@@ -253,7 +253,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         locationManager = CLLocationManager()
         locationManager?.requestAlwaysAuthorization()
         locationManager?.delegate = self;
-        locationManager?.allowsBackgroundLocationUpdates = true
+        
         locationManager?.startUpdatingLocation()
         
 //        var region : CLRegion
@@ -261,6 +261,9 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+//        if status == .AuthorizedAlways {
+//            locationManager?.allowsBackgroundLocationUpdates = true
+//        }
         
     }
     
