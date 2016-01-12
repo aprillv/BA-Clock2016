@@ -17,6 +17,9 @@
 		11128F901C3E3869006390C1 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11128F821C3E385D006390C1 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		11128F951C3E38A6006390C1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11128F941C3E38A6006390C1 /* BaseViewController.swift */; };
 		11128F971C3E38D4006390C1 /* CConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11128F961C3E38D4006390C1 /* CConstants.swift */; };
+		1158DA6F1C44CF3A0022B2D5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1158DA6E1C44CF3A0022B2D5 /* MapKit.framework */; };
+		1158DA771C44CF760022B2D5 /* ClockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158DA761C44CF760022B2D5 /* ClockListViewController.swift */; };
+		1158DA791C44CF930022B2D5 /* ClockMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158DA781C44CF930022B2D5 /* ClockMapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +107,9 @@
 		11128F771C3E385D006390C1 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "Alamofire-master/Alamofire.xcodeproj"; sourceTree = "<group>"; };
 		11128F941C3E38A6006390C1 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		11128F961C3E38D4006390C1 /* CConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CConstants.swift; sourceTree = "<group>"; };
+		1158DA6E1C44CF3A0022B2D5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		1158DA761C44CF760022B2D5 /* ClockListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockListViewController.swift; sourceTree = "<group>"; };
+		1158DA781C44CF930022B2D5 /* ClockMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockMapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1158DA6F1C44CF3A0022B2D5 /* MapKit.framework in Frameworks */,
 				11128F8F1C3E3869006390C1 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,6 +128,7 @@
 		11128F501C3E0EE2006390C1 = {
 			isa = PBXGroup;
 			children = (
+				1158DA6E1C44CF3A0022B2D5 /* MapKit.framework */,
 				11128F771C3E385D006390C1 /* Alamofire.xcodeproj */,
 				11128F5B1C3E0EE2006390C1 /* BA-Clock */,
 				11128F5A1C3E0EE2006390C1 /* Products */,
@@ -155,6 +163,8 @@
 				11128F961C3E38D4006390C1 /* CConstants.swift */,
 				11128F941C3E38A6006390C1 /* BaseViewController.swift */,
 				11128F751C3E3789006390C1 /* LoginViewController.swift */,
+				1158DA761C44CF760022B2D5 /* ClockListViewController.swift */,
+				1158DA781C44CF930022B2D5 /* ClockMapViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -307,8 +317,10 @@
 				11128F761C3E3789006390C1 /* LoginViewController.swift in Sources */,
 				11128F971C3E38D4006390C1 /* CConstants.swift in Sources */,
 				11128F951C3E38A6006390C1 /* BaseViewController.swift in Sources */,
+				1158DA771C44CF760022B2D5 /* ClockListViewController.swift in Sources */,
 				11128F5D1C3E0EE2006390C1 /* AppDelegate.swift in Sources */,
 				11128F651C3E0EE2006390C1 /* BA_Clock.xcdatamodeld in Sources */,
+				1158DA791C44CF930022B2D5 /* ClockMapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wGA-Nx-wYe">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -19,12 +19,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dXN-Vu-9w6">
-                                <rect key="frame" x="160" y="314" width="55" height="39"/>
+                                <rect key="frame" x="137" y="328" width="101" height="39"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <state key="normal" title="Login"/>
+                                <state key="normal" title="Login Text"/>
+                                <connections>
+                                    <segue destination="MBG-or-1jv" kind="show" identifier="ClockList" id="l3j-GQ-03F"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GmG-9n-EzD">
-                                <rect key="frame" x="16" y="157" width="343" height="136"/>
+                                <rect key="frame" x="16" y="171" width="343" height="136"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ARt-Ej-qjO">
                                         <rect key="frame" x="0.0" y="44" width="343" height="1"/>
@@ -117,12 +120,12 @@
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BA Clock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZi-kn-U2t">
-                                <rect key="frame" x="107" y="79" width="161" height="48"/>
+                                <rect key="frame" x="107" y="93" width="161" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© LOVETT HOMES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJ2-3E-pVI">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="© LOVETT HOMES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJ2-3E-pVI">
                                 <rect key="frame" x="136" y="645" width="104" height="14"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -132,21 +135,31 @@
                                 <rect key="frame" x="178" y="324" width="20" height="20"/>
                             </activityIndicatorView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K3h-tQ-xiS">
-                                <rect key="frame" x="113" y="367" width="149" height="29"/>
+                                <rect key="frame" x="113" y="434" width="149" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="Forgot Your Password?"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uSA-oD-1Xv">
+                                <rect key="frame" x="136" y="375" width="103" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Login Map"/>
+                                <connections>
+                                    <segue destination="8VT-MF-qMY" kind="show" identifier="ClockMap" id="6DK-HD-pJh"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="K3h-tQ-xiS" firstAttribute="centerX" secondItem="uSA-oD-1Xv" secondAttribute="centerX" id="4nQ-lp-VNc"/>
                             <constraint firstItem="GmG-9n-EzD" firstAttribute="top" secondItem="wZi-kn-U2t" secondAttribute="bottom" constant="30" id="8K5-mj-aPS"/>
                             <constraint firstItem="dXN-Vu-9w6" firstAttribute="top" secondItem="GmG-9n-EzD" secondAttribute="bottom" constant="21" id="9cb-WN-OQg"/>
                             <constraint firstItem="c5N-Qm-N1e" firstAttribute="centerX" secondItem="ue1-Dz-dZ3" secondAttribute="centerX" id="BOe-bH-WXD"/>
                             <constraint firstItem="wZi-kn-U2t" firstAttribute="centerX" secondItem="ue1-Dz-dZ3" secondAttribute="centerX" id="G5R-mo-6F6"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="uJ2-3E-pVI" secondAttribute="bottom" constant="8" id="OvF-NC-9hb"/>
+                            <constraint firstItem="uSA-oD-1Xv" firstAttribute="centerX" secondItem="dXN-Vu-9w6" secondAttribute="centerX" id="RPk-uj-nON"/>
                             <constraint firstItem="K3h-tQ-xiS" firstAttribute="centerX" secondItem="ue1-Dz-dZ3" secondAttribute="centerX" id="U7e-kv-qZL"/>
                             <constraint firstItem="K3h-tQ-xiS" firstAttribute="centerX" secondItem="dXN-Vu-9w6" secondAttribute="centerX" id="Uz4-sG-ngb"/>
-                            <constraint firstItem="wZi-kn-U2t" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="59" id="Vwb-Zd-6e1"/>
+                            <constraint firstItem="wZi-kn-U2t" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="29" id="Vwb-Zd-6e1"/>
                             <constraint firstItem="c5N-Qm-N1e" firstAttribute="centerY" secondItem="ue1-Dz-dZ3" secondAttribute="centerY" id="X4j-Ct-2Ni"/>
                             <constraint firstItem="K3h-tQ-xiS" firstAttribute="top" secondItem="dXN-Vu-9w6" secondAttribute="bottom" constant="14" id="aAZ-rp-wAm"/>
                             <constraint firstItem="GmG-9n-EzD" firstAttribute="top" secondItem="wZi-kn-U2t" secondAttribute="bottom" constant="30" id="acp-kj-0g7"/>
@@ -156,11 +169,13 @@
                             <constraint firstItem="dXN-Vu-9w6" firstAttribute="centerX" secondItem="ue1-Dz-dZ3" secondAttribute="centerX" id="gtB-K8-WqM"/>
                             <constraint firstItem="uJ2-3E-pVI" firstAttribute="centerX" secondItem="ue1-Dz-dZ3" secondAttribute="centerX" id="hms-M2-WHA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="umQ-5e-dTk" secondAttribute="trailing" constant="-2" id="jHf-De-Ui8"/>
+                            <constraint firstItem="K3h-tQ-xiS" firstAttribute="top" secondItem="uSA-oD-1Xv" secondAttribute="bottom" constant="20" id="mN1-Vd-SX9"/>
                             <constraint firstItem="c5N-Qm-N1e" firstAttribute="centerX" secondItem="ue1-Dz-dZ3" secondAttribute="centerX" id="pYY-bo-TEf"/>
                             <constraint firstItem="GmG-9n-EzD" firstAttribute="centerX" secondItem="ue1-Dz-dZ3" secondAttribute="centerX" id="ppy-1Q-bTe"/>
                             <constraint firstItem="GmG-9n-EzD" firstAttribute="leading" secondItem="ue1-Dz-dZ3" secondAttribute="leadingMargin" constant="80" id="rm2-Qg-wW2"/>
                             <constraint firstItem="dXN-Vu-9w6" firstAttribute="centerX" secondItem="ue1-Dz-dZ3" secondAttribute="centerX" id="tGg-fU-yS9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="GmG-9n-EzD" secondAttribute="trailing" id="uOa-rc-lzX"/>
+                            <constraint firstItem="uSA-oD-1Xv" firstAttribute="top" secondItem="dXN-Vu-9w6" secondAttribute="bottom" constant="8" id="w6y-ou-kPF"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -170,11 +185,13 @@
                                 <exclude reference="rm2-Qg-wW2"/>
                                 <exclude reference="dpy-6n-Qzz"/>
                                 <exclude reference="gtB-K8-WqM"/>
-                                <exclude reference="Uz4-sG-ngb"/>
                                 <exclude reference="jHf-De-Ui8"/>
+                                <exclude reference="Uz4-sG-ngb"/>
+                                <exclude reference="aAZ-rp-wAm"/>
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="mIS-PP-DrU"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="backView" destination="GmG-9n-EzD" id="iaE-ht-IvN"/>
@@ -182,12 +199,107 @@
                         <outlet property="passwordTxt" destination="qSh-IN-9HR" id="Mtj-xr-BVA"/>
                         <outlet property="rememberMeSwitch" destination="umQ-5e-dTk" id="lSA-q0-AVC"/>
                         <outlet property="signInBtn" destination="dXN-Vu-9w6" id="Im2-DN-BUg"/>
+                        <outlet property="signInMap" destination="uSA-oD-1Xv" id="DMG-bn-6vK"/>
                         <outlet property="spinner" destination="c5N-Qm-N1e" id="6yC-sm-Nag"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1148.5" y="-164.5"/>
+            <point key="canvasLocation" x="-685.5" y="-441.5"/>
+        </scene>
+        <!--Clock List View Controller-->
+        <scene sceneID="mgy-rB-bcb">
+            <objects>
+                <tableViewController id="MBG-or-1jv" customClass="ClockListViewController" customModule="BA_Clock" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="MSh-QO-dkb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="clockItemCell" id="AR9-Ri-ImN">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AR9-Ri-ImN" id="IgD-9G-6rD">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="MBG-or-1jv" id="eVd-Nc-b10"/>
+                            <outlet property="delegate" destination="MBG-or-1jv" id="aPV-6H-xd0"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Clock In" id="CRj-xe-9jJ"/>
+                        <barButtonItem width="210" style="plain" systemItem="fixedSpace" id="YE5-Bj-2HZ"/>
+                        <barButtonItem title="Clock Out" id="b4O-ms-K4W"/>
+                    </toolbarItems>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fy4-xa-CXU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9.5" y="-809.5"/>
+        </scene>
+        <!--Clock Map View Controller-->
+        <scene sceneID="x9t-Z1-lEs">
+            <objects>
+                <viewController id="8VT-MF-qMY" customClass="ClockMapViewController" customModule="BA_Clock" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vcm-Sg-4VL"/>
+                        <viewControllerLayoutGuide type="bottom" id="bsl-q1-XUI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8BE-tg-sTT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pkF-mn-HzE">
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="pkF-mn-HzE" secondAttribute="trailing" id="BaP-fy-6Kf"/>
+                            <constraint firstItem="pkF-mn-HzE" firstAttribute="bottom" secondItem="bsl-q1-XUI" secondAttribute="top" id="Kx1-lQ-Szf"/>
+                            <constraint firstItem="pkF-mn-HzE" firstAttribute="top" secondItem="vcm-Sg-4VL" secondAttribute="bottom" id="WHT-dL-E3P"/>
+                            <constraint firstItem="pkF-mn-HzE" firstAttribute="leading" secondItem="8BE-tg-sTT" secondAttribute="leading" id="hCb-hW-zKq"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem title="Clock In" id="34v-FD-s0Q"/>
+                        <barButtonItem width="214" style="plain" systemItem="fixedSpace" id="KeO-dA-jc0"/>
+                        <barButtonItem title="Clock Out" id="6yR-Db-43C"/>
+                    </toolbarItems>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="imageView" destination="pkF-mn-HzE" id="EPa-yj-GfQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pge-Bw-izm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9.5" y="-80.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="zvv-QR-VGd">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="wGA-Nx-wYe" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mXd-Ra-tqK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="iLL-vk-VYD">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ace-Ze-dbf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BSq-jI-adg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1216" y="-455"/>
         </scene>
     </scenes>
 </document>

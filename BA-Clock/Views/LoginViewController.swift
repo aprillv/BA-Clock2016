@@ -19,9 +19,10 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         static let WrongEmailOrPwdMsg :  String = "Email or password is incorrect."
         
     }
-    
+    @IBOutlet weak var signInMap: UIButton!
     // MARK: Outlets
     @IBOutlet weak var emailTxt: UITextField!{
+        
         didSet{
             emailTxt.returnKeyType = .Next
             emailTxt.delegate = self
@@ -89,6 +90,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     private func setSignInBtn(){
         signInBtn.enabled = !self.IsNilOrEmpty(passwordTxt.text)
             && !self.IsNilOrEmpty(emailTxt.text)
+        signInMap.enabled = signInBtn.enabled
+        
     }
     
     
@@ -255,15 +258,20 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         locationManager?.delegate = self;
         
         locationManager?.startUpdatingLocation()
+        navigationController?.setToolbarHidden(true, animated: true)
         
 //        var region : CLRegion
         setSignInBtn()
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-//        if status == .AuthorizedAlways {
-//            locationManager?.allowsBackgroundLocationUpdates = true
-//        }
+        if status == .AuthorizedAlways {
+            print("AuthorizedAlways")
+        }else{
+            print("++++++++++++++++++")
+        }
+        
+        
         
     }
     
