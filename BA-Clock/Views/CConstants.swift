@@ -24,6 +24,8 @@ struct CConstants{
     static let UserInfoRememberMe :  String = "Login Remember Me"
     static let UserInfoEmail :  String = "Login Email"
     static let UserInfoPwd :  String = "Login Password"
+    static let UserDisplayName :  String = "Logined User Name"
+    static let UserFullName : String = "Logined User Full Name"
     
     static let RequestMsg = "Requesting from server"
     static let SavedMsg = "Saving to the BA Server"
@@ -32,21 +34,20 @@ struct CConstants{
     static let SendEmailSuccessfullMsg = "Sent email successfully."
     static let PrintSuccessfullMsg = "Print successfully."
     
-    static let SegueToAddressList :  String = "adressList"
-    static let SegueToSignaturePdf : String = "pdfSignature"
-    static let SegueToClosingMemo : String = "closingmemo"
-    static let SegueToDesignCenter : String = "designcenter"
-    static let SegueToAddendumC : String = "addendumc"
+    static let SegueToText :  String = "LoginText"
+    static let SegueToMap : String = "LoginMap"
     
     
     
     static let LoggedUserNameKey : String = "LoggedUserNameInDefaults"
     static let InstallAppLink : String = "itms-services://?action=download-manifest&url=https://www.buildersaccess.com/iphone/contract.plist"
-    static let ServerURL : String = "https://contractssl.buildersaccess.com/"
+    static let ServerURL : String = "http://clockservice.buildersaccess.com/"
+    static let ServerVersionURL : String = "http://contractssl.buildersaccess.com/"
     //validate login and get address list
-    static let LoginServiceURL: String = "bacontract_login.json"
+    static let LoginServiceURL: String = "login.json"
+    static let ClockInServiceURL: String = "ClockIn.json"
     //check app version
-    static let CheckUpdateServiceURL: String = "bacontract_version.json"
+    static let CheckUpdateServiceURL: String = "bacontract_appid.json"
     //get contract signature
     static let ContractServiceURL = "bacontract_signature.json"
     //get contract Addendum c

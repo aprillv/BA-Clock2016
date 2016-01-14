@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import Foundation
 
 class BaseViewController: UIViewController, CLLocationManagerDelegate {
     

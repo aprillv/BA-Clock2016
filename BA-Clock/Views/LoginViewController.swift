@@ -19,6 +19,12 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         static let WrongEmailOrPwdMsg :  String = "Email or password is incorrect."
         
     }
+    
+    var latitude: NSNumber?
+    var longitude: NSNumber?
+    var timeIntervalClockIn : Double?
+    var gotoTextList : Bool?
+    
     @IBOutlet weak var signInMap: UIButton!
     // MARK: Outlets
     @IBOutlet weak var emailTxt: UITextField!{
@@ -107,14 +113,15 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     
     func checkUpate(){
         let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]
-        let parameter = ["version": (version == nil ?  "" : version!)]
+        let parameter = ["version": (version == nil ?  "" : version!), "appid": "iphone_ClockIn"]
         
         
         
         Alamofire.request(.POST,
-            CConstants.ServerURL + CConstants.CheckUpdateServiceURL,
+            CConstants.ServerVersionURL + CConstants.CheckUpdateServiceURL,
             parameters: parameter).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
+                print(response.result.value)
                 if let rtnValue = response.result.value{
                     if rtnValue.integerValue == 1 {
                          self.doLogin()
@@ -137,12 +144,14 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     }
     
     @IBAction func Login(sender: UIButton) {
+        gotoTextList = sender.tag == 1
         disAblePageControl()
         checkUpate()
     }
     
     private func disAblePageControl(){
         signInBtn.hidden = true
+        signInMap.hidden = true
         emailTxt.enabled = false
         passwordTxt.enabled = false
         rememberMeSwitch.enabled = false
@@ -151,12 +160,43 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         spinner.startAnimating()
         
     }
+    
+    var clockInfo : LoginedInfo?{
+        didSet{
+            if clockInfo?.UserName != ""{
+                if let time = clockInfo!.CurrentScheduledInterval {
+                    if time.integerValue > 0 {
+                        self.timeIntervalClockIn = time.doubleValue * 60
+                        self.performSelector("clockIn", withObject: nil, afterDelay: self.timeIntervalClockIn!)
+                    }
+                }
+                self.saveEmailAndPwdToDisk(email: emailTxt.text!, password: passwordTxt.text!, displayName: clockInfo!.UserName!, fullName: clockInfo!.UserFullName!)
+                
+                if let golist = self.gotoTextList{
+                    if golist {
+                        self.performSegueWithIdentifier(CConstants.SegueToText, sender: self)
+                    }else{
+                        self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
+                    }
+                }else{
+                    self.performSegueWithIdentifier(CConstants.SegueToText, sender: self)
+                }
+                
+            }else{
+                self.PopMsgValidationWithJustOK(msg: constants.WrongEmailOrPwdMsg, txtField: nil)
+            }
+            
+        }
+    }
+    
     private func doLogin(){
         emailTxt.resignFirstResponder()
         passwordTxt.resignFirstResponder()
         
         let email = emailTxt.text
         let password = passwordTxt.text
+        
+       
         
         if IsNilOrEmpty(email) {
             self.toEablePageControl()
@@ -167,36 +207,31 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
                 self.PopMsgWithJustOK(msg: constants.PasswordEmptyMsg, txtField: passwordTxt)
             }else {
                 // do login
+                let tl = Tool()
                 
-                //                self.view.userInteractionEnabled = false
+                let loginRequiredInfo : ClockInRequired = ClockInRequired()
+                loginRequiredInfo.Email = email
+                loginRequiredInfo.Password = tl.md5(string: password!)
+                loginRequiredInfo.HostName = UIDevice.currentDevice().name
+                loginRequiredInfo.IPAddress = tl.getWiFiAddress()
+                loginRequiredInfo.Latitude = self.latitude
+                loginRequiredInfo.Longitude = self.longitude
                 
-                
-//                let loginUserInfo = LoginUser(email: email!, password: password!)
-//                
-//                let a = loginUserInfo.DictionaryFromObject()
-//                Alamofire.request(.POST, CConstants.ServerURL + CConstants.LoginServiceURL, parameters: a).responseJSON{ (response) -> Void in
-//                    if response.result.isSuccess {
-//                        if let rtnValue = response.result.value as? [String: AnyObject]{
-//                            let rtn = Contract(dicInfo: rtnValue)
-//                            
-//                            self.toEablePageControl()
-//                            
-//                            if rtn.activeyn == 1{
-//                                self.saveEmailAndPwdToDisk(email: email!, password: password!)
-//                                self.loginResult = rtn
-//                                self.performSegueWithIdentifier(CConstants.SegueToAddressList, sender: self)
-//                            }else{
-//                                self.PopMsgValidationWithJustOK(msg: constants.WrongEmailOrPwdMsg, txtField: nil)
-//                            }
-//                        }else{
-//                            self.toEablePageControl()
-//                            self.PopServerError()
-//                        }
-//                    }else{
-//                        self.toEablePageControl()
-//                        self.PopNetworkError()
-//                    }
-//                }
+                Alamofire.request(.POST, CConstants.ServerURL + CConstants.ClockInServiceURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                    if response.result.isSuccess {
+                        print(response.result.value)
+                        if let rtnValue = response.result.value as? [String: AnyObject]{
+                            self.clockInfo = LoginedInfo(dicInfo: rtnValue)
+                            self.toEablePageControl()
+                        }else{
+                            self.toEablePageControl()
+                            self.PopServerError()
+                        }
+                    }else{
+                        self.toEablePageControl()
+                        self.PopNetworkError()
+                    }
+                }
                 
                 
             }
@@ -205,6 +240,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
    private func toEablePageControl(){
 //    self.view.userInteractionEnabled = true
     self.signInBtn.hidden = false
+    self.signInMap.hidden = false
     self.emailTxt.enabled = true
     self.passwordTxt.enabled = true
     self.rememberMeSwitch.enabled = true
@@ -213,7 +249,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     self.spinner.stopAnimating()
     }
     
-    func saveEmailAndPwdToDisk(email email: String, password: String){
+    func saveEmailAndPwdToDisk(email email: String, password: String, displayName: String, fullName: String){
         let userInfo = NSUserDefaults.standardUserDefaults()
         if rememberMeSwitch.on {
             userInfo.setObject(true, forKey: CConstants.UserInfoRememberMe)
@@ -222,70 +258,89 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         }
         userInfo.setObject(email, forKey: CConstants.UserInfoEmail)
         userInfo.setObject(password, forKey: CConstants.UserInfoPwd)
+        userInfo.setObject(displayName, forKey: CConstants.UserDisplayName)
+        userInfo.setObject(fullName, forKey: CConstants.UserFullName)
     }
     
     
     // MARK: PrepareForSegue
-//    private var loginResult : Contract?{
-//        didSet{
-//            if loginResult != nil{
-//                let userInfo = NSUserDefaults.standardUserDefaults()
-//                userInfo.setObject(loginResult!.username, forKey: CConstants.LoggedUserNameKey)
-//            }
-//        }
-//    }
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if let identifier = segue.identifier {
-//            switch identifier {
-//                case CConstants.SegueToAddressList:
-//                    if let addressListView = segue.destinationViewController as? AddressListViewController{
-//                        addressListView.AddressListOrigin = loginResult?.contracts
-//                    }
-//                break
-//            default:
-//                break
-//            }
-//        }
-//        
-//    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+                case CConstants.SegueToText:
+                    if let clockListView = segue.destinationViewController as? ClockListViewController{
+                        clockListView.clockInfo = self.clockInfo
+                    }
+                break
+            case CConstants.SegueToMap:
+                if let clockListView = segue.destinationViewController as? ClockMapViewController{
+                    clockListView.clockInfo = self.clockInfo
+                }
+                break
+            default:
+                break
+            }
+        }
+        
+    }
     
     // MARK: Life cycle
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print(view.frame.size)
         locationManager = CLLocationManager()
         locationManager?.requestAlwaysAuthorization()
         locationManager?.delegate = self;
-        
         locationManager?.startUpdatingLocation()
-        navigationController?.setToolbarHidden(true, animated: true)
-        
-//        var region : CLRegion
         setSignInBtn()
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedAlways {
-            print("AuthorizedAlways")
+            
         }else{
-            print("++++++++++++++++++")
+            self.latitude = 0
+            self.longitude = 0
         }
-        
-        
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        print(locations)
+        let userLocation = locations.last
+        if userLocation?.horizontalAccuracy < 0 {
+            return
+        }
+        if userLocation?.timestamp.timeIntervalSinceNow < 30 {
+            self.latitude = userLocation?.coordinate.latitude
+            self.longitude = userLocation?.coordinate.longitude
+            locationManager?.stopUpdatingLocation()
+            
+        }
+    }
+    
+     func clockIn(){
+        locationManager?.startUpdatingLocation()
         
     }
     
-    func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
-    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        self.latitude = 0
+        self.longitude = 0
+        locationManager?.stopUpdatingLocation()
+        locationManager?.startUpdatingLocation()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = true
+        navigationController?.setToolbarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBarHidden = false
+        navigationController?.setToolbarHidden(false, animated: true)
     }
 }

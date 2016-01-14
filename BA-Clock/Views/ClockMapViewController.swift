@@ -8,25 +8,43 @@
 
 import UIKit
 
-class ClockMapViewController: BaseViewController {
-    @IBOutlet weak var imageView: UIImageView!
+class ClockMapViewController: UITableViewController {
+    var clockInfo : LoginedInfo?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        NSString *staticMapUrl = [NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?markers=color:red|%f,%f&%@&sensor=true",yourLatitude, yourLongitude,@"zoom=10&size=270x70"];
-//        NSURL *mapUrl = [NSURL URLWithString:[staticMapUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-//        UIImage *image = [UIImage imageWithData: [NSData dataWithContentsOfURL:mapUrl]];
+        let userInfo = NSUserDefaults.standardUserDefaults()
         
-        let mapUrl = "https://maps.google.com/maps/api/staticmap?markers=color:red|29.751872,-95.362037&zoom=14&size=200x200&sensor=true"
-        if let url : NSURL = NSURL(string: mapUrl) {
-            if let data1 = NSData(contentsOfURL: url) {
-                if let image = UIImage(data: data1){
-                    imageView.image = image
-                }
+        title = userInfo.valueForKey(CConstants.UserFullName) as? String
+        
+        self.tableView.separatorColor = UIColor.clearColor()
+    }
+    
+    private struct constants{
+        static let CellIdentifier : String = "clockMapCell"
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return clockInfo?.ScheduledDay?.count ?? 0
+    }
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifier, forIndexPath: indexPath)
+        
+        if let cellitem = cell as? ClockMapCell {
+            if let item : ScheduledDayItem = clockInfo?.ScheduledDay?[indexPath.row] {
+                cellitem.clockInfo = item
             }
             
+            //            let ddd = CiaNmArray?[CiaNm?[indexPath.section] ?? ""]
+            //            cellitem.contractInfo = ddd![indexPath.row]
+            //            cell.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 8)
         }
         
-        
+        return cell
     }
 }
