@@ -17,14 +17,30 @@ class ClockMapCell: UITableViewCell {
                 
                 clockInImage.image = UIImage(named: "clockin.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
                 
+//                print(clockInMap.frame)
+                let width = Int(UIScreen.mainScreen().bounds.size.width-93)
+                
 //                if let cor = item.ClockInCoordinate {
 //                    if cor.Latitude == nil {
-                    clockInMap.image = UIImage(data: NSData(contentsOfURL: NSURL(string: "https://maps.google.com/maps/api/staticmap?markers=color:red%7C\(item.ClockInCoordinate!.Latitude!),\(item.ClockInCoordinate!.Longitude!)&zoom=14&size=121x74&sensor=true")!)!)
+//                if let data = NSData(contentsOfURL: NSURL(string: "https://maps.google.com/maps/api/staticmap?markers=color:red%7C\(item.ClockInCoordinate!.Latitude!),\(item.ClockInCoordinate!.Longitude!)&zoom=14&size=\(width)x148&sensor=true")!){
+//                    clockInMap.image = UIImage(data: data)
+//                }
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+                    let getImage =  UIImage(data: NSData(contentsOfURL: NSURL(string: "https://maps.google.com/maps/api/staticmap?markers=color:red%7C\(item.ClockInCoordinate!.Latitude!),\(item.ClockInCoordinate!.Longitude!)&zoom=14&size=\(width)x148&sensor=true")!)!)
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.clockInMap.image = getImage
+                        
+                    }
+                }
+                
+                
 //                    }
 //                
 //                }
                 
-                print( "https://maps.google.com/maps/api/staticmap?markers=color:red%7C\(item.ClockInCoordinate!.Latitude!),\(item.ClockInCoordinate!.Longitude!)&zoom=14&size=121x74&sensor=true")
+                
                 
                 timeLbl.text = item.DayFullName! + ", " + item.Day!
                 clockInText.text = "Clock In \n@ " + item.ClockIn!
@@ -32,8 +48,14 @@ class ClockMapCell: UITableViewCell {
                     backGroupImageView.image = UIImage(named: "clockout.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
                     clockOutTextLbl.text = "Clock Out \n@ " + item.ClockOut!
                     if let _ = item.ClockOutCoordinate?.Latitude {
-                        print("https://maps.google.com/maps/api/staticmap?markers=color:red%7C\(item.ClockOutCoordinate!.Latitude),\(item.ClockOutCoordinate!.Longitude)&zoom=14&size=121x74&sensor=true")
-                        clockOutMap.image = UIImage(data: NSData(contentsOfURL: NSURL(string: "https://maps.google.com/maps/api/staticmap?markers=color:red%7C\(item.ClockOutCoordinate!.Latitude!),\(item.ClockOutCoordinate!.Longitude!)&zoom=14&size=121x74&sensor=true")!)!)
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+                            let getImage =  UIImage(data: NSData(contentsOfURL: NSURL(string: "https://maps.google.com/maps/api/staticmap?markers=color:red%7C\(item.ClockOutCoordinate!.Latitude!),\(item.ClockOutCoordinate!.Longitude!)&zoom=14&size=\(width)x148&sensor=true")!)!)
+                            
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.clockOutMap.image = getImage
+                                
+                            }
+                        }
                     }
                     
                 }else{

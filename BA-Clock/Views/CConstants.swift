@@ -37,27 +37,20 @@ struct CConstants{
     static let SegueToText :  String = "LoginText"
     static let SegueToMap : String = "LoginMap"
     
-    
+    static let TurnOnLocationServiceMsg : String = "Please turn on Locaiton Service on your iphone to continue."
     
     static let LoggedUserNameKey : String = "LoggedUserNameInDefaults"
-    static let InstallAppLink : String = "itms-services://?action=download-manifest&url=https://www.buildersaccess.com/iphone/contract.plist"
+    static let InstallAppLink : String = "itms-services://?action=download-manifest&url=https://www.buildersaccess.com/iphone/BA-Clock.plist"
     static let ServerURL : String = "http://clockservice.buildersaccess.com/"
     static let ServerVersionURL : String = "http://contractssl.buildersaccess.com/"
     //validate login and get address list
     static let LoginServiceURL: String = "login.json"
     static let ClockInServiceURL: String = "ClockIn.json"
+    static let SubmitLocationServiceURL: String = "SubmitLocation.json"
+    static let ClockOutServiceURL: String = "ClockOut.json"
     //check app version
     static let CheckUpdateServiceURL: String = "bacontract_appid.json"
-    //get contract signature
-    static let ContractServiceURL = "bacontract_signature.json"
-    //get contract Addendum c
-    static let AddendumCServiceURL = "bacontract_addendumc.json"
-    //get contract ClosingMemo
-    static let ClosingMemoServiceURL = "bacontract_closingMemo.json"
-    //get contract Design Center
-    static let DesignCenterServiceURL = "bacontract_designCenter.json"
-    //upload pdf
-    static let ContractUploadPdfURL = "bacontract_upload.json"
+   
    
     
     

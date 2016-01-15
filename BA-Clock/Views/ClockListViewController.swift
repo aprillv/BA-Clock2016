@@ -8,17 +8,17 @@
 
 import UIKit
 
-class ClockListViewController: UITableViewController {
+class ClockListViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
 
     var clockInfo : LoginedInfo?
+    
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let userInfo = NSUserDefaults.standardUserDefaults()
-        
         title = userInfo.valueForKey(CConstants.UserFullName) as? String
-        
         self.tableView.separatorColor = UIColor.clearColor()
     }
     
@@ -26,14 +26,14 @@ class ClockListViewController: UITableViewController {
         static let CellIdentifier : String = "clockItemCell"
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return clockInfo?.ScheduledDay?.count ?? 0
     }
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifier, forIndexPath: indexPath)
         
         if let cellitem = cell as? ClockTextCell {

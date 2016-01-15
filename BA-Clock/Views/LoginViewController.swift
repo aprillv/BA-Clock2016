@@ -20,12 +20,18 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         
     }
     
+    var isLocationServiceEnabled: Bool?
     var latitude: NSNumber?
     var longitude: NSNumber?
     var timeIntervalClockIn : Double?
     var gotoTextList : Bool?
     
-    @IBOutlet weak var signInMap: UIButton!
+    @IBOutlet weak var signInMap: UIButton!{
+        didSet{
+            signInMap.layer.cornerRadius = 5.0
+            signInMap.backgroundColor = UIColor(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1)
+        }
+    }
     // MARK: Outlets
     @IBOutlet weak var emailTxt: UITextField!{
         
@@ -72,7 +78,11 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         }
     }
     
-    @IBOutlet weak var signInBtn: UIButton!
+    @IBOutlet weak var signInBtn: UIButton!{
+        didSet{
+            signInBtn.layer.cornerRadius = 5.0
+        }
+    }
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
@@ -95,8 +105,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     }
     private func setSignInBtn(){
         signInBtn.enabled = !self.IsNilOrEmpty(passwordTxt.text)
-            && !self.IsNilOrEmpty(emailTxt.text)
-        signInMap.enabled = signInBtn.enabled
+            && !self.IsNilOrEmpty(emailTxt.text) && isLocationServiceEnabled!
+        signInMap.enabled = signInBtn.enabled  && isLocationServiceEnabled!
         
     }
     
@@ -121,7 +131,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
             CConstants.ServerVersionURL + CConstants.CheckUpdateServiceURL,
             parameters: parameter).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
-                print(response.result.value)
+//                print(response.result.value)
                 if let rtnValue = response.result.value{
                     if rtnValue.integerValue == 1 {
                          self.doLogin()
@@ -164,12 +174,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     var clockInfo : LoginedInfo?{
         didSet{
             if clockInfo?.UserName != ""{
-                if let time = clockInfo!.CurrentScheduledInterval {
-                    if time.integerValue > 0 {
-                        self.timeIntervalClockIn = time.doubleValue * 60
-                        self.performSelector("clockIn", withObject: nil, afterDelay: self.timeIntervalClockIn!)
-                    }
-                }
+                
                 self.saveEmailAndPwdToDisk(email: emailTxt.text!, password: passwordTxt.text!, displayName: clockInfo!.UserName!, fullName: clockInfo!.UserFullName!)
                 
                 if let golist = self.gotoTextList{
@@ -275,6 +280,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
                 break
             case CConstants.SegueToMap:
                 if let clockListView = segue.destinationViewController as? ClockMapViewController{
+                    clockListView.locationManager = self.locationManager
+                    locationManager?.delegate = clockListView
                     clockListView.clockInfo = self.clockInfo
                 }
                 break
@@ -290,20 +297,31 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let _ = isLocationServiceEnabled {
+        
+        }else{
+            isLocationServiceEnabled = false
+        }
+        timeIntervalClockIn = 0
         locationManager = CLLocationManager()
         locationManager?.requestAlwaysAuthorization()
         locationManager?.delegate = self;
         locationManager?.startUpdatingLocation()
+//        locationManager?.allowsBackgroundLocationUpdates = true
         setSignInBtn()
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedAlways {
-            
+            isLocationServiceEnabled = true
         }else{
             self.latitude = 0
             self.longitude = 0
+            self.PopMsgWithJustOK(msg: CConstants.TurnOnLocationServiceMsg, txtField: nil)
+            isLocationServiceEnabled = false
         }
+        
+        setSignInBtn()
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -316,13 +334,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
             self.latitude = userLocation?.coordinate.latitude
             self.longitude = userLocation?.coordinate.longitude
             locationManager?.stopUpdatingLocation()
-            
         }
-    }
-    
-     func clockIn(){
-        locationManager?.startUpdatingLocation()
-        
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
@@ -335,12 +347,11 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = true
-        navigationController?.setToolbarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBarHidden = false
-        navigationController?.setToolbarHidden(false, animated: true)
+//        navigationController?.setToolbarHidden(false, animated: true)
     }
 }
