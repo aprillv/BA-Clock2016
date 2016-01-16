@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import CoreLocation
+//import LocalAuthentication
 
 class LoginViewController: BaseViewController, UITextFieldDelegate {
 
@@ -154,7 +155,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     }
     
     @IBAction func Login(sender: UIButton) {
-        gotoTextList = sender.tag == 1
+//        gotoTextList = sender.tag == 1
+        gotoTextList = false
         disAblePageControl()
         checkUpate()
     }
@@ -245,7 +247,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
    private func toEablePageControl(){
 //    self.view.userInteractionEnabled = true
     self.signInBtn.hidden = false
-    self.signInMap.hidden = false
+//    self.signInMap.hidden = false
     self.emailTxt.enabled = true
     self.passwordTxt.enabled = true
     self.rememberMeSwitch.enabled = true

@@ -27,7 +27,67 @@ class ClockMapViewController: BaseViewController {
     var longitude: NSNumber?
     var timeIntervalClockIn : Double?
     
-    @IBOutlet weak var tableView: UITableView!
+    
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:1.0];
+//    
+//    //    self.firstView.backgroundColor=[UIColor redColor];
+//    
+//    
+//    if (fromMap){
+//    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.flipSuperView cache:YES];
+//    [self.mapPage removeFromSuperview];
+//    [self.flipSuperView addSubview:self.listbackView];
+//    [self.flipSuperView sendSubviewToBack:self.mapPage];
+//    [sender setImage:[UIImage imageNamed:@"map.png"] forState:UIControlStateAll];
+//    //        [sender setImage:[UIImage imageNamed:@"map.png"] forState:UIControlStateHighlighted];
+//    [self tabBar:self.Topbar didSelectItem:self.Topbar.selectedItem];
+//    }else{
+//    
+//    if (!self.btnCurrentLocation.superview) {
+//    [self.map addSubview:self.btnCurrentLocation];
+//    }
+//    if ([self.btnSearch.currentTitle isEqualToString:@"Nearby"]) {
+//    [self.btnCurrentLocation.layer setValue:@"1" forKey:@"isLookfor"];
+//    }
+//    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.flipSuperView cache:YES];
+//    [self.listbackView removeFromSuperview];
+//    [self.flipSuperView addSubview:self.mapPage];
+//    [self.flipSuperView sendSubviewToBack:self.listbackView];
+//    [sender setImage:[UIImage imageNamed:@"grid.png"] forState:UIControlStateAll];
+//    //        [sender setImage:[UIImage imageNamed:@"grid.png"] forState:UIControlStateHighlighted];
+//    
+//    }
+//    
+//    [UIView commitAnimations];
+    
+    @IBAction func switchTo(sender: UIBarButtonItem) {
+        switch sender.title!{
+        case "Text":
+            sender.title = "Map"
+            textTable.hidden = false
+            UIView.transitionFromView(mapTable, toView: textTable, duration: 1, options: [.TransitionFlipFromRight, .ShowHideTransitionViews], completion: { (_) -> Void in
+                
+                self.view.bringSubviewToFront(self.textTable)
+            })
+            
+            
+            break
+        default:
+            sender.title = "Text"
+            mapTable.hidden = false
+            UIView.transitionFromView(textTable, toView: mapTable, duration: 1, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: { (_) -> Void in
+                self.view.bringSubviewToFront(self.mapTable)
+            })
+            
+            
+            break
+        }
+    }
+    
+    @IBOutlet weak var switchItem: UIBarButtonItem!
+    @IBOutlet weak var mapTable: UITableView!
+    @IBOutlet weak var textTable: UITableView!
     
     @IBOutlet weak var clockInBtn: UIButton!{
         didSet{
@@ -46,13 +106,14 @@ class ClockMapViewController: BaseViewController {
         
         let userInfo = NSUserDefaults.standardUserDefaults()
         
+        view.bringSubviewToFront(mapTable)
         title = userInfo.valueForKey(CConstants.UserFullName) as? String
         
-        self.tableView.separatorColor = UIColor.clearColor()
     }
     
     private struct constants{
         static let CellIdentifier : String = "clockMapCell"
+        static let CellIdentifierText : String = "clockItemCell"
     }
     
      func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -63,19 +124,36 @@ class ClockMapViewController: BaseViewController {
         return clockInfo?.ScheduledDay?.count ?? 0
     }
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifier, forIndexPath: indexPath)
         
-        if let cellitem = cell as? ClockMapCell {
-            if let item : ScheduledDayItem = clockInfo?.ScheduledDay?[indexPath.row] {
-                cellitem.clockInfo = item
+        
+        if tableView == mapTable {
+            let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifier, forIndexPath: indexPath)
+            if let cellitem = cell as? ClockMapCell {
+                if let item : ScheduledDayItem = clockInfo?.ScheduledDay?[indexPath.row] {
+                    cellitem.clockInfo = item
+                }
+                
+                //            let ddd = CiaNmArray?[CiaNm?[indexPath.section] ?? ""]
+                //            cellitem.contractInfo = ddd![indexPath.row]
+                //            cell.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 8)
             }
-            
-            //            let ddd = CiaNmArray?[CiaNm?[indexPath.section] ?? ""]
-            //            cellitem.contractInfo = ddd![indexPath.row]
-            //            cell.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 8)
+            return cell
+        }else{
+            let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifierText, forIndexPath: indexPath)
+            if let cellitem = cell as? ClockTextCell {
+                if let item : ScheduledDayItem = clockInfo?.ScheduledDay?[indexPath.row] {
+                    cellitem.clockInfo = item
+                }
+                
+                //            let ddd = CiaNmArray?[CiaNm?[indexPath.section] ?? ""]
+                //            cellitem.contractInfo = ddd![indexPath.row]
+                //            cell.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 8)
+            }
+            return cell
         }
         
-        return cell
+        
+        
     }
     @IBAction func doClockIn(sender: UIButton) {
     }
