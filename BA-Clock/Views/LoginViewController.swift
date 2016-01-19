@@ -22,10 +22,6 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     }
     
     var isLocationServiceEnabled: Bool?
-    var latitude: NSNumber?
-    var longitude: NSNumber?
-    var timeIntervalClockIn : Double?
-    var gotoTextList : Bool?
     
     @IBOutlet weak var signInMap: UIButton!{
         didSet{
@@ -132,7 +128,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
             CConstants.ServerVersionURL + CConstants.CheckUpdateServiceURL,
             parameters: parameter).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
-//                print(response.result.value)
+                
                 if let rtnValue = response.result.value{
                     if rtnValue.integerValue == 1 {
                          self.doLogin()
@@ -155,8 +151,6 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     }
     
     @IBAction func Login(sender: UIButton) {
-//        gotoTextList = sender.tag == 1
-        gotoTextList = false
         disAblePageControl()
         checkUpate()
     }
@@ -176,18 +170,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     var clockInfo : LoginedInfo?{
         didSet{
             if clockInfo?.UserName != ""{
-                
                 self.saveEmailAndPwdToDisk(email: emailTxt.text!, password: passwordTxt.text!, displayName: clockInfo!.UserName!, fullName: clockInfo!.UserFullName!)
-                
-                if let golist = self.gotoTextList{
-                    if golist {
-                        self.performSegueWithIdentifier(CConstants.SegueToText, sender: self)
-                    }else{
-                        self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
-                    }
-                }else{
-                    self.performSegueWithIdentifier(CConstants.SegueToText, sender: self)
-                }
+                    self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
                 
             }else{
                 self.PopMsgValidationWithJustOK(msg: constants.WrongEmailOrPwdMsg, txtField: nil)
@@ -219,14 +203,10 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
                 let loginRequiredInfo : ClockInRequired = ClockInRequired()
                 loginRequiredInfo.Email = email
                 loginRequiredInfo.Password = tl.md5(string: password!)
-                loginRequiredInfo.HostName = UIDevice.currentDevice().name
-                loginRequiredInfo.IPAddress = tl.getWiFiAddress()
-                loginRequiredInfo.Latitude = self.latitude
-                loginRequiredInfo.Longitude = self.longitude
                 
-                Alamofire.request(.POST, CConstants.ServerURL + CConstants.ClockInServiceURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                Alamofire.request(.POST, CConstants.ServerURL + CConstants.LoginServiceURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     if response.result.isSuccess {
-                        print(response.result.value)
+//                        print(response.result.value)
                         if let rtnValue = response.result.value as? [String: AnyObject]{
                             self.clockInfo = LoginedInfo(dicInfo: rtnValue)
                             self.toEablePageControl()
@@ -275,11 +255,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let identifier = segue.identifier {
             switch identifier {
-                case CConstants.SegueToText:
-                    if let clockListView = segue.destinationViewController as? ClockListViewController{
-                        clockListView.clockInfo = self.clockInfo
-                    }
-                break
+               
             case CConstants.SegueToMap:
                 if let clockListView = segue.destinationViewController as? ClockMapViewController{
                     clockListView.locationManager = self.locationManager
@@ -304,46 +280,26 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         }else{
             isLocationServiceEnabled = false
         }
-        timeIntervalClockIn = 0
         locationManager = CLLocationManager()
         locationManager?.requestAlwaysAuthorization()
         locationManager?.delegate = self;
-        locationManager?.startUpdatingLocation()
-//        locationManager?.allowsBackgroundLocationUpdates = true
-        setSignInBtn()
+        if emailTxt.text != "" && passwordTxt != "" && rememberMeSwitch.on {
+            self.Login(signInBtn)
+        }else{
+            setSignInBtn()
+        }
+        
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedAlways {
             isLocationServiceEnabled = true
         }else{
-            self.latitude = 0
-            self.longitude = 0
-            self.PopMsgWithJustOK(msg: CConstants.TurnOnLocationServiceMsg, txtField: nil)
+           self.PopMsgWithJustOK(msg: CConstants.TurnOnLocationServiceMsg, txtField: nil)
             isLocationServiceEnabled = false
         }
         
         setSignInBtn()
-    }
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        print(locations)
-        let userLocation = locations.last
-        if userLocation?.horizontalAccuracy < 0 {
-            return
-        }
-        if userLocation?.timestamp.timeIntervalSinceNow < 30 {
-            self.latitude = userLocation?.coordinate.latitude
-            self.longitude = userLocation?.coordinate.longitude
-            locationManager?.stopUpdatingLocation()
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        self.latitude = 0
-        self.longitude = 0
-        locationManager?.stopUpdatingLocation()
-        locationManager?.startUpdatingLocation()
     }
     
     override func viewWillAppear(animated: Bool) {

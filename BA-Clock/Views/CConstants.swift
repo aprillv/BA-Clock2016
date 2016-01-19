@@ -34,7 +34,6 @@ struct CConstants{
     static let SendEmailSuccessfullMsg = "Sent email successfully."
     static let PrintSuccessfullMsg = "Print successfully."
     
-    static let SegueToText :  String = "LoginText"
     static let SegueToMap : String = "LoginMap"
     
     static let TurnOnLocationServiceMsg : String = "Please turn on Locaiton Service on your iphone to continue."

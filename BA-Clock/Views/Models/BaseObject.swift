@@ -9,9 +9,12 @@
 import Foundation
 
 class BaseObject: RequiredBaseObject {
-    required init(dicInfo : [String: AnyObject]){
+    required init(dicInfo : [String: AnyObject]?){
         super.init()
-        self.setValuesForKeysWithDictionary(dicInfo)
+        if let dic = dicInfo {
+        self.setValuesForKeysWithDictionary(dic)
+        }
+        
     }
     
     private struct constants  {
@@ -25,6 +28,7 @@ class BaseObject: RequiredBaseObject {
     override func setValue(value0: AnyObject?, forKey key: String) {
         var skey : String
         skey = key
+//        print(skey)
         let dic = self.getPropertieNamesAsDictionary()
         if dic.keys.contains(key) {
             if let value = value0{
@@ -39,9 +43,16 @@ class BaseObject: RequiredBaseObject {
                         }
                     }
                     super.setValue(tmpArray, forKey: skey)
+                
                 }else if let dic = value as? Dictionary<String, AnyObject>{
-                    let vc : CoordinateObject = CoordinateObject.init(dicInfo: dic)
-                    super.setValue(vc, forKey: skey)
+                    if skey == "OAuthToken"{
+                        let vc : OAuthTokenItem = OAuthTokenItem.init(dicInfo: dic)
+                        super.setValue(vc, forKey: skey)
+                    }else{
+                        let vc : CoordinateObject = CoordinateObject.init(dicInfo: dic)
+                        super.setValue(vc, forKey: skey)
+                    }
+                    
                 }else{
                     super.setValue(value, forKey: skey as String)
                 }

@@ -16,7 +16,6 @@ class ScheduledDayItem: BaseObject {
     var ClockIn: String?
     var ClockOut: String?
     var Hours: NSNumber?
-    var ScheduledInterval: NSNumber?
     var ClockInCoordinate : CoordinateObject?
     var ClockOutCoordinate : CoordinateObject?
 }

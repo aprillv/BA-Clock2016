@@ -13,59 +13,37 @@ import CoreLocation
 class ClockMapViewController: BaseViewController {
     var clockInfo : LoginedInfo?{
         didSet{
-            if let time = clockInfo!.CurrentScheduledInterval {
-                
-                if time.integerValue > 0 {
-                    self.timeIntervalClockIn = time.doubleValue * 60 - 20
-                    self.performSelector("clockIn", withObject: nil, afterDelay: self.timeIntervalClockIn!)
+//            print(clockInfo?.getPropertieNamesAsDictionary())
+            if let clockList = clockInfo!.ScheduledDay {
+                tableSource = [String : [ScheduledDayItem]]()
+                var day = ""
+                var index = 0
+                for item in clockList {
+                    if day != item.Day! {
+                        tableSource!["\(index)"] = [ScheduledDayItem]()
+                        day = item.Day!
+                        index++
+                        
+                    }
+                    tableSource!["\(index-1)"]?.append(item)
+                    
                 }
+                print(tableSource)
+                
             }
         }
     }
+    
+    var tableSource : [String : [ScheduledDayItem]]?
     
     var latitude: NSNumber?
     var longitude: NSNumber?
     var timeIntervalClockIn : Double?
     
-    
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationDuration:1.0];
-//    
-//    //    self.firstView.backgroundColor=[UIColor redColor];
-//    
-//    
-//    if (fromMap){
-//    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.flipSuperView cache:YES];
-//    [self.mapPage removeFromSuperview];
-//    [self.flipSuperView addSubview:self.listbackView];
-//    [self.flipSuperView sendSubviewToBack:self.mapPage];
-//    [sender setImage:[UIImage imageNamed:@"map.png"] forState:UIControlStateAll];
-//    //        [sender setImage:[UIImage imageNamed:@"map.png"] forState:UIControlStateHighlighted];
-//    [self tabBar:self.Topbar didSelectItem:self.Topbar.selectedItem];
-//    }else{
-//    
-//    if (!self.btnCurrentLocation.superview) {
-//    [self.map addSubview:self.btnCurrentLocation];
-//    }
-//    if ([self.btnSearch.currentTitle isEqualToString:@"Nearby"]) {
-//    [self.btnCurrentLocation.layer setValue:@"1" forKey:@"isLookfor"];
-//    }
-//    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.flipSuperView cache:YES];
-//    [self.listbackView removeFromSuperview];
-//    [self.flipSuperView addSubview:self.mapPage];
-//    [self.flipSuperView sendSubviewToBack:self.listbackView];
-//    [sender setImage:[UIImage imageNamed:@"grid.png"] forState:UIControlStateAll];
-//    //        [sender setImage:[UIImage imageNamed:@"grid.png"] forState:UIControlStateHighlighted];
-//    
-//    }
-//    
-//    [UIView commitAnimations];
-    
     @IBAction func switchTo(sender: UIBarButtonItem) {
         switch sender.title!{
         case "Text":
             sender.title = "Map"
-            textTable.hidden = false
             UIView.transitionFromView(mapTable, toView: textTable, duration: 1, options: [.TransitionFlipFromRight, .ShowHideTransitionViews], completion: { (_) -> Void in
                 
                 self.view.bringSubviewToFront(self.textTable)
@@ -75,7 +53,6 @@ class ClockMapViewController: BaseViewController {
             break
         default:
             sender.title = "Text"
-            mapTable.hidden = false
             UIView.transitionFromView(textTable, toView: mapTable, duration: 1, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: { (_) -> Void in
                 self.view.bringSubviewToFront(self.mapTable)
             })
@@ -91,8 +68,9 @@ class ClockMapViewController: BaseViewController {
     
     @IBOutlet weak var clockInBtn: UIButton!{
         didSet{
-            clockInBtn.enabled = false
             clockInBtn.layer.cornerRadius = 5.0
+//            self.clockInBtn.enabled = false
+//            self.clockInBtn.backgroundColor = UIColor.lightGrayColor()
         }
     }
     @IBOutlet weak var clockOutBtn: UIButton!{
@@ -104,8 +82,10 @@ class ClockMapViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let userInfo = NSUserDefaults.standardUserDefaults()
+        self.timeIntervalClockIn = 0
+        self.locationManager?.startUpdatingLocation()
         
+        let userInfo = NSUserDefaults.standardUserDefaults()
         view.bringSubviewToFront(mapTable)
         title = userInfo.valueForKey(CConstants.UserFullName) as? String
         
@@ -117,50 +97,60 @@ class ClockMapViewController: BaseViewController {
     }
     
      func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return tableSource?.count ?? 0
+    }
+
+//    func table
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+        return 35
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?{
+        if let list = tableSource?["\(section)"]{
+            let lbl = UILabel(frame: CGRect(x: 0, y: 20, width: tableView.frame.size.width, height: 15))
+            lbl.text = list.first!.DayFullName! + ", " + list.first!.Day!
+            lbl.textAlignment = NSTextAlignment.Center
+            lbl.font = UIFont(name: "Helvetica Neue", size: 14)
+            lbl.backgroundColor = UIColor.whiteColor()
+            return lbl
+        }else{
+            return nil
+        }
+    
     }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return clockInfo?.ScheduledDay?.count ?? 0
+        return tableSource?["\(section)"]?.count ?? 0
     }
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        let list = tableSource?["\(indexPath.section)"]!
         
         if tableView == mapTable {
             let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifier, forIndexPath: indexPath)
             if let cellitem = cell as? ClockMapCell {
-                if let item : ScheduledDayItem = clockInfo?.ScheduledDay?[indexPath.row] {
+                if let item : ScheduledDayItem = list?[indexPath.row] {
                     cellitem.clockInfo = item
                 }
-                
-                //            let ddd = CiaNmArray?[CiaNm?[indexPath.section] ?? ""]
-                //            cellitem.contractInfo = ddd![indexPath.row]
-                //            cell.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 8)
             }
             return cell
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifierText, forIndexPath: indexPath)
             if let cellitem = cell as? ClockTextCell {
-                if let item : ScheduledDayItem = clockInfo?.ScheduledDay?[indexPath.row] {
+                if let item : ScheduledDayItem = list?[indexPath.row] {
                     cellitem.clockInfo = item
                 }
-                
-                //            let ddd = CiaNmArray?[CiaNm?[indexPath.section] ?? ""]
-                //            cellitem.contractInfo = ddd![indexPath.row]
-                //            cell.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 8)
             }
             return cell
         }
-        
-        
-        
     }
     @IBAction func doClockIn(sender: UIButton) {
+        clockIn()
     }
     @IBAction func doClockOut(sender: UIButton) {
         self.timeIntervalClockIn = -1
-        print(self.locationManager)
-        print(self.locationManager?.delegate)
+        
        self.locationManager?.stopUpdatingLocation()
         self.locationManager?.startUpdatingLocation()
         
@@ -190,17 +180,32 @@ class ClockMapViewController: BaseViewController {
         }
         
         if self.timeIntervalClockIn > 0 {
-            callClockInService()
+            callSubmitLocationService()
         }else if self.timeIntervalClockIn == -1{
-            callClockOutService()
+            callClockService(isClockIn: false)
+        }else if self.timeIntervalClockIn == -2{
+            callClockService(isClockIn: true)
+            
+            if let time = clockInfo!.CurrentScheduledInterval {
+                if time.integerValue > 0 {
+                    self.timeIntervalClockIn = time.doubleValue * 60
+                    self.performSelector("clockIn", withObject: nil, afterDelay: self.timeIntervalClockIn!)
+                }else{
+                    self.timeIntervalClockIn = 0
+                }
+            }else{
+                self.timeIntervalClockIn = 0
+            }
+            
         }
     }
     
     func clockIn(){
+        self.timeIntervalClockIn = -2
         locationManager?.startUpdatingLocation()
     }
     
-    private func callClockInService(){
+    private func callSubmitLocationService(){
         let userInfo = NSUserDefaults.standardUserDefaults()
         let submitRequired = SubmitLocationRequired()
         submitRequired.Latitude = "\(self.latitude!)"
@@ -209,7 +214,7 @@ class ClockMapViewController: BaseViewController {
         //        print(submitRequired.getPropertieNamesAsDictionary())
         Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
-                print("submit location information")
+//                print("submit location information")
                 print(response.result.value)
             }else{
             }
@@ -217,7 +222,21 @@ class ClockMapViewController: BaseViewController {
         
     }
     
-    private func callClockOutService(){
+    private func toEablePageControl(){
+        self.clockInBtn.enabled = true
+        self.clockOutBtn.enabled = true
+        self.clockOutBtn.backgroundColor = UIColor.lightGrayColor()
+        self.clockInBtn.backgroundColor = UIColor(red: 75/255.0, green: 215/255.0, blue: 99/255.0, alpha: 1)
+        self.clockOutBtn.backgroundColor = UIColor(red: 75/255.0, green: 215/255.0, blue: 99/255.0, alpha: 1)
+    }
+    
+    private func disableEablePageControl(){
+        self.clockInBtn.enabled = false
+        self.clockOutBtn.enabled = false
+        self.clockOutBtn.backgroundColor = UIColor.lightGrayColor()
+        self.clockInBtn.backgroundColor = UIColor.lightGrayColor()
+    }
+    private func callClockService(isClockIn isClockIn: Bool){
         let userInfo = NSUserDefaults.standardUserDefaults()
         let clockOutRequiredInfo = ClockOutRequired()
         clockOutRequiredInfo.Latitude = "\(self.latitude!)"
@@ -227,11 +246,68 @@ class ClockMapViewController: BaseViewController {
         clockOutRequiredInfo.IPAddress = tl.getWiFiAddress()
         clockOutRequiredInfo.UserName = userInfo.valueForKey(CConstants.UserDisplayName) as? String
         //        print(submitRequired.getPropertieNamesAsDictionary())
-        Alamofire.request(.POST, CConstants.ServerURL + CConstants.ClockOutServiceURL, parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+        disableEablePageControl()
+        Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
-                print("clock out")
-                print(response.result.value)
-                self.navigationController?.popViewControllerAnimated(true)
+                if let rtnValue = response.result.value as? [String: AnyObject]{
+                    let rtn = ClockResponse(dicInfo: rtnValue)
+                    if Int(rtn.Status!) <= 0 {
+                        if rtn.Message != "" {
+                            self.PopMsgWithJustOK(msg: rtn.Message!, txtField: nil)
+                        }
+                       
+                    }else{
+                        if isClockIn {
+                            if let last = self.tableSource!["\(self.tableSource!.count-1)"] {
+                                let item = ScheduledDayItem(dicInfo: nil)
+                                item.ClockIn = rtn.ClockedInTime
+                                item.ClockInCoordinate = rtn.Coordinate
+                                item.ClockOut = ""
+                                item.Day = rtn.Day
+                                item.DayFullName = rtn.DayFullName
+                                item.DayOfWeek = rtn.DayOfWeek
+                                //                                    item.Hours = rtn
+                                item.DayName = rtn.DayName
+                                
+                                if last.first!.Day! != rtn.Day! {
+                                    self.tableSource!["\(self.tableSource!.count)"] = [ScheduledDayItem]()
+                                }
+                                self.tableSource!["\(self.tableSource!.count-1)"]?.append(item)
+                                self.mapTable.reloadData()
+                                self.textTable.reloadData()
+                            }
+                        }else{
+                            if let last = self.tableSource!["\(self.tableSource!.count-1)"] {
+                                if last.first!.Day! == rtn.Day! {
+                                    if let item = last.last {
+                                        item.ClockOut = rtn.ClockedOutTime
+                                        item.ClockOutCoordinate = rtn.Coordinate
+                                        self.mapTable.reloadData()
+                                        self.textTable.reloadData()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    self.PopServerError()
+                }
+                self.toEablePageControl()
+//                print(isClockIn ? "Clock In" : "clock out")
+//                print(response.result.value)
+//                self.navigationController?.popViewControllerAnimated(true)
+//                if isClockIn {
+//                    self.clockOutBtn.enabled = false
+//                    self.clockInBtn.enabled = true
+//                    self.clockOutBtn.backgroundColor = UIColor.lightGrayColor()
+//                    self.clockInBtn.backgroundColor = UIColor(red: 75/255.0, green: 215/255.0, blue: 99/255.0, alpha: 1)
+//                }else{
+//                    self.clockOutBtn.enabled = true
+//                    self.clockInBtn.enabled = false
+//                    self.clockInBtn.backgroundColor = UIColor.lightGrayColor()
+//                    self.clockOutBtn.backgroundColor = UIColor(red: 75/255.0, green: 215/255.0, blue: 99/255.0, alpha: 1)
+//                }
+                
                 
             }else{
                 

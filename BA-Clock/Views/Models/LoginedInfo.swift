@@ -9,14 +9,14 @@
 import Foundation
 
 class LoginedInfo: BaseObject {
-    var UserName: String?
+    
     var CurrentDayOfWeek: NSNumber?
     var CurrentDayName: String?
     var CurrentDayFullName: String?
     var CurrentScheduledInterval: NSNumber?
     var ScheduledDay: [ScheduledDayItem]?
-    var IsClockedIn : NSNumber?
-    var IsClockedOut : NSNumber?
+    var OAuthToken: OAuthTokenItem?
+    var UserName: String?
     var UserFullName : String?
     
 }
