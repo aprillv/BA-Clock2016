@@ -28,7 +28,7 @@ class ClockMapViewController: BaseViewController {
                     tableSource!["\(index-1)"]?.append(item)
                     
                 }
-                print(tableSource)
+//                print(tableSource)
                 
             }
         }
@@ -38,6 +38,8 @@ class ClockMapViewController: BaseViewController {
     
     var latitude: NSNumber?
     var longitude: NSNumber?
+    
+    var timer: NSTimer?
     var timeIntervalClockIn : Double?
     
     @IBAction func switchTo(sender: UIBarButtonItem) {
@@ -88,6 +90,37 @@ class ClockMapViewController: BaseViewController {
         let userInfo = NSUserDefaults.standardUserDefaults()
         view.bringSubviewToFront(mapTable)
         title = userInfo.valueForKey(CConstants.UserFullName) as? String
+        
+    }
+    
+    private func callAutoUpdate(){
+        let time = getTime()
+        if time > 0 {
+            self.performSelector("update1", withObject: nil, afterDelay: time)
+        }else{
+            update1()
+        }
+    }
+    
+    private func update1(){
+        update()
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(900, target: self, selector: "update", userInfo: nil, repeats: true)
+    }
+    
+    private func getTime() -> NSTimeInterval{
+        let date = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy hh"
+        let nowHour = dateFormatter.stringFromDate(date)
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss"
+        for var i = 14; i < 60; i += 15 {
+            let now15 = dateFormatter.dateFromString(nowHour + ":\(i):59")
+            let timeSpace = now15?.timeIntervalSinceDate(date)
+            if  timeSpace > 0 {
+                return timeSpace!
+            }
+        }
+        return 0
         
     }
     
@@ -186,22 +219,21 @@ class ClockMapViewController: BaseViewController {
         }else if self.timeIntervalClockIn == -2{
             callClockService(isClockIn: true)
             
-            if let time = clockInfo!.CurrentScheduledInterval {
-                if time.integerValue > 0 {
-                    self.timeIntervalClockIn = time.doubleValue * 60
-                    self.performSelector("clockIn", withObject: nil, afterDelay: self.timeIntervalClockIn!)
-                }else{
-                    self.timeIntervalClockIn = 0
-                }
-            }else{
-                self.timeIntervalClockIn = 0
-            }
             
         }
     }
     
+    func update() {
+        print(NSDate())
+        // Something cool
+    }
+    
     func clockIn(){
         self.timeIntervalClockIn = -2
+        locationManager?.startUpdatingLocation()
+    }
+    
+    func SubmitLocation(){
         locationManager?.startUpdatingLocation()
     }
     
@@ -245,10 +277,13 @@ class ClockMapViewController: BaseViewController {
         let tl = Tool()
         clockOutRequiredInfo.IPAddress = tl.getWiFiAddress()
         clockOutRequiredInfo.UserName = userInfo.valueForKey(CConstants.UserDisplayName) as? String
-        //        print(submitRequired.getPropertieNamesAsDictionary())
+        
+//        print(clockOutRequiredInfo.getPropertieNamesAsDictionary())
+        
         disableEablePageControl()
         Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
+//                print(response.result.value)
                 if let rtnValue = response.result.value as? [String: AnyObject]{
                     let rtn = ClockResponse(dicInfo: rtnValue)
                     if Int(rtn.Status!) <= 0 {
@@ -276,6 +311,9 @@ class ClockMapViewController: BaseViewController {
                                 self.mapTable.reloadData()
                                 self.textTable.reloadData()
                             }
+                            
+                            self.callAutoUpdate()
+                            
                         }else{
                             if let last = self.tableSource!["\(self.tableSource!.count-1)"] {
                                 if last.first!.Day! == rtn.Day! {
@@ -287,6 +325,8 @@ class ClockMapViewController: BaseViewController {
                                     }
                                 }
                             }
+                            self.timer?.invalidate()
+                            self.timer = nil
                         }
                     }
                 }else{
