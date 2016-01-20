@@ -51,7 +51,10 @@ struct CConstants{
     static let CheckUpdateServiceURL: String = "bacontract_appid.json"
    
    
-    
+    //about stroyboard
+    static let StoryboardName : String = "Main"
+    static let LoginStoryBoardId : String = "LoginStart"
+    static let ListStoryBoardId : String = "ListStart"
     
     
 }

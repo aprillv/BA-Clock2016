@@ -14,23 +14,23 @@ class ClockMapViewController: BaseViewController {
     var clockInfo : LoginedInfo?{
         didSet{
 //            print(clockInfo?.getPropertieNamesAsDictionary())
-            if let clockList = clockInfo!.ScheduledDay {
-                tableSource = [String : [ScheduledDayItem]]()
-                var day = ""
-                var index = 0
-                for item in clockList {
-                    if day != item.Day! {
-                        tableSource!["\(index)"] = [ScheduledDayItem]()
-                        day = item.Day!
-                        index++
-                        
-                    }
-                    tableSource!["\(index-1)"]?.append(item)
-                    
-                }
-//                print(tableSource)
-                
-            }
+//            if let clockList = clockInfo!.ScheduledDay {
+//                tableSource = [String : [ScheduledDayItem]]()
+//                var day = ""
+//                var index = 0
+//                for item in clockList {
+//                    if day != item.Day! {
+//                        tableSource!["\(index)"] = [ScheduledDayItem]()
+//                        day = item.Day!
+//                        index++
+//                        
+//                    }
+//                    tableSource!["\(index-1)"]?.append(item)
+//                    
+//                }
+////                print(tableSource)
+//                
+//            }
         }
     }
     

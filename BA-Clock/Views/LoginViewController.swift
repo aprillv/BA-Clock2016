@@ -275,6 +275,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let _ = isLocationServiceEnabled {
         
         }else{
@@ -284,7 +285,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         locationManager?.requestAlwaysAuthorization()
         locationManager?.delegate = self;
         if emailTxt.text != "" && passwordTxt != "" && rememberMeSwitch.on {
-            self.Login(signInBtn)
+//            self.Login(signInBtn)
         }else{
             setSignInBtn()
         }
@@ -305,6 +306,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = true
+//         self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
     }
     
     override func viewWillDisappear(animated: Bool) {

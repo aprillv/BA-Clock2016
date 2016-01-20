@@ -19,7 +19,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 //        [[appDelegate window] setBackgroundColor:[UIColor blackColor]];
         self.window?.backgroundColor = UIColor.whiteColor()
+        
+        let storyboard = UIStoryboard(name: CConstants.StoryboardName, bundle: nil)
+        
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        var storyid : String?
+        if let _ = userInfo.objectForKey(CConstants.UserInfoPwd) as? String{
+            if let _ = userInfo.objectForKey(CConstants.UserInfoEmail) as? String {
+                storyid = CConstants.ListStoryBoardId
+            }
+        }
+        let rootController = storyboard.instantiateViewControllerWithIdentifier(storyid ?? CConstants.LoginStoryBoardId) as UIViewController
+        
+        if let nav = self.window?.rootViewController as? UINavigationController{
+            nav.pushViewController(rootController, animated: true)
+        }
+        
+//        self.window?.rootViewController = rootController
         return true
+        
+        
+
+        
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {
