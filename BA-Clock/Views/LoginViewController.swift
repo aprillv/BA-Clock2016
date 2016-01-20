@@ -171,7 +171,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         didSet{
             if clockInfo?.UserName != ""{
                 self.saveEmailAndPwdToDisk(email: emailTxt.text!, password: passwordTxt.text!, displayName: clockInfo!.UserName!, fullName: clockInfo!.UserFullName!)
-                    self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
+                self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
                 
             }else{
                 self.PopMsgValidationWithJustOK(msg: constants.WrongEmailOrPwdMsg, txtField: nil)
@@ -203,7 +203,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
                 let loginRequiredInfo : ClockInRequired = ClockInRequired()
                 loginRequiredInfo.Email = email
                 loginRequiredInfo.Password = tl.md5(string: password!)
-                
+//                print(loginRequiredInfo.getPropertieNamesAsDictionary())
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.LoginServiceURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     if response.result.isSuccess {
 //                        print(response.result.value)

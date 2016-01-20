@@ -34,8 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let nav = self.window?.rootViewController as? UINavigationController{
             nav.pushViewController(rootController, animated: true)
         }
-        
-//        self.window?.rootViewController = rootController
         return true
         
         

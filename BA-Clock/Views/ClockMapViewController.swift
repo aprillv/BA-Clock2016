@@ -14,23 +14,28 @@ class ClockMapViewController: BaseViewController {
     var clockInfo : LoginedInfo?{
         didSet{
 //            print(clockInfo?.getPropertieNamesAsDictionary())
-//            if let clockList = clockInfo!.ScheduledDay {
-//                tableSource = [String : [ScheduledDayItem]]()
-//                var day = ""
-//                var index = 0
-//                for item in clockList {
-//                    if day != item.Day! {
-//                        tableSource!["\(index)"] = [ScheduledDayItem]()
-//                        day = item.Day!
-//                        index++
-//                        
-//                    }
-//                    tableSource!["\(index-1)"]?.append(item)
-//                    
-//                }
-////                print(tableSource)
-//                
-//            }
+            if let clockList = clockInfo!.ScheduledDay {
+                tableSource = [String : [ScheduledDayItem]]()
+                var day = ""
+                var index = 0
+                for item in clockList {
+                    if day != item.Day! {
+                        tableSource!["\(index)"] = [ScheduledDayItem]()
+                        day = item.Day!
+                        index++
+                        
+                    }
+                    tableSource!["\(index-1)"]?.append(item)
+                    
+                }
+                
+                mapTable?.reloadData()
+                textTable?.reloadData()
+                
+                mapTable?.contentOffset = CGPoint(x: 0, y: (mapTable?.contentSize.height ?? 0) - (mapTable?.frame.size.height ?? 0))
+                textTable?.contentOffset = CGPoint(x: 0, y: (textTable?.contentSize.height ?? 0) - (textTable?.frame.size.height ?? 0))
+            }
+            
         }
     }
     
@@ -83,13 +88,53 @@ class ClockMapViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        print(self.clockInfo)
+        if self.clockInfo == nil {
+            self.callGetList()
+        }
+        if self.locationManager == nil{
+            locationManager = CLLocationManager()
+            locationManager?.delegate = self;
+        }
         self.timeIntervalClockIn = 0
         self.locationManager?.startUpdatingLocation()
         
         let userInfo = NSUserDefaults.standardUserDefaults()
         view.bringSubviewToFront(mapTable)
         title = userInfo.valueForKey(CConstants.UserFullName) as? String
+        
+    }
+    
+    private func callGetList(){
+        
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        if let pwd = userInfo.objectForKey(CConstants.UserInfoPwd) as? String{
+            if let email = userInfo.objectForKey(CConstants.UserInfoEmail) as? String {
+                let tl = Tool()
+                
+                let loginRequiredInfo : ClockInRequired = ClockInRequired()
+                loginRequiredInfo.Email = email
+                loginRequiredInfo.Password = tl.md5(string: pwd)
+//                print(loginRequiredInfo.getPropertieNamesAsDictionary())
+//                ["Latitude": "", "IPAddress": "", "Email": "roberto@buildersaccess.com", "Password": "a51831554f195cbd2cd91ad3ea738c89", "HostName": "", "Longitude": ""]
+//                print(loginRequiredInfo.getPropertieNamesAsDictionary())
+                Alamofire.request(.POST, CConstants.ServerURL + CConstants.LoginServiceURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                    if response.result.isSuccess {
+                                                print(response.result.value)
+                        if let rtnValue = response.result.value as? [String: AnyObject]{
+                            self.clockInfo = LoginedInfo(dicInfo: rtnValue)
+                            
+                        }else{
+                            
+                        }
+                    }else{
+                        
+                        self.PopNetworkError()
+                    }
+                }
+            }
+        }
+        
         
     }
     
@@ -103,8 +148,8 @@ class ClockMapViewController: BaseViewController {
     }
     
     private func update1(){
-        update()
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(900, target: self, selector: "update", userInfo: nil, repeats: true)
+        SubmitLocation()
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(900, target: self, selector: "SubmitLocation", userInfo: nil, repeats: true)
     }
     
     private func getTime() -> NSTimeInterval{
@@ -223,10 +268,7 @@ class ClockMapViewController: BaseViewController {
         }
     }
     
-    func update() {
-        print(NSDate())
-        // Something cool
-    }
+    
     
     func clockIn(){
         self.timeIntervalClockIn = -2
@@ -238,16 +280,16 @@ class ClockMapViewController: BaseViewController {
     }
     
     private func callSubmitLocationService(){
-        let userInfo = NSUserDefaults.standardUserDefaults()
         let submitRequired = SubmitLocationRequired()
         submitRequired.Latitude = "\(self.latitude!)"
         submitRequired.Longitude = "\(self.longitude!)"
-        submitRequired.UserName = userInfo.valueForKey(CConstants.UserDisplayName) as? String
+        submitRequired.Token = self.clockInfo?.OAuthToken?.Token
+        submitRequired.TokenSecret = self.clockInfo?.OAuthToken?.TokenSecret
         //        print(submitRequired.getPropertieNamesAsDictionary())
         Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
 //                print("submit location information")
-                print(response.result.value)
+//                print(response.result.value)
             }else{
             }
         }
@@ -269,14 +311,15 @@ class ClockMapViewController: BaseViewController {
         self.clockInBtn.backgroundColor = UIColor.lightGrayColor()
     }
     private func callClockService(isClockIn isClockIn: Bool){
-        let userInfo = NSUserDefaults.standardUserDefaults()
+//        let userInfo = NSUserDefaults.standardUserDefaults()
         let clockOutRequiredInfo = ClockOutRequired()
         clockOutRequiredInfo.Latitude = "\(self.latitude!)"
         clockOutRequiredInfo.Longitude = "\(self.longitude!)"
         clockOutRequiredInfo.HostName = UIDevice.currentDevice().name
         let tl = Tool()
         clockOutRequiredInfo.IPAddress = tl.getWiFiAddress()
-        clockOutRequiredInfo.UserName = userInfo.valueForKey(CConstants.UserDisplayName) as? String
+        clockOutRequiredInfo.Token = self.clockInfo?.OAuthToken?.Token
+        clockOutRequiredInfo.TokenSecret = self.clockInfo?.OAuthToken?.TokenSecret
         
 //        print(clockOutRequiredInfo.getPropertieNamesAsDictionary())
         
@@ -312,7 +355,7 @@ class ClockMapViewController: BaseViewController {
                                 self.textTable.reloadData()
                             }
                             
-                            self.callAutoUpdate()
+                            self.update1()
                             
                         }else{
                             if let last = self.tableSource!["\(self.tableSource!.count-1)"] {

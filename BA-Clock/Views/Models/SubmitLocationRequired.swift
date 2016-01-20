@@ -8,7 +8,8 @@
 
 import Foundation
 class SubmitLocationRequired : RequiredBaseObject {
-    var UserName : String?
+    var Token : String?
+     var TokenSecret : String?
     var Latitude : String?
     var Longitude : String?
 }
