@@ -218,7 +218,7 @@
                         <outlet property="signInMap" destination="uSA-oD-1Xv" id="DMG-bn-6vK"/>
                         <outlet property="spinner" destination="c5N-Qm-N1e" id="6yC-sm-Nag"/>
                         <segue destination="Fih-du-7js" kind="show" identifier="LoginMap" id="OKP-nh-0bc"/>
-                        <segue destination="O0y-RU-zTh" kind="show" id="tNw-KJ-5lC"/>
+                        <segue destination="O0y-RU-zTh" kind="show" identifier="showtext" id="tNw-KJ-5lC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -707,8 +707,8 @@
                                                     <exclude reference="wn1-QL-WWv"/>
                                                     <exclude reference="SHw-DK-5K3"/>
                                                     <exclude reference="u39-gb-FFP"/>
-                                                    <exclude reference="rGH-ff-vpq"/>
                                                     <exclude reference="nLy-Wb-sdI"/>
+                                                    <exclude reference="rGH-ff-vpq"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
