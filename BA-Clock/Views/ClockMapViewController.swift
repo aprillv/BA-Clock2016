@@ -32,8 +32,11 @@ class ClockMapViewController: BaseViewController {
                 mapTable?.reloadData()
                 textTable?.reloadData()
                 
-                mapTable?.contentOffset = CGPoint(x: 0, y: (mapTable?.contentSize.height ?? 0) - (mapTable?.frame.size.height ?? 0))
-                textTable?.contentOffset = CGPoint(x: 0, y: (textTable?.contentSize.height ?? 0) - (textTable?.frame.size.height ?? 0))
+                if (mapTable?.contentSize.height ?? 10) - (mapTable.frame.size.height ?? 10) > 10 {
+                    mapTable?.contentOffset = CGPoint(x: 0, y: (mapTable?.contentSize.height ?? 0) - (mapTable?.frame.size.height ?? 0))
+                    textTable?.contentOffset = CGPoint(x: 0, y: (textTable?.contentSize.height ?? 0) - (textTable?.frame.size.height ?? 0))
+                }
+                
             }
             
         }
@@ -258,10 +261,16 @@ class ClockMapViewController: BaseViewController {
         }
         
         if self.timeIntervalClockIn > 0 {
+            locationManager?.stopUpdatingLocation()
             callSubmitLocationService()
+            
         }else if self.timeIntervalClockIn == -1{
+            locationManager?.stopUpdatingLocation()
+            self.timeIntervalClockIn = 15
             callClockService(isClockIn: false)
         }else if self.timeIntervalClockIn == -2{
+            locationManager?.stopUpdatingLocation()
+            self.timeIntervalClockIn = 0
             callClockService(isClockIn: true)
             
             
@@ -276,6 +285,7 @@ class ClockMapViewController: BaseViewController {
     }
     
     func SubmitLocation(){
+        self.timeIntervalClockIn = 15
         locationManager?.startUpdatingLocation()
     }
     
@@ -311,6 +321,7 @@ class ClockMapViewController: BaseViewController {
         self.clockInBtn.backgroundColor = UIColor.lightGrayColor()
     }
     private func callClockService(isClockIn isClockIn: Bool){
+        print(CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL))
 //        let userInfo = NSUserDefaults.standardUserDefaults()
         let clockOutRequiredInfo = ClockOutRequired()
         clockOutRequiredInfo.Latitude = "\(self.latitude!)"
@@ -324,6 +335,11 @@ class ClockMapViewController: BaseViewController {
 //        print(clockOutRequiredInfo.getPropertieNamesAsDictionary())
         
         disableEablePageControl()
+        if isClockIn {
+            self.timeIntervalClockIn = 15
+        }else{
+            self.timeIntervalClockIn = 0
+        }
         Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
 //                print(response.result.value)
@@ -393,8 +409,9 @@ class ClockMapViewController: BaseViewController {
                 
                 
             }else{
-                
-                //                self.PopNetworkError()
+                self.PopNetworkError()
+               self.toEablePageControl()
+                //
             }
         }
     }

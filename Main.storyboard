@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZwK-p4-vh3">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -115,17 +114,17 @@
                                         <exclude reference="c8t-83-G5j"/>
                                         <exclude reference="KrQ-wz-4LO"/>
                                         <exclude reference="fb3-7a-cv4"/>
-                                        <exclude reference="ymh-o3-LPW"/>
                                         <exclude reference="7Ld-tS-EuL"/>
                                         <exclude reference="fLa-iT-PfQ"/>
+                                        <exclude reference="ymh-o3-LPW"/>
                                         <exclude reference="Q6P-Y4-jct"/>
-                                        <exclude reference="uge-4j-Kfc"/>
                                         <exclude reference="K2T-ha-ig7"/>
                                         <exclude reference="sdc-Nb-OtH"/>
+                                        <exclude reference="uge-4j-Kfc"/>
                                     </mask>
                                 </variation>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BA Clock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pa-Eh-1ra">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="BA Clock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pa-Eh-1ra">
                                 <rect key="frame" x="107" y="93" width="161" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -195,10 +194,10 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="fa9-e1-uVK"/>
                                 <exclude reference="Fii-o2-S1h"/>
-                                <exclude reference="Ypv-7J-CWK"/>
                                 <exclude reference="Gtj-mi-YR0"/>
+                                <exclude reference="Ypv-7J-CWK"/>
+                                <exclude reference="fa9-e1-uVK"/>
                                 <exclude reference="I9W-Px-BIq"/>
                                 <exclude reference="lcM-j2-ZD8"/>
                                 <exclude reference="e21-fF-oFU"/>
