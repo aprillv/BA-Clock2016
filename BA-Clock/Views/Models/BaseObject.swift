@@ -45,13 +45,26 @@ class BaseObject: RequiredBaseObject {
                     super.setValue(tmpArray, forKey: skey)
                 
                 }else if let dic = value as? Dictionary<String, AnyObject>{
-                    if skey == "OAuthToken"{
-                        let vc : OAuthTokenItem = OAuthTokenItem.init(dicInfo: dic)
-                        super.setValue(vc, forKey: skey)
-                    }else{
+                    if skey.lowercaseString.containsString("coordinate"){
                         let vc : CoordinateObject = CoordinateObject.init(dicInfo: dic)
                         super.setValue(vc, forKey: skey)
+                    }else{
+                        let anyobjecType: AnyObject.Type = NSClassFromString(GetObjectStr(skey)!)!
+                        if anyobjecType is BaseObject.Type {
+                            let vc = (anyobjecType as! BaseObject.Type).init(dicInfo: dic)
+                            super.setValue(vc, forKey: skey)
+                        }
                     }
+//                    if skey == "OAuthToken"{
+//                        let vc : OAuthTokenItem = OAuthTokenItem.init(dicInfo: dic)
+//                        super.setValue(vc, forKey: skey)
+//                    }else if skey == "Frequency"{
+//                        let vc : FrequencyItem = FrequencyItem.init(dicInfo: dic)
+//                        super.setValue(vc, forKey: skey)
+//                    
+//                    }else{
+//                        
+//                    }
                     
                 }else{
                     super.setValue(value, forKey: skey as String)
@@ -70,4 +83,9 @@ class BaseObject: RequiredBaseObject {
         }
         return nil
     }
+    
+    private func GetObjectStr(str : String) -> String?{
+        return constants.projectName + str + constants.lastName
+    }
+    
 }

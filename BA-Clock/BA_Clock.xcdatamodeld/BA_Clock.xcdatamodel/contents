@@ -13,7 +13,14 @@
         <attribute name="dayOfWeek" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="hours" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="TimeInterVal" syncable="YES">
+        <attribute name="dayFullName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dayOfWeek" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="scheduledInterval" optional="YES" attributeType="Integer 16" defaultValueString="0.0" syncable="YES"/>
+    </entity>
     <elements>
         <element name="ClockData" positionX="-63" positionY="-18" width="128" height="210"/>
+        <element name="TimeInterVal" positionX="-63" positionY="63" width="128" height="105"/>
     </elements>
 </model>

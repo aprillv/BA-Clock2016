@@ -27,12 +27,7 @@ struct CConstants{
     static let UserDisplayName :  String = "Logined User Name"
     static let UserFullName : String = "Logined User Full Name"
     
-    static let RequestMsg = "Requesting from server"
-    static let SavedMsg = "Saving to the BA Server"
-    static let SavedSuccessMsg = "Saved successfully."
-    static let SavedFailMsg = "Saved fail."
-    static let SendEmailSuccessfullMsg = "Sent email successfully."
-    static let PrintSuccessfullMsg = "Print successfully."
+    static let LoadingMsg = "Loading Data...   "
     
     static let SegueToMap : String = "LoginMap"
     

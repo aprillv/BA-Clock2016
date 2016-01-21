@@ -23,12 +23,12 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     
     var isLocationServiceEnabled: Bool?
     
-    @IBOutlet weak var signInMap: UIButton!{
-        didSet{
-            signInMap.layer.cornerRadius = 5.0
-            signInMap.backgroundColor = UIColor(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1)
-        }
-    }
+//    @IBOutlet weak var signInMap: UIButton!{
+//        didSet{
+//            signInMap.layer.cornerRadius = 5.0
+//            signInMap.backgroundColor = UIColor(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1)
+//        }
+//    }
     // MARK: Outlets
     @IBOutlet weak var emailTxt: UITextField!{
         
@@ -103,7 +103,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     private func setSignInBtn(){
         signInBtn.enabled = !self.IsNilOrEmpty(passwordTxt.text)
             && !self.IsNilOrEmpty(emailTxt.text) && isLocationServiceEnabled!
-        signInMap.enabled = signInBtn.enabled  && isLocationServiceEnabled!
+//        signInMap.enabled = signInBtn.enabled  && isLocationServiceEnabled!
         
     }
     
@@ -157,7 +157,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     
     private func disAblePageControl(){
         signInBtn.hidden = true
-        signInMap.hidden = true
+//        signInMap.hidden = true
         emailTxt.enabled = false
         passwordTxt.enabled = false
         rememberMeSwitch.enabled = false
@@ -295,7 +295,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedAlways {
             isLocationServiceEnabled = true
-        }else{
+        }else if status != .NotDetermined{
            self.PopMsgWithJustOK(msg: CConstants.TurnOnLocationServiceMsg, txtField: nil)
             isLocationServiceEnabled = false
         }
