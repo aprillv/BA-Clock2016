@@ -12,7 +12,7 @@ import UIKit
 struct CConstants{
    
     
-    static let BorderColor : UIColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
+    static let BorderColor : UIColor = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1)
     static let BackColor : UIColor = UIColor(red: 246/255.0, green: 246/255.0, blue: 246/255.0, alpha: 1)
     
     static let MsgTitle : String = "BA Clock"
@@ -28,9 +28,10 @@ struct CConstants{
     static let UserFullName : String = "Logined User Full Name"
     
     static let LoadingMsg = "Loading Data...   "
+     static let LoginingMsg = "Logining... ...  "
     
     static let SegueToMap : String = "LoginMap"
-    
+
     static let TurnOnLocationServiceMsg : String = "Please turn on Locaiton Service on your iphone to continue."
     
     static let LoggedUserNameKey : String = "LoggedUserNameInDefaults"

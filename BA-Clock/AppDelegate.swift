@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 //        [[appDelegate window] setBackgroundColor:[UIColor blackColor]];
         self.window?.backgroundColor = UIColor.whiteColor()
-        
+        print(CLLocationManager.locationServicesEnabled())
         let storyboard = UIStoryboard(name: CConstants.StoryboardName, bundle: nil)
         
         let userInfo = NSUserDefaults.standardUserDefaults()
@@ -32,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootController = storyboard.instantiateViewControllerWithIdentifier(storyid ?? CConstants.LoginStoryBoardId) as UIViewController
         
         if let nav = self.window?.rootViewController as? UINavigationController{
+            
+            UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+            
             nav.pushViewController(rootController, animated: true)
         }
         return true

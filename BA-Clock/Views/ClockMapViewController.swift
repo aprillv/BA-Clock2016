@@ -119,8 +119,14 @@ class ClockMapViewController: BaseViewController {
         super.viewDidLoad()
 //        print(self.clockInfo)
         checkUpate()
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        
         if self.clockInfo == nil {
             self.callGetList()
+        }else{
+            scrollToBottom()
         }
         if self.locationManager == nil{
             locationManager = CLLocationManager()
@@ -261,23 +267,23 @@ class ClockMapViewController: BaseViewController {
 
 //    func table
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
-        return 35
-    }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?{
-        if let list = tableSource?["\(section)"]{
-            let lbl = UILabel(frame: CGRect(x: 0, y: 20, width: tableView.frame.size.width, height: 15))
-            lbl.text = list.first!.DayFullName! + ", " + list.first!.Day!
-            lbl.textAlignment = NSTextAlignment.Center
-            lbl.font = UIFont(name: "Helvetica Neue", size: 14)
-            lbl.backgroundColor = UIColor.whiteColor()
-            return lbl
-        }else{
-            return nil
-        }
-    
-    }
+//    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+//        return 35
+//    }
+//    
+//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?{
+//        if let list = tableSource?["\(section)"]{
+//            let lbl = UILabel(frame: CGRect(x: 0, y: 20, width: tableView.frame.size.width, height: 15))
+//            lbl.text = list.first!.DayFullName! + ", " + list.first!.Day!
+//            lbl.textAlignment = NSTextAlignment.Center
+//            lbl.font = UIFont(name: "Helvetica Neue", size: 14)
+//            lbl.backgroundColor = UIColor.whiteColor()
+//            return lbl
+//        }else{
+//            return nil
+//        }
+//    
+//    }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableSource?["\(section)"]?.count ?? 0
