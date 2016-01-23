@@ -34,25 +34,29 @@ class ClockMapViewController: BaseViewController {
         didSet{
             if let _ = clockInfo{
                 //            print(clockInfo?.getPropertieNamesAsDictionary())
-                if let clockList = clockInfo!.ScheduledDay {
-                    tableSource = [String : [ScheduledDayItem]]()
-                    var day = ""
-                    var index = 0
-                    for item in clockList {
-                        if day != item.Day! {
-                            tableSource!["\(index)"] = [ScheduledDayItem]()
-                            day = item.Day!
-                            index++
-                            
-                        }
-                        tableSource!["\(index-1)"]?.append(item)
-                        
-                    }
+                if let _ = clockInfo!.ScheduledDay {
+//                    tableSource = [String : [ScheduledDayItem]]()
+//                    var day = ""
+//                    var index = 0
+//                    for item in clockList {
+//                        if day != item.Day! {
+//                            tableSource!["\(index)"] = [ScheduledDayItem]()
+//                            day = item.Day!
+//                            index++
+//                            
+//                        }
+//                        tableSource!["\(index-1)"]?.append(item)
+//                        
+//                    }
+//                    tableSource = clockList
                     
                     mapTable?.reloadData()
                     textTable?.reloadData()
                     
                    
+                    let userInfo = NSUserDefaults.standardUserDefaults()
+                    userInfo.setValue(clockInfo!.OAuthToken!.Token!, forKey: constants.UserInfoTokenKey)
+                    userInfo.setValue(clockInfo!.OAuthToken!.TokenSecret!, forKey: constants.UserInfoTokenScretKey)
                     scrollToBottom()
                     CurrentScheduledInterval = clockInfo!.CurrentScheduledInterval!.doubleValue * 60.0
                     
@@ -68,7 +72,7 @@ class ClockMapViewController: BaseViewController {
         }
     }
     var CurrentScheduledInterval : Double?
-    var tableSource : [String : [ScheduledDayItem]]?
+//    var tableSource : [String : [ScheduledDayItem]]?
     
     var latitude: NSNumber?
     var longitude: NSNumber?
@@ -115,11 +119,15 @@ class ClockMapViewController: BaseViewController {
         }
     }
     
+//    @IBAction func goBack(sender: AnyObject) {
+//        self.navigationController?.popViewControllerAnimated(true)
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
 //        print(self.clockInfo)
         checkUpate()
-        
+//        navigationItem.hidesBackButton = false
+//        navigationItem.backBarButtonItem?. = UIColor.whiteColor()
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
         
@@ -127,6 +135,7 @@ class ClockMapViewController: BaseViewController {
             self.callGetList()
         }else{
             scrollToBottom()
+//            self.update1()
         }
         if self.locationManager == nil{
             locationManager = CLLocationManager()
@@ -232,12 +241,37 @@ class ClockMapViewController: BaseViewController {
             update1()
         }
     }
+//    var backgroundTaskIdentifier: UIBackgroundTaskIdentifier?
     
+    var locationTracker : LocationTracker?
+    var locationUpdateTimer : NSTimer?
     private func update1(){
+        
+//        @property LocationTracker * locationTracker;
+//        @property (nonatomic) NSTimer* locationUpdateTimer;
+//        
+        
+        
         SubmitLocation()
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(CurrentScheduledInterval ?? 900, target: self, selector: "SubmitLocation", userInfo: nil, repeats: true)
+        
+        if let a = CurrentScheduledInterval {
+            if a > 0 {
+                locationTracker = LocationTracker()
+                locationTracker?.startLocationTracking()
+                self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(CurrentScheduledInterval ?? 90, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
+            }
+        
+        }
+        
+//        print("fasfasdfds")
+//        print(CurrentScheduledInterval)
+//        self.timer = NSTimer.scheduledTimerWithTimeInterval(CurrentScheduledInterval ?? 90, target: self, selector: "SubmitLocation", userInfo: nil, repeats: true)
     }
     
+    
+    func updateLocation(){
+        self.locationTracker?.updateLocationToServer()
+    }
     private func getTime() -> NSTimeInterval{
         let date = NSDate()
         let dateFormatter = NSDateFormatter()
@@ -259,10 +293,12 @@ class ClockMapViewController: BaseViewController {
         static let CellIdentifier : String = "clockMapCell"
         static let CellIdentifierText : String = "clockItemCell"
         static let UserInfoClockedKey : String = "ClockedIn"
+        static let UserInfoTokenKey : String = "Token"
+        static let UserInfoTokenScretKey : String = "TokenScret"
     }
     
      func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return tableSource?.count ?? 0
+        return 1
     }
 
 //    func table
@@ -286,16 +322,16 @@ class ClockMapViewController: BaseViewController {
 //    }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableSource?["\(section)"]?.count ?? 0
+        return clockInfo?.ScheduledDay?.count ?? 0
     }
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let list = tableSource?["\(indexPath.section)"]!
+        let list = clockInfo!.ScheduledDay!
         
         if tableView == mapTable {
             let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifier, forIndexPath: indexPath)
             if let cellitem = cell as? ClockMapCell {
-                if let item : ScheduledDayItem = list?[indexPath.row] {
+                if let item : ScheduledDayItem = list[indexPath.row] {
                     cellitem.clockInfo = item
                 }
             }
@@ -303,7 +339,7 @@ class ClockMapViewController: BaseViewController {
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifierText, forIndexPath: indexPath)
             if let cellitem = cell as? ClockTextCell {
-                if let item : ScheduledDayItem = list?[indexPath.row] {
+                if let item : ScheduledDayItem = list[indexPath.row] {
                     cellitem.clockInfo = item
                 }
             }
@@ -372,7 +408,7 @@ class ClockMapViewController: BaseViewController {
     
     func SubmitLocation(){
         self.timeIntervalClockIn = 15
-//        print("==================2")
+        print("==================2")
         locationManager?.startUpdatingLocation()
     }
     
@@ -400,7 +436,7 @@ class ClockMapViewController: BaseViewController {
             submitRequired.Longitude = "\(self.longitude!)"
             submitRequired.Token = self.clockInfo?.OAuthToken?.Token
             submitRequired.TokenSecret = self.clockInfo?.OAuthToken?.TokenSecret
-//            print(submitRequired.getPropertieNamesAsDictionary())
+            print(submitRequired.getPropertieNamesAsDictionary())
             currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                 print(response.result.value)
                 if response.result.isSuccess {
@@ -465,7 +501,7 @@ class ClockMapViewController: BaseViewController {
         
         currentRequest = Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
-//                print(response.result.value)
+                print(response.result.value)
                 if let rtnValue = response.result.value as? [String: AnyObject]{
                     let rtn = ClockResponse(dicInfo: rtnValue)
                     if Int(rtn.Status!) <= 0 {
@@ -480,44 +516,46 @@ class ClockMapViewController: BaseViewController {
                        
                     }else{
                         if isClockIn {
-                            if let last = self.tableSource!["\(self.tableSource!.count-1)"] {
+                            
                                 let item = ScheduledDayItem(dicInfo: nil)
                                 item.ClockIn = rtn.ClockedInTime
                                 item.ClockInCoordinate = rtn.Coordinate
                                 item.ClockOut = ""
-                                item.Day = rtn.Day
-                                item.DayFullName = rtn.DayFullName
-                                item.DayOfWeek = rtn.DayOfWeek
+                                item.ClockInDay = rtn.Day
+                                item.ClockInDayFullName = rtn.DayFullName
+                                item.ClockInDayOfWeek = rtn.DayOfWeek
                                 //                                    item.Hours = rtn
-                                item.DayName = rtn.DayName
-                                
-                                if last.first!.Day! != rtn.Day! {
-                                    self.tableSource!["\(self.tableSource!.count)"] = [ScheduledDayItem]()
-                                }
-                                self.tableSource!["\(self.tableSource!.count-1)"]?.append(item)
+                                item.ClockInDayName = rtn.DayName
+                                self.clockInfo?.ScheduledDay?.append(item)
+                            
                                 self.mapTable.reloadData()
                                 self.textTable.reloadData()
                                 self.scrollToBottom()
-                            }
+                            
                             
                             
                             
                             self.update1()
                             
                         }else{
-                            if let last = self.tableSource!["\(self.tableSource!.count-1)"] {
-                                if last.first!.Day! == rtn.Day! {
-                                    if let item = last.last {
+                            if let item = self.clockInfo?.ScheduledDay?[self.clockInfo!.ScheduledDay!.count-1] {
+                                
                                         item.ClockOut = rtn.ClockedOutTime
                                         item.ClockOutCoordinate = rtn.Coordinate
+                                
+                                item.ClockOutDay = rtn.Day
+                                item.ClockOutDayFullName = rtn.DayFullName
+                                item.ClockOutDayOfWeek = rtn.DayOfWeek
+                                item.ClockOutDayName = rtn.DayName
+                                
                                         self.mapTable.reloadData()
                                         self.textTable.reloadData()
                                         self.scrollToBottom()
-                                    }
-                                }
+                                
+                                
                             }
-                            self.timer?.invalidate()
-                            self.timer = nil
+                            self.locationUpdateTimer?.invalidate()
+                            self.locationUpdateTimer = nil
                         }
                         
                         let userInfo = NSUserDefaults.standardUserDefaults()

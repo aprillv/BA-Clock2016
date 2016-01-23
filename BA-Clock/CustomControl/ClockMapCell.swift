@@ -46,10 +46,10 @@ class ClockMapCell: UITableViewCell {
                 
                 
 //                timeLbl.text = item.DayFullName! + ", " + item.Day!
-                clockInText.text = "Clock In \n\(item.Day!)\n@ " + item.ClockIn!
+                clockInText.text = "Clock In \n\(item.ClockInDay!)\n@ " + item.ClockIn!
                 if item.ClockOut != "" {
                     backGroupImageView.image = UIImage(named: "clockout.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
-                    clockOutTextLbl.text = "Clock Out \n\(item.Day!)\n@ " + item.ClockOut!
+                    clockOutTextLbl.text = "Clock Out \n\(item.ClockOutDay!)\n@ " + item.ClockOut!
                     if let _ = item.ClockOutCoordinate?.Latitude {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
                             if let data = NSData(contentsOfURL: NSURL(string: "https://maps.google.com/maps/api/staticmap?markers=color:red%7C\(item.ClockOutCoordinate!.Latitude!),\(item.ClockOutCoordinate!.Longitude!)&zoom=14&size=\(width)x148&sensor=true")!) {

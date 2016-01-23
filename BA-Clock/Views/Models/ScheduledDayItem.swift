@@ -9,13 +9,26 @@
 import Foundation
 
 class ScheduledDayItem: BaseObject {
-    var Day: String?
-    var DayName: String?
-    var DayFullName: String?
-    var DayOfWeek: NSNumber?
+//    var Day: String?
+//    var DayName: String?
+//    var DayFullName: String?
+//    var DayOfWeek: NSNumber?
+    
     var ClockIn: String?
-    var ClockOut: String?
-    var Hours: NSNumber?
     var ClockInCoordinate : CoordinateObject?
+    var ClockInDay : String?
+    var ClockInDayFullName : String?
+    var ClockInDayName : String?
+    var ClockInDayOfWeek : NSNumber?
+    
+    var ClockOut: String?
     var ClockOutCoordinate : CoordinateObject?
+    var ClockOutDay : String?
+    var ClockOutDayFullName : String?
+    var ClockOutDayName : String?
+    var ClockOutDayOfWeek : NSNumber?
+    
+    var Hours: NSNumber?
+    
+    
 }

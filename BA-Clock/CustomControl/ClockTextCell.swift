@@ -18,10 +18,10 @@ class ClockTextCell: UITableViewCell {
                 
                 clockInImage.image = UIImage(named: "clockin.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
 //                timeLbl.text = item.DayFullName! + ", " + item.Day!
-                clockInText.text = "Clock In \n\(item.Day!)\n@ " + item.ClockIn!
+                clockInText.text = "Clock In \n\(item.ClockInDay!)\n@ " + item.ClockIn!
                 if item.ClockOut != "" {
                     backGroupImageView.image = UIImage(named: "clockout.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
-                    clockOutTextLbl.text = "Clock Out \n\(item.Day!)\n@ " + item.ClockOut!
+                    clockOutTextLbl.text = "Clock Out \n\(item.ClockOutDay!)\n@ " + item.ClockOut!
                     backGroupImageView.hidden = false
                     clockOutTextLbl.hidden = false
                 }else{

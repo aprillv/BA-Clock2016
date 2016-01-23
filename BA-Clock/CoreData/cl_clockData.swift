@@ -24,14 +24,14 @@ class cl_clockData: NSObject {
     
     func savedToDB(){
 
-        let fetchRequest = NSFetchRequest(entityName: "ClockData")
-        let request = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        do {
-            try persistentStoreCoordinator.executeRequest(request, withContext: managedObjectContext)
-            
-        } catch let error as NSError {
-            // TODO: handle the error
-        }
+//        let fetchRequest = NSFetchRequest(entityName: "ClockData")
+//        let request = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+//        do {
+//            try persistentStoreCoordinator.executeRequest(request, withContext: managedObjectContext)
+//            
+//        } catch let error as NSError {
+//            // TODO: handle the error
+//        }
         
     
 

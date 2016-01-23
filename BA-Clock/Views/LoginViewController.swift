@@ -216,7 +216,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     
     var clockInfo : LoginedInfo?{
         didSet{
-            if clockInfo?.UserName != ""{
+            if let _ = clockInfo?.UserName{
                 self.saveEmailAndPwdToDisk(email: emailTxt.text!, password: passwordTxt.text!, displayName: clockInfo!.UserName!, fullName: clockInfo!.UserFullName!)
                 self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
                 
@@ -258,8 +258,9 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
                     
                     self.progressBar.dismissViewControllerAnimated(true){
                         if response.result.isSuccess {
-                            //                        print(response.result.value)
+                            
                             if let rtnValue = response.result.value as? [String: AnyObject]{
+                                
                                 self.clockInfo = LoginedInfo(dicInfo: rtnValue)
                                 self.toEablePageControl()
                             }else{
@@ -288,7 +289,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     self.rememberMeSwitch.enabled = true
     self.emailTxt.textColor = UIColor.blackColor()
     self.passwordTxt.textColor = UIColor.blackColor()
-    self.spinner.stopAnimating()
+//    self.spinner.stopAnimating()
     }
     
     func saveEmailAndPwdToDisk(email email: String, password: String, displayName: String, fullName: String){
@@ -356,7 +357,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        print(status)
+//        print(status)
         if status == .AuthorizedAlways {
             isLocationServiceEnabled = true
              setSignInBtn()

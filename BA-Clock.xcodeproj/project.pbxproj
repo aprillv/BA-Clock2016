@@ -22,6 +22,9 @@
 		11128F901C3E3869006390C1 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11128F821C3E385D006390C1 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		11128F951C3E38A6006390C1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11128F941C3E38A6006390C1 /* BaseViewController.swift */; };
 		11128F971C3E38D4006390C1 /* CConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11128F961C3E38D4006390C1 /* CConstants.swift */; };
+		111A25131C5342C70013A9CA /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 111A250D1C5342C70013A9CA /* LocationTracker.m */; };
+		111A25141C5342C70013A9CA /* LocationShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 111A250F1C5342C70013A9CA /* LocationShareModel.m */; };
+		111A25151C5342C70013A9CA /* BackgroundTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 111A25111C5342C70013A9CA /* BackgroundTaskManager.m */; };
 		111AA6AD1C48C93D00BD4098 /* SubmitLocationRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111AA6AC1C48C93D00BD4098 /* SubmitLocationRequired.swift */; };
 		111BF4B71C4E121600C94E66 /* OAuthTokenItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111BF4B61C4E121600C94E66 /* OAuthTokenItem.swift */; };
 		111BF4C01C4E22AC00C94E66 /* ClockResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111BF4BF1C4E22AC00C94E66 /* ClockResponse.swift */; };
@@ -128,6 +131,12 @@
 		11128F771C3E385D006390C1 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "Alamofire-master/Alamofire.xcodeproj"; sourceTree = "<group>"; };
 		11128F941C3E38A6006390C1 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		11128F961C3E38D4006390C1 /* CConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CConstants.swift; sourceTree = "<group>"; };
+		111A250D1C5342C70013A9CA /* LocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationTracker.m; sourceTree = "<group>"; };
+		111A250E1C5342C70013A9CA /* LocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationTracker.h; sourceTree = "<group>"; };
+		111A250F1C5342C70013A9CA /* LocationShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationShareModel.m; sourceTree = "<group>"; };
+		111A25101C5342C70013A9CA /* LocationShareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationShareModel.h; sourceTree = "<group>"; };
+		111A25111C5342C70013A9CA /* BackgroundTaskManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundTaskManager.m; sourceTree = "<group>"; };
+		111A25121C5342C70013A9CA /* BackgroundTaskManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundTaskManager.h; sourceTree = "<group>"; };
 		111AA6AC1C48C93D00BD4098 /* SubmitLocationRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitLocationRequired.swift; sourceTree = "<group>"; };
 		111BF4B61C4E121600C94E66 /* OAuthTokenItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthTokenItem.swift; sourceTree = "<group>"; };
 		111BF4BF1C4E22AC00C94E66 /* ClockResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockResponse.swift; sourceTree = "<group>"; };
@@ -216,6 +225,7 @@
 		11128F5B1C3E0EE2006390C1 /* BA-Clock */ = {
 			isa = PBXGroup;
 			children = (
+				111A25061C5342780013A9CA /* TrackLocation */,
 				11E889401C4F5632003E9633 /* CoreData */,
 				110645A21C4725D900795996 /* Tools */,
 				110B81121C46259F00FE136D /* CustomControl */,
@@ -254,6 +264,20 @@
 				11128F8E1C3E385D006390C1 /* Alamofire.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		111A25061C5342780013A9CA /* TrackLocation */ = {
+			isa = PBXGroup;
+			children = (
+				111A250D1C5342C70013A9CA /* LocationTracker.m */,
+				111A250E1C5342C70013A9CA /* LocationTracker.h */,
+				111A250F1C5342C70013A9CA /* LocationShareModel.m */,
+				111A25101C5342C70013A9CA /* LocationShareModel.h */,
+				111A25111C5342C70013A9CA /* BackgroundTaskManager.m */,
+				111A25121C5342C70013A9CA /* BackgroundTaskManager.h */,
+			);
+			name = TrackLocation;
+			path = Views/TrackLocation;
 			sourceTree = "<group>";
 		};
 		11E889401C4F5632003E9633 /* CoreData */ = {
@@ -405,15 +429,18 @@
 				111AA6AD1C48C93D00BD4098 /* SubmitLocationRequired.swift in Sources */,
 				110645AA1C4725F300795996 /* Tool.swift in Sources */,
 				11F256C41C48CA08009353CD /* ClockOutRequired.swift in Sources */,
+				111A25151C5342C70013A9CA /* BackgroundTaskManager.m in Sources */,
 				11128F951C3E38A6006390C1 /* BaseViewController.swift in Sources */,
 				11F8DC301C50A981002E4736 /* FrequencyItem.swift in Sources */,
 				11128F5D1C3E0EE2006390C1 /* AppDelegate.swift in Sources */,
+				111A25131C5342C70013A9CA /* LocationTracker.m in Sources */,
 				11E889431C4F57FE003E9633 /* cl_clockData.swift in Sources */,
 				110B81101C46189100FE136D /* ScheduledDayItem.swift in Sources */,
 				11128F651C3E0EE2006390C1 /* BA_Clock.xcdatamodeld in Sources */,
 				1158DA791C44CF930022B2D5 /* ClockMapViewController.swift in Sources */,
 				110B810E1C46175E00FE136D /* BaseObject.swift in Sources */,
 				110645AC1C47643800795996 /* ClockInRequired.swift in Sources */,
+				111A25141C5342C70013A9CA /* LocationShareModel.m in Sources */,
 				1166D8571C4CC8CE00878F7C /* LoginRequired.swift in Sources */,
 				110B81141C4625B300FE136D /* ClockTextCell.swift in Sources */,
 				111BF4B71C4E121600C94E66 /* OAuthTokenItem.swift in Sources */,
