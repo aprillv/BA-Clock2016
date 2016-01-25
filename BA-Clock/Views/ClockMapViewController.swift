@@ -57,6 +57,8 @@ class ClockMapViewController: BaseViewController {
                     let userInfo = NSUserDefaults.standardUserDefaults()
                     userInfo.setValue(clockInfo!.OAuthToken!.Token!, forKey: constants.UserInfoTokenKey)
                     userInfo.setValue(clockInfo!.OAuthToken!.TokenSecret!, forKey: constants.UserInfoTokenScretKey)
+                    userInfo.setValue(clockInfo!.ScheduledFrom!, forKey: constants.UserInfoScheduledFrom)
+                    userInfo.setValue(clockInfo!.ScheduledTo!, forKey: constants.UserInfoScheduledTo)
                     scrollToBottom()
                     CurrentScheduledInterval = clockInfo!.CurrentScheduledInterval!.doubleValue * 60.0
                     
@@ -139,6 +141,8 @@ class ClockMapViewController: BaseViewController {
         }
         if self.locationManager == nil{
             locationManager = CLLocationManager()
+            locationManager?.desiredAccuracy=kCLLocationAccuracyNearestTenMeters
+            locationManager?.distanceFilter=10.0
             locationManager?.delegate = self;
         }
         
@@ -257,7 +261,10 @@ class ClockMapViewController: BaseViewController {
         if let a = CurrentScheduledInterval {
             if a > 0 {
                 locationTracker = LocationTracker()
-                locationTracker?.startLocationTracking()
+//                if getTime2() {
+//                    locationTracker?.startLocationTracking()
+//                }
+                
                 self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(CurrentScheduledInterval ?? 90, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
             }
         
@@ -270,7 +277,10 @@ class ClockMapViewController: BaseViewController {
     
     
     func updateLocation(){
-        self.locationTracker?.updateLocationToServer()
+        if getTime2() {
+            self.locationTracker?.updateLocationToServer()
+        }
+        
     }
     private func getTime() -> NSTimeInterval{
         let date = NSDate()
@@ -289,12 +299,37 @@ class ClockMapViewController: BaseViewController {
         
     }
     
+    private func getTime2() -> Bool{
+        let date = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm tt"
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        
+        var send = false
+        if let fromTime = dateFormatter.dateFromString(userInfo.valueForKey(constants.UserInfoScheduledFrom) as! String) {
+            if date.timeIntervalSinceDate(fromTime) > 0 {
+                if let toTime = dateFormatter.dateFromString(userInfo.valueForKey(constants.UserInfoScheduledTo) as! String) {
+                    send = (toTime.timeIntervalSinceDate(date) > 0)
+                }
+            }
+        
+        }
+        
+        
+        return send
+        
+    }
+    
+    
     private struct constants{
         static let CellIdentifier : String = "clockMapCell"
         static let CellIdentifierText : String = "clockItemCell"
         static let UserInfoClockedKey : String = "ClockedIn"
         static let UserInfoTokenKey : String = "Token"
         static let UserInfoTokenScretKey : String = "TokenScret"
+        static let UserInfoScheduledFrom : String = "ScheduledFrom"
+        static let UserInfoScheduledTo : String = "ScheduledTo"
     }
     
      func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -370,11 +405,14 @@ class ClockMapViewController: BaseViewController {
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //        print(locations)
+//        print(NSDate())
         let userLocation = locations.last
         if userLocation?.horizontalAccuracy < 0 {
             return
         }
         if userLocation?.timestamp.timeIntervalSinceNow < 30 {
+//             print(NSDate())
+//            print(userLocation)
             self.latitude = userLocation?.coordinate.latitude
             self.longitude = userLocation?.coordinate.longitude
             locationManager?.stopUpdatingLocation()

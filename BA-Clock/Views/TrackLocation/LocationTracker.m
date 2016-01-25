@@ -22,7 +22,8 @@
 	@synchronized(self) {
 		if (_locationManager == nil) {
 			_locationManager = [[CLLocationManager alloc] init];
-            _locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+            _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+            _locationManager.distanceFilter = 10.0;
 			_locationManager.allowsBackgroundLocationUpdates = YES;
 			_locationManager.pausesLocationUpdatesAutomatically = NO;
 		}

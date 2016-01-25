@@ -348,6 +348,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         locationManager = CLLocationManager()
         locationManager?.requestAlwaysAuthorization()
         locationManager?.delegate = self;
+        locationManager?.desiredAccuracy=kCLLocationAccuracyNearestTenMeters
+        locationManager?.distanceFilter=10.0
         if emailTxt.text != "" && passwordTxt != "" && rememberMeSwitch.on {
 //            self.Login(signInBtn)
         }else{
@@ -368,7 +370,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
 //                if ([[subviews objectAtIndex:0] isKindOfClass:[UIAlertView class]])
 //                return YES;
 //            }
-            print("------------")
+//            print("------------")
 //            print(self.navigationController?.visibleViewController)
             var toshowTurn = true
             for window : UIWindow in UIApplication.sharedApplication().windows {

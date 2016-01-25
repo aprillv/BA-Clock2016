@@ -16,6 +16,8 @@ class LoginedInfo: BaseObject {
     var CurrentScheduledInterval: NSNumber?
     var ScheduledDay: [ScheduledDayItem]?
     var OAuthToken: OAuthTokenItem?
+    var ScheduledFrom: String?
+    var ScheduledTo : String?
     var UserName: String?
     var UserFullName : String?
     
