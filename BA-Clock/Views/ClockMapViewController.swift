@@ -34,7 +34,7 @@ class ClockMapViewController: BaseViewController {
         didSet{
             if let _ = clockInfo{
                 //            print(clockInfo?.getPropertieNamesAsDictionary())
-                if let _ = clockInfo!.ScheduledDay {
+                if let itemList = clockInfo!.ScheduledDay {
 //                    tableSource = [String : [ScheduledDayItem]]()
 //                    var day = ""
 //                    var index = 0
@@ -53,12 +53,17 @@ class ClockMapViewController: BaseViewController {
                     mapTable?.reloadData()
                     textTable?.reloadData()
                     
-                   
+                   let coreData = cl_coreData()
+                    coreData.savedScheduledDaysToDB(itemList)
+                    coreData.savedFrequencysToDB(clockInfo!.Frequency!)
+                    
+                    print(coreData.getFrequencyByWeekdayNm("Monday"))
+                    
                     let userInfo = NSUserDefaults.standardUserDefaults()
                     userInfo.setValue(clockInfo!.OAuthToken!.Token!, forKey: constants.UserInfoTokenKey)
                     userInfo.setValue(clockInfo!.OAuthToken!.TokenSecret!, forKey: constants.UserInfoTokenScretKey)
-                    userInfo.setValue(clockInfo!.ScheduledFrom!, forKey: constants.UserInfoScheduledFrom)
-                    userInfo.setValue(clockInfo!.ScheduledTo!, forKey: constants.UserInfoScheduledTo)
+//                    userInfo.setValue(clockInfo!.ScheduledFrom!, forKey: constants.UserInfoScheduledFrom)
+//                    userInfo.setValue(clockInfo!.ScheduledTo!, forKey: constants.UserInfoScheduledTo)
                     scrollToBottom()
                     CurrentScheduledInterval = clockInfo!.CurrentScheduledInterval!.doubleValue * 60.0
                     
@@ -126,6 +131,7 @@ class ClockMapViewController: BaseViewController {
 //    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.getTime2()
 //        print(self.clockInfo)
         checkUpate()
 //        navigationItem.hidesBackButton = false
@@ -211,6 +217,7 @@ class ClockMapViewController: BaseViewController {
                             
                             let hasclocked = userInfo.valueForKey(constants.UserInfoClockedKey) as? String
                             if hasclocked != nil && hasclocked == "1" {
+                                self.updateLocation()
                                 self.update1()
                             }else{
                                 self.timeIntervalClockIn = 0
@@ -256,7 +263,7 @@ class ClockMapViewController: BaseViewController {
 //        
         
         
-        SubmitLocation()
+//        SubmitLocation()
         
         if let a = CurrentScheduledInterval {
             if a > 0 {
@@ -301,22 +308,35 @@ class ClockMapViewController: BaseViewController {
     
     private func getTime2() -> Bool{
         let date = NSDate()
+//        print(date)
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm tt"
-        let userInfo = NSUserDefaults.standardUserDefaults()
+        dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
+        
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
+        
+        
+        
+        let today = dateFormatter.stringFromDate(date)
+        let index0 = today.startIndex
+        let todayDay = today.substringToIndex(index0.advancedBy(10))
+        let coreData = cl_coreData()
         
         var send = false
-        if let fromTime = dateFormatter.dateFromString(userInfo.valueForKey(constants.UserInfoScheduledFrom) as! String) {
-            if date.timeIntervalSinceDate(fromTime) > 0 {
-                if let toTime = dateFormatter.dateFromString(userInfo.valueForKey(constants.UserInfoScheduledTo) as! String) {
-                    send = (toTime.timeIntervalSinceDate(date) > 0)
+        if let frequency = coreData.getFrequencyByWeekdayNm(today.substringFromIndex(index0.advancedBy(11))) {
+//        if let frequency = coreData.getFrequencyByWeekdayNm("Monday") {
+            print(todayDay + " " + frequency.ScheduledFrom!)
+            dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+            print(dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!))
+            if let fromTime = dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!) {
+//                print(fromTime)
+                if date.timeIntervalSinceDate(fromTime) > 0 {
+                    if let toTime = dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledTo!) {
+                        send = (toTime.timeIntervalSinceDate(date) > 0)
+                    }
                 }
+                
             }
-        
         }
-        
-        
         return send
         
     }

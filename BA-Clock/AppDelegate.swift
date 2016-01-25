@@ -20,7 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 //        [[appDelegate window] setBackgroundColor:[UIColor blackColor]];
         self.window?.backgroundColor = UIColor.whiteColor()
-        print(CLLocationManager.locationServicesEnabled())
+//        print(CLLocationManager.locationServicesEnabled())
+        
+        
+        initializeNotificationServices()
+        
+        
         let storyboard = UIStoryboard(name: CConstants.StoryboardName, bundle: nil)
         
         let userInfo = NSUserDefaults.standardUserDefaults()
@@ -46,6 +51,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
 
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        var deviceTokenStr = "\(deviceToken)"
+        deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(" ", withString: "")
+        deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString("<", withString: "")
+        deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(">", withString: "")
+        print(deviceTokenStr)
+        // ...register device token with our Time Entry API server via REST
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("Device token for push notifications: FAIL -- ")
+        print(error.description)
+    }
+    
+    func initializeNotificationServices() -> Void {
+        let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound , UIUserNotificationType.Alert , UIUserNotificationType.Badge], categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        
+        // This is an asynchronous method to retrieve a Device Token
+        // Callbacks are in AppDelegate.swift
+        // Success = didRegisterForRemoteNotificationsWithDeviceToken
+        // Fail = didFailToRegisterForRemoteNotificationsWithError
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        // display the userInfo
+        if let notification = userInfo["aps"] as? NSDictionary,
+            let alert = notification["alert"] as? String {
+                let alertCtrl = UIAlertController(title: "Time Entry", message: alert as String, preferredStyle: UIAlertControllerStyle.Alert)
+                alertCtrl.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                // Find the presented VC...
+                var presentedVC = self.window?.rootViewController
+                while (presentedVC!.presentedViewController != nil)  {
+                    presentedVC = presentedVC!.presentedViewController
+                }
+                presentedVC!.presentViewController(alertCtrl, animated: true, completion: nil)
+                
+                // call the completion handler
+                // -- pass in NoData, since no new data was fetched from the server.
+                completionHandler(UIBackgroundFetchResult.NoData)
+        }
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

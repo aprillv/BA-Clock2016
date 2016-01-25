@@ -13,4 +13,6 @@ class FrequencyItem : BaseObject {
     var DayName : String?
     var DayOfWeek : NSNumber?
     var ScheduledInterval : NSNumber?
+    var ScheduledFrom : String?
+    var ScheduledTo : String?
 }

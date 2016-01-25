@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1509" minimumToolsVersion="Automatic">
-    <entity name="ClockData" syncable="YES">
+    <entity name="Frequency" syncable="YES">
+        <attribute name="dayFullName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dayOfWeek" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="scheduledFrom" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="scheduledInterval" optional="YES" attributeType="Integer 16" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="scheduledTo" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ScheduledDay" syncable="YES">
         <attribute name="clockIn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockInDay" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockInDayFullName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockInDayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockInDayOfWeek" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="clockInLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="clockInLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="clockOut" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="clockOutLatitude" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="clockOutLongitude" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="day" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dayFullName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dayName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dayOfWeek" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="clockOutDay" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockOutDayFullName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockOutDayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockOutDayOfWeek" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="clockOutLatitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="clockOutLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="hours" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
-    <entity name="TimeInterVal" syncable="YES">
-        <attribute name="dayFullName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dayName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dayOfWeek" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="scheduledInterval" optional="YES" attributeType="Integer 16" defaultValueString="0.0" syncable="YES"/>
-    </entity>
     <elements>
-        <element name="ClockData" positionX="-63" positionY="-18" width="128" height="210"/>
-        <element name="TimeInterVal" positionX="-63" positionY="63" width="128" height="105"/>
+        <element name="ScheduledDay" positionX="-63" positionY="-18" width="128" height="270"/>
+        <element name="Frequency" positionX="-63" positionY="63" width="128" height="135"/>
     </elements>
 </model>
