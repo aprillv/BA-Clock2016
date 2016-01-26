@@ -16,6 +16,7 @@ class ClockMapViewController: BaseViewController {
     
     @IBOutlet weak var clockOutSpinner: UIActivityIndicatorView!
     
+    var firstTime = false
     var currentRequest : Request?
     
     lazy var progressBar: UIAlertController = {
@@ -111,6 +112,7 @@ class ClockMapViewController: BaseViewController {
     
     @IBOutlet weak var switchItem: UIBarButtonItem!
     @IBOutlet weak var mapTable: UITableView!
+    
     @IBOutlet weak var textTable: UITableView!
     
     @IBOutlet weak var clockInBtn: UIButton!{
@@ -142,7 +144,8 @@ class ClockMapViewController: BaseViewController {
         if self.clockInfo == nil {
             self.callGetList()
         }else{
-            scrollToBottom()
+            firstTime = true
+//            scrollToBottom()
 //            self.update1()
         }
         if self.locationManager == nil{
@@ -157,6 +160,8 @@ class ClockMapViewController: BaseViewController {
         title = userInfo.valueForKey(CConstants.UserFullName) as? String
         
     }
+    
+   
     
     private func checkUpate(){
         let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]
@@ -401,6 +406,13 @@ class ClockMapViewController: BaseViewController {
             return cell
         }
     }
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if(firstTime && indexPath.row == tableView.indexPathsForVisibleRows?.last?.row){
+            firstTime = false
+            self.scrollToBottom()
+        }
+    }
+    
     @IBAction func doClockIn(sender: UIButton) {
         clockIn()
     }
