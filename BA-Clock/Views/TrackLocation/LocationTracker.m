@@ -45,8 +45,10 @@
 -(void)applicationEnterBackground{
     CLLocationManager *locationManager = [LocationTracker sharedLocationManager];
     locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
+//    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+//    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    locationManager.distanceFilter = 10.0;
     
     if(IS_OS_8_OR_LATER) {
         [locationManager requestAlwaysAuthorization];
@@ -69,8 +71,10 @@
     
     CLLocationManager *locationManager = [LocationTracker sharedLocationManager];
     locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
+//    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+//    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    locationManager.distanceFilter = 10.0;
     
     if(IS_OS_8_OR_LATER) {
         [locationManager requestAlwaysAuthorization];
@@ -80,10 +84,10 @@
 
 
 - (void)startLocationTracking {
-    NSLog(@"startLocationTracking");
+//    NSLog(@"startLocationTracking");
 
 	if ([CLLocationManager locationServicesEnabled] == NO) {
-        NSLog(@"locationServicesEnabled false");
+//        NSLog(@"locationServicesEnabled false");
         
 //        et alert: UIAlertController = UIAlertController(title: CConstants.MsgTitle, message: msg1, preferredStyle: .Alert)
 //        
@@ -117,9 +121,10 @@
 //            NSLog(@"authorizationStatus authorized");
             CLLocationManager *locationManager = [LocationTracker sharedLocationManager];
             locationManager.delegate = self;
-            locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
-            locationManager.distanceFilter = kCLDistanceFilterNone;
-            
+//            locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+//            locationManager.distanceFilter = kCLDistanceFilterNone;
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+            locationManager.distanceFilter = 10.0;
             if(IS_OS_8_OR_LATER) {
               [locationManager requestAlwaysAuthorization];
             }
@@ -130,7 +135,7 @@
 
 
 - (void)stopLocationTracking {
-    NSLog(@"stopLocationTracking");
+//    NSLog(@"stopLocationTracking");
     
     if (self.shareModel.timer) {
         [self.shareModel.timer invalidate];
@@ -175,6 +180,8 @@
             //Add the vallid location with good accuracy into an array
             //Every 1 minute, I will select the best location based on accuracy and send to server
             [self.shareModel.myLocationArray addObject:dict];
+            
+             NSLog(@"--- Latitude(%f) Longitude(%f) Accuracy(%f)", self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
         }
     }
     
@@ -215,7 +222,12 @@
 //    NSLog(@"locationManager stop Updating after 10 seconds");
 }
 
-
+-(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
+    if (status == kCLAuthorizationStatusDenied) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationServiceDenied" object:nil];
+//        NSNotificationCenter.defaultCenter().postNotificationName("NotificationIdentifier", object: nil)
+    }
+}
 - (void)locationManager: (CLLocationManager *)manager didFailWithError: (NSError *)error
 {
    // NSLog(@"locationManager error:%@",error);
@@ -224,6 +236,7 @@
     {
         case kCLErrorNetwork: // general, network-related error
         {
+            NSLog(@"workerror");
 //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error" message:@"Please check your network connection." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
 //            [alert show];
         }
@@ -231,6 +244,7 @@
         case kCLErrorDenied:{
 //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enable Location Service" message:@"You have to enable the Location Service to use this App. To enable, please go to Settings->Privacy->Location Services" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
 //            [alert show];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationServiceDenied" object:nil];
         }
             break;
         default:
@@ -240,12 +254,9 @@
             break;
     }
 }
-
-
-//Send the location to Server
-- (void)updateLocationToServer {
+- (void)getMyLocation222{
     
-//    NSLog(@"updateLocationToServer");
+    //    NSLog(@"updateLocationToServer");
     
     // Find the best location from the array based on accuracy
     NSMutableDictionary * myBestLocation = [[NSMutableDictionary alloc]init];
@@ -261,14 +272,14 @@
             }
         }
     }
-//    NSLog(@"My Best location:%@",myBestLocation);
+    //    NSLog(@"My Best location:%@",myBestLocation);
     
     //If the array is 0, get the last location
     //Sometimes due to network issue or unknown reason, you could not get the location during that  period, the best you can do is sending the last known location to the server
     if(self.shareModel.myLocationArray.count==0)
     {
-//        NSLog(@"Unable to get location, use the last known location");
-
+        //        NSLog(@"Unable to get location, use the last known location");
+        
         self.myLocation=self.myLastLocation;
         self.myLocationAccuracy=self.myLastLocationAccuracy;
         
@@ -280,9 +291,6 @@
         self.myLocationAccuracy =[[myBestLocation objectForKey:ACCURACY]floatValue];
     }
     
-    
-    [self submitLocaiton];
-    
     //TODO: Your code to send the self.myLocation and self.myLocationAccuracy to your server
     
     //After sending the location to the server successful, remember to clear the current array with the following code. It is to make sure that you clear up old location in the array and add the new locations from locationManager
@@ -291,68 +299,60 @@
     self.shareModel.myLocationArray = [[NSMutableArray alloc]init];
 }
 
--(void)submitLocaiton{
-//    submitRequired.Latitude = "\(self.latitude!)"
-//    submitRequired.Longitude = "\(self.longitude!)"
-//    submitRequired.Token = self.clockInfo?.OAuthToken?.Token
-//    submitRequired.TokenSecret = self.clockInfo?.OAuthToken?.TokenSecret
-//    print(submitRequired.getPropertieNamesAsDictionary())
-//    currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-//        print(response.result.value)
-//        if response.result.isSuccess {
-//            //                print("submit location information")
-//            //                print(response.result.value)
-//        }else{
-//        }
+//Send the location to Server
+//- (void)updateLocationToServer {
+//    [self getMyLocation222];
+//    [self submitLocaiton];
+//}
+//
+//-(void)submitLocaiton{
+//    
+//    NSURLSessionDataTask *postDataTask;
+//    
+//    NSError *error;
+//    NSData *data1;
+//    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+//    [dic setValue:[NSString stringWithFormat:@"%f", self.myLastLocation.latitude] forKey:@"Latitude"];
+//    [dic setValue:[NSString stringWithFormat:@"%f", self.myLastLocation.longitude] forKey:@"Longitude"];
+//    [dic setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"Token"] forKey:@"Token"];
+//    [dic setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"TokenScret"] forKey:@"TokenSecret"];
+//    
+//    if (dic) {
+//        data1 =[NSJSONSerialization dataWithJSONObject:dic options:kNilOptions error:&error];
+//    }else{
+//        data1=nil;
 //    }
-//    static let UserInfoTokenKey : String = "Token"
-//    static let UserInfoTokenScretKey : String = "TokenScret"
-    
-    NSURLSessionDataTask *postDataTask;
-    
-    NSError *error;
-    NSData *data1;
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
-    [dic setValue:[NSString stringWithFormat:@"%f", self.myLastLocation.latitude] forKey:@"Latitude"];
-    [dic setValue:[NSString stringWithFormat:@"%f", self.myLastLocation.longitude] forKey:@"Longitude"];
-    [dic setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"Token"] forKey:@"Token"];
-    [dic setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"TokenScret"] forKey:@"TokenSecret"];
-    
-    if (dic) {
-        data1 =[NSJSONSerialization dataWithJSONObject:dic options:kNilOptions error:&error];
-    }else{
-        data1=nil;
-    }
-    
-    
-    
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
-    NSURL *url;
-    url = [NSURL URLWithString: @"http://clockservice.buildersaccess.com/SubmitLocation.json"];
-    
-    //     NSLog(@"-%@-%@",url, [[NSString alloc]initWithData:data1 encoding:NSUTF8StringEncoding]);
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                       timeoutInterval:20];
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setHTTPMethod:@"POST"];
-    [request setTimeoutInterval: 15];
-    [request setHTTPBody:data1];
-    //        NSLog(@"application %@", [[NSString alloc]initWithData:request.HTTPBody encoding:NSUTF8StringEncoding]);
-    
-    postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"%@Send to Server: Latitude(%f) Longitude(%f) Accuracy(%f)", str, self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
-
-    }];
-    [postDataTask resume];
-//    return postDataTask;
-    
-    
-}
+//    
+//    
+//    
+//    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+//    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
+//    NSURL *url;
+//    url = [NSURL URLWithString: @"http://clockservice.buildersaccess.com/SubmitLocation.json"];
+//    
+//    //     NSLog(@"-%@-%@",url, [[NSString alloc]initWithData:data1 encoding:NSUTF8StringEncoding]);
+//    
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+//                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+//                                                       timeoutInterval:20];
+//    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+//    [request setHTTPMethod:@"POST"];
+//    [request setTimeoutInterval: 15];
+//    [request setHTTPBody:data1];
+//    //        NSLog(@"application %@", [[NSString alloc]initWithData:request.HTTPBody encoding:NSUTF8StringEncoding]);
+//    NSLog(@"Latitude(%f) Longitude(%f) Accuracy(%f)", self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
+//    
+//    postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//        NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//        NSLog(@"%@", str);
+//
+//    }];
+//    [postDataTask resume];
+////    return postDataTask;
+//    
+//    
+//}
 
 
 

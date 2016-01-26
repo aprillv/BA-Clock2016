@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		110645AA1C4725F300795996 /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110645A91C4725F300795996 /* Tool.swift */; };
 		110645AC1C47643800795996 /* ClockInRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110645AB1C47643800795996 /* ClockInRequired.swift */; };
+		1109CEBA1C57162A00AFF20F /* extensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1109CEB91C57162A00AFF20F /* extensionViewController.swift */; };
 		110B810B1C4616F600FE136D /* LoginedInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B810A1C4616F600FE136D /* LoginedInfo.swift */; };
 		110B810E1C46175E00FE136D /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B810D1C46175E00FE136D /* BaseObject.swift */; };
 		110B81101C46189100FE136D /* ScheduledDayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B810F1C46189100FE136D /* ScheduledDayItem.swift */; };
@@ -117,6 +118,7 @@
 /* Begin PBXFileReference section */
 		110645A91C4725F300795996 /* Tool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
 		110645AB1C47643800795996 /* ClockInRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockInRequired.swift; sourceTree = "<group>"; };
+		1109CEB91C57162A00AFF20F /* extensionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensionViewController.swift; sourceTree = "<group>"; };
 		110B80FF1C45DF7500FE136D /* BA-Clock-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BA-Clock-Bridging-Header.h"; sourceTree = "<group>"; };
 		110B810A1C4616F600FE136D /* LoginedInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginedInfo.swift; sourceTree = "<group>"; };
 		110B810D1C46175E00FE136D /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				11128F751C3E3789006390C1 /* LoginViewController.swift */,
 				1158DA781C44CF930022B2D5 /* ClockMapViewController.swift */,
 				110B80FF1C45DF7500FE136D /* BA-Clock-Bridging-Header.h */,
+				1109CEB91C57162A00AFF20F /* extensionViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				11C3B1721C56008300E50193 /* cl_Frequency.swift in Sources */,
 				11128F951C3E38A6006390C1 /* BaseViewController.swift in Sources */,
 				11F8DC301C50A981002E4736 /* FrequencyItem.swift in Sources */,
+				1109CEBA1C57162A00AFF20F /* extensionViewController.swift in Sources */,
 				11128F5D1C3E0EE2006390C1 /* AppDelegate.swift in Sources */,
 				111A25131C5342C70013A9CA /* LocationTracker.m in Sources */,
 				11E889431C4F57FE003E9633 /* cl_coreData.swift in Sources */,

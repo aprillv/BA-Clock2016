@@ -7,12 +7,12 @@
 //
 
 import UIKit
-import CoreLocation
 import Foundation
+import Alamofire
 
-class BaseViewController: UIViewController, CLLocationManagerDelegate {
+class BaseViewController: UIViewController {
     
-    var locationManager : CLLocationManager?
+//    var locationManager : CLLocationManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +84,48 @@ class BaseViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
+    func checkUpate(){
+        let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]
+        let parameter = ["version": (version == nil ?  "" : version!), "appid": "iphone_ClockIn"]
+        
+        Alamofire.request(.POST,
+            CConstants.ServerVersionURL + CConstants.CheckUpdateServiceURL,
+            parameters: parameter).responseJSON{ (response) -> Void in
+                if response.result.isSuccess {
+                    
+                    if let rtnValue = response.result.value{
+                        if rtnValue.integerValue == 1 {
+                            
+                        }else{
+                            if let url = NSURL(string: CConstants.InstallAppLink){
+                                
+                                UIApplication.sharedApplication().openURL(url)
+                            }else{
+                                
+                            }
+                        }
+                    }else{
+                        
+                    }
+                }else{
+                    
+                }
+        }
+    }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        //LocationServiceDenied
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "popLocationErrorMsg", name:"LocationServiceDenied", object: nil)
+    }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "LocationServiceDenied", object: nil)
+    }
+    
+    func popLocationErrorMsg(){
+        self.PopMsgWithJustOK(msg: CConstants.TurnOnLocationServiceMsg, txtField: nil)
+    }
         
 }

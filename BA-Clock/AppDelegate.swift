@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         initializeNotificationServices()
         
+        
+//        
         
         let storyboard = UIStoryboard(name: CConstants.StoryboardName, bundle: nil)
         

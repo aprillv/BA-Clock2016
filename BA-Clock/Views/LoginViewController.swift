@@ -8,24 +8,12 @@
 
 import UIKit
 import Alamofire
-import CoreLocation
 //import LocalAuthentication
 
 class LoginViewController: BaseViewController, UITextFieldDelegate {
 
-    lazy var progressBar: UIAlertController = {
-        let alert = UIAlertController(title: nil, message: CConstants.LoginingMsg, preferredStyle: .Alert)
-        alert.view.addSubview(self.spinner)
-        return alert
-    }()
     
-    lazy var spinner : UIActivityIndicatorView = {
-        let spinner1 = UIActivityIndicatorView(frame: CGRect(x: 40, y: 9, width: 40, height: 40))
-        spinner1.hidesWhenStopped = true
-        spinner1.activityIndicatorViewStyle = .Gray
-        return spinner1
-    }()
-    
+    var locationTracker : LocationTracker?
     // MARK: - Page constants
     private struct constants{
         static let PasswordEmptyMsg : String = "Password Required."
@@ -34,7 +22,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         
     }
     
-    var isLocationServiceEnabled: Bool?
+//    var isLocationServiceEnabled: Bool?
     
 //    @IBOutlet weak var signInMap: UIButton!{
 //        didSet{
@@ -50,6 +38,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
             emailTxt.delegate = self
             let userInfo = NSUserDefaults.standardUserDefaults()
             emailTxt.text = userInfo.objectForKey(CConstants.UserInfoEmail) as? String
+            self.setSignInBtn()
         }
     }
     @IBOutlet weak var passwordTxt: UITextField!{
@@ -64,6 +53,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
                 }
                 
             }
+            self.setSignInBtn()
         }
     }
     
@@ -140,7 +130,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     }
     private func setSignInBtn(){
         signInBtn.enabled = !self.IsNilOrEmpty(passwordTxt.text)
-            && !self.IsNilOrEmpty(emailTxt.text) && isLocationServiceEnabled!
+            && !self.IsNilOrEmpty(emailTxt.text)
 //        signInMap.enabled = signInBtn.enabled  && isLocationServiceEnabled!
         
     }
@@ -156,49 +146,11 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     }
     
     
-    func checkUpate(){
-        
-        self.presentViewController(self.progressBar, animated: true, completion: nil)
-        self.spinner.startAnimating()
-        
-        let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]
-        let parameter = ["version": (version == nil ?  "" : version!), "appid": "iphone_ClockIn"]
-        
-        
-        
-        Alamofire.request(.POST,
-            CConstants.ServerVersionURL + CConstants.CheckUpdateServiceURL,
-            parameters: parameter).responseJSON{ (response) -> Void in
-                
-            if response.result.isSuccess {
-                
-                if let rtnValue = response.result.value{
-                    if rtnValue.integerValue == 1 {
-                         self.doLogin()
-                    }else{
-                        if let url = NSURL(string: CConstants.InstallAppLink){
-                            self.progressBar.dismissViewControllerAnimated(true){
-                                self.toEablePageControl()
-                                UIApplication.sharedApplication().openURL(url)
-                            }
-                        }else{
-                             self.doLogin()
-                        }
-                    }
-                }else{
-                    self.doLogin()
-                }
-            }else{
-                self.doLogin()
-            }
-        }
-        //     NSString*   version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-    }
     
     @IBAction func Login(sender: UIButton) {
+        self.noticeOnlyText(CConstants.LoginingMsg)
         disAblePageControl()
-        
-        checkUpate()
+        self.doLogin()
     }
     
     private func disAblePageControl(){
@@ -210,7 +162,6 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         rememberMeSwitch.enabled = false
         emailTxt.textColor = UIColor.darkGrayColor()
         passwordTxt.textColor = UIColor.darkGrayColor()
-        spinner.startAnimating()
         
     }
     
@@ -218,6 +169,14 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         didSet{
             if let _ = clockInfo?.UserName{
                 self.saveEmailAndPwdToDisk(email: emailTxt.text!, password: passwordTxt.text!, displayName: clockInfo!.UserName!, fullName: clockInfo!.UserFullName!)
+                
+                let coreData = cl_coreData()
+                coreData.savedScheduledDaysToDB(clockInfo!.ScheduledDay!)
+                coreData.savedFrequencysToDB(clockInfo!.Frequency!)
+                
+                let userInfo = NSUserDefaults.standardUserDefaults()
+                userInfo.setValue(clockInfo!.OAuthToken!.Token!, forKey: CConstants.UserInfoTokenKey)
+                userInfo.setValue(clockInfo!.OAuthToken!.TokenSecret!, forKey: CConstants.UserInfoTokenScretKey)
                 self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
                 
             }else{
@@ -255,23 +214,23 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
                 loginRequiredInfo.Password = tl.md5(string: password!)
 //                print(loginRequiredInfo.getPropertieNamesAsDictionary())
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.LoginServiceURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                    
-                    self.progressBar.dismissViewControllerAnimated(true){
+//                    print(response.result.value)
+//                    self.progressBar.dismissViewControllerAnimated(true){
                         if response.result.isSuccess {
                             
                             if let rtnValue = response.result.value as? [String: AnyObject]{
                                 
                                 self.clockInfo = LoginedInfo(dicInfo: rtnValue)
-                                self.toEablePageControl()
+                                
                             }else{
-                                self.toEablePageControl()
                                 self.PopServerError()
                             }
                         }else{
-                            self.toEablePageControl()
                             self.PopNetworkError()
                         }
-                    }
+                        self.toEablePageControl()
+                        self.clearNotice()
+//                    }
                 }
                 
                 
@@ -314,9 +273,12 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
                
             case CConstants.SegueToMap:
                 if let clockListView = segue.destinationViewController as? ClockMapViewController{
-                    clockListView.locationManager = self.locationManager
-                    locationManager?.delegate = clockListView
-                    clockListView.clockInfo = self.clockInfo
+                    if let itemList = self.clockInfo?.ScheduledDay {
+                        clockListView.clockDataList = itemList
+                    }
+                    if let tracker = locationTracker {
+                        clockListView.locationTracker = tracker
+                    }
                 }
                 break
             default:
@@ -331,75 +293,19 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackOpaque
-//        self.navigationController?.navigationBar.tintColor = UIColor.yellowColor()
-//        self.navigationController?.navigationBar.tintColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
         self.navigationController?.navigationBar.translucent = false
-//        self.navigationController?.navigationBar.barTintColor = UIColor(red: 205/255.0, green: 228/255.0, blue: 249/255.0, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
         
         self.title = "BA Clock"
-        if let _ = isLocationServiceEnabled {
         
-        }else{
-            isLocationServiceEnabled = false
-        }
-        locationManager = CLLocationManager()
-        locationManager?.requestAlwaysAuthorization()
-        locationManager?.delegate = self;
-        locationManager?.desiredAccuracy=kCLLocationAccuracyNearestTenMeters
-        locationManager?.distanceFilter=10.0
-        if emailTxt.text != "" && passwordTxt != "" && rememberMeSwitch.on {
-//            self.Login(signInBtn)
-        }else{
-            setSignInBtn()
-        }
+        self.checkUpate()
         
-    }
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-//        print(status)
-        if status == .AuthorizedAlways {
-            isLocationServiceEnabled = true
-             setSignInBtn()
-        }else if status != .NotDetermined{
-//            for (UIWindow* window in [UIApplication sharedApplication].windows) {
-//                NSArray* subviews = window.subviews;
-//                if ([subviews count] > 0)
-//                if ([[subviews objectAtIndex:0] isKindOfClass:[UIAlertView class]])
-//                return YES;
-//            }
-//            print("------------")
-//            print(self.navigationController?.visibleViewController)
-            var toshowTurn = true
-            for window : UIWindow in UIApplication.sharedApplication().windows {
-                for viw : UIView in window.subviews {
-                    if ("\(viw)".containsString("UIInputSetContainerView")) {
-                        toshowTurn = false
-                    }
-                }
-            }
-            if toshowTurn {
-                self.PopMsgWithJustOK(msg: CConstants.TurnOnLocationServiceMsg, txtField: nil)
-                isLocationServiceEnabled = false
-                
-            }
-           setSignInBtn()
-        }
+        let locationManager = LocationTracker.sharedLocationManager()
+        locationTracker = LocationTracker()
+        locationManager.delegate = locationTracker
+        locationManager.requestAlwaysAuthorization()
         
-       
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-//        self.navigationController?.navigationBarHidden = true
-//         self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-//        self.navigationController?.navigationBarHidden = false
-//        navigationController?.setToolbarHidden(false, animated: true)
+        
     }
 }

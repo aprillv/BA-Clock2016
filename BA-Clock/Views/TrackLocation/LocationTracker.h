@@ -24,7 +24,10 @@
 
 - (void)startLocationTracking;
 - (void)stopLocationTracking;
-- (void)updateLocationToServer;
+//- (void)updateLocationToServer;
+//- (void)clockInLocationToServer;
+//- (void)clockOutLocationToServer;
 
+- (void)getMyLocation222;
 
 @end

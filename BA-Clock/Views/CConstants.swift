@@ -26,6 +26,8 @@ struct CConstants{
     static let UserInfoPwd :  String = "Login Password"
     static let UserDisplayName :  String = "Logined User Name"
     static let UserFullName : String = "Logined User Full Name"
+    static let UserInfoTokenKey : String = "Token"
+    static let UserInfoTokenScretKey : String = "TokenScret"
     
     static let LoadingMsg = "Loading Data...   "
      static let LoginingMsg = "Logining... ...  "
@@ -43,6 +45,9 @@ struct CConstants{
     static let ClockInServiceURL: String = "ClockIn.json"
     static let SubmitLocationServiceURL: String = "SubmitLocation.json"
     static let ClockOutServiceURL: String = "ClockOut.json"
+    static let SyncScheduleIntervalURL : String = "SyncScheduleInterval.json"
+    static let GetScheduledDataURL : String = "GetScheduledData.json"
+    
     //check app version
     static let CheckUpdateServiceURL: String = "bacontract_appid.json"
    
