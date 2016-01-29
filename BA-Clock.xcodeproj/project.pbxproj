@@ -14,6 +14,7 @@
 		110B810E1C46175E00FE136D /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B810D1C46175E00FE136D /* BaseObject.swift */; };
 		110B81101C46189100FE136D /* ScheduledDayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B810F1C46189100FE136D /* ScheduledDayItem.swift */; };
 		110B81141C4625B300FE136D /* ClockTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B81131C4625B300FE136D /* ClockTextCell.swift */; };
+		11104F8A1C589ED100DF7922 /* DeviceTokenRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11104F891C589ED100DF7922 /* DeviceTokenRequired.swift */; };
 		11128F5D1C3E0EE2006390C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11128F5C1C3E0EE2006390C1 /* AppDelegate.swift */; };
 		11128F651C3E0EE2006390C1 /* BA_Clock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 11128F631C3E0EE2006390C1 /* BA_Clock.xcdatamodeld */; };
 		11128F671C3E0EE2006390C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11128F661C3E0EE2006390C1 /* Assets.xcassets */; };
@@ -124,6 +125,7 @@
 		110B810D1C46175E00FE136D /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
 		110B810F1C46189100FE136D /* ScheduledDayItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledDayItem.swift; sourceTree = "<group>"; };
 		110B81131C4625B300FE136D /* ClockTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockTextCell.swift; sourceTree = "<group>"; };
+		11104F891C589ED100DF7922 /* DeviceTokenRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTokenRequired.swift; sourceTree = "<group>"; };
 		11128F591C3E0EE2006390C1 /* BA-Clock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BA-Clock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		11128F5C1C3E0EE2006390C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11128F641C3E0EE2006390C1 /* BA_Clock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BA_Clock.xcdatamodel; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				111BF4B61C4E121600C94E66 /* OAuthTokenItem.swift */,
 				111BF4BF1C4E22AC00C94E66 /* ClockResponse.swift */,
 				11F8DC2F1C50A981002E4736 /* FrequencyItem.swift */,
+				11104F891C589ED100DF7922 /* DeviceTokenRequired.swift */,
 			);
 			name = Models;
 			path = Views/Models;
@@ -436,6 +439,7 @@
 				111AA6AD1C48C93D00BD4098 /* SubmitLocationRequired.swift in Sources */,
 				110645AA1C4725F300795996 /* Tool.swift in Sources */,
 				11F256C41C48CA08009353CD /* ClockOutRequired.swift in Sources */,
+				11104F8A1C589ED100DF7922 /* DeviceTokenRequired.swift in Sources */,
 				111A25151C5342C70013A9CA /* BackgroundTaskManager.m in Sources */,
 				11C3B1721C56008300E50193 /* cl_Frequency.swift in Sources */,
 				11128F951C3E38A6006390C1 /* BaseViewController.swift in Sources */,

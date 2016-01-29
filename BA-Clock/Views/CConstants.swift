@@ -26,8 +26,11 @@ struct CConstants{
     static let UserInfoPwd :  String = "Login Password"
     static let UserDisplayName :  String = "Logined User Name"
     static let UserFullName : String = "Logined User Full Name"
+    static let UserDeviceToken : String = "User Device Token"
     static let UserInfoTokenKey : String = "Token"
     static let UserInfoTokenScretKey : String = "TokenScret"
+    static let RegisteredDeviceToken : String = "registeredDeviceToken"
+    static let PhoneType : String = "1"
     
     static let LoadingMsg = "Loading Data...   "
      static let LoginingMsg = "Logining... ...  "
@@ -42,6 +45,7 @@ struct CConstants{
     static let ServerVersionURL : String = "http://contractssl.buildersaccess.com/"
     //validate login and get address list
     static let LoginServiceURL: String = "login.json"
+    static let RegisterDeviceTokenServiceURL: String = "RegisterDeviceToken.json"
     static let ClockInServiceURL: String = "ClockIn.json"
     static let SubmitLocationServiceURL: String = "SubmitLocation.json"
     static let ClockOutServiceURL: String = "ClockOut.json"

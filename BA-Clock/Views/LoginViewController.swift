@@ -106,6 +106,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     @IBOutlet weak var signInBtn: UIButton!{
         didSet{
             signInBtn.layer.cornerRadius = 5.0
+            setSignInBtn()
         }
     }
     
@@ -129,8 +130,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         setSignInBtn()
     }
     private func setSignInBtn(){
-        signInBtn.enabled = !self.IsNilOrEmpty(passwordTxt.text)
-            && !self.IsNilOrEmpty(emailTxt.text)
+        signInBtn?.enabled = !self.IsNilOrEmpty(passwordTxt?.text)
+            && !self.IsNilOrEmpty(emailTxt?.text)
 //        signInMap.enabled = signInBtn.enabled  && isLocationServiceEnabled!
         
     }
@@ -167,8 +168,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     
     var clockInfo : LoginedInfo?{
         didSet{
-            if let _ = clockInfo?.UserName{
-                self.saveEmailAndPwdToDisk(email: emailTxt.text!, password: passwordTxt.text!, displayName: clockInfo!.UserName!, fullName: clockInfo!.UserFullName!)
+            if let username = clockInfo?.UserName{
+                self.saveEmailAndPwdToDisk(email: emailTxt.text!, password: passwordTxt.text!, displayName: username, fullName: clockInfo!.UserFullName!)
                 
                 let coreData = cl_coreData()
                 coreData.savedScheduledDaysToDB(clockInfo!.ScheduledDay!)
@@ -179,12 +180,16 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
                 userInfo.setValue(clockInfo!.OAuthToken!.TokenSecret!, forKey: CConstants.UserInfoTokenScretKey)
                 self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
                 
+                Tool.saveDeviceTokenToSever()
+                
+                
             }else{
                 self.PopMsgValidationWithJustOK(msg: constants.WrongEmailOrPwdMsg, txtField: nil)
             }
             
         }
     }
+    
     
     private func doLogin(){
         emailTxt.resignFirstResponder()

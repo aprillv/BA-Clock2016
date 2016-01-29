@@ -41,7 +41,7 @@ class ClockMapViewController: BaseViewController {
     private struct constants{
         static let CellIdentifier : String = "clockMapCell"
         static let CellIdentifierText : String = "clockItemCell"
-        static let UserInfoClockedKey : String = "ClockedIn"
+//        static let UserInfoClockedKey : String = "ClockedIn"
         
         static let UserInfoScheduledFrom : String = "ScheduledFrom"
         static let UserInfoScheduledTo : String = "ScheduledTo"
@@ -101,6 +101,7 @@ class ClockMapViewController: BaseViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
         
         if self.clockDataList == nil {
+            Tool.saveDeviceTokenToSever()
             self.callGetList()
             self.syncFrequency()
         }else{
@@ -137,13 +138,18 @@ class ClockMapViewController: BaseViewController {
                             for item in rtnValue{
                                 self.clockDataList!.append(ScheduledDayItem(dicInfo: item))
                             }
-                            let hasclocked = userInfo.valueForKey(constants.UserInfoClockedKey) as? String
-                            if hasclocked != nil && hasclocked == "1" {
+//                            let hasclocked = userInfo.valueForKey(constants.UserInfoClockedKey) as? String
+//                            if hasclocked != nil && hasclocked == "1" {
                                 self.update1()
-                                self.updateLocation()
-                            }else{
+                                if let a = self.CurrentScheduledInterval {
+                                    if a > 0 {
+                                    self.updateLocation()
+                                    }
+                                }
                                 
-                            }
+//                            }else{
+//                                
+//                            }
                             
                         }else{
                             
@@ -218,8 +224,23 @@ class ClockMapViewController: BaseViewController {
                             if newInterval != self.CurrentScheduledInterval {
                                 self.CurrentScheduledInterval = newInterval
                                  self.locationUpdateTimer?.invalidate()
-                                self.updateLocation()
-                                 self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
+                                
+                                
+//                                let hasclocked = userInfo.valueForKey(constants.UserInfoClockedKey) as? String
+//                                if hasclocked != nil && hasclocked == "1" {
+                                
+                                    if let a = self.CurrentScheduledInterval {
+                                        if a > 0 {
+                                            self.updateLocation()
+                                            self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
+                                        }
+                                        
+                                    }
+//                                }else{
+//                                    
+//                                }
+                                
+                                
                             }
                             
                         }else{
@@ -511,8 +532,8 @@ class ClockMapViewController: BaseViewController {
                             self.locationUpdateTimer = nil
                         }
                         
-                        let userInfo = NSUserDefaults.standardUserDefaults()
-                        userInfo.setValue(isClockIn ? "1":"0", forKey: constants.UserInfoClockedKey)
+//                        let userInfo = NSUserDefaults.standardUserDefaults()
+//                        userInfo.setValue(isClockIn ? "1":"0", forKey: constants.UserInfoClockedKey)
                     }
                 }else{
                     self.PopServerError()

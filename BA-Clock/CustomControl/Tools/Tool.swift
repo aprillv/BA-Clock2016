@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import Alamofire
+
 class Tool: NSObject {
     func md5(string string: String) -> String {
         var digest = [UInt8](count: Int(CC_MD5_DIGEST_LENGTH), repeatedValue: 0)
@@ -56,6 +58,39 @@ class Tool: NSObject {
         return address
     }
     
+    
+    static func saveDeviceTokenToSever(){
+        
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        if userInfo.valueForKey(CConstants.RegisteredDeviceToken) as? String == nil{
+        
+            if let deviceToken = userInfo.valueForKey(CConstants.UserDeviceToken) as? String
+                , let userToken = userInfo.valueForKey(CConstants.UserInfoTokenKey) as? String
+                , let userTokenSecret = userInfo.valueForKey(CConstants.UserInfoTokenScretKey) as? String{
+                
+                    let required  = DeviceTokenRequired()
+                    required.DeviceToken = deviceToken
+                    required.TokenSecret = userTokenSecret
+                    required.UserToken = userToken
+                    required.PhoneType = CConstants.PhoneType
+                    //        print(required.getPropertieNamesAsDictionary())
+                    Alamofire.request(.POST, CConstants.ServerURL + CConstants.RegisterDeviceTokenServiceURL, parameters: required.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                                            print(response.result.value)
+                        
+                        if let result = response.result.value as? Bool {
+                            if result {
+                                userInfo.setValue("1", forKey: CConstants.RegisteredDeviceToken)
+                            }
+                        }
+                    }
+                
+                
+            }
+        }
+        
+        
+        
+    }
 }
 
 

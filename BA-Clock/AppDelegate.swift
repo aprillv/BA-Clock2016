@@ -24,7 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         initializeNotificationServices()
         
-        
+         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
 //        
         
         let storyboard = UIStoryboard(name: CConstants.StoryboardName, bundle: nil)
@@ -57,7 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(" ", withString: "")
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString("<", withString: "")
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(">", withString: "")
-        print(deviceTokenStr)
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        userInfo.setValue(deviceTokenStr, forKey: CConstants.UserDeviceToken)
+        
+        
         // ...register device token with our Time Entry API server via REST
     }
     
@@ -78,17 +82,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+//        print("fort tessssssss")
         // display the userInfo
-        if let notification = userInfo["aps"] as? NSDictionary,
-            let alert = notification["alert"] as? String {
-                let alertCtrl = UIAlertController(title: "Time Entry", message: alert as String, preferredStyle: UIAlertControllerStyle.Alert)
-                alertCtrl.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                // Find the presented VC...
-                var presentedVC = self.window?.rootViewController
-                while (presentedVC!.presentedViewController != nil)  {
-                    presentedVC = presentedVC!.presentedViewController
-                }
-                presentedVC!.presentViewController(alertCtrl, animated: true, completion: nil)
+        if let _ = userInfo["aps"] as? NSDictionary {
+//            let alert = notification["alert"] as? String {
+//                let alertCtrl = UIAlertController(title: "BA Clock", message: alert as String, preferredStyle: UIAlertControllerStyle.Alert)
+//                alertCtrl.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default){
+//                    (_) -> Void in
+//                    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+//
+////                    let localNotification = UILocalNotification()
+////                    localNotification.applicationIconBadgeNumber = 0
+//                    })
+//                // Find the presented VC...
+//                var presentedVC = self.window?.rootViewController
+//                while (presentedVC!.presentedViewController != nil)  {
+//                    presentedVC = presentedVC!.presentedViewController
+//                }
+//                presentedVC!.presentViewController(alertCtrl, animated: true, completion: nil)
+                
+                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
                 
                 // call the completion handler
                 // -- pass in NoData, since no new data was fetched from the server.
