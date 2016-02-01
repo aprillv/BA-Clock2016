@@ -37,6 +37,8 @@
 		11810D3F1C476F6E00298DD9 /* RequiredBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11810D3E1C476F6E00298DD9 /* RequiredBaseObject.swift */; };
 		11810D481C4788EC00298DD9 /* ClockMapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11810D471C4788EC00298DD9 /* ClockMapCell.swift */; };
 		11810D4A1C478C2800298DD9 /* CoordinateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11810D491C478C2800298DD9 /* CoordinateObject.swift */; };
+		1189AC4B1C5F3E3400E407FE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1189AC4A1C5F3E3400E407FE /* MapViewController.swift */; };
+		1189AC4E1C5F4A1C00E407FE /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1189AC4D1C5F4A1C00E407FE /* CustomAnnotation.swift */; };
 		11C3B1721C56008300E50193 /* cl_Frequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C3B1711C56008300E50193 /* cl_Frequency.swift */; };
 		11E889431C4F57FE003E9633 /* cl_coreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E889421C4F57FE003E9633 /* cl_coreData.swift */; };
 		11F256C41C48CA08009353CD /* ClockOutRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F256C31C48CA08009353CD /* ClockOutRequired.swift */; };
@@ -152,6 +154,8 @@
 		11810D3E1C476F6E00298DD9 /* RequiredBaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequiredBaseObject.swift; sourceTree = "<group>"; };
 		11810D471C4788EC00298DD9 /* ClockMapCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockMapCell.swift; sourceTree = "<group>"; };
 		11810D491C478C2800298DD9 /* CoordinateObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateObject.swift; sourceTree = "<group>"; };
+		1189AC4A1C5F3E3400E407FE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		1189AC4D1C5F4A1C00E407FE /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		11C3B1711C56008300E50193 /* cl_Frequency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cl_Frequency.swift; sourceTree = "<group>"; };
 		11E889421C4F57FE003E9633 /* cl_coreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cl_coreData.swift; sourceTree = "<group>"; };
 		11F256C31C48CA08009353CD /* ClockOutRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockOutRequired.swift; sourceTree = "<group>"; };
@@ -206,6 +210,7 @@
 			children = (
 				110B81131C4625B300FE136D /* ClockTextCell.swift */,
 				11810D471C4788EC00298DD9 /* ClockMapCell.swift */,
+				1189AC4D1C5F4A1C00E407FE /* CustomAnnotation.swift */,
 			);
 			path = CustomControl;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 				1158DA781C44CF930022B2D5 /* ClockMapViewController.swift */,
 				110B80FF1C45DF7500FE136D /* BA-Clock-Bridging-Header.h */,
 				1109CEB91C57162A00AFF20F /* extensionViewController.swift */,
+				1189AC4A1C5F3E3400E407FE /* MapViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -446,6 +452,7 @@
 				11F8DC301C50A981002E4736 /* FrequencyItem.swift in Sources */,
 				1109CEBA1C57162A00AFF20F /* extensionViewController.swift in Sources */,
 				11128F5D1C3E0EE2006390C1 /* AppDelegate.swift in Sources */,
+				1189AC4E1C5F4A1C00E407FE /* CustomAnnotation.swift in Sources */,
 				111A25131C5342C70013A9CA /* LocationTracker.m in Sources */,
 				11E889431C4F57FE003E9633 /* cl_coreData.swift in Sources */,
 				110B81101C46189100FE136D /* ScheduledDayItem.swift in Sources */,
@@ -456,6 +463,7 @@
 				111A25141C5342C70013A9CA /* LocationShareModel.m in Sources */,
 				1166D8571C4CC8CE00878F7C /* LoginRequired.swift in Sources */,
 				110B81141C4625B300FE136D /* ClockTextCell.swift in Sources */,
+				1189AC4B1C5F3E3400E407FE /* MapViewController.swift in Sources */,
 				111BF4B71C4E121600C94E66 /* OAuthTokenItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

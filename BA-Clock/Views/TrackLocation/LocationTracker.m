@@ -181,7 +181,7 @@
             //Every 1 minute, I will select the best location based on accuracy and send to server
             [self.shareModel.myLocationArray addObject:dict];
             
-             NSLog(@"--- Latitude(%f) Longitude(%f) Accuracy(%f)", self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
+//             NSLog(@"--- Latitude(%f) Longitude(%f) Accuracy(%f)", self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
         }
     }
     

@@ -75,8 +75,41 @@ class ClockMapCell: UITableViewCell {
             }
         }
     }
-    @IBOutlet weak var clockOutMap: UIImageView!
-    @IBOutlet weak var clockInMap: UIImageView!
+    
+    var superActionView : AnyObject?{
+        didSet{
+            toADDClockInTap()
+            toADDClockOutTap()
+        }
+    }
+    @IBOutlet weak var clockOutMap: UIImageView!{
+        didSet{
+            toADDClockOutTap()
+        }
+    }
+    @IBOutlet weak var clockInMap: UIImageView! {
+        didSet{
+            toADDClockInTap()
+        }
+    }
+    
+    private func toADDClockInTap(){
+        if let _ = superActionView, let _ = clockInMap {
+            let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:Selector("clockInTapped:"))
+            clockInMap.userInteractionEnabled = true
+            tapGestureRecognizer.numberOfTapsRequired = 2
+            clockInMap.addGestureRecognizer(tapGestureRecognizer)
+        }
+    }
+    
+    private func toADDClockOutTap(){
+        if let _ = superActionView , let _ = clockOutMap{
+            let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:Selector("clockOutTapped:"))
+            tapGestureRecognizer.numberOfTapsRequired = 2
+            clockOutMap.userInteractionEnabled = true
+            clockOutMap.addGestureRecognizer(tapGestureRecognizer)
+        }
+    }
     @IBOutlet weak var timeLbl: UILabel!
     @IBOutlet weak var clockInText: UILabel!
     @IBOutlet weak var clockInImage: UIImageView!

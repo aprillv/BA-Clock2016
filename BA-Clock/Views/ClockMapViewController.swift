@@ -38,6 +38,9 @@ class ClockMapViewController: BaseViewController {
         }
     }
     
+    var selectedItem : ScheduledDayItem?
+    var isIn: Bool?;
+    
     private struct constants{
         static let CellIdentifier : String = "clockMapCell"
         static let CellIdentifierText : String = "clockItemCell"
@@ -347,8 +350,11 @@ class ClockMapViewController: BaseViewController {
         if tableView == mapTable {
             let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifier, forIndexPath: indexPath)
             if let cellitem = cell as? ClockMapCell {
+                cellitem.superActionView = self
                 if let item : ScheduledDayItem = list[indexPath.row] {
                     cellitem.clockInfo = item
+                    cellitem.clockInImage.tag = indexPath.row
+                    cellitem.backGroupImageView.tag = indexPath.row
                 }
             }
             return cell
@@ -366,6 +372,51 @@ class ClockMapViewController: BaseViewController {
         if(firstTime && indexPath.row == tableView.indexPathsForVisibleRows?.last?.row){
             firstTime = false
             self.scrollToBottom()
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let list = clockDataList!
+        if let item : ScheduledDayItem = list[indexPath.row] {
+            self.selectedItem = item
+            self.performSegueWithIdentifier("showMapDetail", sender: nil)
+        }
+    }
+    
+    func clockInTapped(tap : UITapGestureRecognizer){
+        showMap(true,tap: tap)
+    }
+    
+    func clockOutTapped(tap : UITapGestureRecognizer){
+        showMap(false,tap: tap)
+    }
+    
+    private func showMap(isIn: Bool, tap : UITapGestureRecognizer) {
+        self.isIn = isIn
+        if let tag = tap.view?.tag {
+            let list = clockDataList!
+            if let item : ScheduledDayItem = list[tag] {
+                self.selectedItem = item
+                self.performSegueWithIdentifier("showMapDetail", sender: nil)
+            }
+        }
+    
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showMapDetail" {
+            if let item = self.selectedItem {
+                if let dvc = segue.destinationViewController as? MapViewController {
+//                    item.ClockInCoordinate?.Longitude
+                    
+                    if isIn! {
+                    dvc.coordinate = CLLocationCoordinate2D(latitude: item.ClockInCoordinate!.Latitude!.doubleValue, longitude: item.ClockInCoordinate!.Longitude!.doubleValue)
+                    }else{
+                    dvc.coordinate = CLLocationCoordinate2D(latitude: item.ClockOutCoordinate!.Latitude!.doubleValue, longitude: item.ClockOutCoordinate!.Longitude!.doubleValue)
+                    }
+                    
+                }
+            }
         }
     }
     
