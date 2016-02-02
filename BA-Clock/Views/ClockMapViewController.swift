@@ -8,16 +8,18 @@
 
 import UIKit
 import Alamofire
+import MapKit
 
-class ClockMapViewController: BaseViewController {
+class ClockMapViewController: BaseViewController, MKMapViewDelegate {
    
     @IBOutlet weak var clockInSpinner: UIActivityIndicatorView!
     @IBOutlet weak var clockOutSpinner: UIActivityIndicatorView!
     @IBOutlet weak var switchItem: UIBarButtonItem!
     @IBOutlet weak var mapTable: UITableView!
-    @IBOutlet weak var textTable: UITableView!
+//    @IBOutlet weak var textTable: UITableView!
     @IBOutlet weak var clockInBtn: UIButton!
     @IBOutlet weak var clockOutBtn: UIButton!
+    @IBOutlet weak var trackMap: MKMapView!
     
     var CurrentScheduledInterval : Double?
     var locationTracker : LocationTracker?
@@ -29,7 +31,7 @@ class ClockMapViewController: BaseViewController {
         didSet{
             
             self.mapTable?.reloadData()
-            self.textTable?.reloadData()
+//            self.textTable?.reloadData()
             
             if clockDataList != nil && clockDataList?.count > 0 {
                 scrollToBottom()
@@ -49,8 +51,8 @@ class ClockMapViewController: BaseViewController {
         static let UserInfoScheduledFrom : String = "ScheduledFrom"
         static let UserInfoScheduledTo : String = "ScheduledTo"
         
-        static let RightTopItemTitleMap : String = "Map"
-        static let RightTopItemTitleText : String = "Text"
+        static let RightTopItemTitleMap : String = "List"
+        static let RightTopItemTitleText : String = "GIS Track"
     }
     
     
@@ -59,7 +61,7 @@ class ClockMapViewController: BaseViewController {
     private func scrollToBottom(){
         if (mapTable?.contentSize.height ?? 10) - (mapTable?.frame.size.height ?? 10) > 10 {
             mapTable?.contentOffset = CGPoint(x: 0, y: (mapTable?.contentSize.height ?? 0) - (mapTable?.frame.size.height ?? 0))
-            textTable?.contentOffset = CGPoint(x: 0, y: (textTable?.contentSize.height ?? 0) - (textTable?.frame.size.height ?? 0))
+            
         }
     }
     
@@ -68,16 +70,16 @@ class ClockMapViewController: BaseViewController {
         switch sender.title!{
         case constants.RightTopItemTitleText:
             sender.title = constants.RightTopItemTitleMap
-            UIView.transitionFromView(mapTable, toView: textTable, duration: 1, options: [.TransitionFlipFromRight, .ShowHideTransitionViews], completion: { (_) -> Void in
+            UIView.transitionFromView(mapTable, toView: trackMap, duration: 1, options: [.TransitionFlipFromRight, .ShowHideTransitionViews], completion: { (_) -> Void in
                 
-                self.view.bringSubviewToFront(self.textTable)
+                self.view.bringSubviewToFront(self.trackMap)
             })
             
             
             break
         default:
             sender.title = constants.RightTopItemTitleText
-            UIView.transitionFromView(textTable, toView: mapTable, duration: 1, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: { (_) -> Void in
+            UIView.transitionFromView(trackMap, toView: mapTable, duration: 1, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: { (_) -> Void in
                 self.view.bringSubviewToFront(self.mapTable)
             })
             
@@ -136,42 +138,38 @@ class ClockMapViewController: BaseViewController {
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetScheduledDataURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     if response.result.isSuccess {
                         print(response.result.value)
-                        if let rtnValue = response.result.value as? [[String: AnyObject]]{
-                            self.clockDataList = [ScheduledDayItem]()
-                            for item in rtnValue{
-                                self.clockDataList!.append(ScheduledDayItem(dicInfo: item))
-                            }
-//                            let hasclocked = userInfo.valueForKey(constants.UserInfoClockedKey) as? String
-//                            if hasclocked != nil && hasclocked == "1" {
+                        if let rtnValue = response.result.value as? [String: AnyObject]{
+                            
+                            if rtnValue["Status"]!.integerValue == 1 {
+                                self.clockDataList = [ScheduledDayItem]()
+                                for item in rtnValue["ScheduledDay"] as! [[String: AnyObject]]{
+                                    self.clockDataList!.append(ScheduledDayItem(dicInfo: item))
+                                }
+                                
                                 self.update1()
                                 if let a = self.CurrentScheduledInterval {
                                     if a > 0 {
-                                    self.updateLocation()
+                                        self.updateLocation()
                                     }
                                 }
-                                
-//                            }else{
-//                                
-//                            }
+                            }else{
+                                self.PopMsgWithJustOK(msg: rtnValue["Message"] as! String) {
+                                    (action : UIAlertAction) -> Void in
+                                    
+                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                    if let login = storyboard.instantiateViewControllerWithIdentifier("LoginStart") as? LoginViewController {
+                                        var va : [UIViewController]? = self.navigationController?.viewControllers
+                                        if va != nil {
+                                            va!.insert(login, atIndex: 0)
+                                            self.navigationController?.viewControllers = va!
+                                            self.navigationController?.popToRootViewControllerAnimated(true)
+                                        }
+                                    }
+                                }
+                            }
                             
                         }else{
-//                            self.PopMsgWithJustOK(msg: "Token Invalid. Please login.") {
-//                                (action : UIAlertAction) -> Void in
-//                                
-//                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                                    if let login = storyboard.instantiateViewControllerWithIdentifier("LoginStart") as? LoginViewController {
-//                                        var va : [UIViewController]? = self.navigationController?.viewControllers
-//                                        if va != nil {
-//                                            va!.insert(login, atIndex: 0)
-//                                            self.navigationController?.viewControllers = va!
-//                                            self.navigationController?.popToRootViewControllerAnimated(true)
-//                                        }
-//                                        
-//                                    }
-//                                
-//                                
-//                                
-//                            }
+                            
                         }
                     }else{
                         
@@ -598,7 +596,6 @@ class ClockMapViewController: BaseViewController {
                                 self.clockDataList!.append(item)
                             
                                 self.mapTable.reloadData()
-                                self.textTable.reloadData()
                                 self.scrollToBottom()
                                 self.update1()
                             
@@ -614,7 +611,6 @@ class ClockMapViewController: BaseViewController {
                                 item.ClockOutDayName = rtn.DayName
                                 
                                 self.mapTable.reloadData()
-                                self.textTable.reloadData()
                                 self.scrollToBottom()
                             }
                             self.locationUpdateTimer?.invalidate()
