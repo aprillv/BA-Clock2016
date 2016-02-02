@@ -26,6 +26,9 @@ class ClockMapCell: UITableViewCell {
 //                    clockInMap.image = UIImage(data: data)
 //                }
                 
+//                clockInImage.layer.setValue("\(item.ClockInCoordinate!.Latitude!)", forKey: "lat")
+//                clockInImage.layer.setValue("\(item.ClockInCoordinate!.Longitude!)", forKey: "lng")
+//                clockInImage.layer.valueForKey("lat") = "\(item.ClockInCoordinate!.Latitude!)"
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
                     if let data = NSData(contentsOfURL: NSURL(string: "https://maps.google.com/maps/api/staticmap?markers=color:red%7C\(item.ClockInCoordinate!.Latitude!),\(item.ClockInCoordinate!.Longitude!)&zoom=14&size=\(width)x148&sensor=true")!) {
                         let getImage =  UIImage(data: data)
@@ -51,9 +54,12 @@ class ClockMapCell: UITableViewCell {
                     backGroupImageView.image = UIImage(named: "clockout.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
                     clockOutTextLbl.text = "Clock Out \n\(item.ClockOutDay!)\n@ " + item.ClockOut!
                     if let _ = item.ClockOutCoordinate?.Latitude {
+//                        backGroupImageView.layer.setValue("\(item.ClockOutCoordinate!.Latitude!)", forKey: "lat")
+//                        backGroupImageView.layer.setValue("\(item.ClockOutCoordinate!.Longitude!)", forKey: "lng")
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
                             if let data = NSData(contentsOfURL: NSURL(string: "https://maps.google.com/maps/api/staticmap?markers=color:red%7C\(item.ClockOutCoordinate!.Latitude!),\(item.ClockOutCoordinate!.Longitude!)&zoom=14&size=\(width)x148&sensor=true")!) {
                                 let getImage =  UIImage(data: data)
+                                
                                 
                                 dispatch_async(dispatch_get_main_queue()) {
                                     self.clockOutMap.image = getImage
@@ -97,7 +103,7 @@ class ClockMapCell: UITableViewCell {
         if let _ = superActionView, let _ = clockInMap {
             let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:Selector("clockInTapped:"))
             clockInMap.userInteractionEnabled = true
-            tapGestureRecognizer.numberOfTapsRequired = 2
+            tapGestureRecognizer.numberOfTapsRequired = 1
             clockInMap.addGestureRecognizer(tapGestureRecognizer)
         }
     }
@@ -105,7 +111,7 @@ class ClockMapCell: UITableViewCell {
     private func toADDClockOutTap(){
         if let _ = superActionView , let _ = clockOutMap{
             let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:Selector("clockOutTapped:"))
-            tapGestureRecognizer.numberOfTapsRequired = 2
+            tapGestureRecognizer.numberOfTapsRequired = 1
             clockOutMap.userInteractionEnabled = true
             clockOutMap.addGestureRecognizer(tapGestureRecognizer)
         }

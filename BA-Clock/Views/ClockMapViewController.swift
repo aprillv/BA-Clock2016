@@ -135,7 +135,7 @@ class ClockMapViewController: BaseViewController {
                 self.noticeOnlyText(CConstants.LoadingMsg)
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetScheduledDataURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     if response.result.isSuccess {
-                        
+                        print(response.result.value)
                         if let rtnValue = response.result.value as? [[String: AnyObject]]{
                             self.clockDataList = [ScheduledDayItem]()
                             for item in rtnValue{
@@ -155,7 +155,23 @@ class ClockMapViewController: BaseViewController {
 //                            }
                             
                         }else{
-                            
+//                            self.PopMsgWithJustOK(msg: "Token Invalid. Please login.") {
+//                                (action : UIAlertAction) -> Void in
+//                                
+//                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                                    if let login = storyboard.instantiateViewControllerWithIdentifier("LoginStart") as? LoginViewController {
+//                                        var va : [UIViewController]? = self.navigationController?.viewControllers
+//                                        if va != nil {
+//                                            va!.insert(login, atIndex: 0)
+//                                            self.navigationController?.viewControllers = va!
+//                                            self.navigationController?.popToRootViewControllerAnimated(true)
+//                                        }
+//                                        
+//                                    }
+//                                
+//                                
+//                                
+//                            }
                         }
                     }else{
                         
@@ -353,9 +369,11 @@ class ClockMapViewController: BaseViewController {
                 cellitem.superActionView = self
                 if let item : ScheduledDayItem = list[indexPath.row] {
                     cellitem.clockInfo = item
-                    cellitem.clockInImage.tag = indexPath.row
-                    cellitem.backGroupImageView.tag = indexPath.row
+                    
                 }
+                cell.contentView.tag = indexPath.row
+//                cellitem.backGroupImageView.tag = indexPath.row
+//                print("ss tag \(cellitem.clockInImage.tag)")
             }
             return cell
         }else{
@@ -375,25 +393,28 @@ class ClockMapViewController: BaseViewController {
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let list = clockDataList!
-        if let item : ScheduledDayItem = list[indexPath.row] {
-            self.selectedItem = item
-            self.performSegueWithIdentifier("showMapDetail", sender: nil)
-        }
-    }
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        let list = clockDataList!
+//        if let item : ScheduledDayItem = list[indexPath.row] {
+//            self.selectedItem = item
+//            self.performSegueWithIdentifier("showMapDetail", sender: nil)
+//        }
+//    }
     
     func clockInTapped(tap : UITapGestureRecognizer){
+//        print("sfsdf \(tap.view?.superview?.tag)  \(tap.view?.layer.valueForKey("lng"))")
         showMap(true,tap: tap)
     }
     
     func clockOutTapped(tap : UITapGestureRecognizer){
+//         print("out sfsdf \(tap.view?.layer.valueForKey("lat"))  \(tap.view?.layer.valueForKey("lng"))")
         showMap(false,tap: tap)
     }
     
     private func showMap(isIn: Bool, tap : UITapGestureRecognizer) {
         self.isIn = isIn
-        if let tag = tap.view?.tag {
+        if let tag = tap.view?.superview?.tag {
+//            print("tag" + "\(tag)")
             let list = clockDataList!
             if let item : ScheduledDayItem = list[tag] {
                 self.selectedItem = item
@@ -522,8 +543,9 @@ class ClockMapViewController: BaseViewController {
         let tl = Tool()
         clockOutRequiredInfo.IPAddress = tl.getWiFiAddress()
         let OAuthToken = self.getUserToken()
-        clockOutRequiredInfo.Token = OAuthToken.Token
-        clockOutRequiredInfo.TokenSecret = OAuthToken.TokenSecret
+        clockOutRequiredInfo.Token = OAuthToken.Token!
+//        clockOutRequiredInfo.Token = "asdfaasdf"
+        clockOutRequiredInfo.TokenSecret = OAuthToken.TokenSecret!
         
 //        print(clockOutRequiredInfo.getPropertieNamesAsDictionary())
         
@@ -541,7 +563,23 @@ class ClockMapViewController: BaseViewController {
                     let rtn = ClockResponse(dicInfo: rtnValue)
                     if Int(rtn.Status!) <= 0 {
                         if rtn.Message != "" {
-                            self.PopMsgWithJustOK(msg: rtn.Message!, txtField: nil)
+                            self.PopMsgWithJustOK(msg: rtn.Message!) {
+                                 (action : UIAlertAction) -> Void in
+                                if rtn.Status == -4 {
+                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                    if let login = storyboard.instantiateViewControllerWithIdentifier("LoginStart") as? LoginViewController {
+                                        var va : [UIViewController]? = self.navigationController?.viewControllers
+                                        if va != nil {
+                                            va!.insert(login, atIndex: 0)
+                                            self.navigationController?.viewControllers = va!
+                                            self.navigationController?.popToRootViewControllerAnimated(true)
+                                        }
+                                        
+                                    }
+                                }
+                                    
+                                
+                            }
                         }
                         
                        

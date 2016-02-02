@@ -38,6 +38,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
             emailTxt.delegate = self
             let userInfo = NSUserDefaults.standardUserDefaults()
             emailTxt.text = userInfo.objectForKey(CConstants.UserInfoEmail) as? String
+            emailTxt.keyboardType = .EmailAddress
             self.setSignInBtn()
         }
     }
