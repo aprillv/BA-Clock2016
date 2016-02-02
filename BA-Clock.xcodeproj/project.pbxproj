@@ -39,6 +39,7 @@
 		11810D4A1C478C2800298DD9 /* CoordinateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11810D491C478C2800298DD9 /* CoordinateObject.swift */; };
 		1189AC4B1C5F3E3400E407FE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1189AC4A1C5F3E3400E407FE /* MapViewController.swift */; };
 		1189AC4E1C5F4A1C00E407FE /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1189AC4D1C5F4A1C00E407FE /* CustomAnnotation.swift */; };
+		11BCEBD21C608D3E007726D4 /* TrackDotItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BCEBD11C608D3E007726D4 /* TrackDotItem.swift */; };
 		11C3B1721C56008300E50193 /* cl_Frequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C3B1711C56008300E50193 /* cl_Frequency.swift */; };
 		11E889431C4F57FE003E9633 /* cl_coreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E889421C4F57FE003E9633 /* cl_coreData.swift */; };
 		11F256C41C48CA08009353CD /* ClockOutRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F256C31C48CA08009353CD /* ClockOutRequired.swift */; };
@@ -156,6 +157,7 @@
 		11810D491C478C2800298DD9 /* CoordinateObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateObject.swift; sourceTree = "<group>"; };
 		1189AC4A1C5F3E3400E407FE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1189AC4D1C5F4A1C00E407FE /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		11BCEBD11C608D3E007726D4 /* TrackDotItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackDotItem.swift; sourceTree = "<group>"; };
 		11C3B1711C56008300E50193 /* cl_Frequency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cl_Frequency.swift; sourceTree = "<group>"; };
 		11E889421C4F57FE003E9633 /* cl_coreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cl_coreData.swift; sourceTree = "<group>"; };
 		11F256C31C48CA08009353CD /* ClockOutRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockOutRequired.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				111BF4BF1C4E22AC00C94E66 /* ClockResponse.swift */,
 				11F8DC2F1C50A981002E4736 /* FrequencyItem.swift */,
 				11104F891C589ED100DF7922 /* DeviceTokenRequired.swift */,
+				11BCEBD11C608D3E007726D4 /* TrackDotItem.swift */,
 			);
 			name = Models;
 			path = Views/Models;
@@ -437,6 +440,7 @@
 			files = (
 				11810D4A1C478C2800298DD9 /* CoordinateObject.swift in Sources */,
 				111BF4C01C4E22AC00C94E66 /* ClockResponse.swift in Sources */,
+				11BCEBD21C608D3E007726D4 /* TrackDotItem.swift in Sources */,
 				11810D3F1C476F6E00298DD9 /* RequiredBaseObject.swift in Sources */,
 				11128F761C3E3789006390C1 /* LoginViewController.swift in Sources */,
 				11128F971C3E38D4006390C1 /* CConstants.swift in Sources */,

@@ -40,6 +40,9 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
         }
     }
     
+    var trackDotList : [TrackDotItem]?
+    
+    
     var selectedItem : ScheduledDayItem?
     var isIn: Bool?;
     
@@ -69,9 +72,12 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
     @IBAction func switchTo(sender: UIBarButtonItem) {
         switch sender.title!{
         case constants.RightTopItemTitleText:
+            if let line = self.polyLine {
+                trackMap.removeOverlay(line)
+            }
             sender.title = constants.RightTopItemTitleMap
             UIView.transitionFromView(mapTable, toView: trackMap, duration: 1, options: [.TransitionFlipFromRight, .ShowHideTransitionViews], completion: { (_) -> Void in
-                
+                self.getTrackList()
                 self.view.bringSubviewToFront(self.trackMap)
             })
             
@@ -92,7 +98,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        self.setLastSubmitTime()
         if locationTracker == nil {
             locationTracker = LocationTracker()
         }
@@ -137,7 +143,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
                 self.noticeOnlyText(CConstants.LoadingMsg)
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetScheduledDataURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     if response.result.isSuccess {
-                        print(response.result.value)
+//                        print(response.result.value)
                         if let rtnValue = response.result.value as? [String: AnyObject]{
                             
                             if rtnValue["Status"]!.integerValue == 1 {
@@ -148,7 +154,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
                                 
                                 self.update1()
                                 if let a = self.CurrentScheduledInterval {
-                                    if a > 0 {
+                                    if a > 0 && self.getLastSubmitTime(){
                                         self.updateLocation()
                                     }
                                 }
@@ -247,7 +253,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
 //                                if hasclocked != nil && hasclocked == "1" {
                                 
                                     if let a = self.CurrentScheduledInterval {
-                                        if a > 0 {
+                                        if a > 0 && self.getLastSubmitTime(){
                                             self.updateLocation()
                                             self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
                                         }
@@ -457,22 +463,6 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
     
     private var lastCallSubmitLocationService : NSDate?
     private func callSubmitLocationService(){
-//        print(currentRequest?.request?.URLString)
-        
-//        var cando = currentRequest?.task.state != .Running
-//        if !cando {
-//            if let url = currentRequest?.request?.URLString {
-//                if url == CConstants.ServerURL + CConstants.SubmitLocationServiceURL {
-//                    if NSDate().timeIntervalSinceDate(lastCallSubmitLocationService!) >= self.CurrentScheduledInterval ?? 900 {
-//                        currentRequest?.cancel()
-//                        cando = true
-//                    }
-//                }
-//            }
-//
-//        }
-//        if cando {
-//            print("###################")
             
             lastCallSubmitLocationService = NSDate()
             let submitRequired = SubmitLocationRequired()
@@ -482,11 +472,10 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
             submitRequired.Token = OAuthToken.Token
             submitRequired.TokenSecret = OAuthToken.TokenSecret
 //            print(submitRequired.getPropertieNamesAsDictionary())
+    setLastSubmitTime()
             currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
 //                print(response.result.value)
                 if response.result.isSuccess {
-                    //                print("submit location information")
-                    //                print(response.result.value)
                 }else{
                 }
             }
@@ -494,6 +483,24 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
 //        }
         
         
+    }
+    
+    private func setLastSubmitTime(){
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        userInfo.setValue(NSDate(), forKey: "LastSubmitLocationTime")
+    }
+    
+    private func getLastSubmitTime() -> Bool{
+        
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        if let lastTime = userInfo.valueForKey("LastSubmitLocationTime") as? NSDate,
+            let timeSpace = self.CurrentScheduledInterval {
+            
+            let date = NSDate()
+//                print("\( date.timeIntervalSinceDate(lastTime))")
+            return date.timeIntervalSinceDate(lastTime) > timeSpace * 60.0
+        }
+        return false
     }
     
     private func getUserToken() -> OAuthTokenItem{
@@ -639,6 +646,93 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
             }
         }
     }
+    
+    private func getTrackList(){
+        
+            
+            let userInfo = NSUserDefaults.standardUserDefaults()
+            if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String,
+                 let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String {
+                    
+                    let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
+                    loginRequiredInfo.Token = token
+                    loginRequiredInfo.TokenSecret = tokenSecret
+                    
+                    self.noticeOnlyText(CConstants.LoadingMsg)
+                    currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetGISTrackURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                        if response.result.isSuccess {
+                            print(response.result.value)
+                            if let rtnValue = response.result.value as? [String: AnyObject]{
+                                
+                                if rtnValue["Status"]!.integerValue == 1 {
+                                    self.trackDotList = [TrackDotItem]()
+                                    for item in rtnValue["Coordinates"] as! [[String: AnyObject]]{
+                                        self.trackDotList!.append(TrackDotItem(dicInfo: item))
+                                    }
+                                    self.drawTrackPath()
+                                }else{
+                                    self.PopMsgWithJustOK(msg: rtnValue["Message"] as! String) {
+                                        (action : UIAlertAction) -> Void in
+                                        
+                                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                        if let login = storyboard.instantiateViewControllerWithIdentifier("LoginStart") as? LoginViewController {
+                                            var va : [UIViewController]? = self.navigationController?.viewControllers
+                                            if va != nil {
+                                                va!.insert(login, atIndex: 0)
+                                                self.navigationController?.viewControllers = va!
+                                                self.navigationController?.popToRootViewControllerAnimated(true)
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                            }else{
+                                
+                            }
+                        }else{
+                            
+                            self.PopNetworkError()
+                        }
+                        self.performSelector("dismissProgress", withObject: nil, afterDelay: 0.2)
+                    }
+                }
+            
+            
+            
+        }
+    
+    
+    var polyLine : MKPolyline?
+    private func drawTrackPath(){
+        
+        if let dots = self.trackDotList {
+            var dotsArray = [CLLocationCoordinate2D]()
+            for dot in dots {
+                if let lat = dot.Latitude?.doubleValue,
+                    let lng = dot.Longitude?.doubleValue {
+                        dotsArray.append(CLLocationCoordinate2D(latitude: lat, longitude: lng))
+                }
+                
+            }
+//            dotsArray.removeLast()
+            if dotsArray.count > 0 {
+                polyLine = MKPolyline(coordinates: &dotsArray, count: dotsArray.count)
+                trackMap.setVisibleMapRect(polyLine!.boundingMapRect, animated: true)
+                trackMap.addOverlay(polyLine!)
+                
+            }
+        }
+    
+    }
+    
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        let pr = MKPolylineRenderer(overlay: overlay)
+//        pr.strokeColor = UIColor(red: 20/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
+        pr.strokeColor = UIColor.blueColor()
+        pr.lineWidth = 2
+        return pr
+    }
+    
     
    
 }
