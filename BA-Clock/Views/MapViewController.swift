@@ -41,31 +41,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        
-//        MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[thisMapView
-//            dequeueReusableAnnotationViewWithIdentifier:busStopViewIdentifier];
-//        if(annotationView == nil)
-//        {
-//            annotationView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:busStopViewIdentifier] autorelease];
-//        }
-//        
-//        //I choose to color all the annotations green, except for the one with tag == 4
-//        if((annotation).tag == 4) annotationView.pinColor = MKPinAnnotationColorRed;
-//        else annotationView.pinColor = MKPinAnnotationColorGreen;
-//        
-//        //pin drops when it first appears
-//        annotationView.animatesDrop=TRUE;
-//        
-//        //tapping the pin produces a gray box which shows title and subtitle
-//        annotationView.canShowCallout = YES;
-//        
-//        return annotationView;
-        
-        var annotationView : MKPinAnnotationView? = mapView.dequeueReusableAnnotationViewWithIdentifier("April") as? MKPinAnnotationView
+     var annotationView : MKPinAnnotationView? = mapView.dequeueReusableAnnotationViewWithIdentifier("April") as? MKPinAnnotationView
         if annotationView == nil {
             annotationView = MKPinAnnotationView.init(annotation: annotation, reuseIdentifier: "April")
         }
-        annotationView?.pinColor = MKPinAnnotationColor.Red
+        annotationView?.pinTintColor = UIColor.redColor()
         annotationView?.animatesDrop = true
         return annotationView
     

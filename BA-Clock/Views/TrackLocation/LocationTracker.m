@@ -272,7 +272,7 @@
             }
         }
     }
-    //    NSLog(@"My Best location:%@",myBestLocation);
+//        NSLog(@"My Best location:%@",myBestLocation);
     
     //If the array is 0, get the last location
     //Sometimes due to network issue or unknown reason, you could not get the location during that  period, the best you can do is sending the last known location to the server

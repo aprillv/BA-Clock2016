@@ -10,17 +10,85 @@ import UIKit
 import Alamofire
 import MapKit
 
-class ClockMapViewController: BaseViewController, MKMapViewDelegate {
+class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
    
+    @IBOutlet var hideItem: UIBarButtonItem!
     @IBOutlet weak var clockInSpinner: UIActivityIndicatorView!
     @IBOutlet weak var clockOutSpinner: UIActivityIndicatorView!
     @IBOutlet weak var switchItem: UIBarButtonItem!
-    @IBOutlet weak var mapTable: UITableView!
+    @IBOutlet weak var mapTable: UITableView!{
+        didSet{
+//            firstrefreshControl = UIRefreshControl()
+//            firstrefreshControl!.addTarget(self, action: "refreshfirst:", forControlEvents: .ValueChanged)
+//            mapTable.addSubview(firstrefreshControl!)
+            //            trackTable.separatorColor = UIColor(red: 20/255, green: 72/255, blue: 116/255, alpha: 0.3)
+        }
+    }
+    
+    @IBOutlet weak var mapBack: UIView!
 //    @IBOutlet weak var textTable: UITableView!
     @IBOutlet weak var clockInBtn: UIButton!
     @IBOutlet weak var clockOutBtn: UIButton!
     @IBOutlet weak var trackMap: MKMapView!
+    @IBOutlet weak var trackTable: UITableView!{
+        didSet{
+            refreshControl = UIRefreshControl()
+            refreshControl!.addTarget(self, action: "refresh:", forControlEvents: .ValueChanged)
+            trackTable.addSubview(refreshControl!)
+//            trackTable.separatorColor = UIColor(red: 20/255, green: 72/255, blue: 116/255, alpha: 0.3)
+        }
+    }
     
+    var refreshControl : UIRefreshControl?
+    var firstrefreshControl : UIRefreshControl?
+    
+    func refresh(refreshControl: UIRefreshControl) {
+        // Do your job, when done:
+        self.getTrackList()
+    }
+    
+    func refreshfirst(refreshControl: UIRefreshControl) {
+        // Do your job, when done:
+        firstTime = true
+        self.callGetList()
+    }
+    
+    
+    
+    @IBAction func hideOrShowList(sender: UIBarButtonItem) {
+        
+        if let first = map_listContstraint.firstItem as? UIView,
+            let second = map_listContstraint.secondItem as? UIView{
+                mapBack.removeConstraint(map_listContstraint)
+                if first == trackTable || second == trackTable {
+                    sender.title = constants.showListText
+                    map_listContstraint = NSLayoutConstraint(
+                        item: trackMap
+                        , attribute: NSLayoutAttribute.Height
+                        , relatedBy: NSLayoutRelation.Equal
+                        , toItem: mapBack
+                        , attribute: NSLayoutAttribute.Height
+                        , multiplier: 1.0
+                        , constant: 0)
+                }else{
+                    sender.title = constants.hideListText
+                    map_listContstraint = NSLayoutConstraint(
+                        item: trackMap
+                        , attribute: NSLayoutAttribute.Height
+                        , relatedBy: NSLayoutRelation.Equal
+                        , toItem: trackTable
+                        , attribute: NSLayoutAttribute.Height
+                        , multiplier: 1.0
+                        , constant: 0)
+                }
+                mapBack.addConstraint(map_listContstraint)
+                UIView.animateWithDuration(0.5) {
+                    self.view.layoutIfNeeded()
+                }
+        }
+        
+    }
+    @IBOutlet weak var map_listContstraint: NSLayoutConstraint!
     var CurrentScheduledInterval : Double?
     var locationTracker : LocationTracker?
     var locationUpdateTimer : NSTimer?
@@ -48,7 +116,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
     
     private struct constants{
         static let CellIdentifier : String = "clockMapCell"
-        static let CellIdentifierText : String = "clockItemCell"
+        static let CellIdentifierTrack : String = "trackTableCell"
 //        static let UserInfoClockedKey : String = "ClockedIn"
         
         static let UserInfoScheduledFrom : String = "ScheduledFrom"
@@ -56,14 +124,18 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
         
         static let RightTopItemTitleMap : String = "List"
         static let RightTopItemTitleText : String = "GIS Track"
+        
+        static let showListText : String = "Show List"
+        static let hideListText : String = "Hide List"
     }
     
     
    
     
     private func scrollToBottom(){
+//        print(mapTable?.contentSize.height)
         if (mapTable?.contentSize.height ?? 10) - (mapTable?.frame.size.height ?? 10) > 10 {
-            mapTable?.contentOffset = CGPoint(x: 0, y: (mapTable?.contentSize.height ?? 0) - (mapTable?.frame.size.height ?? 0))
+            mapTable.setContentOffset(CGPoint(x: 0, y: (mapTable?.contentSize.height ?? 0) - (mapTable?.frame.size.height ?? 0)), animated: true)
             
         }
     }
@@ -72,20 +144,26 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
     @IBAction func switchTo(sender: UIBarButtonItem) {
         switch sender.title!{
         case constants.RightTopItemTitleText:
-            if let line = self.polyLine {
-                trackMap.removeOverlay(line)
-            }
+            self.navigationItem.leftBarButtonItem = hideItem
             sender.title = constants.RightTopItemTitleMap
-            UIView.transitionFromView(mapTable, toView: trackMap, duration: 1, options: [.TransitionFlipFromRight, .ShowHideTransitionViews], completion: { (_) -> Void in
+            self.trackTable.setContentOffset(CGPoint(x: 0, y: -(self.refreshControl?.frame.size.height ?? 0)), animated: true)
+            UIView.transitionFromView(mapTable, toView: mapBack, duration: 1, options: [.TransitionFlipFromRight, .ShowHideTransitionViews], completion: { (_) -> Void in
+//                self.getTrackList()
+                
                 self.getTrackList()
-                self.view.bringSubviewToFront(self.trackMap)
+                self.view.bringSubviewToFront(self.mapBack)
             })
             
             
             break
         default:
+            self.navigationItem.leftBarButtonItem = nil
+            if let line = self.polyLine {
+                trackMap.removeOverlay(line)
+                trackMap.removeAnnotations(trackMap.annotations)
+            }
             sender.title = constants.RightTopItemTitleText
-            UIView.transitionFromView(trackMap, toView: mapTable, duration: 1, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: { (_) -> Void in
+            UIView.transitionFromView(mapBack, toView: mapTable, duration: 1, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: { (_) -> Void in
                 self.view.bringSubviewToFront(self.mapTable)
             })
             
@@ -99,6 +177,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.setLastSubmitTime()
+        self.navigationItem.leftBarButtonItem = nil
         if locationTracker == nil {
             locationTracker = LocationTracker()
         }
@@ -112,7 +191,10 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
         
         if self.clockDataList == nil {
+            firstTime = true
             Tool.saveDeviceTokenToSever()
+//            self.mapTable?.setContentOffset(CGPoint(x: 0, y: -(self.firstrefreshControl?.frame.size.height ?? 0)), animated: true)
+//            firstrefreshControl?.beginRefreshing()
             self.callGetList()
             self.syncFrequency()
         }else{
@@ -139,9 +221,10 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
                 let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
                 loginRequiredInfo.Token = token
                 loginRequiredInfo.TokenSecret = tokenSecret
-                
+//                self.firstrefreshControl?.beginRefreshing()
                 self.noticeOnlyText(CConstants.LoadingMsg)
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetScheduledDataURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                    self.firstrefreshControl?.endRefreshing()
                     if response.result.isSuccess {
 //                        print(response.result.value)
                         if let rtnValue = response.result.value as? [String: AnyObject]{
@@ -181,7 +264,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
                         
                         self.PopNetworkError()
                     }
-                    self.performSelector("dismissProgress", withObject: nil, afterDelay: 0.2)
+                    self.performSelector("dismissProgress", withObject: nil, afterDelay: 0.1)
                 }
             }
         }
@@ -193,14 +276,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
         self.clearNotice()
     }
     
-    private func callAutoUpdate(){
-        let time = getTime()
-        if time > 0 {
-            self.performSelector("update1", withObject: nil, afterDelay: time)
-        }else{
-            update1()
-        }
-    }
+    
     
     
     private func update1(){
@@ -361,49 +437,82 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
     }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return clockDataList?.count ?? 0
+        if tableView == mapTable {
+            return clockDataList?.count ?? 0
+        }else{
+            return trackDotList?.count ?? 0
+        }
+        
     }
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let list = clockDataList!
+       
         
         if tableView == mapTable {
+             let list = clockDataList!
             let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifier, forIndexPath: indexPath)
             if let cellitem = cell as? ClockMapCell {
                 cellitem.superActionView = self
                 if let item : ScheduledDayItem = list[indexPath.row] {
                     cellitem.clockInfo = item
-                    
                 }
                 cell.contentView.tag = indexPath.row
-//                cellitem.backGroupImageView.tag = indexPath.row
-//                print("ss tag \(cellitem.clockInImage.tag)")
             }
             return cell
         }else{
-            let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifierText, forIndexPath: indexPath)
-            if let cellitem = cell as? ClockTextCell {
-                if let item : ScheduledDayItem = list[indexPath.row] {
-                    cellitem.clockInfo = item
-                }
-            }
+            let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifierTrack, forIndexPath: indexPath)
+            let item = self.trackDotList![indexPath.row]
+            cell.textLabel?.text = item.Tag
             return cell
         }
     }
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if(firstTime && indexPath.row == tableView.indexPathsForVisibleRows?.last?.row){
-            firstTime = false
-            self.scrollToBottom()
+        if tableView == mapTable{
+            print(firstTime)
+            if(firstTime && indexPath.row == tableView.indexPathsForVisibleRows?.last?.row){
+                firstTime = false
+                self.scrollToBottom()
+            }
         }
+        
     }
     
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        let list = clockDataList!
-//        if let item : ScheduledDayItem = list[indexPath.row] {
-//            self.selectedItem = item
-//            self.performSegueWithIdentifier("showMapDetail", sender: nil)
-//        }
-//    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if tableView == trackTable {
+            if let list = trackDotList {
+                let item : TrackDotItem = list[indexPath.row]
+                var haveADD = false
+                for ai in self.trackMap.annotations {
+                    if let annotation = ai as? CustomAnnotation {
+                        if annotation.index == indexPath.row{
+                            trackMap.removeAnnotation(annotation)
+                            trackMap.addAnnotation(annotation)
+                            haveADD = true
+                            let alist = trackMap.annotationsInMapRect(trackMap.visibleMapRect)
+                            if !alist.contains(annotation) {
+                                trackMap.setCenterCoordinate(annotation.coordinate, animated: true)
+                            }
+                            break
+                        }
+                    }
+                }
+                if !haveADD {
+                    let annotation : CustomAnnotation = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: item.Latitude!.doubleValue, longitude: item.Longitude!.doubleValue))
+                    annotation.index = indexPath.row
+                    trackMap.addAnnotation(annotation)
+                    let alist = trackMap.annotationsInMapRect(trackMap.visibleMapRect)
+                    if !alist.contains(annotation) {
+                        trackMap.setCenterCoordinate(annotation.coordinate, animated: true)
+                    }
+                    
+                   
+                }
+                
+            }
+            
+        }
+        
+    }
     
     func clockInTapped(tap : UITapGestureRecognizer){
 //        print("sfsdf \(tap.view?.superview?.tag)  \(tap.view?.layer.valueForKey("lng"))")
@@ -658,10 +767,21 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
                     loginRequiredInfo.Token = token
                     loginRequiredInfo.TokenSecret = tokenSecret
                     
-                    self.noticeOnlyText(CConstants.LoadingMsg)
+                    if hideItem.title == constants.showListText {
+                        self.noticeOnlyText(CConstants.LoadingMsg)
+                    }
+                    
+                    self.refreshControl?.beginRefreshing()
+                    print(self.refreshControl)
                     currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetGISTrackURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                        
+                        self.refreshControl?.endRefreshing()
+                        if let line = self.polyLine {
+                            self.trackMap.removeOverlay(line)
+                            self.trackMap.removeAnnotations(self.trackMap.annotations)
+                        }
                         if response.result.isSuccess {
-                            print(response.result.value)
+//                            print(response.result.value)
                             if let rtnValue = response.result.value as? [String: AnyObject]{
                                 
                                 if rtnValue["Status"]!.integerValue == 1 {
@@ -670,6 +790,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
                                         self.trackDotList!.append(TrackDotItem(dicInfo: item))
                                     }
                                     self.drawTrackPath()
+                                    self.trackTable.reloadData()
                                 }else{
                                     self.PopMsgWithJustOK(msg: rtnValue["Message"] as! String) {
                                         (action : UIAlertAction) -> Void in
@@ -717,7 +838,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
 //            dotsArray.removeLast()
             if dotsArray.count > 0 {
                 polyLine = MKPolyline(coordinates: &dotsArray, count: dotsArray.count)
-                trackMap.setVisibleMapRect(polyLine!.boundingMapRect, animated: true)
+                trackMap.setVisibleMapRect(polyLine!.boundingMapRect, edgePadding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), animated: true)
                 trackMap.addOverlay(polyLine!)
                 
             }
@@ -733,6 +854,15 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate {
         return pr
     }
     
-    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        var annotationView : MKPinAnnotationView? = mapView.dequeueReusableAnnotationViewWithIdentifier("April") as? MKPinAnnotationView
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView.init(annotation: annotation, reuseIdentifier: "April")
+        }
+        annotationView?.pinTintColor = UIColor.redColor()
+        annotationView?.animatesDrop = true
+        return annotationView
+        
+    }
    
 }
