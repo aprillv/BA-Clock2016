@@ -54,6 +54,10 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
     }
     
     
+    @IBOutlet var showhideBtn: UIButton!
+    @IBAction func hideorshow(sender: AnyObject) {
+        self.hideOrShowList(hideItem)
+    }
     
     @IBAction func hideOrShowList(sender: UIBarButtonItem) {
         
@@ -61,7 +65,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
             let second = map_listContstraint.secondItem as? UIView{
                 mapBack.removeConstraint(map_listContstraint)
                 if first == trackTable || second == trackTable {
-                    sender.title = constants.showListText
+                    
                     map_listContstraint = NSLayoutConstraint(
                         item: trackMap
                         , attribute: NSLayoutAttribute.Height
@@ -70,8 +74,11 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
                         , attribute: NSLayoutAttribute.Height
                         , multiplier: 1.0
                         , constant: 0)
+                    mapBack.addConstraint(map_listContstraint)
+                    sender.title = constants.showListText
+                    self.showhideBtn.setImage(UIImage(named: "show"), forState: .Normal)
                 }else{
-                    sender.title = constants.hideListText
+                    
                     map_listContstraint = NSLayoutConstraint(
                         item: trackMap
                         , attribute: NSLayoutAttribute.Height
@@ -80,9 +87,14 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
                         , attribute: NSLayoutAttribute.Height
                         , multiplier: 1.0
                         , constant: 0)
+                    mapBack.addConstraint(map_listContstraint)
+                    sender.title = constants.hideListText
+                    self.showhideBtn.setImage(UIImage(named: "hide"), forState: .Normal)
+                   
                 }
-                mapBack.addConstraint(map_listContstraint)
                 UIView.animateWithDuration(0.5) {
+                    
+                    
                     self.view.layoutIfNeeded()
                 }
         }

@@ -449,6 +449,13 @@
                                             <outlet property="delegate" destination="Pxs-Of-gi9" id="6La-lu-0B5"/>
                                         </connections>
                                     </mapView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxL-sx-jVb">
+                                        <rect key="frame" x="169" y="272" width="46" height="22"/>
+                                        <state key="normal" image="hide"/>
+                                        <connections>
+                                            <action selector="hideorshow:" destination="Pxs-Of-gi9" eventType="touchUpInside" id="S2N-8b-z8r"/>
+                                        </connections>
+                                    </button>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ljd-ke-9ND">
                                         <rect key="frame" x="0.0" y="302" width="383" height="301"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -471,31 +478,20 @@
                                             <outlet property="delegate" destination="Pxs-Of-gi9" id="X96-LV-KV1"/>
                                         </connections>
                                     </tableView>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="AfO-Ln-8hj">
-                                        <rect key="frame" x="181" y="312" width="20" height="20"/>
-                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="ljd-ke-9ND" firstAttribute="top" secondItem="AfO-Ln-8hj" secondAttribute="bottom" constant="274" id="0N2-0z-5h4"/>
                                     <constraint firstItem="J7C-uN-Q59" firstAttribute="top" secondItem="mPy-bg-EfY" secondAttribute="top" id="6re-Tq-K3U"/>
                                     <constraint firstItem="ljd-ke-9ND" firstAttribute="leading" secondItem="mPy-bg-EfY" secondAttribute="leading" id="CQQ-zX-oa1"/>
-                                    <constraint firstItem="ljd-ke-9ND" firstAttribute="top" secondItem="AfO-Ln-8hj" secondAttribute="bottom" constant="20" id="GsC-lp-Se0"/>
                                     <constraint firstItem="ljd-ke-9ND" firstAttribute="height" secondItem="J7C-uN-Q59" secondAttribute="height" id="HML-FD-0dq"/>
                                     <constraint firstItem="ljd-ke-9ND" firstAttribute="top" secondItem="J7C-uN-Q59" secondAttribute="bottom" id="Mc5-pQ-yrc"/>
-                                    <constraint firstItem="ljd-ke-9ND" firstAttribute="top" secondItem="AfO-Ln-8hj" secondAttribute="bottom" constant="-30" id="aad-Z7-Puf"/>
                                     <constraint firstAttribute="bottom" secondItem="ljd-ke-9ND" secondAttribute="bottom" id="kFT-Hy-q4x"/>
+                                    <constraint firstItem="cxL-sx-jVb" firstAttribute="top" secondItem="J7C-uN-Q59" secondAttribute="bottom" constant="-30" id="lPQ-Pc-P0J"/>
                                     <constraint firstItem="J7C-uN-Q59" firstAttribute="leading" secondItem="mPy-bg-EfY" secondAttribute="leading" id="lik-Ub-rvk"/>
-                                    <constraint firstItem="AfO-Ln-8hj" firstAttribute="centerX" secondItem="ljd-ke-9ND" secondAttribute="centerX" id="mDb-F2-wNf"/>
+                                    <constraint firstItem="cxL-sx-jVb" firstAttribute="centerX" secondItem="mPy-bg-EfY" secondAttribute="centerX" id="lj2-xh-ogR"/>
                                     <constraint firstAttribute="trailing" secondItem="ljd-ke-9ND" secondAttribute="trailing" id="n0h-XG-2ts"/>
                                     <constraint firstAttribute="trailing" secondItem="J7C-uN-Q59" secondAttribute="trailing" id="zMU-eV-9Av"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="0N2-0z-5h4"/>
-                                        <exclude reference="GsC-lp-Se0"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h3b-sG-xIb">
                                 <rect key="frame" x="187" y="618" width="1" height="49"/>
@@ -575,6 +571,7 @@
                         <outlet property="mapBack" destination="mPy-bg-EfY" id="nk5-LH-Kqq"/>
                         <outlet property="mapTable" destination="Tt2-tO-RJk" id="O4M-yt-0GJ"/>
                         <outlet property="map_listContstraint" destination="HML-FD-0dq" id="apN-O7-Xwd"/>
+                        <outlet property="showhideBtn" destination="cxL-sx-jVb" id="YEh-PY-qph"/>
                         <outlet property="switchItem" destination="KAZ-JY-nDI" id="tbF-ra-Ghr"/>
                         <outlet property="trackMap" destination="J7C-uN-Q59" id="oAt-vl-61m"/>
                         <outlet property="trackTable" destination="ljd-ke-9ND" id="C7l-2i-1fW"/>
@@ -583,7 +580,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xh6-jL-zFa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3208.5" y="-340.5"/>
+            <point key="canvasLocation" x="-3292.5" y="-340.5"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="kGd-ZQ-Htz">
@@ -641,6 +638,7 @@
     </scenes>
     <resources>
         <image name="close" width="50" height="50"/>
+        <image name="hide" width="46" height="20"/>
         <image name="logo" width="100" height="100"/>
     </resources>
 </document>
