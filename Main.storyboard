@@ -197,10 +197,10 @@
                             <constraint firstAttribute="trailingMargin" secondItem="rtU-mw-aQS" secondAttribute="trailing" id="SrK-dp-Xoe"/>
                             <constraint firstItem="TrM-bp-FfJ" firstAttribute="leading" secondItem="DmO-Wh-V3e" secondAttribute="leadingMargin" id="ZCT-Wp-Juc"/>
                             <constraint firstItem="rtU-mw-aQS" firstAttribute="centerX" secondItem="DmO-Wh-V3e" secondAttribute="centerX" id="a5e-xx-pwh"/>
+                            <constraint firstItem="B24-Kq-yTI" firstAttribute="top" secondItem="4FT-dA-SiF" secondAttribute="bottom" constant="8" id="d90-wf-ibf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="e1U-Ex-ha0" secondAttribute="trailing" constant="-2" id="e21-fF-oFU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="TrM-bp-FfJ" secondAttribute="trailing" id="idD-Pk-vpo"/>
-                            <constraint firstItem="rWw-WR-mAw" firstAttribute="top" secondItem="zyy-PQ-cLW" secondAttribute="bottom" constant="8" id="vES-I8-86v"/>
-                            <constraint firstItem="B24-Kq-yTI" firstAttribute="top" secondItem="4FT-dA-SiF" secondAttribute="bottom" constant="8" id="vfe-rX-3w8"/>
+                            <constraint firstItem="rWw-WR-mAw" firstAttribute="top" secondItem="zyy-PQ-cLW" secondAttribute="bottom" constant="8" id="q2H-gL-Qjv"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -479,23 +479,23 @@
                                         </connections>
                                     </tableView>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NOG-bG-X3e">
-                                        <rect key="frame" x="277" y="267" width="93" height="31"/>
+                                        <rect key="frame" x="15" y="15" width="80" height="31"/>
+                                        <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="Npa-Am-BmO"/>
                                             <constraint firstAttribute="height" constant="31" id="fbv-YR-Tza"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" title="   Clear Pins   ">
-                                            <color key="titleColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Clear Pins">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <action selector="clearPINs" destination="Pxs-Of-gi9" eventType="touchUpInside" id="9xe-4E-cnc"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="NOG-bG-X3e" secondAttribute="trailing" constant="13" id="0ca-hp-O6j"/>
                                     <constraint firstItem="NOG-bG-X3e" firstAttribute="centerY" secondItem="cxL-sx-jVb" secondAttribute="centerY" id="4iK-r5-jbg"/>
+                                    <constraint firstItem="NOG-bG-X3e" firstAttribute="top" secondItem="mPy-bg-EfY" secondAttribute="top" constant="15" id="5xZ-o2-Nay"/>
                                     <constraint firstItem="J7C-uN-Q59" firstAttribute="top" secondItem="mPy-bg-EfY" secondAttribute="top" id="6re-Tq-K3U"/>
                                     <constraint firstItem="ljd-ke-9ND" firstAttribute="leading" secondItem="mPy-bg-EfY" secondAttribute="leading" id="CQQ-zX-oa1"/>
                                     <constraint firstItem="ljd-ke-9ND" firstAttribute="height" secondItem="J7C-uN-Q59" secondAttribute="height" id="HML-FD-0dq"/>
@@ -505,11 +505,14 @@
                                     <constraint firstItem="J7C-uN-Q59" firstAttribute="leading" secondItem="mPy-bg-EfY" secondAttribute="leading" id="lik-Ub-rvk"/>
                                     <constraint firstItem="cxL-sx-jVb" firstAttribute="centerX" secondItem="mPy-bg-EfY" secondAttribute="centerX" id="lj2-xh-ogR"/>
                                     <constraint firstAttribute="trailing" secondItem="ljd-ke-9ND" secondAttribute="trailing" id="n0h-XG-2ts"/>
+                                    <constraint firstItem="NOG-bG-X3e" firstAttribute="leading" secondItem="mPy-bg-EfY" secondAttribute="leading" constant="15" id="ob5-ON-eiT"/>
                                     <constraint firstItem="NOG-bG-X3e" firstAttribute="baseline" secondItem="cxL-sx-jVb" secondAttribute="baseline" id="s6n-KM-eOc"/>
                                     <constraint firstAttribute="trailing" secondItem="J7C-uN-Q59" secondAttribute="trailing" id="zMU-eV-9Av"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="0ca-hp-O6j"/>
+                                        <exclude reference="4iK-r5-jbg"/>
                                         <exclude reference="s6n-KM-eOc"/>
                                     </mask>
                                 </variation>
@@ -569,6 +572,12 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="scq-nq-0OB">
+                        <barButtonItem key="leftBarButtonItem" title="Clear Pins" id="LSm-m4-HQZ">
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="clearPINs" destination="Pxs-Of-gi9" id="IZq-5G-eRK"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="GIS Track" id="KAZ-JY-nDI">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -578,7 +587,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="clearPinBtn" destination="NOG-bG-X3e" id="IM2-b0-LoA"/>
+                        <outlet property="clearItem" destination="LSm-m4-HQZ" id="HMH-yO-vVT"/>
                         <outlet property="clockInBtn" destination="ZuF-wo-mGz" id="YXJ-No-jk0"/>
                         <outlet property="clockInSpinner" destination="FFn-fn-BC7" id="tBT-Gt-85c"/>
                         <outlet property="clockOutBtn" destination="APG-2i-Iq2" id="MJl-rC-g6i"/>

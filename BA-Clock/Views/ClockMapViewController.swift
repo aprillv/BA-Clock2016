@@ -13,6 +13,7 @@ import MapKit
 class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
    
 
+    @IBOutlet var clearItem: UIBarButtonItem!
     @IBOutlet weak var clockInSpinner: UIActivityIndicatorView!
     @IBOutlet weak var clockOutSpinner: UIActivityIndicatorView!
     @IBOutlet weak var switchItem: UIBarButtonItem!
@@ -54,23 +55,31 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
     }
     
     
-    @IBOutlet var clearPinBtn: UIButton!{
-        didSet{
-            clearPinBtn.alpha = 0
-            clearPinBtn.layer.cornerRadius = 15
-            clearPinBtn.backgroundColor = UIColor(red: 20/255.0, green: 72/255.0, blue: 116/255.0, alpha: 0.15)
-        }
-    }
+//    @IBOutlet var clearPinBtn: UIButton!{
+//        didSet{
+//            clearPinBtn.alpha = 0
+//            clearPinBtn.layer.cornerRadius = 8
+//            clearPinBtn.backgroundColor = UIColor(red: 20/255.0, green: 72/255.0, blue: 116/255.0, alpha: 0.85)
+//        }
+//    }
     @IBAction func clearPINs() {
         self.trackMap.removeAnnotations(trackMap.annotations)
-        UIView.animateWithDuration(0.3, delay: 0.0
-            , options: UIViewAnimationOptions.CurveEaseOut
-            , animations: { () -> Void in
-            self.clearPinBtn.alpha = 0
-            }) { (_) -> Void in
-                self.clearPinBtn.hidden = true
-        }
+//        UIView.animateWithDuration(0.3, delay: 0.0
+//            , options: UIViewAnimationOptions.CurveEaseOut
+//            , animations: { () -> Void in
+//            self.clearPinBtn.alpha = 0
+//            }) { (_) -> Void in
+//                self.clearPinBtn.hidden = true
+//        }
         
+        self.clearItem.tag = 0
+                UIView.animateWithDuration(0.2, delay: 0.0
+                    , options: UIViewAnimationOptions.CurveEaseOut
+                    , animations: { () -> Void in
+                    self.clearItem.tintColor = UIColor.clearColor()
+                    }) { (_) -> Void in
+                        
+                }
         
     }
     @IBOutlet var showhideBtn: UIButton!
@@ -188,8 +197,10 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
             if let line = self.polyLine {
                 trackMap.removeOverlay(line)
                 trackMap.removeAnnotations(trackMap.annotations)
-                clearPinBtn.hidden = true
-                clearPinBtn.alpha = 0
+//                clearPinBtn.hidden = true
+//                clearPinBtn.alpha = 0
+                clearItem.tintColor = UIColor.clearColor()
+                self.clearItem.tag = 0
             }
             sender.title = constants.RightTopItemTitleText
             UIView.transitionFromView(mapBack, toView: mapTable, duration: 0.8, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: { (_) -> Void in
@@ -892,15 +903,25 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if mapView.annotations.count > 0 && self.clearPinBtn.hidden {
-            self.clearPinBtn.hidden = false
+//        print(self.clearItem.tintColor)
+        if mapView.annotations.count > 0 && (self.clearItem.tag == 0){
+//            self.clearPinBtn.hidden = false
+//            UIView.animateWithDuration(0.3, delay: 0.0
+//                , options: UIViewAnimationOptions.CurveEaseIn
+//                , animations: { () -> Void in
+//                    self.clearPinBtn.alpha = 1
+//                }) { (_) -> Void in
+//                    self.clearPinBtn.hidden = false
+//            }
+            self.clearItem.tag == 1
             UIView.animateWithDuration(0.3, delay: 0.0
-                , options: UIViewAnimationOptions.CurveEaseIn
+                , options: UIViewAnimationOptions.CurveEaseOut
                 , animations: { () -> Void in
-                    self.clearPinBtn.alpha = 1
+                    self.clearItem.tintColor = UIColor.whiteColor()
                 }) { (_) -> Void in
-                    self.clearPinBtn.hidden = false
+                    
             }
+            
 
         }
         var annotationView : MKPinAnnotationView? = mapView.dequeueReusableAnnotationViewWithIdentifier("April") as? MKPinAnnotationView
