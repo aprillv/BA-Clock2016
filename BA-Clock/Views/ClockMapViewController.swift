@@ -12,7 +12,7 @@ import MapKit
 
 class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
    
-    @IBOutlet var hideItem: UIBarButtonItem!
+
     @IBOutlet weak var clockInSpinner: UIActivityIndicatorView!
     @IBOutlet weak var clockOutSpinner: UIActivityIndicatorView!
     @IBOutlet weak var switchItem: UIBarButtonItem!
@@ -54,16 +54,33 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
     }
     
     
+    @IBOutlet var clearPinBtn: UIButton!{
+        didSet{
+            clearPinBtn.alpha = 0
+            clearPinBtn.layer.cornerRadius = 15
+            clearPinBtn.backgroundColor = UIColor(red: 20/255.0, green: 72/255.0, blue: 116/255.0, alpha: 0.15)
+        }
+    }
+    @IBAction func clearPINs() {
+        self.trackMap.removeAnnotations(trackMap.annotations)
+        UIView.animateWithDuration(0.3, delay: 0.0
+            , options: UIViewAnimationOptions.CurveEaseOut
+            , animations: { () -> Void in
+            self.clearPinBtn.alpha = 0
+            }) { (_) -> Void in
+                self.clearPinBtn.hidden = true
+        }
+        
+        
+    }
     @IBOutlet var showhideBtn: UIButton!
     @IBAction func hideorshow(sender: AnyObject) {
-        self.hideOrShowList(hideItem)
-    }
-    
-    @IBAction func hideOrShowList(sender: UIBarButtonItem) {
+        
         
         if let first = map_listContstraint.firstItem as? UIView,
             let second = map_listContstraint.secondItem as? UIView{
                 mapBack.removeConstraint(map_listContstraint)
+                var mul = -M_PI
                 if first == trackTable || second == trackTable {
                     
                     map_listContstraint = NSLayoutConstraint(
@@ -75,8 +92,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
                         , multiplier: 1.0
                         , constant: 0)
                     mapBack.addConstraint(map_listContstraint)
-                    sender.title = constants.showListText
-                    self.showhideBtn.setImage(UIImage(named: "show"), forState: .Normal)
+//                    self.showhideBtn.setImage(UIImage(named: "show"), forState: .Normal)
                 }else{
                     
                     map_listContstraint = NSLayoutConstraint(
@@ -88,13 +104,14 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
                         , multiplier: 1.0
                         , constant: 0)
                     mapBack.addConstraint(map_listContstraint)
-                    sender.title = constants.hideListText
-                    self.showhideBtn.setImage(UIImage(named: "hide"), forState: .Normal)
+                    mul = 0.0
+//                    self.showhideBtn.setImage(UIImage(named: "hide"), forState: .Normal)
                    
                 }
+//                print(self.showhideBtn.transform)
                 UIView.animateWithDuration(0.5) {
                     
-                    
+                    self.showhideBtn.transform = CGAffineTransformMakeRotation(CGFloat(mul))
                     self.view.layoutIfNeeded()
                 }
         }
@@ -136,9 +153,6 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
         
         static let RightTopItemTitleMap : String = "List"
         static let RightTopItemTitleText : String = "GIS Track"
-        
-        static let showListText : String = "Show List"
-        static let hideListText : String = "Hide List"
     }
     
     
@@ -156,10 +170,11 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
     @IBAction func switchTo(sender: UIBarButtonItem) {
         switch sender.title!{
         case constants.RightTopItemTitleText:
-            self.navigationItem.leftBarButtonItem = hideItem
+//            self.navigationItem.leftBarButtonItem = hideItem
             sender.title = constants.RightTopItemTitleMap
             self.trackTable.setContentOffset(CGPoint(x: 0, y: -(self.refreshControl?.frame.size.height ?? 0)), animated: true)
-            UIView.transitionFromView(mapTable, toView: mapBack, duration: 1, options: [.TransitionFlipFromRight, .ShowHideTransitionViews], completion: { (_) -> Void in
+        
+            UIView.transitionFromView(mapTable, toView: mapBack, duration: 0.8, options: [.TransitionFlipFromRight, .ShowHideTransitionViews], completion: { (_) -> Void in
 //                self.getTrackList()
                 
                 self.getTrackList()
@@ -169,13 +184,15 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
             
             break
         default:
-            self.navigationItem.leftBarButtonItem = nil
+//            self.navigationItem.leftBarButtonItem = nil
             if let line = self.polyLine {
                 trackMap.removeOverlay(line)
                 trackMap.removeAnnotations(trackMap.annotations)
+                clearPinBtn.hidden = true
+                clearPinBtn.alpha = 0
             }
             sender.title = constants.RightTopItemTitleText
-            UIView.transitionFromView(mapBack, toView: mapTable, duration: 1, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: { (_) -> Void in
+            UIView.transitionFromView(mapBack, toView: mapTable, duration: 0.8, options: [.TransitionFlipFromLeft, .ShowHideTransitionViews], completion: { (_) -> Void in
                 self.view.bringSubviewToFront(self.mapTable)
             })
             
@@ -189,7 +206,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.setLastSubmitTime()
-        self.navigationItem.leftBarButtonItem = nil
+//        self.navigationItem.leftBarButtonItem = nil
         if locationTracker == nil {
             locationTracker = LocationTracker()
         }
@@ -480,7 +497,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
     }
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if tableView == mapTable{
-            print(firstTime)
+//            print(firstTime)
             if(firstTime && indexPath.row == tableView.indexPathsForVisibleRows?.last?.row){
                 firstTime = false
                 self.scrollToBottom()
@@ -779,12 +796,20 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
                     loginRequiredInfo.Token = token
                     loginRequiredInfo.TokenSecret = tokenSecret
                     
-                    if hideItem.title == constants.showListText {
+                    
+                    var showNoticie = true
+                    if let first = map_listContstraint.firstItem as? UIView,
+                        let second = map_listContstraint.secondItem as? UIView{
+                            if first == trackTable || second == trackTable {
+                                showNoticie = false
+                            }
+                    }
+                    if showNoticie {
                         self.noticeOnlyText(CConstants.LoadingMsg)
                     }
                     
                     self.refreshControl?.beginRefreshing()
-                    print(self.refreshControl)
+//                    print(self.refreshControl)
                     currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetGISTrackURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                         
                         self.refreshControl?.endRefreshing()
@@ -867,6 +892,17 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if mapView.annotations.count > 0 && self.clearPinBtn.hidden {
+            self.clearPinBtn.hidden = false
+            UIView.animateWithDuration(0.3, delay: 0.0
+                , options: UIViewAnimationOptions.CurveEaseIn
+                , animations: { () -> Void in
+                    self.clearPinBtn.alpha = 1
+                }) { (_) -> Void in
+                    self.clearPinBtn.hidden = false
+            }
+
+        }
         var annotationView : MKPinAnnotationView? = mapView.dequeueReusableAnnotationViewWithIdentifier("April") as? MKPinAnnotationView
         if annotationView == nil {
             annotationView = MKPinAnnotationView.init(annotation: annotation, reuseIdentifier: "April")
