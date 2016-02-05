@@ -58,17 +58,17 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         }
     }
     
-    @IBOutlet weak var rememberMeSwitch: UISwitch!{
-        didSet {
-            rememberMeSwitch.transform = CGAffineTransformMakeScale(0.85, 0.85)
-            let userInfo = NSUserDefaults.standardUserDefaults()
-            if let isRemembered = userInfo.objectForKey(CConstants.UserInfoRememberMe) as? Bool{
-                rememberMeSwitch.on = isRemembered
-            }else{
-                rememberMeSwitch.on = true
-            }
-        }
-    }
+//    @IBOutlet weak var rememberMeSwitch: UISwitch!{
+//        didSet {
+//            rememberMeSwitch.transform = CGAffineTransformMakeScale(0.85, 0.85)
+//            let userInfo = NSUserDefaults.standardUserDefaults()
+//            if let isRemembered = userInfo.objectForKey(CConstants.UserInfoRememberMe) as? Bool{
+//                rememberMeSwitch.on = isRemembered
+//            }else{
+//                rememberMeSwitch.on = true
+//            }
+//        }
+//    }
     
     @IBOutlet weak var backView2: UIView!{
 //        backView.backgroundColor = UIColor.whiteColor()
@@ -139,13 +139,13 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     
     
     // MARK: Outlet Action
-    @IBAction func rememberChanged(sender: UISwitch) {
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        userInfo.setObject(rememberMeSwitch.on, forKey: CConstants.UserInfoRememberMe)
-        if !rememberMeSwitch.on {
-            userInfo.setObject("", forKey: CConstants.UserInfoPwd)
-        }
-    }
+//    @IBAction func rememberChanged(sender: UISwitch) {
+//        let userInfo = NSUserDefaults.standardUserDefaults()
+//        userInfo.setObject(rememberMeSwitch.on, forKey: CConstants.UserInfoRememberMe)
+//        if !rememberMeSwitch.on {
+//            userInfo.setObject("", forKey: CConstants.UserInfoPwd)
+//        }
+//    }
     
     
     
@@ -161,7 +161,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
 //        signInMap.hidden = true
         emailTxt.enabled = false
         passwordTxt.enabled = false
-        rememberMeSwitch.enabled = false
+//        rememberMeSwitch.enabled = false
         emailTxt.textColor = UIColor.darkGrayColor()
         passwordTxt.textColor = UIColor.darkGrayColor()
         
@@ -251,7 +251,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     self.signInBtn.enabled = true
     self.emailTxt.enabled = true
     self.passwordTxt.enabled = true
-    self.rememberMeSwitch.enabled = true
+//    self.rememberMeSwitch.enabled = true
     self.emailTxt.textColor = UIColor.blackColor()
     self.passwordTxt.textColor = UIColor.blackColor()
 //    self.spinner.stopAnimating()
@@ -259,11 +259,11 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     
     func saveEmailAndPwdToDisk(email email: String, password: String, displayName: String, fullName: String){
         let userInfo = NSUserDefaults.standardUserDefaults()
-        if rememberMeSwitch.on {
+//        if rememberMeSwitch.on {
             userInfo.setObject(true, forKey: CConstants.UserInfoRememberMe)
-        }else{
-            userInfo.setObject(false, forKey: CConstants.UserInfoRememberMe)
-        }
+//        }else{
+//            userInfo.setObject(false, forKey: CConstants.UserInfoRememberMe)
+//        }
         userInfo.setObject(email, forKey: CConstants.UserInfoEmail)
         userInfo.setObject(password, forKey: CConstants.UserInfoPwd)
         userInfo.setObject(displayName, forKey: CConstants.UserDisplayName)
@@ -299,6 +299,9 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        userInfo.setValue("0", forKey: CConstants.RegisteredDeviceToken)
+        
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]

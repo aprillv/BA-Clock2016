@@ -62,7 +62,8 @@ class Tool: NSObject {
     static func saveDeviceTokenToSever(){
         
         let userInfo = NSUserDefaults.standardUserDefaults()
-        if userInfo.valueForKey(CConstants.RegisteredDeviceToken) as? String == nil{
+        let str = userInfo.valueForKey(CConstants.RegisteredDeviceToken) as? String
+        if str == nil || str == "0"{
         
             if let deviceToken = userInfo.valueForKey(CConstants.UserDeviceToken) as? String
                 , let userToken = userInfo.valueForKey(CConstants.UserInfoTokenKey) as? String
