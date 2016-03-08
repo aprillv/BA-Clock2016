@@ -10,12 +10,21 @@ import UIKit
 import Alamofire
 import MapKit
 
-class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
+class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate {
    
 
+    @IBOutlet var tabbar: UITabBar!{
+        didSet{
+            for item in tabbar.items! {
+                item.image = item.image?.imageWithRenderingMode(.AlwaysOriginal)
+            }
+            
+//            tabbar.barTintColor = UIColor.whiteColor()
+        }
+    }
     @IBOutlet var clearItem: UIBarButtonItem!
-    @IBOutlet weak var clockInSpinner: UIActivityIndicatorView!
-    @IBOutlet weak var clockOutSpinner: UIActivityIndicatorView!
+//    @IBOutlet weak var clockInSpinner: UIActivityIndicatorView!
+//    @IBOutlet weak var clockOutSpinner: UIActivityIndicatorView!
     @IBOutlet weak var switchItem: UIBarButtonItem!
     @IBOutlet weak var mapTable: UITableView!{
         didSet{
@@ -28,8 +37,8 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
     
     @IBOutlet weak var mapBack: UIView!
 //    @IBOutlet weak var textTable: UITableView!
-    @IBOutlet weak var clockInBtn: UIButton!
-    @IBOutlet weak var clockOutBtn: UIButton!
+//    @IBOutlet weak var clockInBtn: UIButton!
+//    @IBOutlet weak var clockOutBtn: UIButton!
     @IBOutlet weak var trackMap: MKMapView!
     @IBOutlet weak var trackTable: UITableView!{
         didSet{
@@ -162,6 +171,9 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
         
         static let RightTopItemTitleMap : String = "List"
         static let RightTopItemTitleText : String = "GIS Track"
+        
+        static let SegueToMoreController = "More"
+        
     }
     
     
@@ -594,11 +606,11 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
         }
     }
     
-    @IBAction func doClockIn(sender: UIButton) {
+    @IBAction func doClockIn() {
         self.locationTracker?.getMyLocation222()
         self.callClockService(isClockIn: true)
     }
-    @IBAction func doClockOut(sender: UIButton) {
+    @IBAction func doClockOut() {
         
         self.locationTracker?.getMyLocation222()
         self.callClockService(isClockIn: false)
@@ -661,28 +673,28 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
     }
     
     private func toEablePageControlColockOut(){
-        self.clockOutSpinner.stopAnimating()
-        self.clockOutBtn.setTitle("Clock Out", forState: .Normal)
+//        self.clockOutSpinner.stopAnimating()
+//        self.clockOutBtn.setTitle("Clock Out", forState: .Normal)
         self.view.userInteractionEnabled = true
     }
     
     private func disableEablePageControlColockOut(){
         
-        self.clockOutSpinner.startAnimating()
-        self.clockOutBtn.setTitle("", forState: .Normal)
+//        self.clockOutSpinner.startAnimating()
+//        self.clockOutBtn.setTitle("", forState: .Normal)
         self.view.userInteractionEnabled = false
     }
     
     private func toEablePageControlColockIn(){
-        self.clockInSpinner.stopAnimating()
-        self.clockInBtn.setTitle("Clock In", forState: .Normal)
+//        self.clockInSpinner.stopAnimating()
+//        self.clockInBtn.setTitle("Clock In", forState: .Normal)
         self.view.userInteractionEnabled = true
     }
     
     private func disableEablePageControlColockIn(){
         
-        self.clockInSpinner.startAnimating()
-        self.clockInBtn.setTitle("", forState: .Normal)
+//        self.clockInSpinner.startAnimating()
+//        self.clockInBtn.setTitle("", forState: .Normal)
         self.view.userInteractionEnabled = false
     }
     
@@ -932,6 +944,17 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
         annotationView?.animatesDrop = true
         return annotationView
         
+    }
+    
+     func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem){
+        switch item.title! {
+        case "Clock In":
+            doClockIn()
+        case "Clock Out":
+            doClockOut()
+        default:
+            self.performSegueWithIdentifier(constants.SegueToMoreController, sender: nil)
+        }
     }
    
 }

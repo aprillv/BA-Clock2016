@@ -16,7 +16,7 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+//        self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
         navigationItem.hidesBackButton = true
         edgesForExtendedLayout = .None
     }

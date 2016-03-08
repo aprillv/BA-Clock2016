@@ -26,7 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
          UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         UIApplication.sharedApplication().cancelAllLocalNotifications()
-//        
+//       
+        
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.whiteColor()], forState: .Normal)
+        
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.whiteColor()], forState: .Selected)
+        
         
         let storyboard = UIStoryboard(name: CConstants.StoryboardName, bundle: nil)
         

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1104C2CE1C8EAD1C00B50B5F /* GISTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1104C2CD1C8EAD1C00B50B5F /* GISTrackViewController.swift */; };
+		1104C2D61C8EBDB100B50B5F /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1104C2D51C8EBDB100B50B5F /* MoreViewController.swift */; };
 		110645AA1C4725F300795996 /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110645A91C4725F300795996 /* Tool.swift */; };
 		110645AC1C47643800795996 /* ClockInRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110645AB1C47643800795996 /* ClockInRequired.swift */; };
 		1109CEBA1C57162A00AFF20F /* extensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1109CEB91C57162A00AFF20F /* extensionViewController.swift */; };
@@ -120,6 +122,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1104C2CD1C8EAD1C00B50B5F /* GISTrackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GISTrackViewController.swift; sourceTree = "<group>"; };
+		1104C2D51C8EBDB100B50B5F /* MoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		110645A91C4725F300795996 /* Tool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
 		110645AB1C47643800795996 /* ClockInRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockInRequired.swift; sourceTree = "<group>"; };
 		1109CEB91C57162A00AFF20F /* extensionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensionViewController.swift; sourceTree = "<group>"; };
@@ -265,6 +269,8 @@
 				110B80FF1C45DF7500FE136D /* BA-Clock-Bridging-Header.h */,
 				1109CEB91C57162A00AFF20F /* extensionViewController.swift */,
 				1189AC4A1C5F3E3400E407FE /* MapViewController.swift */,
+				1104C2CD1C8EAD1C00B50B5F /* GISTrackViewController.swift */,
+				1104C2D51C8EBDB100B50B5F /* MoreViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -452,6 +458,8 @@
 				11104F8A1C589ED100DF7922 /* DeviceTokenRequired.swift in Sources */,
 				111A25151C5342C70013A9CA /* BackgroundTaskManager.m in Sources */,
 				11C3B1721C56008300E50193 /* cl_Frequency.swift in Sources */,
+				1104C2CE1C8EAD1C00B50B5F /* GISTrackViewController.swift in Sources */,
+				1104C2D61C8EBDB100B50B5F /* MoreViewController.swift in Sources */,
 				11128F951C3E38A6006390C1 /* BaseViewController.swift in Sources */,
 				11F8DC301C50A981002E4736 /* FrequencyItem.swift in Sources */,
 				1109CEBA1C57162A00AFF20F /* extensionViewController.swift in Sources */,
