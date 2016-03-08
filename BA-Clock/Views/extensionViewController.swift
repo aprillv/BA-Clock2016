@@ -85,7 +85,7 @@ class SwiftNotice: NSObject {
         window.windowLevel = UIWindowLevelAlert
         window.center = getRealCenter()
         // change orientation
-        window.transform = CGAffineTransformMakeRotation(CGFloat(degree * M_PI / 180))
+//        window.transform = CGAffineTransformMakeRotation(CGFloat(degree * M_PI / 180))
         window.hidden = false
         window.addSubview(mainView)
         spinner1.startAnimating()
