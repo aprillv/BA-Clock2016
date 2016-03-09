@@ -30,5 +30,7 @@ class ScheduledDayItem: BaseObject {
     
     var Hours: NSNumber?
     
+    var ClockInName: String?
+    var ClockOutName: String?
     
 }

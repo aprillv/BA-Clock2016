@@ -49,10 +49,10 @@ class ClockMapCell: UITableViewCell {
                 
                 
 //                timeLbl.text = item.DayFullName! + ", " + item.Day!
-                clockInText.text = "Clock In \n\(item.ClockInDay!)\n@ " + item.ClockIn!
+                clockInText.text = "\(item.ClockInName ?? "Clock In") \n\(item.ClockInDay!)\n@ " + item.ClockIn!
                 if item.ClockOut != "" {
                     backGroupImageView.image = UIImage(named: "clockout.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
-                    clockOutTextLbl.text = "Clock Out \n\(item.ClockOutDay!)\n@ " + item.ClockOut!
+                    clockOutTextLbl.text = "\(item.ClockOutName  ?? "Clock Out") \n\(item.ClockOutDay!)\n@ " + item.ClockOut!
                     if let _ = item.ClockOutCoordinate?.Latitude {
 //                        backGroupImageView.layer.setValue("\(item.ClockOutCoordinate!.Latitude!)", forKey: "lat")
 //                        backGroupImageView.layer.setValue("\(item.ClockOutCoordinate!.Longitude!)", forKey: "lng")

@@ -26,6 +26,7 @@
 		11128F901C3E3869006390C1 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11128F821C3E385D006390C1 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		11128F951C3E38A6006390C1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11128F941C3E38A6006390C1 /* BaseViewController.swift */; };
 		11128F971C3E38D4006390C1 /* CConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11128F961C3E38D4006390C1 /* CConstants.swift */; };
+		1116A7AA1C8FB60400438FBB /* MoreActionRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116A7A91C8FB60400438FBB /* MoreActionRequired.swift */; };
 		111A25131C5342C70013A9CA /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 111A250D1C5342C70013A9CA /* LocationTracker.m */; };
 		111A25141C5342C70013A9CA /* LocationShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 111A250F1C5342C70013A9CA /* LocationShareModel.m */; };
 		111A25151C5342C70013A9CA /* BackgroundTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 111A25111C5342C70013A9CA /* BackgroundTaskManager.m */; };
@@ -143,6 +144,7 @@
 		11128F771C3E385D006390C1 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "Alamofire-master/Alamofire.xcodeproj"; sourceTree = "<group>"; };
 		11128F941C3E38A6006390C1 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		11128F961C3E38D4006390C1 /* CConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CConstants.swift; sourceTree = "<group>"; };
+		1116A7A91C8FB60400438FBB /* MoreActionRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreActionRequired.swift; sourceTree = "<group>"; };
 		111A250D1C5342C70013A9CA /* LocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationTracker.m; sourceTree = "<group>"; };
 		111A250E1C5342C70013A9CA /* LocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationTracker.h; sourceTree = "<group>"; };
 		111A250F1C5342C70013A9CA /* LocationShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationShareModel.m; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 				11F8DC2F1C50A981002E4736 /* FrequencyItem.swift */,
 				11104F891C589ED100DF7922 /* DeviceTokenRequired.swift */,
 				11BCEBD11C608D3E007726D4 /* TrackDotItem.swift */,
+				1116A7A91C8FB60400438FBB /* MoreActionRequired.swift */,
 			);
 			name = Models;
 			path = Views/Models;
@@ -467,6 +470,7 @@
 				1189AC4E1C5F4A1C00E407FE /* CustomAnnotation.swift in Sources */,
 				111A25131C5342C70013A9CA /* LocationTracker.m in Sources */,
 				11E889431C4F57FE003E9633 /* cl_coreData.swift in Sources */,
+				1116A7AA1C8FB60400438FBB /* MoreActionRequired.swift in Sources */,
 				110B81101C46189100FE136D /* ScheduledDayItem.swift in Sources */,
 				11128F651C3E0EE2006390C1 /* BA_Clock.xcdatamodeld in Sources */,
 				1158DA791C44CF930022B2D5 /* ClockMapViewController.swift in Sources */,

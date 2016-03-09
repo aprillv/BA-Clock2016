@@ -48,6 +48,7 @@ struct CConstants{
     static let LoginServiceURL: String = "login.json"
     static let RegisterDeviceTokenServiceURL: String = "RegisterDeviceToken.json"
     static let ClockInServiceURL: String = "ClockIn.json"
+    static let MoreActionServiceURL: String = "MoreActions.json"
     static let SubmitLocationServiceURL: String = "SubmitLocation.json"
     static let ClockOutServiceURL: String = "ClockOut.json"
     static let SyncScheduleIntervalURL : String = "SyncScheduleInterval.json"

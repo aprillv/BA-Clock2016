@@ -224,7 +224,9 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
         }
     }
     
-    
+    override func viewWillAppear(animated: Bool) {
+        self.callGetList()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -274,7 +276,9 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
                 loginRequiredInfo.Token = token
                 loginRequiredInfo.TokenSecret = tokenSecret
 //                self.firstrefreshControl?.beginRefreshing()
-                self.noticeOnlyText(CConstants.LoadingMsg)
+                if self.clockDataList == nil {
+                    self.noticeOnlyText(CConstants.LoadingMsg)
+                }
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetScheduledDataURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     self.firstrefreshControl?.endRefreshing()
                     if response.result.isSuccess {
@@ -282,17 +286,60 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
                         if let rtnValue = response.result.value as? [String: AnyObject]{
                             
                             if rtnValue["Status"]!.integerValue == 1 {
-                                self.clockDataList = [ScheduledDayItem]()
-                                for item in rtnValue["ScheduledDay"] as! [[String: AnyObject]]{
-                                    self.clockDataList!.append(ScheduledDayItem(dicInfo: item))
-                                }
-                                
-                                self.update1()
-                                if let a = self.CurrentScheduledInterval {
-                                    if a > 0 && self.getLastSubmitTime(){
-                                        self.updateLocation()
+                                if self.clockDataList != nil {
+//                                    var changed = false
+                                    if let list = rtnValue["ScheduledDay"] as? [[String: AnyObject]] {
+                                        for item in list{
+                                            let info = ScheduledDayItem(dicInfo: item)
+                                            
+                                            if self.clockDataList!.filter(
+                                                { $0.ClockIn == info.ClockIn && $0.ClockOut == info.ClockOut}
+                                                ).count > 0 {
+                                            } else {
+                                                let listtmp = self.clockDataList!.filter(
+                                                    { $0.ClockIn == info.ClockIn}
+                                                )
+                                                if listtmp.count > 0 {
+                                                    let ind = self.clockDataList!.indexOf(listtmp[0])
+//                                                    self.clockDataList?.removeAtIndex(ind!)
+                                                    let s = ind?.distanceTo(self.clockDataList!.indexOf(self.clockDataList![0])!)
+                                                    
+                                                    let p = NSIndexPath(forRow: s!, inSection: 0)
+                                                    self.clockDataList![s!] = info
+                                                    
+                                                    self.mapTable.reloadRowsAtIndexPaths([p], withRowAnimation: .None)
+                                                }else{
+                                                    self.clockDataList?.append(info)
+                                                    self.mapTable.insertRowsAtIndexPaths([NSIndexPath(forRow: self.clockDataList!.count-1, inSection: 0)], withRowAnimation: .None)
+                                                }
+//                                                changed = true
+                                                
+                                                
+                                            }
+                                            
+                                        }
+                                    }
+//                                    if changed {
+//                                        self.mapTable?.reloadData()
+//                                        self.scrollToBottom()
+//                                        
+//                                    }
+                                }else{
+                                    self.clockDataList = [ScheduledDayItem]()
+                                    for item in rtnValue["ScheduledDay"] as! [[String: AnyObject]]{
+                                        self.clockDataList!.append(ScheduledDayItem(dicInfo: item))
+                                    }
+                                    self.update1()
+                                    if let a = self.CurrentScheduledInterval {
+                                        if a > 0 && self.getLastSubmitTime(){
+                                            self.updateLocation()
+                                        }
                                     }
                                 }
+                               
+                                
+                                
+                                
                             }else{
                                 self.PopMsgWithJustOK(msg: rtnValue["Message"] as! String) {
                                     (action : UIAlertAction) -> Void in
@@ -602,6 +649,11 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
                     }
                     
                 }
+            }
+        }else if segue.identifier == constants.SegueToMoreController {
+            if let dvc = segue.destinationViewController as? MoreViewController {
+                dvc.locationTracker = self.locationTracker
+                
             }
         }
     }
