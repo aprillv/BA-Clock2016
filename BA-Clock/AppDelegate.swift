@@ -90,21 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print("fort tessssssss")
         // display the userInfo
         if let _ = userInfo["aps"] as? NSDictionary {
-//            let alert = notification["alert"] as? String {
-//                let alertCtrl = UIAlertController(title: "BA Clock", message: alert as String, preferredStyle: UIAlertControllerStyle.Alert)
-//                alertCtrl.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default){
-//                    (_) -> Void in
-//                    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-//
-////                    let localNotification = UILocalNotification()
-////                    localNotification.applicationIconBadgeNumber = 0
-//                    })
-//                // Find the presented VC...
-//                var presentedVC = self.window?.rootViewController
-//                while (presentedVC!.presentedViewController != nil)  {
-//                    presentedVC = presentedVC!.presentedViewController
-//                }
-//                presentedVC!.presentViewController(alertCtrl, animated: true, completion: nil)
+
                 
                 UIApplication.sharedApplication().applicationIconBadgeNumber = 0
                 

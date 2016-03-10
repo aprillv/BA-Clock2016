@@ -26,7 +26,7 @@ class BaseViewController: UIViewController {
     }
     
     func PopMsgWithJustOK(msg msg1: String, txtField : UITextField?){
-        
+//        let hud = 
         let alert: UIAlertController = UIAlertController(title: CConstants.MsgTitle, message: msg1, preferredStyle: .Alert)
         
         //Create and add the OK action

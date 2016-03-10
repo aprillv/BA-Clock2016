@@ -11,6 +11,42 @@ import Alamofire
 
 class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     var locationTracker : LocationTracker?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+//        UIButton *button =  [UIButton buttonWithType:UIButtonTypeCustom];
+//        [button setImage:[UIImage imageNamed:@"image.png"] forState:UIControlStateNormal];
+//        [button addTarget:target action:@selector(buttonAction:)forControlEvents:UIControlEventTouchUpInside];
+//        [button setFrame:CGRectMake(0, 0, 53, 31)];
+//        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(3, 5, 50, 20)];
+//        [label setFont:[UIFont fontWithName:@"Arial-BoldMT" size:13]];
+//        [label setText:title];
+//        label.textAlignment = UITextAlignmentCenter;
+//        [label setTextColor:[UIColor whiteColor]];
+//        [label setBackgroundColor:[UIColor clearColor]];
+//        [button addSubview:label];
+//        UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+//        self.navigationItem.leftBarButtonItem = barButton;
+        
+        let button = UIButton(type: .Custom)
+//        button.setImage(UIImage(named: "back"), forState: .Normal)
+        button.addTarget(self, action: "GoBackToList:", forControlEvents: .TouchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 60, height: 44)
+//        button.setTitle("Back", forState: .Normal)
+        let im = UIImageView(image: UIImage(named: "back"))
+        var ct = im.frame
+        ct.origin.y = (44 - ct.size.height)/2
+        im.frame = ct
+        button.addSubview(im)
+        let lbl = UILabel(frame: CGRect(x: 20, y: 0, width: 40, height: 44))
+        lbl.textColor = UIColor.whiteColor()
+        lbl.text = "Back"
+        button.addSubview(lbl)
+        let leftbutton = UIBarButtonItem(customView: button)
+        self.navigationItem.leftBarButtonItem = leftbutton
+        
+    }
+    
     @IBAction func GoBackToList(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }

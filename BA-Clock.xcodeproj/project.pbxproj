@@ -47,6 +47,7 @@
 		11E889431C4F57FE003E9633 /* cl_coreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E889421C4F57FE003E9633 /* cl_coreData.swift */; };
 		11F256C41C48CA08009353CD /* ClockOutRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F256C31C48CA08009353CD /* ClockOutRequired.swift */; };
 		11F8DC301C50A981002E4736 /* FrequencyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F8DC2F1C50A981002E4736 /* FrequencyItem.swift */; };
+		7C1686CA2158C40A6F00EEC4 /* libPods-BA-Clock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD3E751F02820BA23FF63338 /* libPods-BA-Clock.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +169,9 @@
 		11E889421C4F57FE003E9633 /* cl_coreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cl_coreData.swift; sourceTree = "<group>"; };
 		11F256C31C48CA08009353CD /* ClockOutRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockOutRequired.swift; sourceTree = "<group>"; };
 		11F8DC2F1C50A981002E4736 /* FrequencyItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequencyItem.swift; sourceTree = "<group>"; };
+		3C5C896F08706DD1428A0ED8 /* Pods-BA-Clock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BA-Clock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BA-Clock/Pods-BA-Clock.debug.xcconfig"; sourceTree = "<group>"; };
+		41515ADC4D8E6DED1032837D /* Pods-BA-Clock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BA-Clock.release.xcconfig"; path = "Pods/Target Support Files/Pods-BA-Clock/Pods-BA-Clock.release.xcconfig"; sourceTree = "<group>"; };
+		DD3E751F02820BA23FF63338 /* libPods-BA-Clock.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BA-Clock.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +181,7 @@
 			files = (
 				1158DA6F1C44CF3A0022B2D5 /* MapKit.framework in Frameworks */,
 				11128F8F1C3E3869006390C1 /* Alamofire.framework in Frameworks */,
+				7C1686CA2158C40A6F00EEC4 /* libPods-BA-Clock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +238,8 @@
 				11128F771C3E385D006390C1 /* Alamofire.xcodeproj */,
 				11128F5B1C3E0EE2006390C1 /* BA-Clock */,
 				11128F5A1C3E0EE2006390C1 /* Products */,
+				40E3546B5740D77F373767CF /* Pods */,
+				89592751F8F74FFAC20BD0BA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -315,6 +322,23 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		40E3546B5740D77F373767CF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3C5C896F08706DD1428A0ED8 /* Pods-BA-Clock.debug.xcconfig */,
+				41515ADC4D8E6DED1032837D /* Pods-BA-Clock.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		89592751F8F74FFAC20BD0BA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DD3E751F02820BA23FF63338 /* libPods-BA-Clock.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -322,10 +346,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 11128F6E1C3E0EE2006390C1 /* Build configuration list for PBXNativeTarget "BA-Clock" */;
 			buildPhases = (
+				4C5B1C694B2BCBBAADE3E61F /* Check Pods Manifest.lock */,
 				11128F551C3E0EE2006390C1 /* Sources */,
 				11128F561C3E0EE2006390C1 /* Frameworks */,
 				11128F571C3E0EE2006390C1 /* Resources */,
 				11128F931C3E3869006390C1 /* Embed Frameworks */,
+				C472570D5B195AB91AD614B2 /* Embed Pods Frameworks */,
+				B334769454110D51BCC446D1 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -441,6 +468,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4C5B1C694B2BCBBAADE3E61F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B334769454110D51BCC446D1 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BA-Clock/Pods-BA-Clock-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C472570D5B195AB91AD614B2 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BA-Clock/Pods-BA-Clock-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		11128F551C3E0EE2006390C1 /* Sources */ = {
@@ -589,6 +664,7 @@
 		};
 		11128F6F1C3E0EE2006390C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C5C896F08706DD1428A0ED8 /* Pods-BA-Clock.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -605,6 +681,7 @@
 		};
 		11128F701C3E0EE2006390C1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41515ADC4D8E6DED1032837D /* Pods-BA-Clock.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

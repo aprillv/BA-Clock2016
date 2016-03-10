@@ -225,6 +225,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.callGetList()
     }
     
@@ -249,7 +250,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
             Tool.saveDeviceTokenToSever()
 //            self.mapTable?.setContentOffset(CGPoint(x: 0, y: -(self.firstrefreshControl?.frame.size.height ?? 0)), animated: true)
 //            firstrefreshControl?.beginRefreshing()
-            self.callGetList()
+//            self.callGetList()
             self.syncFrequency()
         }else{
             firstTime = true
@@ -267,7 +268,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
     
     
     private func callGetList(){
-        
+//        print("+++++++++++++")
         let userInfo = NSUserDefaults.standardUserDefaults()
         if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String{
             if let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String {
@@ -314,7 +315,6 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
                                                     self.mapTable.beginUpdates()
                                                     let h = self.clockDataList!.count
                                                     self.clockDataList?.insert(info, atIndex: h)
-//                                                    self.clockDataList?.append(info)
                                                     let p = NSIndexPath(forRow: h, inSection: 0)
                                                     self.mapTable.insertRowsAtIndexPaths([p], withRowAnimation: .Top)
                                                     self.mapTable.endUpdates()
@@ -347,15 +347,19 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
                                
                                 
                                 
-                                
+                              self.performSelector("dismissProgress", withObject: nil, afterDelay: 0.1)
                             }else{
+                                self.dismissProgress()
                                 self.PopMsgWithJustOK(msg: rtnValue["Message"] as! String) {
                                     (action : UIAlertAction) -> Void in
                                     
                                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                     if let login = storyboard.instantiateViewControllerWithIdentifier("LoginStart") as? LoginViewController {
+                                        
                                         var va : [UIViewController]? = self.navigationController?.viewControllers
                                         if va != nil {
+                                            self.locationTracker?.stopLocationTracking()
+                                            self.locationTracker = nil
                                             va!.insert(login, atIndex: 0)
                                             self.navigationController?.viewControllers = va!
                                             self.navigationController?.popToRootViewControllerAnimated(true)
@@ -365,13 +369,13 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
                             }
                             
                         }else{
-                            
+                          self.performSelector("dismissProgress", withObject: nil, afterDelay: 0.1)
                         }
                     }else{
-                        
+                        self.performSelector("dismissProgress", withObject: nil, afterDelay: 0.1)
                         self.PopNetworkError()
                     }
-                    self.performSelector("dismissProgress", withObject: nil, afterDelay: 0.1)
+                    
                 }
             }
         }
@@ -1016,5 +1020,7 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
             self.performSegueWithIdentifier(constants.SegueToMoreController, sender: nil)
         }
     }
+    
+    
    
 }

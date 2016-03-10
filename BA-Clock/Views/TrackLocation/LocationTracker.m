@@ -118,29 +118,7 @@
 //    NSLog(@"startLocationTracking");
 
 	if ([CLLocationManager locationServicesEnabled] == NO) {
-//        NSLog(@"locationServicesEnabled false");
-        
-//        et alert: UIAlertController = UIAlertController(title: CConstants.MsgTitle, message: msg1, preferredStyle: .Alert)
-//        
-//        //Create and add the OK action
-//        let oKAction: UIAlertAction = UIAlertAction(title: CConstants.MsgOKTitle, style: .Cancel) { action -> Void in
-//            //Do some stuff
-//            txtField?.becomeFirstResponder()
-//        }
-//        alert.addAction(oKAction)
-//        
-//        
-//        //Present the AlertController
-//        self.presentViewController(alert, animated: true, completion: nil)
-        
-//         initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil
-//        UIAlertController *servicesDisabledAlert = [[UIAlertController alloc] init];
-//        servicesDisabledAlert.title = @"BA Clock";
-//        servicesDisabledAlert.message = @"You currently have all location services for this device disabled";
-//        UIAlertAction *ok = [[UIAlertAction alloc]init];
-//        [servicesDisabledAlert addAction:ok];
-    
-        
+     
         
         
 	} else {
