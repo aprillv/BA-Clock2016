@@ -300,17 +300,25 @@ class ClockMapViewController: BaseViewController, MKMapViewDelegate, UITableView
                                                     { $0.ClockIn == info.ClockIn}
                                                 )
                                                 if listtmp.count > 0 {
+                                                     self.mapTable.beginUpdates()
                                                     let ind = self.clockDataList!.indexOf(listtmp[0])
 //                                                    self.clockDataList?.removeAtIndex(ind!)
                                                     let s = ind?.distanceTo(self.clockDataList!.indexOf(self.clockDataList![0])!)
                                                     
-                                                    let p = NSIndexPath(forRow: s!, inSection: 0)
-                                                    self.clockDataList![s!] = info
+                                                    let p = NSIndexPath(forRow: -s!, inSection: 0)
+                                                    self.clockDataList![-s!] = info
                                                     
                                                     self.mapTable.reloadRowsAtIndexPaths([p], withRowAnimation: .None)
+                                                    self.mapTable.endUpdates()
                                                 }else{
-                                                    self.clockDataList?.append(info)
-                                                    self.mapTable.insertRowsAtIndexPaths([NSIndexPath(forRow: self.clockDataList!.count-1, inSection: 0)], withRowAnimation: .None)
+                                                    self.mapTable.beginUpdates()
+                                                    let h = self.clockDataList!.count
+                                                    self.clockDataList?.insert(info, atIndex: h)
+//                                                    self.clockDataList?.append(info)
+                                                    let p = NSIndexPath(forRow: h, inSection: 0)
+                                                    self.mapTable.insertRowsAtIndexPaths([p], withRowAnimation: .Top)
+                                                    self.mapTable.endUpdates()
+//                                                    self.scrollToBottom()
                                                 }
 //                                                changed = true
                                                 
