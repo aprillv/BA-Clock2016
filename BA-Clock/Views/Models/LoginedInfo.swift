@@ -21,5 +21,6 @@ class LoginedInfo: BaseObject {
     var ScheduledTo : String?
     var UserName: String?
     var UserFullName : String?
+    var GPSAgreement : NSNumber?
     
 }

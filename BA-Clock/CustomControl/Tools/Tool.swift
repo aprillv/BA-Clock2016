@@ -10,6 +10,85 @@ import Foundation
 import Alamofire
 
 class Tool: NSObject {
+    func getTime2() -> Bool{
+        let date = NSDate()
+        //        print(date)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
+        
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
+        
+        
+        
+        let today = dateFormatter.stringFromDate(date)
+        let index0 = today.startIndex
+        let todayDay = today.substringToIndex(index0.advancedBy(10))
+        let coreData = cl_coreData()
+        
+        var send = false
+        if let frequency = coreData.getFrequencyByWeekdayNm(today.substringFromIndex(index0.advancedBy(11))) {
+            //        if let frequency = coreData.getFrequencyByWeekdayNm("Monday") {
+            //            print(todayDay + " " + frequency.ScheduledFrom!)
+            dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+            //            print(dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!))
+            if let fromTime = dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!) {
+                //                print(fromTime)
+                if date.timeIntervalSinceDate(fromTime) > 0 {
+                    if let toTime = dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledTo!) {
+                        send = (toTime.timeIntervalSinceDate(date) > 0)
+                    }
+                }
+                
+            }
+        }
+        return send
+        
+    }
+    
+    func getTimeInter() -> (Bool, NSTimeInterval){
+        let date = NSDate()
+        //        print(date)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
+        
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
+        
+        
+        
+        let today = dateFormatter.stringFromDate(date)
+        let index0 = today.startIndex
+        let todayDay = today.substringToIndex(index0.advancedBy(10))
+        let coreData = cl_coreData()
+        
+        var send = false
+        var rtn : NSTimeInterval = 0
+        if let frequency = coreData.getFrequencyByWeekdayNm(today.substringFromIndex(index0.advancedBy(11))) {
+            //        if let frequency = coreData.getFrequencyByWeekdayNm("Monday") {
+            //            print(todayDay + " " + frequency.ScheduledFrom!)
+            dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+            //            print(dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!))
+            if let fromTime = dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!) {
+                //                print(fromTime)
+                if date.timeIntervalSinceDate(fromTime) > 0 {
+                    if let toTime = dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledTo!) {
+                        send = (toTime.timeIntervalSinceDate(date) > 0)
+                        if !send {
+                            let nextTime = fromTime.dateByAddingTimeInterval(60*60*24)
+                            rtn = nextTime.timeIntervalSinceDate(date)
+                        }
+                    }
+                }else {
+                    rtn = fromTime.timeIntervalSinceDate(date)
+                }
+                
+            }
+        }
+//        return (false, 60)
+        return (send, rtn)
+        
+    }
+    
+    
     func md5(string string: String) -> String {
         var digest = [UInt8](count: Int(CC_MD5_DIGEST_LENGTH), repeatedValue: 0)
         if let data = string.dataUsingEncoding(NSUTF8StringEncoding) {

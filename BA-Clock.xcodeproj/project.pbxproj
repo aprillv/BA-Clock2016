@@ -11,7 +11,6 @@
 		1104C2D61C8EBDB100B50B5F /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1104C2D51C8EBDB100B50B5F /* MoreViewController.swift */; };
 		110645AA1C4725F300795996 /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110645A91C4725F300795996 /* Tool.swift */; };
 		110645AC1C47643800795996 /* ClockInRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110645AB1C47643800795996 /* ClockInRequired.swift */; };
-		1109CEBA1C57162A00AFF20F /* extensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1109CEB91C57162A00AFF20F /* extensionViewController.swift */; };
 		110B810B1C4616F600FE136D /* LoginedInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B810A1C4616F600FE136D /* LoginedInfo.swift */; };
 		110B810E1C46175E00FE136D /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B810D1C46175E00FE136D /* BaseObject.swift */; };
 		110B81101C46189100FE136D /* ScheduledDayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110B810F1C46189100FE136D /* ScheduledDayItem.swift */; };
@@ -33,6 +32,8 @@
 		111AA6AD1C48C93D00BD4098 /* SubmitLocationRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111AA6AC1C48C93D00BD4098 /* SubmitLocationRequired.swift */; };
 		111BF4B71C4E121600C94E66 /* OAuthTokenItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111BF4B61C4E121600C94E66 /* OAuthTokenItem.swift */; };
 		111BF4C01C4E22AC00C94E66 /* ClockResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111BF4BF1C4E22AC00C94E66 /* ClockResponse.swift */; };
+		111FF7E61C92906200960FD3 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111FF7E51C92906200960FD3 /* AgreementViewController.swift */; };
+		112D38991C9A72A100E98E9C /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D38981C9A72A100E98E9C /* TextTableViewCell.swift */; };
 		11561A0F1C4F6C3D007A049A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11561A0E1C4F6C3D007A049A /* Main.storyboard */; };
 		1158DA6F1C44CF3A0022B2D5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1158DA6E1C44CF3A0022B2D5 /* MapKit.framework */; };
 		1158DA791C44CF930022B2D5 /* ClockMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158DA781C44CF930022B2D5 /* ClockMapViewController.swift */; };
@@ -128,7 +129,6 @@
 		1104C2D51C8EBDB100B50B5F /* MoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		110645A91C4725F300795996 /* Tool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
 		110645AB1C47643800795996 /* ClockInRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockInRequired.swift; sourceTree = "<group>"; };
-		1109CEB91C57162A00AFF20F /* extensionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensionViewController.swift; sourceTree = "<group>"; };
 		110B80FF1C45DF7500FE136D /* BA-Clock-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BA-Clock-Bridging-Header.h"; sourceTree = "<group>"; };
 		110B810A1C4616F600FE136D /* LoginedInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginedInfo.swift; sourceTree = "<group>"; };
 		110B810D1C46175E00FE136D /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
@@ -155,6 +155,8 @@
 		111AA6AC1C48C93D00BD4098 /* SubmitLocationRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitLocationRequired.swift; sourceTree = "<group>"; };
 		111BF4B61C4E121600C94E66 /* OAuthTokenItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthTokenItem.swift; sourceTree = "<group>"; };
 		111BF4BF1C4E22AC00C94E66 /* ClockResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockResponse.swift; sourceTree = "<group>"; };
+		111FF7E51C92906200960FD3 /* AgreementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
+		112D38981C9A72A100E98E9C /* TextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
 		11561A0E1C4F6C3D007A049A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1158DA6E1C44CF3A0022B2D5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1158DA781C44CF930022B2D5 /* ClockMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockMapViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				110B81131C4625B300FE136D /* ClockTextCell.swift */,
 				11810D471C4788EC00298DD9 /* ClockMapCell.swift */,
 				1189AC4D1C5F4A1C00E407FE /* CustomAnnotation.swift */,
+				112D38981C9A72A100E98E9C /* TextTableViewCell.swift */,
 			);
 			path = CustomControl;
 			sourceTree = "<group>";
@@ -277,10 +280,10 @@
 				11128F751C3E3789006390C1 /* LoginViewController.swift */,
 				1158DA781C44CF930022B2D5 /* ClockMapViewController.swift */,
 				110B80FF1C45DF7500FE136D /* BA-Clock-Bridging-Header.h */,
-				1109CEB91C57162A00AFF20F /* extensionViewController.swift */,
 				1189AC4A1C5F3E3400E407FE /* MapViewController.swift */,
 				1104C2CD1C8EAD1C00B50B5F /* GISTrackViewController.swift */,
 				1104C2D51C8EBDB100B50B5F /* MoreViewController.swift */,
+				111FF7E51C92906200960FD3 /* AgreementViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -540,17 +543,18 @@
 				1104C2D61C8EBDB100B50B5F /* MoreViewController.swift in Sources */,
 				11128F951C3E38A6006390C1 /* BaseViewController.swift in Sources */,
 				11F8DC301C50A981002E4736 /* FrequencyItem.swift in Sources */,
-				1109CEBA1C57162A00AFF20F /* extensionViewController.swift in Sources */,
 				11128F5D1C3E0EE2006390C1 /* AppDelegate.swift in Sources */,
 				1189AC4E1C5F4A1C00E407FE /* CustomAnnotation.swift in Sources */,
 				111A25131C5342C70013A9CA /* LocationTracker.m in Sources */,
 				11E889431C4F57FE003E9633 /* cl_coreData.swift in Sources */,
 				1116A7AA1C8FB60400438FBB /* MoreActionRequired.swift in Sources */,
+				111FF7E61C92906200960FD3 /* AgreementViewController.swift in Sources */,
 				110B81101C46189100FE136D /* ScheduledDayItem.swift in Sources */,
 				11128F651C3E0EE2006390C1 /* BA_Clock.xcdatamodeld in Sources */,
 				1158DA791C44CF930022B2D5 /* ClockMapViewController.swift in Sources */,
 				110B810E1C46175E00FE136D /* BaseObject.swift in Sources */,
 				110645AC1C47643800795996 /* ClockInRequired.swift in Sources */,
+				112D38991C9A72A100E98E9C /* TextTableViewCell.swift in Sources */,
 				111A25141C5342C70013A9CA /* LocationShareModel.m in Sources */,
 				1166D8571C4CC8CE00878F7C /* LoginRequired.swift in Sources */,
 				110B81141C4625B300FE136D /* ClockTextCell.swift in Sources */,

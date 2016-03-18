@@ -46,6 +46,7 @@ struct CConstants{
     static let ServerVersionURL : String = "http://contractssl.buildersaccess.com/"
     //validate login and get address list
     static let LoginServiceURL: String = "login.json"
+    static let UpdAgreementURL : String = "UpdateGPSAgreement.json"
     static let RegisterDeviceTokenServiceURL: String = "RegisterDeviceToken.json"
     static let ClockInServiceURL: String = "ClockIn.json"
     static let MoreActionServiceURL: String = "MoreActions.json"

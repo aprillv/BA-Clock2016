@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 //import LocalAuthentication
 
-class LoginViewController: BaseViewController, UITextFieldDelegate {
+class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDelegate {
 
     
     var locationTracker : LocationTracker?
@@ -20,6 +20,12 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         static let EmailEmptyMsg :  String = "Email Required."
         static let WrongEmailOrPwdMsg :  String = "Email or password is incorrect."
         
+        static let segueToAgreement = "showAgreement"
+        
+    }
+    
+    func afterAgree() {
+        self.Login(signInBtn)
     }
     
 //    var isLocationServiceEnabled: Bool?
@@ -150,10 +156,14 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     
     
     @IBAction func Login(sender: UIButton) {
-        self.noticeOnlyText(CConstants.LoginingMsg)
+       
+//        popupAgreement()
+//        self.noticeOnlyText(CConstants.LoginingMsg)
         disAblePageControl()
         self.doLogin()
     }
+    
+    
     
     private func disAblePageControl(){
         signInBtn.enabled = false
@@ -170,29 +180,47 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
     var clockInfo : LoginedInfo?{
         didSet{
             if let username = clockInfo?.UserName{
-                self.saveEmailAndPwdToDisk(email: emailTxt.text!, password: passwordTxt.text!, displayName: username, fullName: clockInfo!.UserFullName!)
                 
-                let coreData = cl_coreData()
-                coreData.savedScheduledDaysToDB(clockInfo!.ScheduledDay!)
-                coreData.savedFrequencysToDB(clockInfo!.Frequency!)
+                if let gistrack = clockInfo?.GPSAgreement {
+                    if gistrack == 1 {
+                        self.saveEmailAndPwdToDisk(email: emailTxt.text!, password: passwordTxt.text!, displayName: username, fullName: clockInfo!.UserFullName!)
+                        
+                        let coreData = cl_coreData()
+                        coreData.savedScheduledDaysToDB(clockInfo!.ScheduledDay!)
+                        coreData.savedFrequencysToDB(clockInfo!.Frequency!)
+                        
+                        let userInfo = NSUserDefaults.standardUserDefaults()
+                        userInfo.setValue(clockInfo!.OAuthToken!.Token!, forKey: CConstants.UserInfoTokenKey)
+                        userInfo.setValue(clockInfo!.OAuthToken!.TokenSecret!, forKey: CConstants.UserInfoTokenScretKey)
+                        self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
+                        
+                        Tool.saveDeviceTokenToSever()
+                    }else{
+                        let userInfo = NSUserDefaults.standardUserDefaults()
+                        userInfo.setValue(clockInfo!.OAuthToken!.Token!, forKey: CConstants.UserInfoTokenKey)
+                        userInfo.setValue(clockInfo!.OAuthToken!.TokenSecret!, forKey: CConstants.UserInfoTokenScretKey)
+                        self.performSegueWithIdentifier(constants.segueToAgreement, sender: nil)
+                    }
+                }else{
+                    self.performSegueWithIdentifier(constants.segueToAgreement, sender: nil)
+                }
                 
-                let userInfo = NSUserDefaults.standardUserDefaults()
-                userInfo.setValue(clockInfo!.OAuthToken!.Token!, forKey: CConstants.UserInfoTokenKey)
-                userInfo.setValue(clockInfo!.OAuthToken!.TokenSecret!, forKey: CConstants.UserInfoTokenScretKey)
-                self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
                 
-                Tool.saveDeviceTokenToSever()
                 
                 
             }else{
                 self.PopMsgValidationWithJustOK(msg: constants.WrongEmailOrPwdMsg, txtField: nil)
             }
             
+            
+            
+            
         }
     }
     
     
     private func doLogin(){
+        
         emailTxt.resignFirstResponder()
         passwordTxt.resignFirstResponder()
         
@@ -210,6 +238,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
                 self.PopMsgWithJustOK(msg: constants.PasswordEmptyMsg, txtField: passwordTxt)
             }else {
                 
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.labelText = CConstants.LoginingMsg
                 
                 
                 // do login
@@ -220,6 +250,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
                 loginRequiredInfo.Password = tl.md5(string: password!)
 //                print(loginRequiredInfo.getPropertieNamesAsDictionary())
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.LoginServiceURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                    hud.hide(true)
 //                    print(response.result.value)
 //                    self.progressBar.dismissViewControllerAnimated(true){
                         if response.result.isSuccess {
@@ -235,7 +266,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
                             self.PopNetworkError()
                         }
                         self.toEablePageControl()
-                        self.clearNotice()
+//                        self.clearNotice()
 //                    }
                 }
                 
@@ -269,7 +300,9 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
         userInfo.setObject(displayName, forKey: CConstants.UserDisplayName)
         userInfo.setObject(fullName, forKey: CConstants.UserFullName)
     }
-    
+    func beginTracking(){
+        NSNotificationCenter.defaultCenter().postNotificationName("beginTracking", object: nil)
+    }
     
     // MARK: PrepareForSegue
     
@@ -280,11 +313,27 @@ class LoginViewController: BaseViewController, UITextFieldDelegate {
             case CConstants.SegueToMap:
                 if let clockListView = segue.destinationViewController as? ClockMapViewController{
                     if let itemList = self.clockInfo?.ScheduledDay {
-                        clockListView.clockDataList = itemList
+                        var h = itemList
+                        let tl = Tool()
+                        let (istime, timespace) = tl.getTimeInter()
+                        if !istime {
+                            h.append(ScheduledDayItem(dicInfo: ["ClockIn" : "-1", "ClockOut":"-1"]))
+                            if timespace > 0 {
+                                self.performSelector("beginTracking", withObject: nil, afterDelay: timespace)
+                            }
+                            
+                        }
+                        clockListView.clockDataList = h
+                        
                     }
                     if let tracker = locationTracker {
                         clockListView.locationTracker = tracker
                     }
+                }
+                break
+            case constants.segueToAgreement:
+                if let agreement = segue.destinationViewController as? AgreementViewController{
+                    agreement.delegate = self
                 }
                 break
             default:
