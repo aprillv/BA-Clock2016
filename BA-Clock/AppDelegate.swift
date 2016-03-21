@@ -22,11 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print(CLLocationManager.locationServicesEnabled())
         
         
-        initializeNotificationServices()
+        
         
          UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         UIApplication.sharedApplication().cancelAllLocalNotifications()
 //       
+        initializeNotificationServices()
+        
         
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.whiteColor()], forState: .Normal)
         
@@ -63,6 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(" ", withString: "")
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString("<", withString: "")
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(">", withString: "")
+//        print(deviceTokenStr)
         let userInfo = NSUserDefaults.standardUserDefaults()
         userInfo.setValue(deviceTokenStr, forKey: CConstants.UserDeviceToken)
         
