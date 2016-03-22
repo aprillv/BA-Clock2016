@@ -87,9 +87,9 @@ class cl_coreData: NSObject {
                 scheduledDayItem.setValue(item.DayFullName!, forKey: "dayFullName")
                 scheduledDayItem.setValue(item.DayName!, forKey: "dayName")
                 scheduledDayItem.setValue(item.DayOfWeek!, forKey: "dayOfWeek")
-                scheduledDayItem.setValue(item.ScheduledFrom!, forKey: "scheduledFrom")
+                scheduledDayItem.setValue(item.ScheduledFrom ?? "08:00 AM", forKey: "scheduledFrom")
                 scheduledDayItem.setValue(item.ScheduledInterval!, forKey: "scheduledInterval")
-                scheduledDayItem.setValue(item.ScheduledTo!, forKey: "scheduledTo")
+                scheduledDayItem.setValue(item.ScheduledTo ?? "05:30 PM", forKey: "scheduledTo")
                 do {
                     try managedObjectContext.save()
                     

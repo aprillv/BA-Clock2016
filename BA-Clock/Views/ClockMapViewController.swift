@@ -319,6 +319,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         
         if let a = CurrentScheduledInterval {
             if a > 0 {
+                self.locationUpdateTimer?.invalidate()
                 self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(CurrentScheduledInterval ?? 900, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
             }
         
@@ -365,6 +366,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                     if let a = self.CurrentScheduledInterval {
                                         if a > 0 && self.getLastSubmitTime(){
                                             self.updateLocation()
+                                            self.locationUpdateTimer?.invalidate()
                                             self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
                                         }
                                         
@@ -623,10 +625,10 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
             let OAuthToken = self.getUserToken()
             submitRequired.Token = OAuthToken.Token
             submitRequired.TokenSecret = OAuthToken.TokenSecret
-//            print(submitRequired.getPropertieNamesAsDictionary())
+            print(submitRequired.getPropertieNamesAsDictionary())
     setLastSubmitTime()
             currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-//                print(response.result.value)
+                print(response.result.value)
                 if response.result.isSuccess {
                 }else{
                 }
@@ -650,9 +652,9 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
             
             let date = NSDate()
 //                print("\( date.timeIntervalSinceDate(lastTime))")
-            return date.timeIntervalSinceDate(lastTime) > timeSpace * 60.0
+            return date.timeIntervalSinceDate(lastTime) > timeSpace
         }
-        return false
+        return true
     }
     
     private func getUserToken() -> OAuthTokenItem{

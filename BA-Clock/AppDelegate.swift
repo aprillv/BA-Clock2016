@@ -24,9 +24,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
-         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+         UIApplication.sharedApplication().applicationIconBadgeNumber = -1
         UIApplication.sharedApplication().cancelAllLocalNotifications()
-//       
+        if let list = UIApplication.sharedApplication().scheduledLocalNotifications {
+            for no in list {
+                UIApplication.sharedApplication().cancelLocalNotification(no)
+            }
+        }
+        
+//        UIApplication.sharedApplication().cancelAllLocalNotifications()
+//
         initializeNotificationServices()
         
         
@@ -65,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(" ", withString: "")
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString("<", withString: "")
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(">", withString: "")
-//        print(deviceTokenStr)
+        print(deviceTokenStr)
         let userInfo = NSUserDefaults.standardUserDefaults()
         userInfo.setValue(deviceTokenStr, forKey: CConstants.UserDeviceToken)
         

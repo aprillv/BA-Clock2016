@@ -442,7 +442,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                 
                 let date = NSDate()
                 //                print("\( date.timeIntervalSinceDate(lastTime))")
-                return date.timeIntervalSinceDate(lastTime) > timeSpace * 60.0
+                return date.timeIntervalSinceDate(lastTime) > timeSpace
         }
         return false
     }
