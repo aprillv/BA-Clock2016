@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     private func clearNotifications(){
-        print("sss")
+//        print("sss")
         UIApplication.sharedApplication().applicationIconBadgeNumber = -1
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         if let list = UIApplication.sharedApplication().scheduledLocalNotifications {

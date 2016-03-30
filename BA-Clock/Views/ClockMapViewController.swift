@@ -17,22 +17,11 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
             for item in tabbar.items! {
                 item.image = item.image?.imageWithRenderingMode(.AlwaysOriginal)
             }
-            
-//            tabbar.barTintColor = UIColor.whiteColor()
         }
     }
     @IBOutlet var clearItem: UIBarButtonItem!
-//    @IBOutlet weak var clockInSpinner: UIActivityIndicatorView!
-//    @IBOutlet weak var clockOutSpinner: UIActivityIndicatorView!
     @IBOutlet weak var switchItem: UIBarButtonItem!
-    @IBOutlet weak var mapTable: UITableView!{
-        didSet{
-//            firstrefreshControl = UIRefreshControl()
-//            firstrefreshControl!.addTarget(self, action: "refreshfirst:", forControlEvents: .ValueChanged)
-//            mapTable.addSubview(firstrefreshControl!)
-            //            trackTable.separatorColor = UIColor(red: 20/255, green: 72/255, blue: 116/255, alpha: 0.3)
-        }
-    }
+    @IBOutlet weak var mapTable: UITableView!
   
     
     var refreshControl : UIRefreshControl?
@@ -77,7 +66,6 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         static let CellIdentifier : String = "clockMapCell"
         static let CellTextIdentifier : String = "clockTextCell"
         static let CellIdentifierTrack : String = "trackTableCell"
-//        static let UserInfoClockedKey : String = "ClockedIn"
         
         static let UserInfoScheduledFrom : String = "ScheduledFrom"
         static let UserInfoScheduledTo : String = "ScheduledTo"
@@ -105,10 +93,17 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "firstUpdateLocation:", name: "firstTrack", object: nil)
          NSNotificationCenter.defaultCenter().addObserver(self, selector: "changeList", name: "beginTracking", object: nil)
         self.callGetList()
     }
     
+    
+    func firstUpdateLocation(o : AnyObject) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "firstTrack", object: nil)
+       self.updateLocation()
+    }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "beginTracking", object: nil)
@@ -126,11 +121,6 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
             if let item = i {
                 if let index = list.indexOf(item) {
                     self.clockDataList!.removeAtIndex(index)
-                    
-//                    let indexpath = NSIndexPath(forRow: index, inSection: 0)
-//                    self.mapTable.beginUpdates()
-//                    self.mapTable.deleteRowsAtIndexPaths([indexpath], withRowAnimation: .None)
-//                    self.mapTable.endUpdates()
                 }
                
             }
@@ -141,8 +131,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.setLastSubmitTime()
-//        self.navigationItem.leftBarButtonItem = nil
+        print(NSDate())
         if locationTracker == nil {
             locationTracker = LocationTracker()
         }
@@ -152,19 +141,23 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         self.CurrentScheduledInterval = self.getCurrentInterval1()
         
         checkUpate()
+        
+        
+        self.update1()
+//        if self.getLastSubmitTime(){
+//            self.updateLocation()
+//        }
+        
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
         
-        if self.clockDataList == nil {
+//        if self.clockDataList == nil {
             firstTime = true
             Tool.saveDeviceTokenToSever()
-//            self.mapTable?.setContentOffset(CGPoint(x: 0, y: -(self.firstrefreshControl?.frame.size.height ?? 0)), animated: true)
-//            firstrefreshControl?.beginRefreshing()
-//            self.callGetList()
             self.syncFrequency()
-        }else{
-            firstTime = true
-        }
+//        }else{
+//            firstTime = true
+//        }
         
         let userInfo = NSUserDefaults.standardUserDefaults()
         view.bringSubviewToFront(mapTable)
@@ -219,7 +212,6 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                                 if listtmp.count > 0 {
                                                      self.mapTable.beginUpdates()
                                                     let ind = self.clockDataList!.indexOf(listtmp[0])
-//                                                    self.clockDataList?.removeAtIndex(ind!)
                                                     let s = ind?.distanceTo(self.clockDataList!.indexOf(self.clockDataList![0])!)
                                                     
                                                     let p = NSIndexPath(forRow: -s!, inSection: 0)
@@ -234,20 +226,13 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                                     let p = NSIndexPath(forRow: h, inSection: 0)
                                                     self.mapTable.insertRowsAtIndexPaths([p], withRowAnimation: .Top)
                                                     self.mapTable.endUpdates()
-//                                                    self.scrollToBottom()
                                                 }
-//                                                changed = true
                                                 
                                                 
                                             }
                                             
                                         }
                                     }
-//                                    if changed {
-//                                        self.mapTable?.reloadData()
-//                                        self.scrollToBottom()
-//                                        
-//                                    }
                                 }else{
                                     self.clockDataList = [ScheduledDayItem]()
                                     for item in rtnValue["ScheduledDay"] as! [[String: AnyObject]]{
@@ -262,12 +247,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                             self.performSelector("beginTracking", withObject: nil, afterDelay: timespace)
                                         }
                                     }
-                                    self.update1()
-                                    if let a = self.CurrentScheduledInterval {
-                                        if a > 0 && self.getLastSubmitTime(){
-                                            self.updateLocation()
-                                        }
-                                    }
+                                    
                                 }
                                
                                 
@@ -317,20 +297,31 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         
         self.SyncTimer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: "syncFrequency", userInfo: nil, repeats: true)
         
-        if let a = CurrentScheduledInterval {
+        resetUpdateLocationTimer()
+    }
+    
+    private func resetUpdateLocationTimer(){
+        if let a = self.CurrentScheduledInterval {
             if a > 0 {
                 self.locationUpdateTimer?.invalidate()
                 self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(CurrentScheduledInterval ?? 900, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
             }
-        
+            
+        }else{
+            let log = cl_log()
+            log.savedLogToDB(NSDate(), xtype: true, lat: "resetUpdateLocationTimer fail")
         }
     }
     
-    
     func updateLocation(){
+        
+        
         if getTime2() {
             self.locationTracker?.getMyLocation222()
             self.callSubmitLocationService()
+        }else{
+            let log = cl_log()
+        log.savedLogToDB(NSDate(), xtype: true, lat: "updateLocation")
         }
         
     }
@@ -345,8 +336,6 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                 loginRequiredInfo.TokenSecret = tokenSecret
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     if response.result.isSuccess {
-//                        print("++++++++++++++++++++++++++++")
-//                        print(response.result.value)
                         if let rtnValue = response.result.value as? [[String: AnyObject]]{
                             var rtn = [FrequencyItem]()
                             for item in rtnValue{
@@ -357,25 +346,10 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                             let newInterval = self.getCurrentInterval1()
                             if newInterval != self.CurrentScheduledInterval {
                                 self.CurrentScheduledInterval = newInterval
-                                 self.locationUpdateTimer?.invalidate()
-                                
-                                
-//                                let hasclocked = userInfo.valueForKey(constants.UserInfoClockedKey) as? String
-//                                if hasclocked != nil && hasclocked == "1" {
-                                
-                                    if let a = self.CurrentScheduledInterval {
-                                        if a > 0 && self.getLastSubmitTime(){
-                                            self.updateLocation()
-                                            self.locationUpdateTimer?.invalidate()
-                                            self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
-                                        }
-                                        
-                                    }
-//                                }else{
-//                                    
-//                                }
-                                
-                                
+                                self.resetUpdateLocationTimer()
+                                if self.getLastSubmitTime() {
+                                    self.updateLocation()
+                                }
                             }
                             
                         }else{
@@ -383,7 +357,6 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                         }
                     }else{
                         
-                        //                        self.PopNetworkError()
                     }
                 }
             }
@@ -427,6 +400,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         if let frequency = coreData.getFrequencyByWeekdayNm(today.substringFromIndex(index0.advancedBy(11))) {
            send = frequency.ScheduledInterval!.doubleValue * 60.0
         }
+        print(send)
         return send
         
     }
@@ -617,11 +591,15 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     
     private var lastCallSubmitLocationService : NSDate?
     private func callSubmitLocationService(){
-//            print("map \(NSDate())")
+        
             lastCallSubmitLocationService = NSDate()
             let submitRequired = SubmitLocationRequired()
             submitRequired.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
             submitRequired.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
+        
+        let log = cl_log()
+        log.savedLogToDB(NSDate(), xtype: true, lat: "\(submitRequired.Latitude!) \(submitRequired.Longitude!)")
+        
             let OAuthToken = self.getUserToken()
             submitRequired.Token = OAuthToken.Token
             submitRequired.TokenSecret = OAuthToken.TokenSecret
@@ -650,9 +628,13 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         if let lastTime = userInfo.valueForKey("LastSubmitLocationTime") as? NSDate,
             let timeSpace = self.CurrentScheduledInterval {
             
-            let date = NSDate()
-//                print("\( date.timeIntervalSinceDate(lastTime))")
-            return date.timeIntervalSinceDate(lastTime) > timeSpace
+                if timeSpace > 0 {
+                    
+                    return  NSDate().timeIntervalSinceDate(lastTime) > timeSpace
+                }else{
+                    return false
+                }
+            
         }
         return true
     }
@@ -758,7 +740,6 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                             
                                 self.mapTable.reloadData()
                                 self.scrollToBottom()
-                                self.update1()
                             
                         }else{
                             if let item = self.clockDataList?[self.clockDataList!.count-1] {
@@ -774,12 +755,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                 self.mapTable.reloadData()
                                 self.scrollToBottom()
                             }
-//                            self.locationUpdateTimer?.invalidate()
-//                            self.locationUpdateTimer = nil
                         }
-                        
-//                        let userInfo = NSUserDefaults.standardUserDefaults()
-//                        userInfo.setValue(isClockIn ? "1":"0", forKey: constants.UserInfoClockedKey)
                     }
                 }else{
                     self.PopServerError()

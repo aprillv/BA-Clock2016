@@ -165,7 +165,11 @@
         CLLocation * newLocation = [locations objectAtIndex:i];
         CLLocationCoordinate2D theLocation = newLocation.coordinate;
         CLLocationAccuracy theAccuracy = newLocation.horizontalAccuracy;
+        if (self.myLastLocation.latitude == 0.0) {
         
+        }
+//        NSLog(@"--- Latitude(%f) Longitude(%f) Accuracy(%f) %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude,self.myLocationAccuracy, self.myLastLocation.latitude);
+
         NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
         
         if (locationAge > 30.0)
@@ -181,6 +185,8 @@
             self.myLastLocation = theLocation;
             self.myLastLocationAccuracy= theAccuracy;
             
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"firstTrack" object:[NSString stringWithFormat:@"%f;%f", self.myLastLocation.latitude, self.myLastLocation.longitude]];
+            
             NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
             [dict setObject:[NSNumber numberWithFloat:theLocation.latitude] forKey:@"latitude"];
             [dict setObject:[NSNumber numberWithFloat:theLocation.longitude] forKey:@"longitude"];
@@ -190,7 +196,6 @@
             //Every 1 minute, I will select the best location based on accuracy and send to server
             [self.shareModel.myLocationArray addObject:dict];
             
-//             NSLog(@"--- Latitude(%f) Longitude(%f) Accuracy(%f)", self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
         }
     }
     

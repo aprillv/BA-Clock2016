@@ -578,6 +578,11 @@ Company does not screen communications in advance and is not responsible for scr
                                 <action selector="clearPINs" destination="Pxs-Of-gi9" id="IZq-5G-eRK"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="ZUF-Rs-IVm">
+                            <connections>
+                                <segue destination="RBc-pd-d2L" kind="show" id="Wor-Y1-Icc"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -590,7 +595,51 @@ Company does not screen communications in advance and is not responsible for scr
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xh6-jL-zFa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3892.5" y="-649.5"/>
+            <point key="canvasLocation" x="-4083.5" y="-661.5"/>
+        </scene>
+        <!--Log File-->
+        <scene sceneID="tjV-BR-lnt">
+            <objects>
+                <viewController id="RBc-pd-d2L" customClass="logFile" customModule="BA_Clock" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZXv-3h-sKn"/>
+                        <viewControllerLayoutGuide type="bottom" id="0cO-wx-xKd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="q9j-g2-wry">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uFp-BE-UbV">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="logcell" id="Z1q-sx-xHA">
+                                        <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z1q-sx-xHA" id="uk9-02-FsC">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="uFp-BE-UbV" firstAttribute="leading" secondItem="q9j-g2-wry" secondAttribute="leadingMargin" constant="-16" id="8VS-RK-t2p"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uFp-BE-UbV" secondAttribute="trailing" constant="-16" id="eYh-95-Mb3"/>
+                            <constraint firstItem="uFp-BE-UbV" firstAttribute="top" secondItem="ZXv-3h-sKn" secondAttribute="bottom" id="iYP-XZ-7Ji"/>
+                            <constraint firstItem="0cO-wx-xKd" firstAttribute="top" secondItem="uFp-BE-UbV" secondAttribute="bottom" id="yTo-aR-cT6"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="logTable" destination="uFp-BE-UbV" id="yyB-Qz-w72"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n4j-s5-kio" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3637" y="-870"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="kGd-ZQ-Htz">
