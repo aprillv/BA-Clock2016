@@ -617,7 +617,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     
     private var lastCallSubmitLocationService : NSDate?
     private func callSubmitLocationService(){
-//            print("april")
+//            print("map \(NSDate())")
             lastCallSubmitLocationService = NSDate()
             let submitRequired = SubmitLocationRequired()
             submitRequired.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
@@ -625,10 +625,10 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
             let OAuthToken = self.getUserToken()
             submitRequired.Token = OAuthToken.Token
             submitRequired.TokenSecret = OAuthToken.TokenSecret
-            print(submitRequired.getPropertieNamesAsDictionary())
+//            print(submitRequired.getPropertieNamesAsDictionary())
     setLastSubmitTime()
             currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                print(response.result.value)
+//                print(response.result.value)
                 if response.result.isSuccess {
                 }else{
                 }
@@ -774,8 +774,8 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                 self.mapTable.reloadData()
                                 self.scrollToBottom()
                             }
-                            self.locationUpdateTimer?.invalidate()
-                            self.locationUpdateTimer = nil
+//                            self.locationUpdateTimer?.invalidate()
+//                            self.locationUpdateTimer = nil
                         }
                         
 //                        let userInfo = NSUserDefaults.standardUserDefaults()

@@ -14,25 +14,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-//        [[appDelegate window] setBackgroundColor:[UIColor blackColor]];
-        self.window?.backgroundColor = UIColor.whiteColor()
-//        print(CLLocationManager.locationServicesEnabled())
-        
-        
-        
-        
-         UIApplication.sharedApplication().applicationIconBadgeNumber = -1
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
+    private func clearNotifications(){
+        print("sss")
+        UIApplication.sharedApplication().applicationIconBadgeNumber = -1
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         if let list = UIApplication.sharedApplication().scheduledLocalNotifications {
             for no in list {
                 UIApplication.sharedApplication().cancelLocalNotification(no)
             }
         }
         
-//        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+    }
+
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+//         print("\(NSDate()) didFinishLaunchingWithOptions")
+        
+       clearNotifications()
+        
+        self.window?.backgroundColor = UIColor.whiteColor()
+//        print(CLLocationManager.locationServicesEnabled())
+        
+        
+        
+        
+        
 //
         initializeNotificationServices()
         
@@ -115,9 +121,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
+//    func applicationDidBecomeActive(application: UIApplication) {
+//        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+//    }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
@@ -191,13 +197,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    
     
     func applicationDidEnterBackground(application: UIApplication) {
-        
+//        print("\(NSDate()) applicationDidEnterBackground")
       
-        
+         clearNotifications()
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
-        
+//        print("\(NSDate()) applicationWillEnterForeground")
     }
     
 

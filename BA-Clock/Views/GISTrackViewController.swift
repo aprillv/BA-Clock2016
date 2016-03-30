@@ -415,7 +415,9 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         let OAuthToken = self.getUserToken()
         submitRequired.Token = OAuthToken.Token
         submitRequired.TokenSecret = OAuthToken.TokenSecret
-        //            print(submitRequired.getPropertieNamesAsDictionary())
+//        print("background")
+//                    print(submitRequired.getPropertieNamesAsDictionary())
+         print("background \(NSDate())")
         setLastSubmitTime()
         currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
             //                print(response.result.value)
