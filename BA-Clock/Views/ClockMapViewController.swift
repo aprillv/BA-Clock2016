@@ -303,8 +303,25 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     private func resetUpdateLocationTimer(){
         if let a = self.CurrentScheduledInterval {
             if a > 0 {
-                self.locationUpdateTimer?.invalidate()
-                self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(CurrentScheduledInterval ?? 900, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
+//                let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
+//                dispatch_async(dispatch_get_global_queue(qos, 0)) {
+                    self.locationUpdateTimer?.invalidate()
+//                    self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
+                
+//                NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.7
+//                    target:[NSBlockOperation blockOperationWithBlock:^{ /* do this! */ }]
+//                    selector:@selector(main)
+//                userInfo:nil
+//                repeats:NO
+//                ];
+                
+                self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target:
+                    NSBlockOperation(block: { () -> Void in
+                        self.updateLocation()
+                    }), selector: "main", userInfo: nil, repeats: true)
+                
+//                }
+               
             }
             
         }else{
@@ -314,7 +331,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     }
     
     func updateLocation(){
-        
+//        print("april")
         
         if getTime2() {
             self.locationTracker?.getMyLocation222()
@@ -389,7 +406,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-        
+         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         
         
         let today = dateFormatter.stringFromDate(date)
@@ -413,7 +430,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         
-        
+         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
@@ -526,7 +543,12 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         
     }
     
-   
+    @IBAction func gotoLog(sender: AnyObject) {
+        if self.title == "April" || self.title == "april Lv" || self.title == "jack fan" {
+            self.performSegueWithIdentifier("showLog", sender: nil)
+        }
+    }
+
     
     func clockInTapped(tap : UITapGestureRecognizer){
 //        print("sfsdf \(tap.view?.superview?.tag)  \(tap.view?.layer.valueForKey("lng"))")

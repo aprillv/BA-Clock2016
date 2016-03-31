@@ -280,7 +280,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-        
+         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         
         
         let today = dateFormatter.stringFromDate(date)

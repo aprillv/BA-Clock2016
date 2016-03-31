@@ -579,8 +579,9 @@ Company does not screen communications in advance and is not responsible for scr
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" id="ZUF-Rs-IVm">
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="RBc-pd-d2L" kind="show" id="Wor-Y1-Icc"/>
+                                <action selector="gotoLog:" destination="Pxs-Of-gi9" id="jbQ-h7-6wX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -591,6 +592,7 @@ Company does not screen communications in advance and is not responsible for scr
                         <outlet property="tabbar" destination="Zwh-On-rqN" id="5Rm-gy-Hhv"/>
                         <segue destination="nvC-56-ODH" kind="presentation" identifier="showMapDetail" id="1Ei-fW-KDl"/>
                         <segue destination="87Q-nH-QVh" kind="show" identifier="More" id="XWW-Vi-Bvk"/>
+                        <segue destination="RBc-pd-d2L" kind="show" identifier="showLog" id="Ux1-H1-HZn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xh6-jL-zFa" userLabel="First Responder" sceneMemberID="firstResponder"/>

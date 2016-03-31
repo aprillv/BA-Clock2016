@@ -29,8 +29,8 @@ class logFile: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("logcell", forIndexPath: indexPath)
         let logItem = logc![indexPath.row]
-        let index = logItem.time!.startIndex
-        cell.textLabel?.text = "\(logItem.time!.substringToIndex(index.advancedBy(19))) \(logItem.latlng!)"
+//        let index = logItem.time!.startIndex
+        cell.textLabel?.text = "\(logItem.time!) \(logItem.latlng!)"
 //        cell.detailTextLabel?.text = "\(logItem.time!)"
         return cell
     }

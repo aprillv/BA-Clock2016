@@ -35,13 +35,16 @@ class cl_log: NSObject {
                 let scheduledDayItem = NSManagedObject(entity: entity!,
                     insertIntoManagedObjectContext: managedObjectContext)
                 
-                
-                
-                scheduledDayItem.setValue(lat, forKey: "latlng")
-                scheduledDayItem.setValue(xtype, forKey: "xtype")
-                scheduledDayItem.setValue("\(d)", forKey: "time")
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+            dateFormatter.dateFormat =  "MM/dd hh:mm a"
+            let nowHour = dateFormatter.stringFromDate(d)
             
-                
+            scheduledDayItem.setValue(lat, forKey: "latlng")
+            scheduledDayItem.setValue(xtype, forKey: "xtype")
+            scheduledDayItem.setValue(nowHour, forKey: "time")
+            
+            
                 
                 do {
                     try managedObjectContext.save()
@@ -64,8 +67,8 @@ class cl_log: NSObject {
     
     func getLogs() -> [logs]?{
         let fetchRequest = NSFetchRequest(entityName: "LogFile")
-        let predicate = NSPredicate(format: "time BEGINSWITH[cd] %@", "2016")
-        fetchRequest.predicate = predicate
+//        let predicate = NSPredicate(format: "time BEGINSWITH[cd] %@", "2016")
+//        fetchRequest.predicate = predicate
         do {
             let results =
             try managedObjectContext.executeFetchRequest(fetchRequest)

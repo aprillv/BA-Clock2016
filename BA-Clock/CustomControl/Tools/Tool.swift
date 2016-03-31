@@ -18,7 +18,7 @@ class Tool: NSObject {
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         
-        
+         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
@@ -53,7 +53,7 @@ class Tool: NSObject {
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         
-        
+         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
