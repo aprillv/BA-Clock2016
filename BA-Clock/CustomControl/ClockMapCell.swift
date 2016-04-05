@@ -105,7 +105,9 @@ class ClockMapCell: UITableViewCell {
     
     private func toADDClockInTap(){
         if let _ = superActionView, let _ = clockInMap {
-            let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:Selector("clockInTapped:"))
+            
+            let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:#selector(ClockMapViewController.clockInTapped(_:)))
+//            let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:Selector("clockInTapped:"))
             clockInMap.userInteractionEnabled = true
             tapGestureRecognizer.numberOfTapsRequired = 1
             clockInMap.addGestureRecognizer(tapGestureRecognizer)
@@ -114,7 +116,8 @@ class ClockMapCell: UITableViewCell {
     
     private func toADDClockOutTap(){
         if let _ = superActionView , let _ = clockOutMap{
-            let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:Selector("clockOutTapped:"))
+//            let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:Selector("clockOutTapped:"))
+             let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:#selector(ClockMapViewController.clockOutTapped(_:)))
             tapGestureRecognizer.numberOfTapsRequired = 1
             clockOutMap.userInteractionEnabled = true
             clockOutMap.addGestureRecognizer(tapGestureRecognizer)

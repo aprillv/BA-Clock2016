@@ -94,8 +94,8 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "firstUpdateLocation:", name: "firstTrack", object: nil)
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: "changeList", name: "beginTracking", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ClockMapViewController.firstUpdateLocation(_:)), name: "firstTrack", object: nil)
+         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ClockMapViewController.changeList), name: "beginTracking", object: nil)
         self.callGetList()
     }
     
@@ -131,7 +131,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(NSDate())
+        
         if locationTracker == nil {
             locationTracker = LocationTracker()
         }
@@ -244,7 +244,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                     if !isTime {
                                         self.clockDataList!.append(ScheduledDayItem(dicInfo: ["ClockIn" : "-1", "ClockOut":"-1"]))
                                         if timespace > 0 {
-                                            self.performSelector("beginTracking", withObject: nil, afterDelay: timespace)
+                                            self.performSelector(#selector(ClockMapViewController.beginTracking), withObject: nil, afterDelay: timespace)
                                         }
                                     }
                                     
@@ -295,10 +295,14 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     
     private func update1(){
         
-        self.SyncTimer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: "syncFrequency", userInfo: nil, repeats: true)
+        self.SyncTimer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(ClockMapViewController.syncFrequency), userInfo: nil, repeats: true)
         
         resetUpdateLocationTimer()
     }
+    
+    
+    private var signalSource: dispatch_source_t!
+    private var signalOnceToken = dispatch_once_t()
     
     private func resetUpdateLocationTimer(){
         if let a = self.CurrentScheduledInterval {
@@ -315,11 +319,13 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
 //                repeats:NO
 //                ];
                 
+                
                 self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target:
                     NSBlockOperation(block: { () -> Void in
                         self.updateLocation()
-                    }), selector: "main", userInfo: nil, repeats: true)
-                
+//                        print("test")
+                    }), selector: #selector(NSOperation.main), userInfo: nil, repeats: true)
+                NSRunLoop.currentRunLoop().addTimer(self.locationUpdateTimer!, forMode: NSRunLoopCommonModes)
 //                }
                
             }
@@ -331,7 +337,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     }
     
     func updateLocation(){
-//        print("april")
+       
         
         if getTime2() {
             self.locationTracker?.getMyLocation222()
@@ -387,7 +393,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         dateFormatter.dateFormat = "MM/dd/yyyy hh"
         let nowHour = dateFormatter.stringFromDate(date)
         dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss"
-        for var i = 14; i < 60; i += 15 {
+        for i in 14.stride(to: 60, by: 15) {
             let now15 = dateFormatter.dateFromString(nowHour + ":\(i):59")
             let timeSpace = now15?.timeIntervalSinceDate(date)
             if  timeSpace > 0 {
@@ -614,6 +620,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     private var lastCallSubmitLocationService : NSDate?
     private func callSubmitLocationService(){
         
+        print("ssssssss")
             lastCallSubmitLocationService = NSDate()
             let submitRequired = SubmitLocationRequired()
             submitRequired.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"

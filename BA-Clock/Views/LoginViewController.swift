@@ -319,7 +319,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                         if !istime {
                             h.append(ScheduledDayItem(dicInfo: ["ClockIn" : "-1", "ClockOut":"-1"]))
                             if timespace > 0 {
-                                self.performSelector("beginTracking", withObject: nil, afterDelay: timespace)
+                                self.performSelector(#selector(LoginViewController.beginTracking), withObject: nil, afterDelay: timespace)
                             }
                             
                         }
@@ -348,6 +348,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         let userInfo = NSUserDefaults.standardUserDefaults()
         userInfo.setValue("0", forKey: CConstants.RegisteredDeviceToken)
         

@@ -30,7 +30,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         let button = UIButton(type: .Custom)
 //        button.setImage(UIImage(named: "back"), forState: .Normal)
-        button.addTarget(self, action: "GoBackToList:", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(MoreViewController.GoBackToList(_:)), forControlEvents: .TouchUpInside)
         button.frame = CGRect(x: 0, y: 0, width: 60, height: 44)
 //        button.setTitle("Back", forState: .Normal)
         let im = UIImageView(image: UIImage(named: "back"))

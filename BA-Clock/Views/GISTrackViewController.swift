@@ -26,7 +26,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     @IBOutlet weak var trackTable: UITableView!{
         didSet{
             refreshControl = UIRefreshControl()
-            refreshControl!.addTarget(self, action: "refresh:", forControlEvents: .ValueChanged)
+            refreshControl!.addTarget(self, action: #selector(GISTrackViewController.refresh(_:)), forControlEvents: .ValueChanged)
             trackTable.addSubview(refreshControl!)
             //            trackTable.separatorColor = UIColor(red: 20/255, green: 72/255, blue: 116/255, alpha: 0.3)
         }
@@ -180,11 +180,11 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     
     private func update1(){
         
-        self.SyncTimer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: "syncFrequency", userInfo: nil, repeats: true)
+        self.SyncTimer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(GISTrackViewController.syncFrequency), userInfo: nil, repeats: true)
         
         if let a = CurrentScheduledInterval {
             if a > 0 {
-                self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(CurrentScheduledInterval ?? 900, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
+                self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(CurrentScheduledInterval ?? 900, target: self, selector: #selector(GISTrackViewController.updateLocation), userInfo: nil, repeats: true)
             }
             
         }
@@ -232,7 +232,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                                 if let a = self.CurrentScheduledInterval {
                                     if a > 0 && self.getLastSubmitTime(){
                                         self.updateLocation()
-                                        self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
+                                        self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target: self, selector: #selector(GISTrackViewController.updateLocation), userInfo: nil, repeats: true)
                                     }
                                     
                                 }
@@ -262,7 +262,8 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         dateFormatter.dateFormat = "MM/dd/yyyy hh"
         let nowHour = dateFormatter.stringFromDate(date)
         dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss"
-        for var i = 14; i < 60; i += 15 {
+        for i in 14.stride(to: 60, by: 15) {
+//        for var i = 14; i < 60; i += 15 {
             let now15 = dateFormatter.dateFromString(nowHour + ":\(i):59")
             let timeSpace = now15?.timeIntervalSinceDate(date)
             if  timeSpace > 0 {
@@ -540,7 +541,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                         
                         self.PopNetworkError()
                     }
-                    self.performSelector("dismissProgress", withObject: nil, afterDelay: 0.2)
+                    self.performSelector(#selector(GISTrackViewController.dismissProgress), withObject: nil, afterDelay: 0.2)
                 }
         }
         

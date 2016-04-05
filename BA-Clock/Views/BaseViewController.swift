@@ -116,7 +116,7 @@ class BaseViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         //LocationServiceDenied
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "popLocationErrorMsg", name:"LocationServiceDenied", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BaseViewController.popLocationErrorMsg), name:"LocationServiceDenied", object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {

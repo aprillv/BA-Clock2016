@@ -26,7 +26,7 @@ class cl_log: NSObject {
         
 //        let fetchRequest = NSFetchRequest(entityName: "LogFile")
 //        let request = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        do {
+//        do {
 //            try persistentStoreCoordinator.executeRequest(request, withContext: managedObjectContext)
            
                 let entity =  NSEntityDescription.entityForName("LogFile",
@@ -54,10 +54,10 @@ class cl_log: NSObject {
                 }
             
             
-        } catch let error as NSError {
-            print("\(error)")
-            // TODO: handle the error
-        }
+//        } catch let error as NSError {
+//            print("\(error)")
+//            // TODO: handle the error
+//        }
         
         
         

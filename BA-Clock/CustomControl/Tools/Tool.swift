@@ -111,7 +111,9 @@ class Tool: NSObject {
         if getifaddrs(&ifaddr) == 0 {
             
             // For each interface ...
-            for (var ptr = ifaddr; ptr != nil; ptr = ptr.memory.ifa_next) {
+//          
+            var ptr = ifaddr
+            while ptr != nil {
                 let interface = ptr.memory
                 
                 // Check for IPv4 or IPv6 interface:
@@ -125,11 +127,12 @@ class Tool: NSObject {
                         var addr = interface.ifa_addr.memory
                         var hostname = [CChar](count: Int(NI_MAXHOST), repeatedValue: 0)
                         getnameinfo(&addr, socklen_t(interface.ifa_addr.memory.sa_len),
-                            &hostname, socklen_t(hostname.count),
-                            nil, socklen_t(0), NI_NUMERICHOST)
+                                    &hostname, socklen_t(hostname.count),
+                                    nil, socklen_t(0), NI_NUMERICHOST)
                         address = String.fromCString(hostname)
                     }
                 }
+                ptr = ptr.memory.ifa_next
             }
             freeifaddrs(ifaddr)
         }
