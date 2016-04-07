@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "481452163.537043"
+            timestampString = "481705585.431145"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "582"
-            endingLineNumber = "582"
+            startingLineNumber = "550"
+            endingLineNumber = "550"
             landmarkName = "prepareForSegue(_:sender:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,27 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "481452163.537043"
+            timestampString = "481705585.431145"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "432"
-            endingLineNumber = "432"
-            landmarkName = "getTime2()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "481452163.537043"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "430"
-            endingLineNumber = "430"
+            startingLineNumber = "431"
+            endingLineNumber = "431"
             landmarkName = "ClockMapViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -250,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "481452163.537043"
+            timestampString = "481705585.431145"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "616"
-            endingLineNumber = "616"
+            startingLineNumber = "584"
+            endingLineNumber = "584"
             landmarkName = "ClockMapViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -330,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "481452163.537043"
+            timestampString = "481705585.431145"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "483"
-            endingLineNumber = "483"
+            startingLineNumber = "451"
+            endingLineNumber = "451"
             landmarkName = "tableView(_:numberOfRowsInSection:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -479,10 +463,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "function signature specialization &lt;Arg[2] = Owned To Guaranteed&gt; of generic specialization &lt;Swift.String.UTF8View with Swift.String.UTF8View : Swift.CollectionType in Swift, Swift.IndexingGenerator&lt;Swift.String.UTF8View&gt; with Swift.IndexingGenerator&lt;Swift.String.UTF8View&gt; : Swift.GeneratorType in Swift, Swift.UInt8, Swift.String.UTF8View.Index with Swift.String.UTF8View.Index : Swift.ForwardIndexType in Swift, Swift.Int with Swift.Int : Swift._SignedIntegerType in Swift, Swift.Int with Swift.Int : Swift._BuiltinIntegerLiteralConvertible in Swift, Swift._DisabledRangeIndex_, Swift.String.UTF8View with Swift.String.UTF8View : Swift.Indexable in Swift and Swift.String.UTF8View : Swift.SequenceType in Swift, Swift.IndexingGenerator&lt;Swift.String.UTF8View&gt; with Swift.IndexingGenerator&lt;Swift.String.UTF8View&gt; : Swift.GeneratorType in Swift, Swift.UInt8, Swift.String.UTF8View.Index with Swift.String.UTF8View.Index : Swift.ForwardIndexType in Swift, Swift.Int with Swift.Int : Swift._SignedIntegerType in Swift, Swift.Int with Swift.Int : Swift._BuiltinIntegerLiteralConvertible in Swift, Swift._DisabledRangeIndex_, Swift.String.UTF8View, Swift.UInt8, Swift.UInt8&gt; of (extension in Swift):Swift.CollectionType.split (Swift.Int, allowEmptySlices : Swift.Bool, isSeparator : (A.Generator.Element) throws -&gt; Swift.Bool) throws -&gt; Swift.Array&lt;A.SubSequence&gt;"
-                  moduleName = "libswiftCore.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "268">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -494,11 +476,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/TrackLocation/LocationTracker.m"
-            timestampString = "481106449.962025"
+            timestampString = "481705585.431145"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "-stopLocationTracking"
             landmarkType = "5">
          </BreakpointContent>
@@ -510,11 +492,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "481452163.537043"
+            timestampString = "481705585.431145"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "549"
-            endingLineNumber = "549"
+            startingLineNumber = "517"
+            endingLineNumber = "517"
             landmarkName = "tableView(_:willDisplayCell:forRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -526,11 +508,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "481452596.955565"
+            timestampString = "481705585.431145"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "736"
-            endingLineNumber = "736"
+            startingLineNumber = "704"
+            endingLineNumber = "704"
             landmarkName = "callClockService(isClockIn:)"
             landmarkType = "5">
             <Locations>
@@ -542,11 +524,11 @@
                   moduleName = "BA-Clock"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/April/Desktop/BuildersAccess/BA-Clock/BA-Clock/Views/ClockMapViewController.swift"
-                  timestampString = "481454113.552808"
+                  timestampString = "481712175.691971"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "736"
-                  endingLineNumber = "736"
+                  startingLineNumber = "704"
+                  endingLineNumber = "704"
                   offsetFromSymbolStart = "900">
                </Location>
                <Location
@@ -557,11 +539,11 @@
                   moduleName = "BA-Clock"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/April/Desktop/BuildersAccess/BA-Clock/BA-Clock/Views/ClockMapViewController.swift"
-                  timestampString = "481454113.553034"
+                  timestampString = "481712175.692114"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "738"
-                  endingLineNumber = "738"
+                  startingLineNumber = "706"
+                  endingLineNumber = "706"
                   offsetFromSymbolStart = "36">
                </Location>
             </Locations>

@@ -7,6 +7,7 @@
 //
 
 #import "LocationTracker.h"
+#import "BA_Clock-Swift.h"
 
 #define LATITUDE @"latitude"
 #define LONGITUDE @"longitude"
@@ -62,37 +63,10 @@
 
 - (void) restartLocationUpdates
 {
-//    NSLog(@"restartLocationUpdates");
+    NSLog(@"restartLocationUpdates");
+    cl_log *cg = [[cl_log alloc] init];
+    [cg savedLogToDB:[NSDate date] xtype:false lat:@"backgroundlocation"];
     
-//    // 初始化本地通知对象
-//    UILocalNotification *notification = [[UILocalNotification alloc] init];
-//    if (notification) {
-//        // 设置通知的提醒时间
-//        NSDate *currentDate   = [NSDate date];
-//        notification.timeZone = [NSTimeZone defaultTimeZone]; // 使用本地时区
-//        notification.fireDate = [currentDate dateByAddingTimeInterval:5.0];
-//        
-//        // 设置重复间隔
-//        notification.repeatInterval = kCFCalendarUnitDay;
-//        
-//        // 设置提醒的文字内容
-//        notification.alertBody   = @"Wake up, man";
-//        notification.alertAction = NSLocalizedString(@"起床了", nil);
-//        
-//        // 通知提示音 使用默认的
-//        notification.soundName= UILocalNotificationDefaultSoundName;
-//        
-//        // 设置应用程序右上角的提醒个数
-//        notification.applicationIconBadgeNumber++;
-//        
-//        // 设定通知的userInfo，用来标识该通知
-//        NSMutableDictionary *aUserInfo = [[NSMutableDictionary alloc] init];
-////        aUserInfo[@"sss"] = @"LocalNotificationID";
-//        notification.userInfo = aUserInfo;
-//        
-//        // 将通知添加到系统中
-//        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-//    }
     
     
     if (self.shareModel.timer) {
@@ -208,7 +182,7 @@
     [self.shareModel.bgTask beginNewBackgroundTask];
     
     //Restart the locationMaanger after 1 minute
-    self.shareModel.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self
+    self.shareModel.timer = [NSTimer scheduledTimerWithTimeInterval:60*5 target:self
                                                            selector:@selector(restartLocationUpdates)
                                                            userInfo:nil
                                                             repeats:NO];
@@ -230,8 +204,12 @@
 
 //Stop the locationManager
 -(void)stopLocationDelayBy10Seconds{
+    
+    [self updateLocationToServer];
     CLLocationManager *locationManager = [LocationTracker sharedLocationManager];
     [locationManager stopUpdatingLocation];
+    
+    
     
 //    NSLog(@"locationManager stop Updating after 10 seconds");
 }
@@ -314,59 +292,63 @@
 }
 
 //Send the location to Server
-//- (void)updateLocationToServer {
-//    [self getMyLocation222];
-//    [self submitLocaiton];
-//}
-//
-//-(void)submitLocaiton{
-//    
-//    NSURLSessionDataTask *postDataTask;
-//    
-//    NSError *error;
-//    NSData *data1;
-//    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
-//    [dic setValue:[NSString stringWithFormat:@"%f", self.myLastLocation.latitude] forKey:@"Latitude"];
-//    [dic setValue:[NSString stringWithFormat:@"%f", self.myLastLocation.longitude] forKey:@"Longitude"];
-//    [dic setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"Token"] forKey:@"Token"];
-//    [dic setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"TokenScret"] forKey:@"TokenSecret"];
-//    
-//    if (dic) {
-//        data1 =[NSJSONSerialization dataWithJSONObject:dic options:kNilOptions error:&error];
-//    }else{
-//        data1=nil;
-//    }
-//    
-//    
-//    
-//    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
-//    NSURL *url;
-//    url = [NSURL URLWithString: @"http://clockservice.buildersaccess.com/SubmitLocation.json"];
-//    
-//    //     NSLog(@"-%@-%@",url, [[NSString alloc]initWithData:data1 encoding:NSUTF8StringEncoding]);
-//    
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-//                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
-//                                                       timeoutInterval:20];
-//    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//    [request setHTTPMethod:@"POST"];
-//    [request setTimeoutInterval: 15];
-//    [request setHTTPBody:data1];
-//    //        NSLog(@"application %@", [[NSString alloc]initWithData:request.HTTPBody encoding:NSUTF8StringEncoding]);
+- (void)updateLocationToServer {
+    Tool *tl = [[Tool alloc]init];
+    if (tl.getTime2){
+        [self getMyLocation222];
+        [self submitLocaiton];
+    }
+    
+}
+
+-(void)submitLocaiton{
+    
+    NSURLSessionDataTask *postDataTask;
+    
+    NSError *error;
+    NSData *data1;
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setValue:[NSString stringWithFormat:@"%f", self.myLastLocation.latitude] forKey:@"Latitude"];
+    [dic setValue:[NSString stringWithFormat:@"%f", self.myLastLocation.longitude] forKey:@"Longitude"];
+    [dic setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"Token"] forKey:@"Token"];
+    [dic setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"TokenScret"] forKey:@"TokenSecret"];
+    
+    if (dic) {
+        data1 =[NSJSONSerialization dataWithJSONObject:dic options:kNilOptions error:&error];
+    }else{
+        data1=nil;
+    }
+    
+    
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
+    NSURL *url;
+    url = [NSURL URLWithString: @"http://clockservice.buildersaccess.com/SubmitLocation.json"];
+    
+    //     NSLog(@"-%@-%@",url, [[NSString alloc]initWithData:data1 encoding:NSUTF8StringEncoding]);
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:20];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPMethod:@"POST"];
+    [request setTimeoutInterval: 15];
+    [request setHTTPBody:data1];
+    //        NSLog(@"application %@", [[NSString alloc]initWithData:request.HTTPBody encoding:NSUTF8StringEncoding]);
 //    NSLog(@"Latitude(%f) Longitude(%f) Accuracy(%f)", self.myLocation.latitude, self.myLocation.longitude,self.myLocationAccuracy);
-//    
-//    postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    
+    postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
 //        NSLog(@"%@", str);
-//
-//    }];
-//    [postDataTask resume];
-////    return postDataTask;
-//    
-//    
-//}
+
+    }];
+    [postDataTask resume];
+//    return postDataTask;
+    
+    
+}
 
 
 

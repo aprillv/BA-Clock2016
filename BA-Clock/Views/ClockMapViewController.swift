@@ -339,12 +339,13 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     func updateLocation(){
        
         
-        if getTime2() {
+        let tl = Tool()
+        if tl.getTime2() {
             self.locationTracker?.getMyLocation222()
             self.callSubmitLocationService()
         }else{
             let log = cl_log()
-        log.savedLogToDB(NSDate(), xtype: true, lat: "updateLocation")
+            log.savedLogToDB(NSDate(), xtype: true, lat: "updateLocation")
         }
         
     }
@@ -428,40 +429,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         
     }
     
-    private func getTime2() -> Bool{
-        let date = NSDate()
-//        print(date)
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
-        
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-        
-         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        
-        let today = dateFormatter.stringFromDate(date)
-        let index0 = today.startIndex
-        let todayDay = today.substringToIndex(index0.advancedBy(10))
-        let coreData = cl_coreData()
-        
-        var send = false
-        if let frequency = coreData.getFrequencyByWeekdayNm(today.substringFromIndex(index0.advancedBy(11))) {
-//        if let frequency = coreData.getFrequencyByWeekdayNm("Monday") {
-//            print(todayDay + " " + frequency.ScheduledFrom!)
-            dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-//            print(dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!))
-            if let fromTime = dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!) {
-//                print(fromTime)
-                if date.timeIntervalSinceDate(fromTime) > 0 {
-                    if let toTime = dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledTo!) {
-                        send = (toTime.timeIntervalSinceDate(date) > 0)
-                    }
-                }
-                
-            }
-        }
-        return send
-        
-    }
+    
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -620,7 +588,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     private var lastCallSubmitLocationService : NSDate?
     private func callSubmitLocationService(){
         
-        print("ssssssss")
+        print("===== \(NSDate())")
             lastCallSubmitLocationService = NSDate()
             let submitRequired = SubmitLocationRequired()
             submitRequired.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"

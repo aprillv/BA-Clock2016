@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(" ", withString: "")
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString("<", withString: "")
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(">", withString: "")
-        print(deviceTokenStr)
+//        print(deviceTokenStr)
         let userInfo = NSUserDefaults.standardUserDefaults()
         userInfo.setValue(deviceTokenStr, forKey: CConstants.UserDeviceToken)
         
