@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(" ", withString: "")
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString("<", withString: "")
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(">", withString: "")
-//        print(deviceTokenStr)
+        print(deviceTokenStr)
         let userInfo = NSUserDefaults.standardUserDefaults()
         userInfo.setValue(deviceTokenStr, forKey: CConstants.UserDeviceToken)
         
@@ -116,10 +116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
+    
 
 //    func applicationDidBecomeActive(application: UIApplication) {
 //        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
@@ -198,13 +195,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidEnterBackground(application: UIApplication) {
 //        print("\(NSDate()) applicationDidEnterBackground")
-      
+      print("_______________")
          clearNotifications()
     }
     
-    func applicationWillEnterForeground(application: UIApplication) {
-//        print("\(NSDate()) applicationWillEnterForeground")
+    
+    var  backgroundUpdateTask : UIBackgroundTaskIdentifier?
+    
+    func applicationWillResignActive(application: UIApplication) {
+        print("&&&&&&&&&&&&&&&&&&")
+        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        backgroundUpdateTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
+            self.endBackgroundUpdateTask()
+        })
     }
+    
+    func  endBackgroundUpdateTask() {
+        if self.backgroundUpdateTask != nil{
+            UIApplication.sharedApplication().endBackgroundTask(self.backgroundUpdateTask!)
+            self.backgroundUpdateTask = UIBackgroundTaskInvalid
+        }
+        
+    }
+    
+    func applicationWillEnterForeground(application: UIApplication) {
+        print("************")
+        endBackgroundUpdateTask()
+    }
+//    
     
 
 }

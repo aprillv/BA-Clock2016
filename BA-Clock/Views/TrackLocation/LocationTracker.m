@@ -24,7 +24,7 @@
 		if (_locationManager == nil) {
 			_locationManager = [[CLLocationManager alloc] init];
             _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-            _locationManager.distanceFilter = 10.0;
+            _locationManager.distanceFilter = 100.0;
 			_locationManager.allowsBackgroundLocationUpdates = YES;
 			_locationManager.pausesLocationUpdatesAutomatically = NO;
 		}
@@ -54,6 +54,9 @@
     if(IS_OS_8_OR_LATER) {
         [locationManager requestAlwaysAuthorization];
     }
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
+        locationManager.allowsBackgroundLocationUpdates = YES;
+    }
     [locationManager startUpdatingLocation];
     
     //Use the BackgroundTaskManager to manage all the background Task
@@ -63,7 +66,7 @@
 
 - (void) restartLocationUpdates
 {
-    NSLog(@"restartLocationUpdates");
+//    NSLog(@"restartLocationUpdates");
     cl_log *cg = [[cl_log alloc] init];
     [cg savedLogToDB:[NSDate date] xtype:false lat:@"backgroundlocation"];
     
@@ -79,10 +82,13 @@
 //    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
 //    locationManager.distanceFilter = kCLDistanceFilterNone;
     locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    locationManager.distanceFilter = 10.0;
+    locationManager.distanceFilter = 100.0;
     
     if(IS_OS_8_OR_LATER) {
         [locationManager requestAlwaysAuthorization];
+    }
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
+        locationManager.allowsBackgroundLocationUpdates = YES;
     }
     [locationManager startUpdatingLocation];
 }
@@ -107,9 +113,12 @@
 //            locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
 //            locationManager.distanceFilter = kCLDistanceFilterNone;
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-            locationManager.distanceFilter = 10.0;
+            locationManager.distanceFilter = 100.0;
             if(IS_OS_8_OR_LATER) {
               [locationManager requestAlwaysAuthorization];
+            }
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
+                locationManager.allowsBackgroundLocationUpdates = YES;
             }
             [locationManager startUpdatingLocation];
         }
@@ -182,10 +191,10 @@
     [self.shareModel.bgTask beginNewBackgroundTask];
     
     //Restart the locationMaanger after 1 minute
-    self.shareModel.timer = [NSTimer scheduledTimerWithTimeInterval:60*5 target:self
-                                                           selector:@selector(restartLocationUpdates)
-                                                           userInfo:nil
-                                                            repeats:NO];
+    self.shareModel.timer = [NSTimer scheduledTimerWithTimeInterval: 60*5 target:self
+                                                           selector: @selector(restartLocationUpdates)
+                                                           userInfo: nil
+                                                            repeats: NO];
     
     //Will only stop the locationManager after 10 seconds, so that we can get some accurate locations
     //The location manager will only operate for 10 seconds to save battery

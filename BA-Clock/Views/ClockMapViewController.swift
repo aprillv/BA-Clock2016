@@ -320,13 +320,15 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
 //                ];
                 
                 
-                self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target:
-                    NSBlockOperation(block: { () -> Void in
-                        self.updateLocation()
-//                        print("test")
-                    }), selector: #selector(NSOperation.main), userInfo: nil, repeats: true)
-                NSRunLoop.currentRunLoop().addTimer(self.locationUpdateTimer!, forMode: NSRunLoopCommonModes)
-//                }
+//                self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target:
+//                    NSBlockOperation(block: { () -> Void in
+//                        self.updateLocation()
+////                        print("test")
+//                    }), selector: #selector(NSOperation.main), userInfo: nil, repeats: true)
+//                NSRunLoop.currentRunLoop().addTimer(self.locationUpdateTimer!, forMode: NSRunLoopCommonModes)
+////                }
+                
+                self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target: self, selector: #selector(ClockMapViewController.updateLocation), userInfo: nil, repeats: true)
                
             }
             
@@ -337,7 +339,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     }
     
     func updateLocation(){
-       
+//      print(NSRunLoop.currentRunLoop().ismai)
         
         let tl = Tool()
         if tl.getTime2() {
@@ -588,7 +590,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     private var lastCallSubmitLocationService : NSDate?
     private func callSubmitLocationService(){
         
-        print("===== \(NSDate())")
+//        print("===== \(NSDate())")
             lastCallSubmitLocationService = NSDate()
             let submitRequired = SubmitLocationRequired()
             submitRequired.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
@@ -786,6 +788,44 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         }
     }
     
+//    var locationManager : CLLocationManager
+//    
+//    func startHikeLocationUpdates() {
+//        // Create a location manager object
+//        self.locationManager = CLLocationManager()
+//        
+//        // Set the delegate
+//        self.locationManager.delegate = self
+//        
+//        // Request location authorization
+//        self.locationManager.requestWhenInUseAuthorization()
+//        
+//        // Specify the type of activity your app is currently performing
+//        self.locationManager.activityType = CLActivityTypeFitness
+//        
+//        // Start location updates
+//        self.locationManager.startUpdatingLocation()
+//    }
+//    
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        // Add the new locations to the hike
+//        self.hike.addLocations(locations)
+//        
+//        // Defer updates until the user hikes a certain distance or a period of time has passed
+//        if (!deferringUpdates) {
+//            distance: CLLocationDistance = hike.goal - hike.distance
+//            time: NSTimeInterval = nextUpdate.timeIntervalSinceNow()
+//            locationManager.allowDeferredLocationUpdatesUntilTraveled(distance, timeout:time)
+//            deferringUpdates = true;
+//        } }
+//    
+//    func locationManager(manager: CLLocationManager, didFinishDeferredUpdatesWithError error: NSError!) {
+//        // Stop deferring updates
+//        self.deferringUpdates = false
+//        
+//        // Adjust for the next goal
+//    }
+
     
    
 }

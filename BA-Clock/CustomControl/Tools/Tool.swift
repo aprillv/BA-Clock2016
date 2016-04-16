@@ -47,14 +47,10 @@ class Tool: NSObject {
     
     func getTimeInter() -> (Bool, NSTimeInterval){
         let date = NSDate()
-        //        print(date)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
-        
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-        
-         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
         let todayDay = today.substringToIndex(index0.advancedBy(10))
