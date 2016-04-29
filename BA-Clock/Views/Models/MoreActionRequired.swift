@@ -16,4 +16,7 @@ class MoreActionRequired: RequiredBaseObject {
     var HostName : String?
     var Latitude : String?
     var Longitude : String?
+    var ReasonStart : String?
+    var ReasonEnd : String?
+    var Reason : String?
 }

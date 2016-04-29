@@ -40,6 +40,9 @@
 		11561A0F1C4F6C3D007A049A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11561A0E1C4F6C3D007A049A /* Main.storyboard */; };
 		1158DA6F1C44CF3A0022B2D5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1158DA6E1C44CF3A0022B2D5 /* MapKit.framework */; };
 		1158DA791C44CF930022B2D5 /* ClockMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158DA781C44CF930022B2D5 /* ClockMapViewController.swift */; };
+		11632BFC1CD3261100B70C44 /* timeSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11632BFB1CD3261100B70C44 /* timeSelectorViewController.swift */; };
+		11632C041CD32F9D00B70C44 /* MoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11632C031CD32F9D00B70C44 /* MoreTableViewCell.swift */; };
+		11632C061CD357BE00B70C44 /* noteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11632C051CD357BE00B70C44 /* noteTableViewCell.swift */; };
 		1166D8571C4CC8CE00878F7C /* LoginRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1166D8561C4CC8CE00878F7C /* LoginRequired.swift */; };
 		11810D3F1C476F6E00298DD9 /* RequiredBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11810D3E1C476F6E00298DD9 /* RequiredBaseObject.swift */; };
 		11810D481C4788EC00298DD9 /* ClockMapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11810D471C4788EC00298DD9 /* ClockMapCell.swift */; };
@@ -166,6 +169,9 @@
 		11561A0E1C4F6C3D007A049A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1158DA6E1C44CF3A0022B2D5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1158DA781C44CF930022B2D5 /* ClockMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockMapViewController.swift; sourceTree = "<group>"; };
+		11632BFB1CD3261100B70C44 /* timeSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = timeSelectorViewController.swift; sourceTree = "<group>"; };
+		11632C031CD32F9D00B70C44 /* MoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreTableViewCell.swift; sourceTree = "<group>"; };
+		11632C051CD357BE00B70C44 /* noteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = noteTableViewCell.swift; sourceTree = "<group>"; };
 		1166D8561C4CC8CE00878F7C /* LoginRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRequired.swift; sourceTree = "<group>"; };
 		11810D3E1C476F6E00298DD9 /* RequiredBaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequiredBaseObject.swift; sourceTree = "<group>"; };
 		11810D471C4788EC00298DD9 /* ClockMapCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockMapCell.swift; sourceTree = "<group>"; };
@@ -291,6 +297,9 @@
 				1104C2D51C8EBDB100B50B5F /* MoreViewController.swift */,
 				111FF7E51C92906200960FD3 /* AgreementViewController.swift */,
 				1110E0571CABFDB100AE132F /* logFile.swift */,
+				11632BFB1CD3261100B70C44 /* timeSelectorViewController.swift */,
+				11632C031CD32F9D00B70C44 /* MoreTableViewCell.swift */,
+				11632C051CD357BE00B70C44 /* noteTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -543,12 +552,15 @@
 				11810D481C4788EC00298DD9 /* ClockMapCell.swift in Sources */,
 				110B810B1C4616F600FE136D /* LoginedInfo.swift in Sources */,
 				111AA6AD1C48C93D00BD4098 /* SubmitLocationRequired.swift in Sources */,
+				11632C061CD357BE00B70C44 /* noteTableViewCell.swift in Sources */,
 				110645AA1C4725F300795996 /* Tool.swift in Sources */,
+				11632BFC1CD3261100B70C44 /* timeSelectorViewController.swift in Sources */,
 				11F256C41C48CA08009353CD /* ClockOutRequired.swift in Sources */,
 				11104F8A1C589ED100DF7922 /* DeviceTokenRequired.swift in Sources */,
 				111A25151C5342C70013A9CA /* BackgroundTaskManager.m in Sources */,
 				11C3B1721C56008300E50193 /* cl_Frequency.swift in Sources */,
 				1110E0561CABFB5700AE132F /* logs.swift in Sources */,
+				11632C041CD32F9D00B70C44 /* MoreTableViewCell.swift in Sources */,
 				1104C2CE1C8EAD1C00B50B5F /* GISTrackViewController.swift in Sources */,
 				1104C2D61C8EBDB100B50B5F /* MoreViewController.swift in Sources */,
 				11128F951C3E38A6006390C1 /* BaseViewController.swift in Sources */,

@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, timeSelectorDelegate {
     var locationTracker : LocationTracker?
     
     override func viewDidLoad() {
@@ -56,135 +56,187 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         static let CellIdentifierTrack = "MoreCell"
         static let SegueToGISTrack = "GISTrack"
         
-        static let TitleGISTrack = "GIS Track"
-        static let TitleLunch = "Lunch"
-        static let TitleLunchBreak = "Lunch Break"
-        static let TitleLunchReturn = "Lunch Return"
-        static let TitlePersonal = "Personal Reason"
-        static let TitlePersonal15 = "Out for 15 Mins"
-        static let TitlePersonal30 = "Out for 30 Mins"
-        static let TitlePersonal1Hour = "Out for 1 Hour"
-        static let TitlePersonal1Day = "Out for 1 Day"
-        static let TitlePersonalMedical = "Medical Reason"
+//        static let TitleGISTrack = "GIS Track"
+//        static let TitleLunch = "Lunch"
+//        static let TitleLunchBreak = "Strart Time"
+//        static let TitleLunchReturn = "Lunch Return"
+//        static let TitlePersonal = "Personal Reason"
+//        static let TitlePersonalStart = "Strart Time"
+//        static let TitlePersonalEnd = "End Time"
+//        static let TitleCompanyReason = "Company Reason"
+//        static let TitleCompanyStart = "Strart Time"
+//        static let TitleCompanyEnd = "End Time"
         
     }
     
-    let personalTitle = [constants.TitlePersonal15,
-        constants.TitlePersonal30,
-        constants.TitlePersonal1Hour,
-        constants.TitlePersonal1Day,
-        constants.TitlePersonalMedical
-    ]
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        return 3
-        return 2
+        return 4
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        switch section{
-//        case 0:
-//            return 1
-//        case 1:
-//            return 2
-//        default:
-//            return personalTitle.count
-//        }
         switch section{
         case 0:
-            return 2
+            return 3
         default:
-            return personalTitle.count
+             return 1
         }
+
         
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        print(section)
-//        print(section == 0 ? 0 : 30)
-//        return section == 0 ? 0.01 : 40
         return 40
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        switch section{
-//        case 1:
-//            return constants.TitleLunch
-//        case 2:
-//            return constants.TitlePersonal
-//        default:
-//            return nil
-//        }
-        switch section{
-        case 0:
-            return constants.TitleLunch
-        case 1:
-            return constants.TitlePersonal
-        default:
-            return nil
+    var checkStatus = [true, false, false]
+    var StartTime : NSDate = NSDate() {
+        didSet{
+            if tableView != nil {
+                let index = NSIndexSet(index: 1)
+              tableView.reloadSections(index, withRowAnimation: .Automatic)
+            }
         }
+    }
+    var EndTime  : NSDate = NSDate().dateByAddingTimeInterval(60*30){
+        didSet{
+            if tableView != nil {
+                let index = NSIndexSet(index: 2)
+                tableView.reloadSections(index, withRowAnimation: .Automatic)
+            }
+        }
+    }
+    
+    var dateFormat: NSDateFormatter = NSDateFormatter()
+    
+    private func getFormatedDate(d: NSDate) -> String{
+        dateFormat.dateFormat = "hh:mm a"
+        return dateFormat.stringFromDate(d)
+    }
+    
+    private func getFormatedDate2(d: NSDate) -> String{
+        dateFormat.dateFormat = "hh:mm:ss a"
+        return dateFormat.stringFromDate(d)
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+//        let cell1 = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifierTrack, forIndexPath: indexPath)
         
-//        let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifierTrack, forIndexPath: indexPath)
-//        
-//        switch indexPath.section {
-//        case 0:
-//            cell.textLabel?.text = constants.TitleGISTrack
-//            cell.imageView?.image = UIImage(named: "location3")
-//        case 1:
-//            if indexPath.row == 0 {
-//                cell.textLabel?.text = constants.TitleLunchBreak
-////                cell.imageView?.image = UIImage(named: "location10")
-//            }else{
-//                cell.textLabel?.text = constants.TitleLunchReturn
-////                cell.imageView?.image = UIImage(named: "location")
-//            }
-//        default:
-//            cell.textLabel?.text = personalTitle[indexPath.row]
-////            cell.imageView?.image = UIImage(named: "location30")
-//        }
-//        return cell
-        let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifierTrack, forIndexPath: indexPath)
-        
-        switch indexPath.section {
-       
+        switch indexPath.section{
         case 0:
-            if indexPath.row == 0 {
-                cell.textLabel?.text = constants.TitleLunchBreak
-                //                cell.imageView?.image = UIImage(named: "location10")
-            }else{
-                cell.textLabel?.text = constants.TitleLunchReturn
-                //                cell.imageView?.image = UIImage(named: "location")
+            let cell1 = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifierTrack, forIndexPath: indexPath)
+            if let cell = cell1 as? MoreTableViewCell {
+                switch indexPath.row {
+                case 0:
+                    cell.actionlbl?.text = "Lunch"
+                case 2:
+                    cell.actionlbl?.text = "Company Reason"
+                default:
+                    cell.actionlbl?.text = "Personal Reason"
+                }
+                cell.checkImg.image = UIImage(named: checkStatus[indexPath.row] ? "radioed" : "radio")
             }
+            return cell1
+        case 1:
+            let cell1 = tableView.dequeueReusableCellWithIdentifier("time", forIndexPath: indexPath)
+            cell1.textLabel?.text = getFormatedDate(StartTime)
+            return cell1
+        case 2:
+            let cell1 = tableView.dequeueReusableCellWithIdentifier("time", forIndexPath: indexPath)
+            cell1.textLabel?.text = getFormatedDate(EndTime)
+            return cell1
         default:
-            cell.textLabel?.text = personalTitle[indexPath.row]
-            //            cell.imageView?.image = UIImage(named: "location30")
+            let cell1 = tableView.dequeueReusableCellWithIdentifier("notes", forIndexPath: indexPath)
+            if let cell = cell1 as? noteTableViewCell {
+                
+                let numberToolbar = UIToolbar(frame: CGRectMake(0, 0, self.view.frame.size.width, 50))
+                numberToolbar.barStyle = UIBarStyle.Default
+                numberToolbar.items = [
+//                    UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action:
+//                        #selector(cancelNumberPad)),
+                    UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
+                    UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(doneWithNumberPad))]
+                numberToolbar.sizeToFit()
+                dext = cell.txtView
+                cell.txtView.inputAccessoryView = numberToolbar
+               
+            }
+            return cell1
         }
-        return cell
         
     }
+    
+    var dext : UITextView?
+    
+    func cancelNumberPad() {
+        dext?.resignFirstResponder()
+    }
+    
+    func doneWithNumberPad() {
+        dext?.resignFirstResponder()
+    }
+
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60.0
+        switch indexPath.section{
+        case 3:
+            return 120
+        default:
+            return 44
+        }
     }
     
+    @IBOutlet var datepicker: UIDatePicker!
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        switch indexPath.section {
-//        case 0:
-//            self.performSegueWithIdentifier(constants.SegueToGISTrack, sender:nil)
-//            
-//        default:
-//            let cell = tableView.cellForRowAtIndexPath(indexPath)
-//            callService(cell?.textLabel?.text ?? "")
-//            break
-//        }
-//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-            let cell = tableView.cellForRowAtIndexPath(indexPath)
-            callService(cell?.textLabel?.text ?? "")
-            
+        switch indexPath.section {
+        case 0:
+            dext?.resignFirstResponder()
+                for i in 0...checkStatus.count-1 {
+                    if i == indexPath.row {
+                        checkStatus[indexPath.row] = true
+                    }else{
+                        checkStatus[i] = false
+                    }
+                }
+                self.tableView.reloadData()
+        case 1:
+            dext?.resignFirstResponder()
+            self.performSegueWithIdentifier("showTime", sender: 1)
+        case 2:
+            dext?.resignFirstResponder()
+            self.performSegueWithIdentifier("showTime", sender: 2)
+        default:
+            break;
+        }
+        
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "showTime":
+                if let time = segue.destinationViewController as? timeSelectorViewController,
+                    let index = sender as? Int {
+                    time.delegate = self
+                    time.xtitle = index == 1 ? "Start Time" : "End Time"
+                    time.xdate = index == 1 ? StartTime : EndTime
+                    if index == 2 {
+                        time.xminDate = StartTime.dateByAddingTimeInterval(60*5)
+                    }
+                }
+            default:
+                break
+            }
+        }
+    }
+    
+    func finishSelectTime(xtime: NSDate, isStrat: Bool) {
+        if isStrat {
+            StartTime = xtime
+        }else{
+            EndTime = xtime
+        }
     }
    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -196,10 +248,16 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         let lbl = UILabel()
         lbl.textAlignment = .Left
-        if section == 0 {
-        lbl.text = constants.TitleLunch.uppercaseString
-        }else{
-        lbl.text = constants.TitlePersonal.uppercaseString
+        
+        switch section{
+        case 0:
+            lbl.text = "Leave Reason"
+        case 1:
+            lbl.text = "Start Time"
+        case 2:
+            lbl.text = "End Time"
+        default:
+            lbl.text = "Notes"
         }
         lbl.sizeToFit()
         lbl.font = UIFont(name: "System", size: 17)
@@ -216,8 +274,54 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         return userInfo1
     }
     
-    private func callService(actionType : String){
-       
+//    private func callService(actionType : String){
+//       
+//        let requiredInfo = MoreActionRequired()
+//        requiredInfo.ActionType = actionType
+//        requiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
+//        requiredInfo.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
+//        requiredInfo.HostName = UIDevice.currentDevice().name
+//        let tl = Tool()
+//        requiredInfo.IPAddress = tl.getWiFiAddress()
+//        let OAuthToken = self.getUserToken()
+//        requiredInfo.Token = OAuthToken.Token!
+//        //        clockOutRequiredInfo.Token = "asdfaasdf"
+//        requiredInfo.TokenSecret = OAuthToken.TokenSecret!
+//        
+//        print(requiredInfo.getPropertieNamesAsDictionary())
+//        Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
+//            parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+//            
+//                if let rtnValue = response.result.value as? Int{
+//                    if rtnValue == 1 {
+//                        self.navigationController?.popViewControllerAnimated(true)
+//                    }else{
+//                         self.PopServerError()
+//                    }
+//                }else{
+//                    self.PopServerError()
+//                }
+//                
+//           
+//        }
+//    }
+    
+    
+    private func callService(){
+        var actionType : String?
+        for i in 0...2 {
+            if checkStatus[i] {
+                switch i{
+                case 0:
+                    actionType = "Lunch"
+                case 1:
+                    actionType = "Personal Reason"
+                default:
+                    actionType = "Company Reason"
+                }
+                break
+            }
+        }
         let requiredInfo = MoreActionRequired()
         requiredInfo.ActionType = actionType
         requiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
@@ -229,23 +333,86 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         requiredInfo.Token = OAuthToken.Token!
         //        clockOutRequiredInfo.Token = "asdfaasdf"
         requiredInfo.TokenSecret = OAuthToken.TokenSecret!
+        requiredInfo.ReasonStart = self.getFormatedDate2(StartTime)
+        requiredInfo.ReasonEnd = self.getFormatedDate2(EndTime)
         
-        print(requiredInfo.getPropertieNamesAsDictionary())
+        let index = NSIndexPath(forRow: 0, inSection: 3)
+        if let cell = tableView.cellForRowAtIndexPath(index) as? noteTableViewCell {
+            requiredInfo.Reason = cell.txtView.text ?? " "
+        }else{
+            requiredInfo.Reason = " "
+        }
+        
+//        print(requiredInfo.getPropertieNamesAsDictionary())
         Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
             parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-            
+                
                 if let rtnValue = response.result.value as? Int{
                     if rtnValue == 1 {
                         self.navigationController?.popViewControllerAnimated(true)
                     }else{
-                         self.PopServerError()
+                        self.PopServerError()
                     }
                 }else{
                     self.PopServerError()
                 }
                 
-           
+                
         }
     }
+    
+    @IBAction func doCancel(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+
+//    @IBOutlet var noteView: UITextView!{
+//        didSet{
+//            noteView.layer.cornerRadius = 5.0
+//            noteView.layer.borderColor = CConstants.BorderColor.CGColor
+//            noteView.layer.borderWidth = 1.0 / (UIScreen().scale)
+//        }
+//    }
+    @IBAction func dosubmit(sender: AnyObject) {
+        callService()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(myKeyboardWillShowHandler(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(myKeyboardWillHideHandler(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        //        [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+        
+    }
+    func myKeyboardWillHideHandler(noti : NSNotification) {
+        tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        tableView.scrollEnabled = true
+    }
+    
+    
+    func myKeyboardWillShowHandler(noti : NSNotification) {
+//        print(view.frame.size.height)
+        if view.frame.size.height == 672.0{
+            // 6+
+             tableView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
+        }else if view.frame.size.height > 600{
+            // 6
+            tableView.setContentOffset(CGPoint(x: 0, y: 200), animated: true)
+       }else if view.frame.size.height > 500{
+    // 6
+            tableView.setContentOffset(CGPoint(x: 0, y: 300), animated: true)
+        }
+    
+        tableView.scrollEnabled = false
+    }
+    
     
 }
