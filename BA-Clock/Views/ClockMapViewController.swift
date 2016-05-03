@@ -232,6 +232,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                             }
                                             
                                         }
+                                        self.scrollToBottom()
                                     }
                                 }else{
                                     self.clockDataList = [ScheduledDayItem]()
@@ -247,6 +248,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                             self.performSelector(#selector(ClockMapViewController.beginTracking), withObject: nil, afterDelay: timespace)
                                         }
                                     }
+                                    
                                     
                                 }
                                
@@ -783,13 +785,51 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
             doClockIn()
         case "Clock Out":
             doClockOut()
+        case "Come Back":
+            doComeBack()
         default:
             self.performSegueWithIdentifier(constants.SegueToMoreController, sender: nil)
         }
     }
     
+    private func doComeBack(){
+        self.locationTracker?.getMyLocation222()
+//        currentRequest?.cancel()
+        //        print(CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL))
+        //        let userInfo = NSUserDefaults.standardUserDefaults()
+        let clockOutRequiredInfo = ClockOutRequired()
+        clockOutRequiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
+        clockOutRequiredInfo.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
+        clockOutRequiredInfo.HostName = UIDevice.currentDevice().name
+        let tl = Tool()
+        clockOutRequiredInfo.IPAddress = tl.getWiFiAddress()
+        let OAuthToken = self.getUserToken()
+        clockOutRequiredInfo.Token = OAuthToken.Token!
+        //        clockOutRequiredInfo.Token = "asdfaasdf"
+        clockOutRequiredInfo.TokenSecret = OAuthToken.TokenSecret!
+        var param = clockOutRequiredInfo.getPropertieNamesAsDictionary()
+        param["ActionType"] = "Come Back"
+        //        print(clockOutRequiredInfo.getPropertieNamesAsDictionary())
+        
+        
+        var hud : MBProgressHUD?
+        hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud!.labelText = "Saving to server..."
+        
+        Alamofire.request(.POST, CConstants.ServerURL + "ComeBack.json", parameters: param).responseJSON{ (response) -> Void in
+            hud?.hide(true)
+            if response.result.isSuccess {
+//                print(response.result.value)
+self.callGetList()
+            }else{
+                self.PopNetworkError()
+                
+            }
+        }
+    }
+    
 //    var locationManager : CLLocationManager
-//    
+//
 //    func startHikeLocationUpdates() {
 //        // Create a location manager object
 //        self.locationManager = CLLocationManager()

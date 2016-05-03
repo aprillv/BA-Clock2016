@@ -548,7 +548,8 @@ Company does not screen communications in advance and is not responsible for scr
                                 <items>
                                     <tabBarItem title="Clock In" image="clockIns" id="vO8-6N-NfC"/>
                                     <tabBarItem title="Clock Out" image="clockOuts" id="MM6-Ey-kBR"/>
-                                    <tabBarItem title="More" image="more" selectedImage="more" id="gDL-8q-Z9i"/>
+                                    <tabBarItem title="Go Out" image="clockIns" selectedImage="more" id="gDL-8q-Z9i"/>
+                                    <tabBarItem title="Come Back" image="clockOuts" selectedImage="more" id="FWd-Ov-2os"/>
                                 </items>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="barTintColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
@@ -871,7 +872,7 @@ Company does not screen communications in advance and is not responsible for scr
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tOk-7S-4l5">
                                                     <rect key="frame" x="38" y="19" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
