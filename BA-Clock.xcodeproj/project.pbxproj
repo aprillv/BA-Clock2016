@@ -24,14 +24,10 @@
 		11128F671C3E0EE2006390C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11128F661C3E0EE2006390C1 /* Assets.xcassets */; };
 		11128F6A1C3E0EE2006390C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11128F681C3E0EE2006390C1 /* LaunchScreen.storyboard */; };
 		11128F761C3E3789006390C1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11128F751C3E3789006390C1 /* LoginViewController.swift */; };
-		11128F8F1C3E3869006390C1 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11128F821C3E385D006390C1 /* Alamofire.framework */; };
-		11128F901C3E3869006390C1 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11128F821C3E385D006390C1 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		11128F951C3E38A6006390C1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11128F941C3E38A6006390C1 /* BaseViewController.swift */; };
 		11128F971C3E38D4006390C1 /* CConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11128F961C3E38D4006390C1 /* CConstants.swift */; };
+		111293DD1CDB3AC400B0DAFC /* CLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111293DC1CDB3AC400B0DAFC /* CLocationManager.swift */; };
 		1116A7AA1C8FB60400438FBB /* MoreActionRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116A7A91C8FB60400438FBB /* MoreActionRequired.swift */; };
-		111A25131C5342C70013A9CA /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 111A250D1C5342C70013A9CA /* LocationTracker.m */; };
-		111A25141C5342C70013A9CA /* LocationShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 111A250F1C5342C70013A9CA /* LocationShareModel.m */; };
-		111A25151C5342C70013A9CA /* BackgroundTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 111A25111C5342C70013A9CA /* BackgroundTaskManager.m */; };
 		111AA6AD1C48C93D00BD4098 /* SubmitLocationRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111AA6AC1C48C93D00BD4098 /* SubmitLocationRequired.swift */; };
 		111BF4B71C4E121600C94E66 /* OAuthTokenItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111BF4B61C4E121600C94E66 /* OAuthTokenItem.swift */; };
 		111BF4C01C4E22AC00C94E66 /* ClockResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111BF4BF1C4E22AC00C94E66 /* ClockResponse.swift */; };
@@ -49,72 +45,14 @@
 		11810D4A1C478C2800298DD9 /* CoordinateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11810D491C478C2800298DD9 /* CoordinateObject.swift */; };
 		1189AC4B1C5F3E3400E407FE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1189AC4A1C5F3E3400E407FE /* MapViewController.swift */; };
 		1189AC4E1C5F4A1C00E407FE /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1189AC4D1C5F4A1C00E407FE /* CustomAnnotation.swift */; };
+		11A6263A1CD9D78400B91EBE /* cl_submitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A626391CD9D78400B91EBE /* cl_submitData.swift */; };
+		11A626471CD9E0C800B91EBE /* Pods_BA_Clock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A626461CD9E0C800B91EBE /* Pods_BA_Clock.framework */; };
 		11BCEBD21C608D3E007726D4 /* TrackDotItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BCEBD11C608D3E007726D4 /* TrackDotItem.swift */; };
 		11C3B1721C56008300E50193 /* cl_Frequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C3B1711C56008300E50193 /* cl_Frequency.swift */; };
 		11E889431C4F57FE003E9633 /* cl_coreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E889421C4F57FE003E9633 /* cl_coreData.swift */; };
 		11F256C41C48CA08009353CD /* ClockOutRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F256C31C48CA08009353CD /* ClockOutRequired.swift */; };
 		11F8DC301C50A981002E4736 /* FrequencyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F8DC2F1C50A981002E4736 /* FrequencyItem.swift */; };
-		7C1686CA2158C40A6F00EEC4 /* libPods-BA-Clock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD3E751F02820BA23FF63338 /* libPods-BA-Clock.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		11128F811C3E385D006390C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 11128F771C3E385D006390C1 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8111E3319A95C8B0040E7D1;
-			remoteInfo = "Alamofire iOS";
-		};
-		11128F831C3E385D006390C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 11128F771C3E385D006390C1 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8111E3E19A95C8B0040E7D1;
-			remoteInfo = "Alamofire iOS Tests";
-		};
-		11128F851C3E385D006390C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 11128F771C3E385D006390C1 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4DD67C0B1A5C55C900ED2280;
-			remoteInfo = "Alamofire OSX";
-		};
-		11128F871C3E385D006390C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 11128F771C3E385D006390C1 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F829C6B21A7A94F100A2CD59;
-			remoteInfo = "Alamofire OSX Tests";
-		};
-		11128F891C3E385D006390C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 11128F771C3E385D006390C1 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4CF626EF1BA7CB3E0011A099;
-			remoteInfo = "Alamofire tvOS";
-		};
-		11128F8B1C3E385D006390C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 11128F771C3E385D006390C1 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4CF626F81BA7CB3E0011A099;
-			remoteInfo = "Alamofire tvOS Tests";
-		};
-		11128F8D1C3E385D006390C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 11128F771C3E385D006390C1 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E4202FE01B667AA100C997FB;
-			remoteInfo = "Alamofire watchOS";
-		};
-		11128F911C3E3869006390C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 11128F771C3E385D006390C1 /* Alamofire.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F8111E3219A95C8B0040E7D1;
-			remoteInfo = "Alamofire iOS";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		11128F931C3E3869006390C1 /* Embed Frameworks */ = {
@@ -123,7 +61,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				11128F901C3E3869006390C1 /* Alamofire.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,16 +88,10 @@
 		11128F691C3E0EE2006390C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		11128F6B1C3E0EE2006390C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11128F751C3E3789006390C1 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		11128F771C3E385D006390C1 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "Alamofire-master/Alamofire.xcodeproj"; sourceTree = "<group>"; };
 		11128F941C3E38A6006390C1 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		11128F961C3E38D4006390C1 /* CConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CConstants.swift; sourceTree = "<group>"; };
+		111293DC1CDB3AC400B0DAFC /* CLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLocationManager.swift; sourceTree = "<group>"; };
 		1116A7A91C8FB60400438FBB /* MoreActionRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreActionRequired.swift; sourceTree = "<group>"; };
-		111A250D1C5342C70013A9CA /* LocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationTracker.m; sourceTree = "<group>"; };
-		111A250E1C5342C70013A9CA /* LocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationTracker.h; sourceTree = "<group>"; };
-		111A250F1C5342C70013A9CA /* LocationShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationShareModel.m; sourceTree = "<group>"; };
-		111A25101C5342C70013A9CA /* LocationShareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationShareModel.h; sourceTree = "<group>"; };
-		111A25111C5342C70013A9CA /* BackgroundTaskManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundTaskManager.m; sourceTree = "<group>"; };
-		111A25121C5342C70013A9CA /* BackgroundTaskManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundTaskManager.h; sourceTree = "<group>"; };
 		111AA6AC1C48C93D00BD4098 /* SubmitLocationRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitLocationRequired.swift; sourceTree = "<group>"; };
 		111BF4B61C4E121600C94E66 /* OAuthTokenItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthTokenItem.swift; sourceTree = "<group>"; };
 		111BF4BF1C4E22AC00C94E66 /* ClockResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockResponse.swift; sourceTree = "<group>"; };
@@ -178,6 +109,10 @@
 		11810D491C478C2800298DD9 /* CoordinateObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateObject.swift; sourceTree = "<group>"; };
 		1189AC4A1C5F3E3400E407FE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1189AC4D1C5F4A1C00E407FE /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		11A626391CD9D78400B91EBE /* cl_submitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cl_submitData.swift; sourceTree = "<group>"; };
+		11A626421CD9DE0700B91EBE /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = "../../../Library/Developer/Xcode/DerivedData/BA-Clock-btldguqodhyzauffklqyprjcyjpz/Build/Products/Debug-iphonesimulator/MBProgressHUD/MBProgressHUD.framework"; sourceTree = "<group>"; };
+		11A626441CD9DE1900B91EBE /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../../Library/Developer/Xcode/DerivedData/BA-Clock-btldguqodhyzauffklqyprjcyjpz/Build/Products/Debug-iphonesimulator/Alamofire/Alamofire.framework"; sourceTree = "<group>"; };
+		11A626461CD9E0C800B91EBE /* Pods_BA_Clock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_BA_Clock.framework; path = "../../../Library/Developer/Xcode/DerivedData/BA-Clock-btldguqodhyzauffklqyprjcyjpz/Build/Products/Debug-iphonesimulator/Pods_BA_Clock.framework"; sourceTree = "<group>"; };
 		11BCEBD11C608D3E007726D4 /* TrackDotItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackDotItem.swift; sourceTree = "<group>"; };
 		11C3B1711C56008300E50193 /* cl_Frequency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cl_Frequency.swift; sourceTree = "<group>"; };
 		11E889421C4F57FE003E9633 /* cl_coreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cl_coreData.swift; sourceTree = "<group>"; };
@@ -185,7 +120,7 @@
 		11F8DC2F1C50A981002E4736 /* FrequencyItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequencyItem.swift; sourceTree = "<group>"; };
 		3C5C896F08706DD1428A0ED8 /* Pods-BA-Clock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BA-Clock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BA-Clock/Pods-BA-Clock.debug.xcconfig"; sourceTree = "<group>"; };
 		41515ADC4D8E6DED1032837D /* Pods-BA-Clock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BA-Clock.release.xcconfig"; path = "Pods/Target Support Files/Pods-BA-Clock/Pods-BA-Clock.release.xcconfig"; sourceTree = "<group>"; };
-		DD3E751F02820BA23FF63338 /* libPods-BA-Clock.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BA-Clock.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA26A5913366F0830973872C /* Pods_BA_Clock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BA_Clock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,9 +128,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11A626471CD9E0C800B91EBE /* Pods_BA_Clock.framework in Frameworks */,
 				1158DA6F1C44CF3A0022B2D5 /* MapKit.framework in Frameworks */,
-				11128F8F1C3E3869006390C1 /* Alamofire.framework in Frameworks */,
-				7C1686CA2158C40A6F00EEC4 /* libPods-BA-Clock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,7 +184,6 @@
 			children = (
 				11561A0E1C4F6C3D007A049A /* Main.storyboard */,
 				1158DA6E1C44CF3A0022B2D5 /* MapKit.framework */,
-				11128F771C3E385D006390C1 /* Alamofire.xcodeproj */,
 				11128F5B1C3E0EE2006390C1 /* BA-Clock */,
 				11128F5A1C3E0EE2006390C1 /* Products */,
 				40E3546B5740D77F373767CF /* Pods */,
@@ -269,7 +202,6 @@
 		11128F5B1C3E0EE2006390C1 /* BA-Clock */ = {
 			isa = PBXGroup;
 			children = (
-				111A25061C5342780013A9CA /* TrackLocation */,
 				11E889401C4F5632003E9633 /* CoreData */,
 				110645A21C4725D900795996 /* Tools */,
 				110B81121C46259F00FE136D /* CustomControl */,
@@ -300,36 +232,9 @@
 				11632BFB1CD3261100B70C44 /* timeSelectorViewController.swift */,
 				11632C031CD32F9D00B70C44 /* MoreTableViewCell.swift */,
 				11632C051CD357BE00B70C44 /* noteTableViewCell.swift */,
+				111293DC1CDB3AC400B0DAFC /* CLocationManager.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		11128F781C3E385D006390C1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				11128F821C3E385D006390C1 /* Alamofire.framework */,
-				11128F841C3E385D006390C1 /* Alamofire iOS Tests.xctest */,
-				11128F861C3E385D006390C1 /* Alamofire.framework */,
-				11128F881C3E385D006390C1 /* Alamofire OSX Tests.xctest */,
-				11128F8A1C3E385D006390C1 /* Alamofire.framework */,
-				11128F8C1C3E385D006390C1 /* Alamofire tvOS Tests.xctest */,
-				11128F8E1C3E385D006390C1 /* Alamofire.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		111A25061C5342780013A9CA /* TrackLocation */ = {
-			isa = PBXGroup;
-			children = (
-				111A250D1C5342C70013A9CA /* LocationTracker.m */,
-				111A250E1C5342C70013A9CA /* LocationTracker.h */,
-				111A250F1C5342C70013A9CA /* LocationShareModel.m */,
-				111A25101C5342C70013A9CA /* LocationShareModel.h */,
-				111A25111C5342C70013A9CA /* BackgroundTaskManager.m */,
-				111A25121C5342C70013A9CA /* BackgroundTaskManager.h */,
-			);
-			name = TrackLocation;
-			path = Views/TrackLocation;
 			sourceTree = "<group>";
 		};
 		11E889401C4F5632003E9633 /* CoreData */ = {
@@ -339,6 +244,7 @@
 				11C3B1711C56008300E50193 /* cl_Frequency.swift */,
 				1110E04D1CABFA0300AE132F /* cl_log.swift */,
 				1110E0551CABFB5700AE132F /* logs.swift */,
+				11A626391CD9D78400B91EBE /* cl_submitData.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -355,7 +261,10 @@
 		89592751F8F74FFAC20BD0BA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DD3E751F02820BA23FF63338 /* libPods-BA-Clock.a */,
+				11A626461CD9E0C800B91EBE /* Pods_BA_Clock.framework */,
+				11A626441CD9DE1900B91EBE /* Alamofire.framework */,
+				11A626421CD9DE0700B91EBE /* MBProgressHUD.framework */,
+				FA26A5913366F0830973872C /* Pods_BA_Clock.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -367,18 +276,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 11128F6E1C3E0EE2006390C1 /* Build configuration list for PBXNativeTarget "BA-Clock" */;
 			buildPhases = (
-				4C5B1C694B2BCBBAADE3E61F /* Check Pods Manifest.lock */,
+				4C5B1C694B2BCBBAADE3E61F /* 📦 Check Pods Manifest.lock */,
 				11128F551C3E0EE2006390C1 /* Sources */,
 				11128F561C3E0EE2006390C1 /* Frameworks */,
 				11128F571C3E0EE2006390C1 /* Resources */,
 				11128F931C3E3869006390C1 /* Embed Frameworks */,
-				C472570D5B195AB91AD614B2 /* Embed Pods Frameworks */,
-				B334769454110D51BCC446D1 /* Copy Pods Resources */,
+				C472570D5B195AB91AD614B2 /* 📦 Embed Pods Frameworks */,
+				B334769454110D51BCC446D1 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				11128F921C3E3869006390C1 /* PBXTargetDependency */,
 			);
 			name = "BA-Clock";
 			productName = "BA-Clock";
@@ -412,70 +320,12 @@
 			mainGroup = 11128F501C3E0EE2006390C1;
 			productRefGroup = 11128F5A1C3E0EE2006390C1 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 11128F781C3E385D006390C1 /* Products */;
-					ProjectRef = 11128F771C3E385D006390C1 /* Alamofire.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				11128F581C3E0EE2006390C1 /* BA-Clock */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		11128F821C3E385D006390C1 /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = 11128F811C3E385D006390C1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		11128F841C3E385D006390C1 /* Alamofire iOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Alamofire iOS Tests.xctest";
-			remoteRef = 11128F831C3E385D006390C1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		11128F861C3E385D006390C1 /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = 11128F851C3E385D006390C1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		11128F881C3E385D006390C1 /* Alamofire OSX Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Alamofire OSX Tests.xctest";
-			remoteRef = 11128F871C3E385D006390C1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		11128F8A1C3E385D006390C1 /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = 11128F891C3E385D006390C1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		11128F8C1C3E385D006390C1 /* Alamofire tvOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Alamofire tvOS Tests.xctest";
-			remoteRef = 11128F8B1C3E385D006390C1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		11128F8E1C3E385D006390C1 /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = 11128F8D1C3E385D006390C1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		11128F571C3E0EE2006390C1 /* Resources */ = {
@@ -491,14 +341,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4C5B1C694B2BCBBAADE3E61F /* Check Pods Manifest.lock */ = {
+		4C5B1C694B2BCBBAADE3E61F /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -506,14 +356,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		B334769454110D51BCC446D1 /* Copy Pods Resources */ = {
+		B334769454110D51BCC446D1 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,14 +371,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BA-Clock/Pods-BA-Clock-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C472570D5B195AB91AD614B2 /* Embed Pods Frameworks */ = {
+		C472570D5B195AB91AD614B2 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -553,11 +403,12 @@
 				110B810B1C4616F600FE136D /* LoginedInfo.swift in Sources */,
 				111AA6AD1C48C93D00BD4098 /* SubmitLocationRequired.swift in Sources */,
 				11632C061CD357BE00B70C44 /* noteTableViewCell.swift in Sources */,
+				11A6263A1CD9D78400B91EBE /* cl_submitData.swift in Sources */,
 				110645AA1C4725F300795996 /* Tool.swift in Sources */,
 				11632BFC1CD3261100B70C44 /* timeSelectorViewController.swift in Sources */,
 				11F256C41C48CA08009353CD /* ClockOutRequired.swift in Sources */,
+				111293DD1CDB3AC400B0DAFC /* CLocationManager.swift in Sources */,
 				11104F8A1C589ED100DF7922 /* DeviceTokenRequired.swift in Sources */,
-				111A25151C5342C70013A9CA /* BackgroundTaskManager.m in Sources */,
 				11C3B1721C56008300E50193 /* cl_Frequency.swift in Sources */,
 				1110E0561CABFB5700AE132F /* logs.swift in Sources */,
 				11632C041CD32F9D00B70C44 /* MoreTableViewCell.swift in Sources */,
@@ -568,7 +419,6 @@
 				11128F5D1C3E0EE2006390C1 /* AppDelegate.swift in Sources */,
 				1110E04E1CABFA0300AE132F /* cl_log.swift in Sources */,
 				1189AC4E1C5F4A1C00E407FE /* CustomAnnotation.swift in Sources */,
-				111A25131C5342C70013A9CA /* LocationTracker.m in Sources */,
 				11E889431C4F57FE003E9633 /* cl_coreData.swift in Sources */,
 				1116A7AA1C8FB60400438FBB /* MoreActionRequired.swift in Sources */,
 				111FF7E61C92906200960FD3 /* AgreementViewController.swift in Sources */,
@@ -578,7 +428,6 @@
 				110B810E1C46175E00FE136D /* BaseObject.swift in Sources */,
 				110645AC1C47643800795996 /* ClockInRequired.swift in Sources */,
 				112D38991C9A72A100E98E9C /* TextTableViewCell.swift in Sources */,
-				111A25141C5342C70013A9CA /* LocationShareModel.m in Sources */,
 				1166D8571C4CC8CE00878F7C /* LoginRequired.swift in Sources */,
 				110B81141C4625B300FE136D /* ClockTextCell.swift in Sources */,
 				1189AC4B1C5F3E3400E407FE /* MapViewController.swift in Sources */,
@@ -588,14 +437,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		11128F921C3E3869006390C1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Alamofire iOS";
-			targetProxy = 11128F911C3E3869006390C1 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		11128F681C3E0EE2006390C1 /* LaunchScreen.storyboard */ = {
@@ -698,8 +539,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/\"/**",
+				);
 				INFOPLIST_FILE = "BA-Clock/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.buildersaccess.Clock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "BA-Clock/Views/BA-Clock-Bridging-Header.h";
@@ -715,8 +561,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/\"/**",
+				);
 				INFOPLIST_FILE = "BA-Clock/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.buildersaccess.Clock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "BA-Clock/Views/BA-Clock-Bridging-Header.h";

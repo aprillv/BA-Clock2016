@@ -45,5 +45,6 @@ class timeSelectorViewController: BaseViewController {
             }
         }
         datePicker.minimumDate = xminDate ?? NSDate()
+        datePicker.minuteInterval = 15
     }
 }

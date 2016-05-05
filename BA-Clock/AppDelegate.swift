@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        
+
         UIApplication.sharedApplication().cancelAllLocalNotifications()
     }
 
@@ -36,7 +39,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print(CLLocationManager.locationServicesEnabled())
         
         
+        let net = NetworkReachabilityManager()
+        net?.startListening()
         
+        net?.listener = {status in
+            
+            if  net?.isReachable ?? false {
+                let sd = cl_submitData()
+                sd.resubmit()
+            }
+            else {
+                //                print("no connection")
+            }
+            
+        }
         
         
 //
@@ -66,9 +82,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             nav.pushViewController(rootController, animated: true)
         }
         return true
-        
-        
-
         
         
     }

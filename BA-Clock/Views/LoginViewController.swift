@@ -12,8 +12,6 @@ import Alamofire
 
 class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDelegate {
 
-    
-    var locationTracker : LocationTracker?
     // MARK: - Page constants
     private struct constants{
         static let PasswordEmptyMsg : String = "Password Required."
@@ -275,14 +273,9 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
         }
     }
    private func toEablePageControl(){
-//    self.view.userInteractionEnabled = true
-//    self.signInBtn.hidden = false
-//    self.signInMap.hidden = false
-//     signInBtn.backgroundColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
     self.signInBtn.enabled = true
     self.emailTxt.enabled = true
     self.passwordTxt.enabled = true
-//    self.rememberMeSwitch.enabled = true
     self.emailTxt.textColor = UIColor.blackColor()
     self.passwordTxt.textColor = UIColor.blackColor()
 //    self.spinner.stopAnimating()
@@ -300,9 +293,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
         userInfo.setObject(displayName, forKey: CConstants.UserDisplayName)
         userInfo.setObject(fullName, forKey: CConstants.UserFullName)
     }
-    func beginTracking(){
-        NSNotificationCenter.defaultCenter().postNotificationName("beginTracking", object: nil)
-    }
+   
     
     // MARK: PrepareForSegue
     
@@ -318,17 +309,15 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                         let (istime, timespace) = tl.getTimeInter()
                         if !istime {
                             h.append(ScheduledDayItem(dicInfo: ["ClockIn" : "-1", "ClockOut":"-1"]))
-                            if timespace > 0 {
-                                self.performSelector(#selector(LoginViewController.beginTracking), withObject: nil, afterDelay: timespace)
-                            }
+                            
                             
                         }
                         clockListView.clockDataList = h
                         
                     }
-                    if let tracker = locationTracker {
-                        clockListView.locationTracker = tracker
-                    }
+//                    if let tracker = locationTracker {
+//                        clockListView.locationTracker = tracker
+//                    }
                 }
                 break
             case constants.segueToAgreement:
@@ -361,10 +350,10 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
         
         self.checkUpate()
         
-        let locationManager = LocationTracker.sharedLocationManager()
-        locationTracker = LocationTracker()
-        locationManager.delegate = locationTracker
-        locationManager.requestAlwaysAuthorization()
+//        let locationManager = LocationTracker.sharedLocationManager()
+//        locationTracker = LocationTracker()
+//        locationManager.delegate = locationTracker
+//        locationManager.requestAlwaysAuthorization()
         
         
     }

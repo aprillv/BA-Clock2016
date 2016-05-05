@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 
+
 class ClockMapViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate {
    
 
@@ -19,6 +20,8 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
             }
         }
     }
+    
+//    var a : sche
     @IBOutlet var clearItem: UIBarButtonItem!
     @IBOutlet weak var switchItem: UIBarButtonItem!
     @IBOutlet weak var mapTable: UITableView!
@@ -27,6 +30,8 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     var refreshControl : UIRefreshControl?
     var firstrefreshControl : UIRefreshControl?
     
+    
+    var locationManager : CLocationManager?
     
     
     func refreshfirst(refreshControl: UIRefreshControl) {
@@ -37,8 +42,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     
    
     @IBOutlet weak var map_listContstraint: NSLayoutConstraint!
-    var CurrentScheduledInterval : Double?
-    var locationTracker : LocationTracker?
+   
     var locationUpdateTimer : NSTimer?
     var SyncTimer : NSTimer?
     var firstTime = false
@@ -94,19 +98,17 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ClockMapViewController.firstUpdateLocation(_:)), name: "firstTrack", object: nil)
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ClockMapViewController.changeList), name: "beginTracking", object: nil)
+        
         self.callGetList()
     }
     
+  
     
-    func firstUpdateLocation(o : AnyObject) {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "firstTrack", object: nil)
-       self.updateLocation()
-    }
+    
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "beginTracking", object: nil)
+        
     }
     
     func changeList(){
@@ -131,30 +133,21 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager = CLocationManager.sharedInstance
+        locationManager?.startUpdatingLocation()
         
-        if locationTracker == nil {
-            locationTracker = LocationTracker()
-        }
-        locationTracker?.startLocationTracking()
-       
-        
-        self.CurrentScheduledInterval = self.getCurrentInterval1()
         
         checkUpate()
         
-        
-        self.update1()
-//        if self.getLastSubmitTime(){
-//            self.updateLocation()
-//        }
-        
+             
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
         
 //        if self.clockDataList == nil {
             firstTime = true
             Tool.saveDeviceTokenToSever()
-            self.syncFrequency()
+        let tl = Tool()
+            tl.syncFrequency()
 //        }else{
 //            firstTime = true
 //        }
@@ -245,7 +238,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                     if !isTime {
                                         self.clockDataList!.append(ScheduledDayItem(dicInfo: ["ClockIn" : "-1", "ClockOut":"-1"]))
                                         if timespace > 0 {
-                                            self.performSelector(#selector(ClockMapViewController.beginTracking), withObject: nil, afterDelay: timespace)
+                                           
                                         }
                                     }
                                     
@@ -263,8 +256,8 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                         
                                         var va : [UIViewController]? = self.navigationController?.viewControllers
                                         if va != nil {
-                                            self.locationTracker?.stopLocationTracking()
-                                            self.locationTracker = nil
+//                                            self.locationTracker?.stopLocationTracking()
+//                                            self.locationTracker = nil
                                             va!.insert(login, atIndex: 0)
                                             self.navigationController?.viewControllers = va!
                                             self.navigationController?.popToRootViewControllerAnimated(true)
@@ -287,66 +280,12 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     }
     
     
-    func beginTracking(){
-    NSNotificationCenter.defaultCenter().postNotificationName("beginTracking", object: nil)
-    }
-   
-    
-    
-    
-    
-    private func update1(){
-        
-        self.SyncTimer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(ClockMapViewController.syncFrequency), userInfo: nil, repeats: true)
-        
-        resetUpdateLocationTimer()
-    }
-    
-    
-    private var signalSource: dispatch_source_t!
-    private var signalOnceToken = dispatch_once_t()
-    
-    private func resetUpdateLocationTimer(){
-        if let a = self.CurrentScheduledInterval {
-            if a > 0 {
-//                let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
-//                dispatch_async(dispatch_get_global_queue(qos, 0)) {
-                    self.locationUpdateTimer?.invalidate()
-//                    self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target: self, selector: "updateLocation", userInfo: nil, repeats: true)
-                
-//                NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.7
-//                    target:[NSBlockOperation blockOperationWithBlock:^{ /* do this! */ }]
-//                    selector:@selector(main)
-//                userInfo:nil
-//                repeats:NO
-//                ];
-                
-                
-//                self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target:
-//                    NSBlockOperation(block: { () -> Void in
-//                        self.updateLocation()
-////                        print("test")
-//                    }), selector: #selector(NSOperation.main), userInfo: nil, repeats: true)
-//                NSRunLoop.currentRunLoop().addTimer(self.locationUpdateTimer!, forMode: NSRunLoopCommonModes)
-////                }
-                
-                self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target: self, selector: #selector(ClockMapViewController.updateLocation), userInfo: nil, repeats: true)
-               
-            }
-            
-        }else{
-            let log = cl_log()
-            log.savedLogToDB(NSDate(), xtype: true, lat: "resetUpdateLocationTimer fail")
-        }
-    }
     
     func updateLocation(){
 //      print(NSRunLoop.currentRunLoop().ismai)
         
         let tl = Tool()
         if tl.getTime2() {
-            self.locationTracker?.getMyLocation222()
-            self.callSubmitLocationService()
         }else{
             let log = cl_log()
             log.savedLogToDB(NSDate(), xtype: true, lat: "updateLocation")
@@ -354,84 +293,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         
     }
     
-    func syncFrequency(){
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String{
-            if let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String {
-                
-                let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
-                loginRequiredInfo.Token = token
-                loginRequiredInfo.TokenSecret = tokenSecret
-                currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                    if response.result.isSuccess {
-                        if let rtnValue = response.result.value as? [[String: AnyObject]]{
-                            var rtn = [FrequencyItem]()
-                            for item in rtnValue{
-                                rtn.append(FrequencyItem(dicInfo: item))
-                            }
-                            let coreData = cl_coreData()
-                            coreData.savedFrequencysToDB(rtn)
-                            let newInterval = self.getCurrentInterval1()
-                            if newInterval != self.CurrentScheduledInterval {
-                                self.CurrentScheduledInterval = newInterval
-                                self.resetUpdateLocationTimer()
-                                if self.getLastSubmitTime() {
-                                    self.updateLocation()
-                                }
-                            }
-                            
-                        }else{
-                            
-                        }
-                    }else{
-                        
-                    }
-                }
-            }
-        }
-        
-    }
-    
-    private func getTime() -> NSTimeInterval{
-        let date = NSDate()
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy hh"
-        let nowHour = dateFormatter.stringFromDate(date)
-        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss"
-        for i in 14.stride(to: 60, by: 15) {
-            let now15 = dateFormatter.dateFromString(nowHour + ":\(i):59")
-            let timeSpace = now15?.timeIntervalSinceDate(date)
-            if  timeSpace > 0 {
-                return timeSpace!
-            }
-        }
-        return 0
-        
-    }
-    
-    private func getCurrentInterval1() -> Double{
-//        return 60
-        let date = NSDate()
-        //        print(date)
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
-        
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        
-        
-        let today = dateFormatter.stringFromDate(date)
-        let index0 = today.startIndex
-        let coreData = cl_coreData()
-        
-        var send = 900.0
-        if let frequency = coreData.getFrequencyByWeekdayNm(today.substringFromIndex(index0.advancedBy(11))) {
-           send = frequency.ScheduledInterval!.doubleValue * 60.0
-        }
-        print(send)
-        return send
-        
-    }
+  
     
     
     
@@ -552,34 +414,34 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showMapDetail" {
-            if let item = self.selectedItem {
-                if let dvc = segue.destinationViewController as? MapViewController {
-//                    item.ClockInCoordinate?.Longitude
-                    
-                    if isIn! {
-                    dvc.coordinate = CLLocationCoordinate2D(latitude: item.ClockInCoordinate!.Latitude!.doubleValue, longitude: item.ClockInCoordinate!.Longitude!.doubleValue)
-                    }else{
-                    dvc.coordinate = CLLocationCoordinate2D(latitude: item.ClockOutCoordinate!.Latitude!.doubleValue, longitude: item.ClockOutCoordinate!.Longitude!.doubleValue)
-                    }
-                    
-                }
-            }
-        }else if segue.identifier == constants.SegueToMoreController {
-            if let dvc = segue.destinationViewController as? MoreViewController {
-                dvc.locationTracker = self.locationTracker
-                
-            }
-        }
+//        if segue.identifier == "showMapDetail" {
+//            if let item = self.selectedItem {
+//                if let dvc = segue.destinationViewController as? MapViewController {
+////                    item.ClockInCoordinate?.Longitude
+//                    
+//                    if isIn! {
+//                    dvc.coordinate = CLLocationCoordinate2D(latitude: item.ClockInCoordinate!.Latitude!.doubleValue, longitude: item.ClockInCoordinate!.Longitude!.doubleValue)
+//                    }else{
+//                    dvc.coordinate = CLLocationCoordinate2D(latitude: item.ClockOutCoordinate!.Latitude!.doubleValue, longitude: item.ClockOutCoordinate!.Longitude!.doubleValue)
+//                    }
+//                    
+//                }
+//            }
+//        }else if segue.identifier == constants.SegueToMoreController {
+//            if let dvc = segue.destinationViewController as? MoreViewController {
+//                dvc.locationTracker = self.locationTracker
+//                
+//            }
+//        }
     }
     
     @IBAction func doClockIn() {
-        self.locationTracker?.getMyLocation222()
+//        self.locationTracker?.getMyLocation222()
         self.callClockService(isClockIn: true)
     }
     @IBAction func doClockOut() {
         
-        self.locationTracker?.getMyLocation222()
+//        self.locationTracker?.getMyLocation222()
         self.callClockService(isClockIn: false)
     }
     
@@ -590,101 +452,22 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     
     
     private var lastCallSubmitLocationService : NSDate?
-    private func callSubmitLocationService(){
-        
-//        print("===== \(NSDate())")
-            lastCallSubmitLocationService = NSDate()
-            let submitRequired = SubmitLocationRequired()
-            submitRequired.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
-            submitRequired.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
-        
-        let log = cl_log()
-        log.savedLogToDB(NSDate(), xtype: true, lat: "\(submitRequired.Latitude!) \(submitRequired.Longitude!)")
-        
-            let OAuthToken = self.getUserToken()
-            submitRequired.Token = OAuthToken.Token
-            submitRequired.TokenSecret = OAuthToken.TokenSecret
-//            print(submitRequired.getPropertieNamesAsDictionary())
-    setLastSubmitTime()
-            currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-//                print(response.result.value)
-                if response.result.isSuccess {
-                }else{
-                }
-            }
-            
-//        }
-        
-        
-    }
-    
-    private func setLastSubmitTime(){
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        userInfo.setValue(NSDate(), forKey: "LastSubmitLocationTime")
-    }
-    
-    private func getLastSubmitTime() -> Bool{
-        
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        if let lastTime = userInfo.valueForKey("LastSubmitLocationTime") as? NSDate,
-            let timeSpace = self.CurrentScheduledInterval {
-            
-                if timeSpace > 0 {
-                    
-                    return  NSDate().timeIntervalSinceDate(lastTime) > timeSpace
-                }else{
-                    return false
-                }
-            
-        }
-        return true
-    }
-    
-    private func getUserToken() -> OAuthTokenItem{
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        let userInfo1 = OAuthTokenItem(dicInfo: nil)
-        userInfo1.Token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String
-        userInfo1.TokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String
-        return userInfo1
-    }
-    
-    private func toEablePageControlColockOut(){
-//        self.clockOutSpinner.stopAnimating()
-//        self.clockOutBtn.setTitle("Clock Out", forState: .Normal)
-        self.view.userInteractionEnabled = true
-    }
-    
-    private func disableEablePageControlColockOut(){
-        
-//        self.clockOutSpinner.startAnimating()
-//        self.clockOutBtn.setTitle("", forState: .Normal)
-        self.view.userInteractionEnabled = false
-    }
-    
-    private func toEablePageControlColockIn(){
-//        self.clockInSpinner.stopAnimating()
-//        self.clockInBtn.setTitle("Clock In", forState: .Normal)
-        self.view.userInteractionEnabled = true
-    }
-    
-    private func disableEablePageControlColockIn(){
-        
-//        self.clockInSpinner.startAnimating()
-//        self.clockInBtn.setTitle("", forState: .Normal)
-        self.view.userInteractionEnabled = false
-    }
+       
+   
     
     private func callClockService(isClockIn isClockIn: Bool){
         currentRequest?.cancel()
 //        print(CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL))
 //        let userInfo = NSUserDefaults.standardUserDefaults()
         let clockOutRequiredInfo = ClockOutRequired()
-        clockOutRequiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
-        clockOutRequiredInfo.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
+//        clockOutRequiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
+//        clockOutRequiredInfo.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
         clockOutRequiredInfo.HostName = UIDevice.currentDevice().name
         let tl = Tool()
         clockOutRequiredInfo.IPAddress = tl.getWiFiAddress()
-        let OAuthToken = self.getUserToken()
+        
+        
+        let OAuthToken = tl.getUserToken()
         clockOutRequiredInfo.Token = OAuthToken.Token!
 //        clockOutRequiredInfo.Token = "asdfaasdf"
         clockOutRequiredInfo.TokenSecret = OAuthToken.TokenSecret!
@@ -692,11 +475,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
 //        print(clockOutRequiredInfo.getPropertieNamesAsDictionary())
         
       
-        if isClockIn {
-            disableEablePageControlColockIn()
-        }else{
-            disableEablePageControlColockOut()
-        }
+        self.view.userInteractionEnabled = false
         
         currentRequest = Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
@@ -761,25 +540,18 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                 }else{
                     self.PopServerError()
                 }
-                if isClockIn {
-                    self.toEablePageControlColockIn()
-                }else {
-                    self.toEablePageControlColockOut()
-                }
+               self.view.userInteractionEnabled = true
                 
             }else{
                 self.PopNetworkError()
-                if isClockIn {
-                    self.toEablePageControlColockIn()
-                }else {
-                    self.toEablePageControlColockOut()
-                }
+                self.view.userInteractionEnabled = true
             }
         }
     }
     
     
      func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem){
+        tabBar.selectedItem = nil
         switch item.title! {
         case "Clock In":
             doClockIn()
@@ -793,17 +565,18 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     }
     
     private func doComeBack(){
-        self.locationTracker?.getMyLocation222()
+//        self.locationTracker?.getMyLocation222()
 //        currentRequest?.cancel()
         //        print(CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL))
         //        let userInfo = NSUserDefaults.standardUserDefaults()
         let clockOutRequiredInfo = ClockOutRequired()
-        clockOutRequiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
-        clockOutRequiredInfo.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
+//        clockOutRequiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
+//        clockOutRequiredInfo.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
         clockOutRequiredInfo.HostName = UIDevice.currentDevice().name
         let tl = Tool()
         clockOutRequiredInfo.IPAddress = tl.getWiFiAddress()
-        let OAuthToken = self.getUserToken()
+        
+        let OAuthToken = tl.getUserToken()
         clockOutRequiredInfo.Token = OAuthToken.Token!
         //        clockOutRequiredInfo.Token = "asdfaasdf"
         clockOutRequiredInfo.TokenSecret = OAuthToken.TokenSecret!
@@ -820,51 +593,13 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
             hud?.hide(true)
             if response.result.isSuccess {
 //                print(response.result.value)
-self.callGetList()
+                self.callGetList()
             }else{
                 self.PopNetworkError()
                 
             }
         }
     }
-    
-//    var locationManager : CLLocationManager
-//
-//    func startHikeLocationUpdates() {
-//        // Create a location manager object
-//        self.locationManager = CLLocationManager()
-//        
-//        // Set the delegate
-//        self.locationManager.delegate = self
-//        
-//        // Request location authorization
-//        self.locationManager.requestWhenInUseAuthorization()
-//        
-//        // Specify the type of activity your app is currently performing
-//        self.locationManager.activityType = CLActivityTypeFitness
-//        
-//        // Start location updates
-//        self.locationManager.startUpdatingLocation()
-//    }
-//    
-//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        // Add the new locations to the hike
-//        self.hike.addLocations(locations)
-//        
-//        // Defer updates until the user hikes a certain distance or a period of time has passed
-//        if (!deferringUpdates) {
-//            distance: CLLocationDistance = hike.goal - hike.distance
-//            time: NSTimeInterval = nextUpdate.timeIntervalSinceNow()
-//            locationManager.allowDeferredLocationUpdatesUntilTraveled(distance, timeout:time)
-//            deferringUpdates = true;
-//        } }
-//    
-//    func locationManager(manager: CLLocationManager, didFinishDeferredUpdatesWithError error: NSError!) {
-//        // Stop deferring updates
-//        self.deferringUpdates = false
-//        
-//        // Adjust for the next goal
-//    }
 
     
    

@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, timeSelectorDelegate {
-    var locationTracker : LocationTracker?
+//    var locationTracker : LocationTracker?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,8 +127,8 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 switch indexPath.row {
                 case 0:
                     cell.actionlbl?.text = "Lunch"
-                case 2:
-                    cell.actionlbl?.text = "Company Reason"
+                case 1:
+                    cell.actionlbl?.text = "business meeting"
                 default:
                     cell.actionlbl?.text = "Personal Reason"
                 }
@@ -324,8 +324,8 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
         let requiredInfo = MoreActionRequired()
         requiredInfo.ActionType = actionType
-        requiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
-        requiredInfo.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
+//        requiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
+//        requiredInfo.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
         requiredInfo.HostName = UIDevice.currentDevice().name
         let tl = Tool()
         requiredInfo.IPAddress = tl.getWiFiAddress()

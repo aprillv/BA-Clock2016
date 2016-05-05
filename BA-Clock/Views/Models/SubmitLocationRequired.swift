@@ -12,4 +12,5 @@ class SubmitLocationRequired : RequiredBaseObject {
      var TokenSecret : String?
     var Latitude : String?
     var Longitude : String?
+    var ClientTime : String?
 }

@@ -170,6 +170,129 @@ class Tool: NSObject {
         
         
     }
+    
+    func getUserToken() -> OAuthTokenItem{
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        let userInfo1 = OAuthTokenItem(dicInfo: nil)
+        userInfo1.Token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String
+        userInfo1.TokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String
+        return userInfo1
+    }
+
+    func callSubmitLocationService(latitude : Double?, longitude1 : Double?){
+        let d = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
+        let ClientTime = dateFormatter.stringFromDate(d)
+        
+        callSubmitLocationService(latitude, longitude1: longitude1, time: ClientTime)
+    }
+    
+    
+    func callSubmitLocationService(latitude : Double?, longitude1 : Double?, time: String){
+        let submitRequired = SubmitLocationRequired()
+        submitRequired.Latitude = "\(latitude ?? 0)"
+        submitRequired.Longitude = "\(longitude1 ?? 0)"
+        submitRequired.ClientTime = time
+        
+        let log = cl_log()
+        log.savedLogToDB(NSDate(), xtype: true, lat: "\(submitRequired.Latitude!) \(submitRequired.Longitude!)")
+        
+        let OAuthToken = getUserToken()
+        submitRequired.Token = OAuthToken.Token
+        submitRequired.TokenSecret = OAuthToken.TokenSecret
+        
+        Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+            //                print(response.result.value)
+            if response.result.isSuccess {
+            }else{
+                
+                if let net = NetworkReachabilityManager() {
+                    if net.isReachable {
+                        self.callSubmitLocationService(latitude, longitude1: longitude1, time: time)
+                    }else{
+                        let submitData = cl_submitData()
+                        submitData.savedSubmitDataToDB(time, lat: latitude ?? 0 , lng: longitude1 ?? 0)
+                    }
+                }else{
+                    let submitData = cl_submitData()
+                    submitData.savedSubmitDataToDB(time, lat: latitude ?? 0 , lng: longitude1 ?? 0)
+                }
+            }
+        }
+    }
+    
+    func syncFrequency(){
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String{
+            if let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String {
+                
+                let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
+                loginRequiredInfo.Token = token
+                loginRequiredInfo.TokenSecret = tokenSecret
+                Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                    //                   print(response.result.value)
+                    if response.result.isSuccess {
+                        if let rtnValue = response.result.value as? [[String: AnyObject]]{
+//                            print(rtnValue)
+                            var rtn = [FrequencyItem]()
+                            for item in rtnValue{
+                                rtn.append(FrequencyItem(dicInfo: item))
+                            }
+                            let coreData = cl_coreData()
+                            coreData.savedFrequencysToDB(rtn)
+                        }else{
+                            
+                        }
+                    }else{
+                        
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    private func getTime() -> NSTimeInterval{
+        let date = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy hh"
+        let nowHour = dateFormatter.stringFromDate(date)
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss"
+        for i in 14.stride(to: 60, by: 15) {
+            let now15 = dateFormatter.dateFromString(nowHour + ":\(i):59")
+            let timeSpace = now15?.timeIntervalSinceDate(date)
+            if  timeSpace > 0 {
+                return timeSpace!
+            }
+        }
+        return 0
+        
+    }
+    
+    private func getCurrentInterval1() -> Double{
+        //        return 60
+        let date = NSDate()
+        //        print(date)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
+        
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        
+        let today = dateFormatter.stringFromDate(date)
+        let index0 = today.startIndex
+        let coreData = cl_coreData()
+        
+        var send = 900.0
+        if let frequency = coreData.getFrequencyByWeekdayNm(today.substringFromIndex(index0.advancedBy(11))) {
+            send = frequency.ScheduledInterval!.doubleValue * 60.0
+        }
+        //        print(send)
+        return send
+        
+    }
 }
 
 
