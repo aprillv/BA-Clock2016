@@ -306,6 +306,11 @@
 					11128F581C3E0EE2006390C1 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 7D8CVP7EK4;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};

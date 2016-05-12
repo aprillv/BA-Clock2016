@@ -65,7 +65,11 @@ struct CConstants{
     static let LoginStoryBoardId : String = "LoginStart"
     static let ListStoryBoardId : String = "ListStart"
     
-    
+    static let SubmitLocationType : Int = 1
+    static let ClockInType : Int = 2
+    static let ClockOutType : Int = 3
+    static let GoOutType : Int = 4
+    static let ComeBackType : Int = 5
 }
 
 

@@ -19,4 +19,5 @@ class MoreActionRequired: RequiredBaseObject {
     var ReasonStart : String?
     var ReasonEnd : String?
     var Reason : String?
+    var ClientTime: String?
 }

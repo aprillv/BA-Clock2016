@@ -22,7 +22,7 @@ class cl_submitData: NSObject {
         return appDelegate.managedObjectContext
     }()
     
-    func savedSubmitDataToDB(d: String, lat: Double, lng: Double){
+    func savedSubmitDataToDB(d: String, lat: Double, lng: Double, reasonStart: String, reasonEnd: String, reason: String, actionType: String){
         let entity =  NSEntityDescription.entityForName("SubmitData",
                                                         inManagedObjectContext:managedObjectContext)
         let scheduledDayItem = NSManagedObject(entity: entity!,
@@ -31,6 +31,28 @@ class cl_submitData: NSObject {
         scheduledDayItem.setValue(lat, forKey: "latitude")
         scheduledDayItem.setValue(lng, forKey: "longitude")
         scheduledDayItem.setValue(d, forKey: "submitdate")
+        scheduledDayItem.setValue(CConstants.GoOutType, forKey: "xtype")
+        scheduledDayItem.setValue(reasonStart, forKey: "reasonStart")
+        scheduledDayItem.setValue(reasonEnd, forKey: "reasonEnd")
+        scheduledDayItem.setValue(reason, forKey: "reason")
+        scheduledDayItem.setValue(actionType, forKey: "actionType")
+        do {
+            try managedObjectContext.save()
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+    }
+    
+    func savedSubmitDataToDB(d: String, lat: Double, lng: Double, xtype: Int){
+        let entity =  NSEntityDescription.entityForName("SubmitData",
+                                                        inManagedObjectContext:managedObjectContext)
+        let scheduledDayItem = NSManagedObject(entity: entity!,
+                                               insertIntoManagedObjectContext: managedObjectContext)
+        
+        scheduledDayItem.setValue(lat, forKey: "latitude")
+        scheduledDayItem.setValue(lng, forKey: "longitude")
+        scheduledDayItem.setValue(d, forKey: "submitdate")
+        scheduledDayItem.setValue(xtype, forKey: "xtype")
         
         do {
             try managedObjectContext.save()
@@ -51,9 +73,17 @@ class cl_submitData: NSObject {
                 for item : NSManagedObject in t {
                     let lat =  item.valueForKey("latitude") as? Double
                     let lng = item.valueForKey("longitude") as? Double
-                    if let d = item.valueForKey("submitdate") as? String{
+                    
+                    if let xtype = item.valueForKey("xtype") as? Int,
+                        let d = item.valueForKey("submitdate") as? String{
                         managedObjectContext.deleteObject(item)
-                        tl.callSubmitLocationService(lat, longitude1: lng, time: d)
+                        switch xtype {
+                        case CConstants.SubmitLocationType:
+                            tl.callSubmitLocationService(lat, longitude1: lng, time: d)
+                        default:
+                            break
+                        }
+                        
                     }
                 }
                 

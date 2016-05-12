@@ -213,11 +213,11 @@ class Tool: NSObject {
                         self.callSubmitLocationService(latitude, longitude1: longitude1, time: time)
                     }else{
                         let submitData = cl_submitData()
-                        submitData.savedSubmitDataToDB(time, lat: latitude ?? 0 , lng: longitude1 ?? 0)
+                        submitData.savedSubmitDataToDB(time, lat: latitude ?? 0 , lng: longitude1 ?? 0, xtype: CConstants.SubmitLocationType)
                     }
                 }else{
                     let submitData = cl_submitData()
-                    submitData.savedSubmitDataToDB(time, lat: latitude ?? 0 , lng: longitude1 ?? 0)
+                    submitData.savedSubmitDataToDB(time, lat: latitude ?? 0 , lng: longitude1 ?? 0, xtype: CConstants.SubmitLocationType)
                 }
             }
         }
@@ -232,7 +232,7 @@ class Tool: NSObject {
                 loginRequiredInfo.Token = token
                 loginRequiredInfo.TokenSecret = tokenSecret
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                    //                   print(response.result.value)
+//                    print(response.result.value)
                     if response.result.isSuccess {
                         if let rtnValue = response.result.value as? [[String: AnyObject]]{
 //                            print(rtnValue)
@@ -254,24 +254,52 @@ class Tool: NSObject {
         
     }
     
-    private func getTime() -> NSTimeInterval{
+    func getFirstQuauterTimeSpace() -> NSTimeInterval{
         let date = NSDate()
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy hh"
+        dateFormatter.dateFormat = "MM/dd/yyyy HH"
         let nowHour = dateFormatter.stringFromDate(date)
-        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss"
-        for i in 14.stride(to: 60, by: 15) {
-            let now15 = dateFormatter.dateFromString(nowHour + ":\(i):59")
+        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
+        for i in 0.stride(to: 59, by: 15) {
+            
+            let now15 = dateFormatter.dateFromString(nowHour + (i == 0 ? ":00:00" : ":\(i):00"))
+//            print(nowHour + (i == 0 ? ":00:00" : ":\(i):00"))
             let timeSpace = now15?.timeIntervalSinceDate(date)
             if  timeSpace > 0 {
                 return timeSpace!
             }
         }
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        let nowHour1 = dateFormatter.stringFromDate(date)
+         dateFormatter.dateFormat = "HH"
+        let now2 = dateFormatter.stringFromDate(date)
+        let a = Int(now2) ?? 0 + 1
+        let now15 = dateFormatter.dateFromString(nowHour1 + " \(a)" + ":00:00")
+        let timeSpace = now15?.timeIntervalSinceDate(date)
+        if  timeSpace > 0 {
+            return timeSpace!
+        }
+        
         return 0
         
     }
+    func getClientTime() -> String{
+        //        return 60
+        let date = NSDate()
+        //        print(date)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        
+        let today = dateFormatter.stringFromDate(date)
+        
+        return today
+        
+    }
     
-    private func getCurrentInterval1() -> Double{
+    func getCurrentInterval1() -> Double{
         //        return 60
         let date = NSDate()
         //        print(date)

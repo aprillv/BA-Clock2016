@@ -11,6 +11,7 @@ class ClockOutRequired: RequiredBaseObject {
     var Token : String?
     var TokenSecret : String?
     var IPAddress : String?
+    var ClientTime : String?
     var HostName : String?
     var Latitude : String?
     var Longitude : String?

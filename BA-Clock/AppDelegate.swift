@@ -19,15 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print("sss")
         UIApplication.sharedApplication().applicationIconBadgeNumber = -1
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-        if let list = UIApplication.sharedApplication().scheduledLocalNotifications {
-            for no in list {
-                UIApplication.sharedApplication().cancelLocalNotification(no)
-            }
-        }
-        
-        
-
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
+//        if let list = UIApplication.sharedApplication().scheduledLocalNotifications {
+//            for no in list {
+//                UIApplication.sharedApplication().cancelLocalNotification(no)
+//            }
+//        }
+//        
+//        
+//
+//        UIApplication.sharedApplication().cancelAllLocalNotifications()
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -105,14 +105,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func initializeNotificationServices() -> Void {
-        let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound , UIUserNotificationType.Alert , UIUserNotificationType.Badge], categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
         
-        // This is an asynchronous method to retrieve a Device Token
-        // Callbacks are in AppDelegate.swift
-        // Success = didRegisterForRemoteNotificationsWithDeviceToken
-        // Fail = didFailToRegisterForRemoteNotificationsWithError
-        UIApplication.sharedApplication().registerForRemoteNotifications()
+//        var type = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound];
+        let setting = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound], categories: nil);
+        UIApplication.sharedApplication().registerUserNotificationSettings(setting);
+        UIApplication.sharedApplication().registerForRemoteNotifications();
+        
+//        let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound , UIUserNotificationType.Alert , UIUserNotificationType.Badge], categories: nil)
+//        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+//        
+//        // This is an asynchronous method to retrieve a Device Token
+//        // Callbacks are in AppDelegate.swift
+//        // Success = didRegisterForRemoteNotificationsWithDeviceToken
+//        // Fail = didFailToRegisterForRemoteNotificationsWithError
+//        UIApplication.sharedApplication().registerForRemoteNotifications()
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
@@ -208,7 +214,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidEnterBackground(application: UIApplication) {
 //        print("\(NSDate()) applicationDidEnterBackground")
-      print("_______________")
+//      print("_______________")
          clearNotifications()
     }
     
@@ -216,25 +222,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var  backgroundUpdateTask : UIBackgroundTaskIdentifier?
     
     func applicationWillResignActive(application: UIApplication) {
-        print("&&&&&&&&&&&&&&&&&&")
+//        print("&&&&&&&&&&&&&&&&&&")
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-        backgroundUpdateTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
-            self.endBackgroundUpdateTask()
-        })
+//        backgroundUpdateTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
+//            self.endBackgroundUpdateTask()
+//        })
     }
     
     func  endBackgroundUpdateTask() {
-        if self.backgroundUpdateTask != nil{
-            UIApplication.sharedApplication().endBackgroundTask(self.backgroundUpdateTask!)
-            self.backgroundUpdateTask = UIBackgroundTaskInvalid
-        }
+//        if self.backgroundUpdateTask != nil{
+//            UIApplication.sharedApplication().endBackgroundTask(self.backgroundUpdateTask!)
+//            self.backgroundUpdateTask = UIBackgroundTaskInvalid
+//        }
         
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
-        print("************")
-        endBackgroundUpdateTask()
+//        print("************")
+//        endBackgroundUpdateTask()
     }
 //    
     

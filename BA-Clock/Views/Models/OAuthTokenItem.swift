@@ -11,4 +11,5 @@ import Foundation
 class OAuthTokenItem : BaseObject {
     var Token : String?
     var TokenSecret : String?
+    var ClientTime: String?
 }

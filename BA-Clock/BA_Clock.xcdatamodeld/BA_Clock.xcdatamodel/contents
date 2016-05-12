@@ -31,14 +31,19 @@
         <attribute name="hours" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="SubmitData" syncable="YES">
+        <attribute name="actionType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="reason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reasonEnd" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reasonStart" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="submitdate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="xtype" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
         <element name="Frequency" positionX="-63" positionY="63" width="128" height="135"/>
         <element name="LogFile" positionX="-63" positionY="99" width="128" height="90"/>
         <element name="ScheduledDay" positionX="-63" positionY="-18" width="128" height="270"/>
-        <element name="SubmitData" positionX="-63" positionY="99" width="128" height="90"/>
+        <element name="SubmitData" positionX="-63" positionY="99" width="128" height="165"/>
     </elements>
 </model>

@@ -92,11 +92,12 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         didSet{
             if tableView != nil {
                 let index = NSIndexSet(index: 1)
-              tableView.reloadSections(index, withRowAnimation: .Automatic)
+                tableView.reloadSections(index, withRowAnimation: .Automatic)
             }
+            EndTime = StartTime.dateByAddingTimeInterval(60*30)
         }
     }
-    var EndTime  : NSDate = NSDate().dateByAddingTimeInterval(60*30){
+    var EndTime : NSDate = NSDate().dateByAddingTimeInterval(60*30){
         didSet{
             if tableView != nil {
                 let index = NSIndexSet(index: 2)
@@ -128,7 +129,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 case 0:
                     cell.actionlbl?.text = "Lunch"
                 case 1:
-                    cell.actionlbl?.text = "business meeting"
+                    cell.actionlbl?.text = "Business / Meeting"
                 default:
                     cell.actionlbl?.text = "Personal Reason"
                 }
@@ -207,8 +208,6 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         default:
             break;
         }
-        
-        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
@@ -240,9 +239,6 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        UILabel *lbl = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)] autorelease];
-//        lbl.textAlignment = UITextAlignmentCenter;
-//        lbl.font = [UIFont systemFontOfSize:12];
         
         let view =  UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40))
         
@@ -307,6 +303,8 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 //    }
     
     
+    var locationManager : CLocationManager?
+    
     private func callService(){
         var actionType : String?
         for i in 0...2 {
@@ -324,17 +322,20 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
         let requiredInfo = MoreActionRequired()
         requiredInfo.ActionType = actionType
-//        requiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
-//        requiredInfo.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
+        
+        requiredInfo.Latitude = "\(self.locationManager?.currentLocation?.coordinate.latitude ?? 0)"
+        requiredInfo.Longitude = "\(self.locationManager?.currentLocation?.coordinate.longitude ?? 0)"
         requiredInfo.HostName = UIDevice.currentDevice().name
         let tl = Tool()
         requiredInfo.IPAddress = tl.getWiFiAddress()
+        requiredInfo.ClientTime = tl.getClientTime()
         let OAuthToken = self.getUserToken()
         requiredInfo.Token = OAuthToken.Token!
         //        clockOutRequiredInfo.Token = "asdfaasdf"
         requiredInfo.TokenSecret = OAuthToken.TokenSecret!
         requiredInfo.ReasonStart = self.getFormatedDate2(StartTime)
         requiredInfo.ReasonEnd = self.getFormatedDate2(EndTime)
+        
         
         let index = NSIndexPath(forRow: 0, inSection: 3)
         if let cell = tableView.cellForRowAtIndexPath(index) as? noteTableViewCell {
@@ -349,12 +350,29 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 
                 if let rtnValue = response.result.value as? Int{
                     if rtnValue == 1 {
+                        self.locationManager?.setNotComeBackNotification(self.EndTime)
                         self.navigationController?.popViewControllerAnimated(true)
                     }else{
+                        let cl = cl_submitData()
+                        cl.savedSubmitDataToDB(requiredInfo.ClientTime ?? ""
+                            , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
+                            , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
+                            , reasonStart : requiredInfo.ReasonStart ?? ""
+                            , reasonEnd : requiredInfo.ReasonEnd  ?? ""
+                            , reason : requiredInfo.Reason  ?? ""
+                            , actionType: actionType ?? "")
                         self.PopServerError()
                     }
                 }else{
-                    self.PopServerError()
+                    let cl = cl_submitData()
+                    cl.savedSubmitDataToDB(requiredInfo.ClientTime ?? ""
+                        , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
+                        , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
+                        , reasonStart : requiredInfo.ReasonStart ?? ""
+                        , reasonEnd : requiredInfo.ReasonEnd  ?? ""
+                        , reason : requiredInfo.Reason  ?? ""
+                        , actionType: actionType ?? "")
+//                    self.PopServerError()
                 }
                 
                 
@@ -416,3 +434,4 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     
 }
+

@@ -135,7 +135,8 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         super.viewDidLoad()
         locationManager = CLocationManager.sharedInstance
         locationManager?.startUpdatingLocation()
-        
+        // for test notification
+        locationManager?.setNotComeBackNotification(NSDate())
         
         checkUpate()
         
@@ -144,10 +145,10 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
         
 //        if self.clockDataList == nil {
-            firstTime = true
-            Tool.saveDeviceTokenToSever()
+        firstTime = true
+        Tool.saveDeviceTokenToSever()
         let tl = Tool()
-            tl.syncFrequency()
+        tl.syncFrequency()
 //        }else{
 //            firstTime = true
 //        }
@@ -168,10 +169,11 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         let userInfo = NSUserDefaults.standardUserDefaults()
         if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String{
             if let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String {
-                
+                let tl = Tool()
                 let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
                 loginRequiredInfo.Token = token
                 loginRequiredInfo.TokenSecret = tokenSecret
+                loginRequiredInfo.ClientTime = tl.getClientTime()
 //                self.firstrefreshControl?.beginRefreshing()
                 var hud : MBProgressHUD?
                 if self.clockDataList == nil {
@@ -460,12 +462,13 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
 //        print(CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL))
 //        let userInfo = NSUserDefaults.standardUserDefaults()
         let clockOutRequiredInfo = ClockOutRequired()
-//        clockOutRequiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
-//        clockOutRequiredInfo.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
+        
+        clockOutRequiredInfo.Latitude = "\(self.locationManager?.currentLocation?.coordinate.latitude ?? 0)"
+        clockOutRequiredInfo.Longitude = "\(self.locationManager?.currentLocation?.coordinate.longitude ?? 0)"
         clockOutRequiredInfo.HostName = UIDevice.currentDevice().name
         let tl = Tool()
         clockOutRequiredInfo.IPAddress = tl.getWiFiAddress()
-        
+        clockOutRequiredInfo.ClientTime = tl.getClientTime()
         
         let OAuthToken = tl.getUserToken()
         clockOutRequiredInfo.Token = OAuthToken.Token!
@@ -476,7 +479,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         
       
         self.view.userInteractionEnabled = false
-        
+       
         currentRequest = Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
 //                print(response.result.value)
@@ -538,12 +541,22 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                         }
                     }
                 }else{
+                    let cl = cl_submitData()
+                    cl.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
+                        , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
+                        , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
+                        , xtype: Int(isClockIn ? CConstants.ClockInType : CConstants.ClockOutType))
                     self.PopServerError()
                 }
                self.view.userInteractionEnabled = true
                 
             }else{
-                self.PopNetworkError()
+                let cl = cl_submitData()
+                cl.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
+                    , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
+                    , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
+                    , xtype: Int(isClockIn ? CConstants.ClockInType : CConstants.ClockOutType))
+//                self.PopNetworkError()
                 self.view.userInteractionEnabled = true
             }
         }
@@ -570,16 +583,16 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         //        print(CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL))
         //        let userInfo = NSUserDefaults.standardUserDefaults()
         let clockOutRequiredInfo = ClockOutRequired()
-//        clockOutRequiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
-//        clockOutRequiredInfo.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
+        clockOutRequiredInfo.Latitude = "\(self.locationManager?.currentLocation?.coordinate.latitude ?? 0)"
+        clockOutRequiredInfo.Longitude = "\(self.locationManager?.currentLocation?.coordinate.longitude ?? 0)"
         clockOutRequiredInfo.HostName = UIDevice.currentDevice().name
         let tl = Tool()
         clockOutRequiredInfo.IPAddress = tl.getWiFiAddress()
         
         let OAuthToken = tl.getUserToken()
         clockOutRequiredInfo.Token = OAuthToken.Token!
-        //        clockOutRequiredInfo.Token = "asdfaasdf"
         clockOutRequiredInfo.TokenSecret = OAuthToken.TokenSecret!
+        clockOutRequiredInfo.ClientTime = tl.getClientTime()
         var param = clockOutRequiredInfo.getPropertieNamesAsDictionary()
         param["ActionType"] = "Come Back"
         //        print(clockOutRequiredInfo.getPropertieNamesAsDictionary())
@@ -593,9 +606,15 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
             hud?.hide(true)
             if response.result.isSuccess {
 //                print(response.result.value)
+                UIApplication.sharedApplication().cancelAllLocalNotifications()
                 self.callGetList()
             }else{
-                self.PopNetworkError()
+                let cl = cl_submitData()
+                cl.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
+                    , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
+                    , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
+                    , xtype: CConstants.ComeBackType)
+//                self.PopNetworkError()
                 
             }
         }

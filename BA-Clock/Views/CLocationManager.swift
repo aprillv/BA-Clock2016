@@ -27,6 +27,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     var locationManager:CLLocationManager?
     var currentLocation:CLLocation?
     var SyncTimer: NSTimer?
+    var NoComeBackTimer: NSTimer?
     
     override init() {
         super.init()
@@ -44,9 +45,53 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
 //        self.locationManager
         self.locationManager?.startUpdatingLocation()
         
-        self.SyncTimer = NSTimer.scheduledTimerWithTimeInterval(900, target: self, selector: #selector(CLocationManager.saveLog), userInfo: nil, repeats: true)
+        let tl = Tool()
+        let firstInterval = tl.getFirstQuauterTimeSpace()
+        NSTimer.scheduledTimerWithTimeInterval(firstInterval, target: self, selector: #selector(CLocationManager.CircleSubmitLocation), userInfo: nil, repeats: false)
         
         
+        
+        
+        
+    }
+    
+    func setNotComeBackNotification(endTime : NSDate) {
+        
+        let info = UILocalNotification()
+        info.fireDate = endTime.dateByAddingTimeInterval(10.0 * 60.0)
+        info.timeZone = NSTimeZone.defaultTimeZone()
+        info.alertBody = "You should click come back now. It is time out more than 10 minutes."
+        info.soundName = UILocalNotificationDefaultSoundName
+        info.applicationIconBadgeNumber = 1
+        
+        
+        info.repeatInterval = .Minute
+        //        info.repeatInterval = NSCalendar.int
+        //        info.repeatInterval = 10
+        UIApplication.sharedApplication().scheduleLocalNotification(info)
+        
+//        let a = endTime.dateByAddingTimeInterval(60)
+//        
+//        
+//        let info = UILocalNotification()
+//        info.fireDate = a
+//        info.timeZone = NSTimeZone.defaultTimeZone()
+//        info.alertBody = "april88"
+//        info.soundName = UILocalNotificationDefaultSoundName
+//        info.applicationIconBadgeNumber = 1
+//        info.repeatInterval = .Minute
+//        UIApplication.sharedApplication().scheduleLocalNotification(info)
+        
+    }
+   
+    
+    func CircleSubmitLocation() {
+        saveLog()
+        let tl = Tool()
+        let interval = tl.getCurrentInterval1()
+        if interval > 0 {
+            self.SyncTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: #selector(CLocationManager.saveLog), userInfo: nil, repeats: true)
+        }
     }
     
     
@@ -62,8 +107,8 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         self.currentLocation = location 
         
         // use for real time update location
-        updateLocation(self.currentLocation)
-        print(NSDate(), location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 1)
+//        updateLocation()
+//        print(NSDate(), location?.coordinate.latitude ?? 0, location?.coordinate.longitude ?? 1)
     }
     
     
@@ -74,12 +119,15 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     
     }
     
-    func updateLocation(currentLocation:CLLocation?){
+    func updateLocation(){
         let lat = currentLocation?.coordinate.latitude
-        let lon = currentLocation?.coordinate.longitude
+        let lng = currentLocation?.coordinate.longitude
+        let tl = Tool()
+        tl.callSubmitLocationService(lat, longitude1: lng)
     }
     
     func saveLog(){
+        updateLocation()
         let lg = cl_log()
         lg.savedLogToDB(NSDate(), xtype: true, lat: "\(currentLocation?.coordinate.latitude) -- \(currentLocation?.coordinate.longitude)")
         
