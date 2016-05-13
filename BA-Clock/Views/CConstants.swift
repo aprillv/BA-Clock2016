@@ -55,6 +55,10 @@ struct CConstants{
     static let SyncScheduleIntervalURL : String = "SyncScheduleInterval.json"
     static let GetScheduledDataURL : String = "GetScheduledData.json"
     static let GetGISTrackURL : String = "GetGISTrack.json"
+    
+    static let LastClockInTime : String = "LastClockInTime"
+    static let LastClockOutTime : String = "LastClockOutTime"
+    
 
     //check app version
     static let CheckUpdateServiceURL: String = "bacontract_appid.json"

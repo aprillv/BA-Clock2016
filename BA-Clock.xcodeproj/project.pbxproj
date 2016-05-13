@@ -164,8 +164,7 @@
 				11BCEBD11C608D3E007726D4 /* TrackDotItem.swift */,
 				1116A7A91C8FB60400438FBB /* MoreActionRequired.swift */,
 			);
-			name = Models;
-			path = Views/Models;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		110B81121C46259F00FE136D /* CustomControl */ = {
@@ -205,7 +204,6 @@
 				11E889401C4F5632003E9633 /* CoreData */,
 				110645A21C4725D900795996 /* Tools */,
 				110B81121C46259F00FE136D /* CustomControl */,
-				110B81091C45FBD700FE136D /* Models */,
 				11128F721C3E35CA006390C1 /* Views */,
 				11128F5C1C3E0EE2006390C1 /* AppDelegate.swift */,
 				11128F661C3E0EE2006390C1 /* Assets.xcassets */,
@@ -228,6 +226,7 @@
 				1104C2CD1C8EAD1C00B50B5F /* GISTrackViewController.swift */,
 				1104C2D51C8EBDB100B50B5F /* MoreViewController.swift */,
 				111FF7E51C92906200960FD3 /* AgreementViewController.swift */,
+				110B81091C45FBD700FE136D /* Models */,
 				1110E0571CABFDB100AE132F /* logFile.swift */,
 				11632BFB1CD3261100B70C44 /* timeSelectorViewController.swift */,
 				11632C031CD32F9D00B70C44 /* MoreTableViewCell.swift */,

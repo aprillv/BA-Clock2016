@@ -299,6 +299,21 @@ class Tool: NSObject {
         
     }
     
+    func getClockMsgFormatedTime(date : NSDate) -> String{
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss a"
+        
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        
+        let today = dateFormatter.stringFromDate(date)
+        
+        return today
+        
+    }
+    
+    
     func getCurrentInterval1() -> Double{
         //        return 60
         let date = NSDate()
@@ -321,6 +336,124 @@ class Tool: NSObject {
         return send
         
     }
+    
+    // MARK: Clock IN/OUT
+    func callClockService(isClockIn isClockIn: Bool, clockOutRequiredInfo : ClockOutRequired){
+        
+        Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+            if response.result.isSuccess {
+                //                print(response.result.value)
+                if let _ = response.result.value as? [String: AnyObject]{
+//                    let rtn = ClockResponse(dicInfo: rtnValue)
+                    
+                }else{
+                    self.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
+                }
+                
+            }else{
+                self.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
+            }
+        }
+    }
+    
+    func saveClockDataToLocalDB(isClockIn isClockIn: Bool,clockOutRequiredInfo : ClockOutRequired) {
+        let cl = cl_submitData()
+        cl.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
+            , lat: Double(clockOutRequiredInfo.Latitude ?? "0.0" ) ?? 0.0
+            , lng: Double(clockOutRequiredInfo.Longitude ?? "0.0" ) ?? 0.0
+            , xtype: Int(isClockIn ? CConstants.ClockInType : CConstants.ClockOutType))
+    }
+    
+    
+    // MARK: COME BACK
+    func doComeBack(clockOutRequiredInfo : ClockOutRequired){
+        
+        var param = clockOutRequiredInfo.getPropertieNamesAsDictionary()
+        param["ActionType"] = "Come Back"
+        
+        Alamofire.request(.POST, CConstants.ServerURL + "ComeBack.json", parameters: param).responseJSON{ (response) -> Void in
+            if response.result.isSuccess {
+                
+            }else{
+                let cl = cl_submitData()
+                cl.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
+                    , lat: Double(clockOutRequiredInfo.Latitude ?? "0.0") ?? 0.0
+                    , lng: Double(clockOutRequiredInfo.Longitude ?? "0.0") ?? 0.0
+                    , xtype: CConstants.ComeBackType)
+                
+            }
+        }
+    }
+    
+    // MARK: GO OUT
+    func doGoOutService(requiredInfo : MoreActionRequired){
+//        var actionType : String?
+//        for i in 0...2 {
+//            if checkStatus[i] {
+//                switch i{
+//                case 0:
+//                    actionType = "Lunch"
+//                case 1:
+//                    actionType = "Personal Reason"
+//                default:
+//                    actionType = "Company Reason"
+//                }
+//                break
+//            }
+//        }
+//        let requiredInfo = MoreActionRequired()
+//        requiredInfo.ActionType = actionType
+//        
+//        requiredInfo.Latitude = "\(self.locationManager?.currentLocation?.coordinate.latitude ?? 0)"
+//        requiredInfo.Longitude = "\(self.locationManager?.currentLocation?.coordinate.longitude ?? 0)"
+//        requiredInfo.HostName = UIDevice.currentDevice().name
+//        let tl = Tool()
+//        requiredInfo.IPAddress = tl.getWiFiAddress()
+//        requiredInfo.ClientTime = tl.getClientTime()
+//        let OAuthToken = self.getUserToken()
+//        requiredInfo.Token = OAuthToken.Token!
+//        //        clockOutRequiredInfo.Token = "asdfaasdf"
+//        requiredInfo.TokenSecret = OAuthToken.TokenSecret!
+//        requiredInfo.ReasonStart = self.getFormatedDate2(StartTime)
+//        requiredInfo.ReasonEnd = self.getFormatedDate2(EndTime)
+//        
+//        
+//        let index = NSIndexPath(forRow: 0, inSection: 3)
+//        if let cell = tableView.cellForRowAtIndexPath(index) as? noteTableViewCell {
+//            requiredInfo.Reason = cell.txtView.text ?? " "
+//        }else{
+//            requiredInfo.Reason = " "
+//        }
+        
+        //        print(requiredInfo.getPropertieNamesAsDictionary())
+        Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
+            parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                
+                if let rtnValue = response.result.value as? Int{
+                    if rtnValue == 1 {
+                        
+                    }else{
+                        self.saveGoOutDataToLocalDB(requiredInfo)
+                    }
+                }else{
+                    self.saveGoOutDataToLocalDB(requiredInfo)
+                }
+                
+                
+        }
+    }
+    
+    func saveGoOutDataToLocalDB(requiredInfo : MoreActionRequired) {
+        let cl = cl_submitData()
+        cl.savedSubmitDataToDB(requiredInfo.ClientTime ?? ""
+            , lat: Double(requiredInfo.Latitude ?? "0.0") ?? 0.0
+            , lng: Double(requiredInfo.Latitude ?? "0.0") ?? 0.0
+            , reasonStart : requiredInfo.ReasonStart ?? ""
+            , reasonEnd : requiredInfo.ReasonEnd  ?? ""
+            , reason : requiredInfo.Reason  ?? ""
+            , actionType: requiredInfo.ActionType ?? "")
+    }
+    
 }
 
 

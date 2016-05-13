@@ -353,25 +353,11 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                         self.locationManager?.setNotComeBackNotification(self.EndTime)
                         self.navigationController?.popViewControllerAnimated(true)
                     }else{
-                        let cl = cl_submitData()
-                        cl.savedSubmitDataToDB(requiredInfo.ClientTime ?? ""
-                            , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
-                            , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
-                            , reasonStart : requiredInfo.ReasonStart ?? ""
-                            , reasonEnd : requiredInfo.ReasonEnd  ?? ""
-                            , reason : requiredInfo.Reason  ?? ""
-                            , actionType: actionType ?? "")
+                        tl.saveGoOutDataToLocalDB(requiredInfo)
                         self.PopServerError()
                     }
                 }else{
-                    let cl = cl_submitData()
-                    cl.savedSubmitDataToDB(requiredInfo.ClientTime ?? ""
-                        , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
-                        , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
-                        , reasonStart : requiredInfo.ReasonStart ?? ""
-                        , reasonEnd : requiredInfo.ReasonEnd  ?? ""
-                        , reason : requiredInfo.Reason  ?? ""
-                        , actionType: actionType ?? "")
+                    tl.saveGoOutDataToLocalDB(requiredInfo)
 //                    self.PopServerError()
                 }
                 

@@ -80,6 +80,39 @@ class cl_submitData: NSObject {
                         switch xtype {
                         case CConstants.SubmitLocationType:
                             tl.callSubmitLocationService(lat, longitude1: lng, time: d)
+                        case CConstants.ClockInType, CConstants.ClockOutType, CConstants.ComeBackType:
+                            let clockOutRequiredInfo : ClockOutRequired = ClockOutRequired()
+                            clockOutRequiredInfo.Latitude = "\(lat ?? 0.0 )"
+                            clockOutRequiredInfo.Longitude = "\(lng ?? 0.0 )"
+                            clockOutRequiredInfo.HostName = UIDevice.currentDevice().name
+                            clockOutRequiredInfo.IPAddress = tl.getWiFiAddress()
+                            clockOutRequiredInfo.ClientTime = d
+                            let OAuthToken = tl.getUserToken()
+                            clockOutRequiredInfo.Token = OAuthToken.Token!
+                            clockOutRequiredInfo.TokenSecret = OAuthToken.TokenSecret!
+                            if xtype == CConstants.ComeBackType {
+                                tl.doComeBack(clockOutRequiredInfo)
+                            }else{
+                                tl.callClockService(isClockIn: xtype == CConstants.ClockInType, clockOutRequiredInfo: clockOutRequiredInfo)
+                            }
+                        case CConstants.GoOutType:
+                            
+                            let requiredInfo = MoreActionRequired()
+                            requiredInfo.ActionType = (item.valueForKey("actionType") as? String) ?? ""
+                            
+                            requiredInfo.Latitude = "\(lat ?? 0.0 )"
+                            requiredInfo.Longitude = "\(lat ?? 0.0 )"
+                            requiredInfo.HostName = UIDevice.currentDevice().name
+                            requiredInfo.IPAddress = tl.getWiFiAddress()
+                            requiredInfo.ClientTime = d
+                            let OAuthToken = tl.getUserToken()
+                            requiredInfo.Token = OAuthToken.Token!
+                            requiredInfo.TokenSecret = OAuthToken.TokenSecret!
+                            requiredInfo.ReasonStart = (item.valueForKey("reasonStart") as? String) ?? ""
+                            requiredInfo.ReasonEnd = (item.valueForKey("reasonEnd") as? String) ?? ""
+                            requiredInfo.Reason = (item.valueForKey("reason") as? String) ?? ""
+                            tl.doGoOutService(requiredInfo)
+                            
                         default:
                             break
                         }

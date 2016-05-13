@@ -480,36 +480,38 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
       
         self.view.userInteractionEnabled = false
        
-        currentRequest = Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-            if response.result.isSuccess {
-//                print(response.result.value)
-                if let rtnValue = response.result.value as? [String: AnyObject]{
-                    let rtn = ClockResponse(dicInfo: rtnValue)
-                    if Int(rtn.Status!) <= 0 {
-                        if rtn.Message != "" {
-                            self.PopMsgWithJustOK(msg: rtn.Message!) {
-                                 (action : UIAlertAction) -> Void in
-                                if rtn.Status == -4 {
-                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                    if let login = storyboard.instantiateViewControllerWithIdentifier("LoginStart") as? LoginViewController {
-                                        var va : [UIViewController]? = self.navigationController?.viewControllers
-                                        if va != nil {
-                                            va!.insert(login, atIndex: 0)
-                                            self.navigationController?.viewControllers = va!
-                                            self.navigationController?.popToRootViewControllerAnimated(true)
+        let net = NetworkReachabilityManager()
+        if net?.isReachable ?? false {
+            currentRequest = Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                if response.result.isSuccess {
+                    //                print(response.result.value)
+                    if let rtnValue = response.result.value as? [String: AnyObject]{
+                        let rtn = ClockResponse(dicInfo: rtnValue)
+                        if Int(rtn.Status!) <= 0 {
+                            if rtn.Message != "" {
+                                self.PopMsgWithJustOK(msg: rtn.Message!) {
+                                    (action : UIAlertAction) -> Void in
+                                    if rtn.Status == -4 {
+                                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                        if let login = storyboard.instantiateViewControllerWithIdentifier("LoginStart") as? LoginViewController {
+                                            var va : [UIViewController]? = self.navigationController?.viewControllers
+                                            if va != nil {
+                                                va!.insert(login, atIndex: 0)
+                                                self.navigationController?.viewControllers = va!
+                                                self.navigationController?.popToRootViewControllerAnimated(true)
+                                            }
+                                            
                                         }
-                                        
                                     }
-                                }
                                     
-                                
+                                    
+                                }
                             }
-                        }
-                        
-                       
-                    }else{
-                        if isClockIn {
                             
+                            
+                        }else{
+                            if isClockIn {
+                                
                                 let item = ScheduledDayItem(dicInfo: nil)
                                 item.ClockIn = rtn.ClockedInTime
                                 item.ClockInCoordinate = rtn.Coordinate
@@ -520,46 +522,69 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                 //                                    item.Hours = rtn
                                 item.ClockInDayName = rtn.DayName
                                 self.clockDataList!.append(item)
-                            
-                                self.mapTable.reloadData()
-                                self.scrollToBottom()
-                            
-                        }else{
-                            if let item = self.clockDataList?[self.clockDataList!.count-1] {
-                                
-                                item.ClockOut = rtn.ClockedOutTime
-                                item.ClockOutCoordinate = rtn.Coordinate
-                                
-                                item.ClockOutDay = rtn.Day
-                                item.ClockOutDayFullName = rtn.DayFullName
-                                item.ClockOutDayOfWeek = rtn.DayOfWeek
-                                item.ClockOutDayName = rtn.DayName
                                 
                                 self.mapTable.reloadData()
                                 self.scrollToBottom()
+                                
+                            }else{
+                                if let item = self.clockDataList?[self.clockDataList!.count-1] {
+                                    
+                                    item.ClockOut = rtn.ClockedOutTime
+                                    item.ClockOutCoordinate = rtn.Coordinate
+                                    
+                                    item.ClockOutDay = rtn.Day
+                                    item.ClockOutDayFullName = rtn.DayFullName
+                                    item.ClockOutDayOfWeek = rtn.DayOfWeek
+                                    item.ClockOutDayName = rtn.DayName
+                                    
+                                    self.mapTable.reloadData()
+                                    self.scrollToBottom()
+                                }
                             }
                         }
+                    }else{
+                        tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
+                        
+                        self.PopServerError()
                     }
+                    self.view.userInteractionEnabled = true
+                    
                 }else{
-                    let cl = cl_submitData()
-                    cl.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
-                        , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
-                        , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
-                        , xtype: Int(isClockIn ? CConstants.ClockInType : CConstants.ClockOutType))
-                    self.PopServerError()
+                    tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
+                    
+                    self.view.userInteractionEnabled = true
                 }
-               self.view.userInteractionEnabled = true
-                
-            }else{
-                let cl = cl_submitData()
-                cl.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
-                    , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
-                    , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
-                    , xtype: Int(isClockIn ? CConstants.ClockInType : CConstants.ClockOutType))
-//                self.PopNetworkError()
-                self.view.userInteractionEnabled = true
             }
+        }else{
+            let userInfo = NSUserDefaults.standardUserDefaults()
+            if let lastClockOutTime = userInfo.valueForKey(CConstants.LastClockOutTime) as? NSDate {
+                let now = NSDate()
+                let h = now.timeIntervalSinceDate(lastClockOutTime)
+                if h < 60 {
+                    let msg = "Please wait 1 minute to clock in without clocking out. Last clock Out @\(tl.getClockMsgFormatedTime(lastClockOutTime))"
+                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                    return
+                }
+                
+                if let lastClockInTime = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate {
+                    if lastClockInTime.timeIntervalSinceDate(lastClockInTime) > 0 {
+                        let h = now.timeIntervalSinceDate(lastClockInTime)
+                        if h < 12 * 60 * 60 {
+                            let msg = "You cannot clock in without clocking out. Last clock in @\(tl.getClockMsgFormatedTime(lastClockInTime))"
+                            self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                            return
+                        }
+                    }
+                }
+            }
+            tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
+            
+            
         }
+        
+        
+        
+        
     }
     
     
@@ -578,10 +603,6 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     }
     
     private func doComeBack(){
-//        self.locationTracker?.getMyLocation222()
-//        currentRequest?.cancel()
-        //        print(CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL))
-        //        let userInfo = NSUserDefaults.standardUserDefaults()
         let clockOutRequiredInfo = ClockOutRequired()
         clockOutRequiredInfo.Latitude = "\(self.locationManager?.currentLocation?.coordinate.latitude ?? 0)"
         clockOutRequiredInfo.Longitude = "\(self.locationManager?.currentLocation?.coordinate.longitude ?? 0)"
