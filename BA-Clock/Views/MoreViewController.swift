@@ -344,25 +344,72 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             requiredInfo.Reason = " "
         }
         
-//        print(requiredInfo.getPropertieNamesAsDictionary())
-        Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
-            parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                
-                if let rtnValue = response.result.value as? Int{
-                    if rtnValue == 1 {
-                        self.locationManager?.setNotComeBackNotification(self.EndTime)
-                        self.navigationController?.popViewControllerAnimated(true)
+        let net = NetworkReachabilityManager()
+        
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        
+        if let lastGoOutTime = userInfo.valueForKey(CConstants.LastGoOutTime) as? NSDate {
+            if let lastComeBackTime = userInfo.valueForKey(CConstants.LastComeBackTime) as? NSDate {
+                if lastGoOutTime.timeIntervalSinceDate(lastComeBackTime) > 0 {
+                    let msg = "In order to go out, you have to come back first."
+                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                    return
+                }
+            }else{
+                let msg = "In order to go out, you have to come back first."
+                self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                return
+            }
+            
+        }
+        
+        if let lastClockInTime = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate {
+            if let lastClockOutTime = userInfo.valueForKey(CConstants.LastClockOutTime) as? NSDate {
+                if lastClockOutTime.timeIntervalSinceDate(lastClockInTime) > 0 {
+                    let msg = "In order to go out, you have to clock in first."
+                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                    return
+                }
+            }
+        }else{
+            let msg = "In order to go out, you have to clock in first."
+            self.PopMsgWithJustOK(msg: msg, txtField: nil)
+            return
+        }
+        
+        if net?.isReachable ?? false {
+            
+            let submitData = cl_submitData()
+            submitData.resubmit()
+            
+//            let userInfo = NSUserDefaults.standardUserDefaults()
+            userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)
+            
+            //        print(requiredInfo.getPropertieNamesAsDictionary())
+            Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
+                parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                    
+                    if let rtnValue = response.result.value as? Int{
+                        if rtnValue == 1 {
+                            self.locationManager?.setNotComeBackNotification(self.EndTime)
+                            self.navigationController?.popViewControllerAnimated(true)
+                        }else{
+//                            tl.saveGoOutDataToLocalDB(requiredInfo)
+                            self.PopServerError()
+                        }
                     }else{
                         tl.saveGoOutDataToLocalDB(requiredInfo)
-                        self.PopServerError()
+                        self.navigationController?.popViewControllerAnimated(true)
+                        //                    self.PopServerError()
                     }
-                }else{
-                    tl.saveGoOutDataToLocalDB(requiredInfo)
-//                    self.PopServerError()
-                }
-                
-                
+            }
+            
+        }else{
+            userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)
+            tl.saveGoOutDataToLocalDB(requiredInfo)
+            self.navigationController?.popViewControllerAnimated(true)
         }
+
     }
     
     @IBAction func doCancel(sender: AnyObject) {

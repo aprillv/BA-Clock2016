@@ -58,6 +58,8 @@ struct CConstants{
     
     static let LastClockInTime : String = "LastClockInTime"
     static let LastClockOutTime : String = "LastClockOutTime"
+    static let LastGoOutTime : String = "LastGoOutTime"
+    static let LastComeBackTime : String = "LastComeBackTime"
     
 
     //check app version

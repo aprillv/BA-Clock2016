@@ -229,7 +229,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uY6-BT-kik">
                                 <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <mutableString key="text">GEO FENCE:
+                                <string key="text">GEO FENCE:
  
 If an employee refuses to install the app, you can tell the employee to go home and “think about it” because refusal to install the app will result in termination.  If the employee continues to refuse to install the app, you can terminate the employee for insubordination and/or refusing to meet a job requirement.
  
@@ -245,7 +245,7 @@ Question: What will happen if the employee loses his phone or leave it at home b
  
 FACEBOOK:
  
-Absolutely you can use Facebook against the dishonest employee you terminated.  I use Facebook in Court all the time.  People say the craziest things and post the most damning pictures on Facebook.  Facebook is a great “admission” against the person posting.  Too bad you did not have the Facebook page when she told you “I was sick,” but you have it now.</mutableString>
+Absolutely you can use Facebook against the dishonest employee you terminated.  I use Facebook in Court all the time.  People say the craziest things and post the most damning pictures on Facebook.  Facebook is a great “admission” against the person posting.  Too bad you did not have the Facebook page when she told you “I was sick,” but you have it now.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -984,7 +984,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8AP-dq-8zJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5844.5" y="-252.5"/>
+            <point key="canvasLocation" x="-5005.5" y="-289.5"/>
         </scene>
         <!--Time Selector View Controller-->
         <scene sceneID="9ZQ-eg-TFq">
@@ -1084,7 +1084,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="atC-tT-gPo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5659.5" y="-25.5"/>
+            <point key="canvasLocation" x="-5677.5" y="-93.5"/>
         </scene>
     </scenes>
     <resources>
