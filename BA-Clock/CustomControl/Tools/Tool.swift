@@ -204,7 +204,7 @@ class Tool: NSObject {
         submitRequired.TokenSecret = OAuthToken.TokenSecret
         
         Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-            //                print(response.result.value)
+                            print(submitRequired.getPropertieNamesAsDictionary(), response.result.value)
             if response.result.isSuccess {
             }else{
                 

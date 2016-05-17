@@ -30,6 +30,21 @@
         <attribute name="clockOutLongitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="hours" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="ShowSchedule" syncable="YES">
+        <attribute name="clockIn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockInCoordinate_lat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="clockInCoordinate_lng" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="clockInDay" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockInDayFullName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockInName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockOut" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockOutCoordinate_lat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="clockOutCoordinate_lng" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="clockOutDay" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockOutDayFullName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clockOutName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hours" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+    </entity>
     <entity name="SubmitData" syncable="YES">
         <attribute name="actionType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -45,5 +60,6 @@
         <element name="LogFile" positionX="-63" positionY="99" width="128" height="90"/>
         <element name="ScheduledDay" positionX="-63" positionY="-18" width="128" height="270"/>
         <element name="SubmitData" positionX="-63" positionY="99" width="128" height="165"/>
+        <element name="ShowSchedule" positionX="-63" positionY="99" width="128" height="240"/>
     </elements>
 </model>

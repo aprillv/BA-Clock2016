@@ -28,6 +28,8 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 //        UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
 //        self.navigationItem.leftBarButtonItem = barButton;
         
+        self.locationManager = CLocationManager.sharedInstance
+        
         let button = UIButton(type: .Custom)
 //        button.setImage(UIImage(named: "back"), forState: .Normal)
         button.addTarget(self, action: #selector(MoreViewController.GoBackToList(_:)), forControlEvents: .TouchUpInside)
@@ -55,6 +57,17 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     struct constants {
         static let CellIdentifierTrack = "MoreCell"
         static let SegueToGISTrack = "GISTrack"
+        
+//        case 0:
+//        cell.actionlbl?.text = "Lunch"
+//        case 1:
+//        cell.actionlbl?.text = "Business / Meeting"
+//        default:
+//        cell.actionlbl?.text = "Personal Reason"
+//        
+        static let LunchString = "Lunch"
+        static let BusinessString = "Business / Meeting"
+        static let PersonalString = "Personal Reason"
         
 //        static let TitleGISTrack = "GIS Track"
 //        static let TitleLunch = "Lunch"
@@ -114,7 +127,8 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     private func getFormatedDate2(d: NSDate) -> String{
-        dateFormat.dateFormat = "hh:mm:ss a"
+        dateFormat.dateFormat = "HH:mm:ss"
+         dateFormat.timeZone = NSTimeZone(name: "America/Chicago")
         return dateFormat.stringFromDate(d)
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -127,11 +141,11 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             if let cell = cell1 as? MoreTableViewCell {
                 switch indexPath.row {
                 case 0:
-                    cell.actionlbl?.text = "Lunch"
+                    cell.actionlbl?.text = constants.LunchString
                 case 1:
-                    cell.actionlbl?.text = "Business / Meeting"
+                    cell.actionlbl?.text = constants.BusinessString
                 default:
-                    cell.actionlbl?.text = "Personal Reason"
+                    cell.actionlbl?.text = constants.PersonalString
                 }
                 cell.checkImg.image = UIImage(named: checkStatus[indexPath.row] ? "radioed" : "radio")
             }
@@ -311,11 +325,11 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             if checkStatus[i] {
                 switch i{
                 case 0:
-                    actionType = "Lunch"
-                case 1:
-                    actionType = "Personal Reason"
+                    actionType = constants.LunchString
+                case 2:
+                    actionType = constants.PersonalString
                 default:
-                    actionType = "Company Reason"
+                    actionType = constants.BusinessString
                 }
                 break
             }
@@ -371,10 +385,6 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                     return
                 }
             }
-        }else{
-            let msg = "In order to go out, you have to clock in first."
-            self.PopMsgWithJustOK(msg: msg, txtField: nil)
-            return
         }
         
         if net?.isReachable ?? false {
@@ -386,9 +396,17 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)
             
             //        print(requiredInfo.getPropertieNamesAsDictionary())
+            
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.userInteractionEnabled = false
+            hud.labelText = CConstants.SavingMsg
+            
             Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
                 parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     
+                    hud.userInteractionEnabled = true
+                    hud.hide(true)
+//                    print(requiredInfo.getPropertieNamesAsDictionary(), response.result.value)
                     if let rtnValue = response.result.value as? Int{
                         if rtnValue == 1 {
                             self.locationManager?.setNotComeBackNotification(self.EndTime)

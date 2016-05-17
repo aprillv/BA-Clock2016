@@ -350,9 +350,9 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ywX-O6-9be">
-                                                    <rect key="frame" x="8" y="8" width="174" height="149"/>
+                                                    <rect key="frame" x="8" y="8" width="174" height="70"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="149" id="2em-IC-A2Y"/>
+                                                        <constraint firstAttribute="height" constant="70" id="2em-IC-A2Y"/>
                                                         <constraint firstAttribute="width" constant="150" id="z5m-8Y-Mvk"/>
                                                     </constraints>
                                                     <variation key="default">
@@ -362,7 +362,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                     </variation>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XKp-yu-sXA">
-                                                    <rect key="frame" x="202" y="28" width="173" height="149"/>
+                                                    <rect key="frame" x="202" y="28" width="173" height="70"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="0qT-d8-2de"/>
                                                         <constraint firstAttribute="height" constant="149" id="9vk-MV-zxa"/>
@@ -370,6 +370,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                     <variation key="default">
                                                         <mask key="constraints">
                                                             <exclude reference="0qT-d8-2de"/>
+                                                            <exclude reference="9vk-MV-zxa"/>
                                                         </mask>
                                                     </variation>
                                                 </imageView>
@@ -391,7 +392,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yff-kq-9bZ">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yff-kq-9bZ">
                                                     <rect key="frame" x="25" y="77" width="145" height="74"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="121" id="RdP-mD-Z1R"/>
@@ -403,7 +404,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FkL-ul-XGF">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FkL-ul-XGF">
                                                     <rect key="frame" x="213" y="96" width="145" height="74"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="74" id="4lC-BY-Unl"/>
@@ -433,33 +434,67 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BGH-Cy-a7U">
+                                                    <rect key="frame" x="147" y="15" width="35" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="Bf0-UF-oDK"/>
+                                                        <constraint firstAttribute="width" constant="35" id="b7p-Su-MBh"/>
+                                                    </constraints>
+                                                    <state key="normal" image="location0"/>
+                                                    <connections>
+                                                        <action selector="tapClockInCell:" destination="AEJ-zh-3HT" eventType="touchUpInside" id="wqE-fG-SlB"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yi6-qK-yUM">
+                                                    <rect key="frame" x="327" y="34" width="35" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="35" id="YSn-ax-qyB"/>
+                                                        <constraint firstAttribute="height" constant="25" id="v2V-xl-x5s"/>
+                                                    </constraints>
+                                                    <state key="normal" image="location0"/>
+                                                    <connections>
+                                                        <action selector="tapClockOutCell:" destination="AEJ-zh-3HT" eventType="touchUpInside" id="jc2-qM-cEN"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="yff-kq-9bZ" firstAttribute="top" secondItem="NhT-t3-XvD" secondAttribute="topMargin" constant="54" id="0pp-TY-Iu6"/>
                                                 <constraint firstItem="FkL-ul-XGF" firstAttribute="top" secondItem="jyB-Kb-bQH" secondAttribute="bottom" constant="-3" id="28H-3p-RtT"/>
                                                 <constraint firstItem="IgY-EB-YVK" firstAttribute="leading" secondItem="jyB-Kb-bQH" secondAttribute="leading" id="39k-f4-L2T"/>
+                                                <constraint firstItem="ywX-O6-9be" firstAttribute="top" secondItem="BGH-Cy-a7U" secondAttribute="bottom" constant="-32" id="4nd-Di-STV"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="BGH-Cy-a7U" secondAttribute="trailing" constant="193" id="5Zr-2V-z7E"/>
+                                                <constraint firstItem="BGH-Cy-a7U" firstAttribute="trailing" secondItem="XKp-yu-sXA" secondAttribute="trailing" id="5vP-0G-3lZ"/>
                                                 <constraint firstItem="IgY-EB-YVK" firstAttribute="top" secondItem="jyB-Kb-bQH" secondAttribute="bottom" id="7LD-kE-pmm"/>
                                                 <constraint firstItem="XKp-yu-sXA" firstAttribute="leading" secondItem="NhT-t3-XvD" secondAttribute="leadingMargin" constant="209" id="8Kp-wp-qnl"/>
                                                 <constraint firstItem="UUG-RJ-4d2" firstAttribute="leading" secondItem="yff-kq-9bZ" secondAttribute="leading" id="9Ar-Ef-gTf"/>
                                                 <constraint firstItem="ywX-O6-9be" firstAttribute="leading" secondItem="yff-kq-9bZ" secondAttribute="trailing" constant="-158" id="BMc-Dg-b03"/>
                                                 <constraint firstItem="FkL-ul-XGF" firstAttribute="top" secondItem="jyB-Kb-bQH" secondAttribute="bottom" constant="42" id="C1g-jg-hg4"/>
+                                                <constraint firstItem="BGH-Cy-a7U" firstAttribute="leading" secondItem="ywX-O6-9be" secondAttribute="trailing" constant="-35" id="CAt-KT-l9q"/>
                                                 <constraint firstItem="PHZ-fJ-aqm" firstAttribute="height" secondItem="UUG-RJ-4d2" secondAttribute="height" id="DHr-v8-MFq"/>
+                                                <constraint firstItem="XKp-yu-sXA" firstAttribute="top" secondItem="yi6-qK-yUM" secondAttribute="bottom" constant="-31" id="Gg7-9g-foy"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="UUG-RJ-4d2" secondAttribute="trailing" constant="212" id="KjA-Dj-F7L"/>
                                                 <constraint firstItem="PHZ-fJ-aqm" firstAttribute="leading" secondItem="UUG-RJ-4d2" secondAttribute="leading" id="MEK-ed-v4g"/>
                                                 <constraint firstItem="FkL-ul-XGF" firstAttribute="leading" secondItem="XKp-yu-sXA" secondAttribute="trailing" constant="-158" id="McG-X7-qmF"/>
                                                 <constraint firstItem="FkL-ul-XGF" firstAttribute="leading" secondItem="yff-kq-9bZ" secondAttribute="trailing" constant="43" id="Phi-ch-zsg"/>
                                                 <constraint firstItem="XKp-yu-sXA" firstAttribute="leading" secondItem="ywX-O6-9be" secondAttribute="trailing" constant="20" id="SJz-rb-1gU"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="BGH-Cy-a7U" secondAttribute="trailing" constant="193" id="Tto-xb-Nnk"/>
+                                                <constraint firstItem="XKp-yu-sXA" firstAttribute="height" secondItem="ywX-O6-9be" secondAttribute="height" id="YfM-nX-MHW"/>
                                                 <constraint firstItem="jyB-Kb-bQH" firstAttribute="top" secondItem="NhT-t3-XvD" secondAttribute="topMargin" constant="26" id="a1t-xR-HiE"/>
                                                 <constraint firstItem="XKp-yu-sXA" firstAttribute="top" secondItem="NhT-t3-XvD" secondAttribute="topMargin" constant="20" id="aZI-hz-TjV"/>
+                                                <constraint firstItem="yi6-qK-yUM" firstAttribute="leading" secondItem="XKp-yu-sXA" secondAttribute="trailing" constant="-48" id="d3r-K0-jLw"/>
                                                 <constraint firstItem="jyB-Kb-bQH" firstAttribute="width" secondItem="FkL-ul-XGF" secondAttribute="width" id="dOs-Mg-aJt"/>
+                                                <constraint firstItem="yi6-qK-yUM" firstAttribute="leading" secondItem="yff-kq-9bZ" secondAttribute="trailing" constant="153" id="evL-c4-qgU"/>
                                                 <constraint firstItem="UUG-RJ-4d2" firstAttribute="top" secondItem="NhT-t3-XvD" secondAttribute="topMargin" constant="7" id="f8h-I3-q3d"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="FkL-ul-XGF" secondAttribute="trailing" constant="17" id="fVT-K9-iLg"/>
+                                                <constraint firstItem="ywX-O6-9be" firstAttribute="top" secondItem="BGH-Cy-a7U" secondAttribute="bottom" constant="-32" id="hYD-5p-MVx"/>
                                                 <constraint firstItem="yff-kq-9bZ" firstAttribute="width" secondItem="FkL-ul-XGF" secondAttribute="width" id="khJ-ev-4lA"/>
                                                 <constraint firstItem="IgY-EB-YVK" firstAttribute="width" secondItem="jyB-Kb-bQH" secondAttribute="width" id="mNa-gj-sHq"/>
+                                                <constraint firstItem="yff-kq-9bZ" firstAttribute="top" secondItem="yi6-qK-yUM" secondAttribute="bottom" constant="18" id="mXI-0L-e5T"/>
                                                 <constraint firstItem="PHZ-fJ-aqm" firstAttribute="top" secondItem="UUG-RJ-4d2" secondAttribute="bottom" id="n2o-d2-lza"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="ywX-O6-9be" secondAttribute="leading" id="opr-oz-Rhr"/>
                                                 <constraint firstItem="yff-kq-9bZ" firstAttribute="top" secondItem="UUG-RJ-4d2" secondAttribute="bottom" constant="42" id="pVp-xU-W5G"/>
                                                 <constraint firstItem="ywX-O6-9be" firstAttribute="width" secondItem="XKp-yu-sXA" secondAttribute="width" id="pbA-Gf-prg"/>
+                                                <constraint firstItem="BGH-Cy-a7U" firstAttribute="leading" secondItem="ywX-O6-9be" secondAttribute="leading" id="q6B-uh-h6g"/>
                                                 <constraint firstItem="FkL-ul-XGF" firstAttribute="top" secondItem="NhT-t3-XvD" secondAttribute="topMargin" constant="73" id="soo-5i-L55"/>
                                                 <constraint firstItem="yff-kq-9bZ" firstAttribute="leading" secondItem="NhT-t3-XvD" secondAttribute="leadingMargin" constant="17" id="svG-Me-u6D"/>
                                                 <constraint firstItem="UUG-RJ-4d2" firstAttribute="width" secondItem="yff-kq-9bZ" secondAttribute="width" id="t8G-t1-Aqj"/>
@@ -470,14 +505,21 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
+                                                    <exclude reference="4nd-Di-STV"/>
                                                     <exclude reference="BMc-Dg-b03"/>
                                                     <exclude reference="KjA-Dj-F7L"/>
                                                     <exclude reference="DHr-v8-MFq"/>
                                                     <exclude reference="0pp-TY-Iu6"/>
+                                                    <exclude reference="mXI-0L-e5T"/>
+                                                    <exclude reference="5Zr-2V-z7E"/>
+                                                    <exclude reference="5vP-0G-3lZ"/>
+                                                    <exclude reference="Tto-xb-Nnk"/>
+                                                    <exclude reference="q6B-uh-h6g"/>
                                                     <exclude reference="8Kp-wp-qnl"/>
                                                     <exclude reference="28H-3p-RtT"/>
                                                     <exclude reference="McG-X7-qmF"/>
                                                     <exclude reference="soo-5i-L55"/>
+                                                    <exclude reference="evL-c4-qgU"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -491,6 +533,8 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                             <outlet property="clockOutTextLbl" destination="jyB-Kb-bQH" id="vmR-mc-R3i"/>
                                             <outlet property="clockOutTime" destination="IgY-EB-YVK" id="iLG-Hf-Hgw"/>
                                             <outlet property="contentView" destination="NhT-t3-XvD" id="Egj-ek-Xf6"/>
+                                            <outlet property="tapClockBtn" destination="BGH-Cy-a7U" id="VDa-gh-RNo"/>
+                                            <outlet property="tapClockOutBtn" destination="yi6-qK-yUM" id="Bxm-I9-HYe"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="clockTextCell" id="8Gv-jo-tpg" customClass="TextTableViewCell" customModule="BA_Clock" customModuleProvider="target">
@@ -1095,6 +1139,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
         <image name="comeback" width="25" height="28"/>
         <image name="goout" width="23" height="28"/>
         <image name="hide" width="36" height="13"/>
+        <image name="location0" width="16" height="20"/>
         <image name="logo" width="100" height="100"/>
         <image name="more" width="28" height="6"/>
     </resources>

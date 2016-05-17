@@ -61,6 +61,7 @@ struct CConstants{
     static let LastGoOutTime : String = "LastGoOutTime"
     static let LastComeBackTime : String = "LastComeBackTime"
     
+    static let SavingMsg = "Saving to server..."
 
     //check app version
     static let CheckUpdateServiceURL: String = "bacontract_appid.json"
@@ -76,6 +77,8 @@ struct CConstants{
     static let ClockOutType : Int = 3
     static let GoOutType : Int = 4
     static let ComeBackType : Int = 5
+    
+    static let ToAddTrack : String = "AddTrack"
 }
 
 

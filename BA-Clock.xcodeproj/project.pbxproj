@@ -45,6 +45,7 @@
 		11810D4A1C478C2800298DD9 /* CoordinateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11810D491C478C2800298DD9 /* CoordinateObject.swift */; };
 		1189AC4B1C5F3E3400E407FE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1189AC4A1C5F3E3400E407FE /* MapViewController.swift */; };
 		1189AC4E1C5F4A1C00E407FE /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1189AC4D1C5F4A1C00E407FE /* CustomAnnotation.swift */; };
+		119236071CEAF921003F50D8 /* cl_showSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119236061CEAF921003F50D8 /* cl_showSchedule.swift */; };
 		11A6263A1CD9D78400B91EBE /* cl_submitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A626391CD9D78400B91EBE /* cl_submitData.swift */; };
 		11A626471CD9E0C800B91EBE /* Pods_BA_Clock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A626461CD9E0C800B91EBE /* Pods_BA_Clock.framework */; };
 		11BCEBD21C608D3E007726D4 /* TrackDotItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BCEBD11C608D3E007726D4 /* TrackDotItem.swift */; };
@@ -109,6 +110,7 @@
 		11810D491C478C2800298DD9 /* CoordinateObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateObject.swift; sourceTree = "<group>"; };
 		1189AC4A1C5F3E3400E407FE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1189AC4D1C5F4A1C00E407FE /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		119236061CEAF921003F50D8 /* cl_showSchedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cl_showSchedule.swift; sourceTree = "<group>"; };
 		11A626391CD9D78400B91EBE /* cl_submitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cl_submitData.swift; sourceTree = "<group>"; };
 		11A626421CD9DE0700B91EBE /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = "../../../Library/Developer/Xcode/DerivedData/BA-Clock-btldguqodhyzauffklqyprjcyjpz/Build/Products/Debug-iphonesimulator/MBProgressHUD/MBProgressHUD.framework"; sourceTree = "<group>"; };
 		11A626441CD9DE1900B91EBE /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../../Library/Developer/Xcode/DerivedData/BA-Clock-btldguqodhyzauffklqyprjcyjpz/Build/Products/Debug-iphonesimulator/Alamofire/Alamofire.framework"; sourceTree = "<group>"; };
@@ -164,7 +166,8 @@
 				11BCEBD11C608D3E007726D4 /* TrackDotItem.swift */,
 				1116A7A91C8FB60400438FBB /* MoreActionRequired.swift */,
 			);
-			path = Models;
+			name = Models;
+			path = Views/Models;
 			sourceTree = "<group>";
 		};
 		110B81121C46259F00FE136D /* CustomControl */ = {
@@ -204,6 +207,7 @@
 				11E889401C4F5632003E9633 /* CoreData */,
 				110645A21C4725D900795996 /* Tools */,
 				110B81121C46259F00FE136D /* CustomControl */,
+				110B81091C45FBD700FE136D /* Models */,
 				11128F721C3E35CA006390C1 /* Views */,
 				11128F5C1C3E0EE2006390C1 /* AppDelegate.swift */,
 				11128F661C3E0EE2006390C1 /* Assets.xcassets */,
@@ -226,7 +230,6 @@
 				1104C2CD1C8EAD1C00B50B5F /* GISTrackViewController.swift */,
 				1104C2D51C8EBDB100B50B5F /* MoreViewController.swift */,
 				111FF7E51C92906200960FD3 /* AgreementViewController.swift */,
-				110B81091C45FBD700FE136D /* Models */,
 				1110E0571CABFDB100AE132F /* logFile.swift */,
 				11632BFB1CD3261100B70C44 /* timeSelectorViewController.swift */,
 				11632C031CD32F9D00B70C44 /* MoreTableViewCell.swift */,
@@ -244,6 +247,7 @@
 				1110E04D1CABFA0300AE132F /* cl_log.swift */,
 				1110E0551CABFB5700AE132F /* logs.swift */,
 				11A626391CD9D78400B91EBE /* cl_submitData.swift */,
+				119236061CEAF921003F50D8 /* cl_showSchedule.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -405,6 +409,7 @@
 				11128F971C3E38D4006390C1 /* CConstants.swift in Sources */,
 				11810D481C4788EC00298DD9 /* ClockMapCell.swift in Sources */,
 				110B810B1C4616F600FE136D /* LoginedInfo.swift in Sources */,
+				119236071CEAF921003F50D8 /* cl_showSchedule.swift in Sources */,
 				111AA6AD1C48C93D00BD4098 /* SubmitLocationRequired.swift in Sources */,
 				11632C061CD357BE00B70C44 /* noteTableViewCell.swift in Sources */,
 				11A6263A1CD9D78400B91EBE /* cl_submitData.swift in Sources */,

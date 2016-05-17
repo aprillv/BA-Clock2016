@@ -29,6 +29,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //
 //        UIApplication.sharedApplication().cancelAllLocalNotifications()
     }
+    
+   
+    func applicationWillEnterForeground(application: UIApplication){
+//        print("aadsfdfd");
+        let locaitonManager = CLocationManager.sharedInstance
+        locaitonManager.updateLocation()
+    }
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 //         print("\(NSDate()) didFinishLaunchingWithOptions")
@@ -67,6 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: CConstants.StoryboardName, bundle: nil)
         
         let userInfo = NSUserDefaults.standardUserDefaults()
+        userInfo.setBool(true, forKey: CConstants.ToAddTrack)
+        
         var storyid : String?
         if let _ = userInfo.objectForKey(CConstants.UserInfoPwd) as? String{
             if let _ = userInfo.objectForKey(CConstants.UserInfoEmail) as? String {
@@ -238,11 +248,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-    func applicationWillEnterForeground(application: UIApplication) {
-//        print("************")
-//        endBackgroundUpdateTask()
-    }
-//    
+//    func applicationWillEnterForeground(application: UIApplication) {
+////        print("************")
+////        endBackgroundUpdateTask()
+//    }
+//
     
 
 }

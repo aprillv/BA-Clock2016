@@ -99,7 +99,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         super.viewWillAppear(animated)
         
         
-        self.callGetList()
+        
     }
     
   
@@ -153,11 +153,25 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
 //            firstTime = true
 //        }
         
+        let ss = cl_showSchedule()
+        let rtn = ss.getScheduledList()
+        if rtn.count == 0 {
+            self.callGetList()
+        }else{
+            self.clockDataList = rtn
+            if let h = self.clockDataList?.filter({$0.ClockInName == "Clock In"}).last {
+                print(h.ClockIn, h.ClockInDay, h.ClockOutDayFullName)
+            }
+        }
+        
+        
         let userInfo = NSUserDefaults.standardUserDefaults()
         view.bringSubviewToFront(mapTable)
         title = userInfo.valueForKey(CConstants.UserFullName) as? String
         
     }
+    
+    
     
    
     
@@ -180,14 +194,16 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
 //                    self.noticeOnlyText(CConstants.LoadingMsg)
                     hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud!.labelText = CConstants.LoadingMsg
+                    hud?.userInteractionEnabled = false
                 }
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetScheduledDataURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     self.firstrefreshControl?.endRefreshing()
+                     hud?.userInteractionEnabled = true
                     if self.clockDataList == nil {
                     hud!.hide(true)
                     }
                     if response.result.isSuccess {
-//                        print(response.result.value)
+                        print(response.result.value)
                         if let rtnValue = response.result.value as? [String: AnyObject]{
                             
                             if rtnValue["Status"]!.integerValue == 1 {
@@ -196,6 +212,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                     if let list = rtnValue["ScheduledDay"] as? [[String: AnyObject]] {
                                         for item in list{
                                             let info = ScheduledDayItem(dicInfo: item)
+                                            
                                             
                                             if self.clockDataList!.filter(
                                                 { $0.ClockIn == info.ClockIn && $0.ClockOut == info.ClockOut}
@@ -231,9 +248,15 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                     }
                                 }else{
                                     self.clockDataList = [ScheduledDayItem]()
+                                    let ss = cl_showSchedule()
                                     for item in rtnValue["ScheduledDay"] as! [[String: AnyObject]]{
-                                        self.clockDataList!.append(ScheduledDayItem(dicInfo: item))
+                                        let info = ScheduledDayItem(dicInfo: item)
+                                        self.clockDataList!.append(info)
+//                                        ss.savedSubmitDataToDB(info)
                                     }
+                                    
+                                    
+                                    
                                     let tl = Tool()
                                     let (isTime, timespace) = tl.getTimeInter()
                                     
@@ -303,7 +326,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let item = self.clockDataList![indexPath.row]
         if (item.ClockIn! != "-1"){
-            return 189
+            return 100
         }else{
             return 50
         }
@@ -392,26 +415,26 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     }
 
     
-    func clockInTapped(tap : UITapGestureRecognizer){
+    func clockInTapped(tap : UIButton){
 //        print("sfsdf \(tap.view?.superview?.tag)  \(tap.view?.layer.valueForKey("lng"))")
         showMap(true,tap: tap)
     }
     
-    func clockOutTapped(tap : UITapGestureRecognizer){
+    func clockOutTapped(tap : UIButton){
 //         print("out sfsdf \(tap.view?.layer.valueForKey("lat"))  \(tap.view?.layer.valueForKey("lng"))")
         showMap(false,tap: tap)
     }
     
-    private func showMap(isIn: Bool, tap : UITapGestureRecognizer) {
+    private func showMap(isIn: Bool, tap : UIButton) {
         self.isIn = isIn
-        if let tag = tap.view?.superview?.tag {
+         let tag = tap.tag 
 //            print("tag" + "\(tag)")
             let list = clockDataList!
             if let item : ScheduledDayItem = list[tag] {
                 self.selectedItem = item
                 self.performSegueWithIdentifier("showMapDetail", sender: nil)
             }
-        }
+        
     
     }
 
@@ -480,6 +503,79 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
       
         self.view.userInteractionEnabled = false
        
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        if let lastGoOutTime = userInfo.valueForKey(CConstants.LastGoOutTime) as? NSDate {
+            if let lastComeBackTime = userInfo.valueForKey(CConstants.LastComeBackTime) as? NSDate {
+                if lastComeBackTime.timeIntervalSinceDate(lastGoOutTime) < 0 {
+                    let msg = "In order to \(isClockIn ? "clock in" : "clock out"), you have to come back first."
+                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                    self.view.userInteractionEnabled = true
+                    return
+                }
+            }else{
+                let msg = "In order to \(isClockIn ? "clock in" : "clock out"), you have to come back first."
+                self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                self.view.userInteractionEnabled = true
+                return
+            }
+        }
+        
+        if isClockIn {
+            
+            
+            if let lastClockOutTime = userInfo.valueForKey(CConstants.LastClockOutTime) as? NSDate {
+                let now = NSDate()
+                let h = now.timeIntervalSinceDate(lastClockOutTime)
+                if h < 60 {
+                    let msg = "Please wait 1 minute to clock in. Last clock out @\(tl.getClockMsgFormatedTime(lastClockOutTime))"
+                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                    self.view.userInteractionEnabled = true
+                    return
+                }
+                
+                if let lastClockInTime = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate {
+                    if lastClockInTime.timeIntervalSinceDate(lastClockInTime) > 0 {
+                        let h = now.timeIntervalSinceDate(lastClockInTime)
+                        if h < 12 * 60 * 60 {
+                            let msg = "You cannot clock in without clocking out. Last clock in @\(tl.getClockMsgFormatedTime(lastClockInTime))"
+                            self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                            self.view.userInteractionEnabled = true
+                            return
+                        }
+                    }
+                }
+            }
+            userInfo.setValue(NSDate(), forKey: CConstants.LastClockInTime)
+            tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
+            self.view.userInteractionEnabled = true
+        }else{
+            if let lastClockInTime = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate {
+                if let lastClockOutTime = userInfo.valueForKey(CConstants.LastClockOutTime) as? NSDate {
+                    let h = lastClockInTime.timeIntervalSinceDate(lastClockOutTime)
+                    if h < 0 {
+                        let msg = "In order to clock out, you have to clock in first."
+                        self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                        self.view.userInteractionEnabled = true
+                        return
+                    }
+                }
+                let now = NSDate()
+                let h = now.timeIntervalSinceDate(lastClockInTime)
+                if h < 60 && h > 0  {
+                    let msg = "You cannot clock out within clock in 1 minute. Last clock in @\(tl.getClockMsgFormatedTime(lastClockInTime))"
+                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                    self.view.userInteractionEnabled = true
+                    return
+                }
+            }else{
+                let msg = "In order to clock out, you have to clock in first."
+                self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                self.view.userInteractionEnabled = true
+                return
+            }
+            
+        }
+        
         let net = NetworkReachabilityManager()
         if net?.isReachable ?? false {
             
@@ -564,81 +660,9 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                 }
             }
         }else{
-            let userInfo = NSUserDefaults.standardUserDefaults()
-            if let lastGoOutTime = userInfo.valueForKey(CConstants.LastGoOutTime) as? NSDate {
-                if let lastComeBackTime = userInfo.valueForKey(CConstants.LastComeBackTime) as? NSDate {
-                    if lastComeBackTime.timeIntervalSinceDate(lastGoOutTime) < 0 {
-                        let msg = "In order to \(isClockIn ? "clock in" : "clock out"), you have to come back first."
-                        self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                          self.view.userInteractionEnabled = true
-                        return
-                    }
-                }else{
-                    let msg = "In order to \(isClockIn ? "clock in" : "clock out"), you have to come back first."
-                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                    self.view.userInteractionEnabled = true
-                    return
-                }
-            }
-            
-            if isClockIn {
-               
-                
-                if let lastClockOutTime = userInfo.valueForKey(CConstants.LastClockOutTime) as? NSDate {
-                    let now = NSDate()
-                    let h = now.timeIntervalSinceDate(lastClockOutTime)
-                    if h < 60 {
-                        let msg = "Please wait 1 minute to clock in. Last clock out @\(tl.getClockMsgFormatedTime(lastClockOutTime))"
-                        self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                        self.view.userInteractionEnabled = true
-                        return
-                    }
-                    
-                    if let lastClockInTime = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate {
-                        if lastClockInTime.timeIntervalSinceDate(lastClockInTime) > 0 {
-                            let h = now.timeIntervalSinceDate(lastClockInTime)
-                            if h < 12 * 60 * 60 {
-                                let msg = "You cannot clock in without clocking out. Last clock in @\(tl.getClockMsgFormatedTime(lastClockInTime))"
-                                self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                                self.view.userInteractionEnabled = true
-                                return
-                            }
-                        }
-                    }
-                }
-                userInfo.setValue(NSDate(), forKey: CConstants.LastClockInTime)
-                tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
-                 self.view.userInteractionEnabled = true
-            }else{
-                if let lastClockInTime = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate {
-                    if let lastClockOutTime = userInfo.valueForKey(CConstants.LastClockOutTime) as? NSDate {
-                        let h = lastClockInTime.timeIntervalSinceDate(lastClockOutTime)
-                        if h < 0 {
-                            let msg = "In order to clock out, you have to clock in first."
-                            self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                            self.view.userInteractionEnabled = true
-                            return
-                        }
-                    }
-                    let now = NSDate()
-                    let h = now.timeIntervalSinceDate(lastClockInTime)
-                    if h < 60 && h > 0  {
-                        let msg = "You cannot clock out within clock in 1 minute. Last clock in @\(tl.getClockMsgFormatedTime(lastClockInTime))"
-                        self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                        self.view.userInteractionEnabled = true
-                        return
-                    }
-                }else{
-                    let msg = "In order to clock out, you have to clock in first."
-                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                    self.view.userInteractionEnabled = true
-                    return
-                }
-                userInfo.setValue(NSDate(), forKey: CConstants.LastClockOutTime)
-                tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
-                 self.view.userInteractionEnabled = true
-            }
-            
+            userInfo.setValue(NSDate(), forKey: CConstants.LastClockOutTime)
+            tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
+            self.view.userInteractionEnabled = true
         }
         
         
@@ -705,7 +729,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
             
             var hud : MBProgressHUD?
             hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud!.labelText = "Saving to server..."
+            hud!.labelText = CConstants.SavingMsg
             
             Alamofire.request(.POST, CConstants.ServerURL + "ComeBack.json", parameters: param).responseJSON{ (response) -> Void in
                 hud?.hide(true)

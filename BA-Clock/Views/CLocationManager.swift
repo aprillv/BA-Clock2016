@@ -56,18 +56,14 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     func setNotComeBackNotification(endTime : NSDate) {
-        
+        print(endTime)
         let info = UILocalNotification()
         info.fireDate = endTime.dateByAddingTimeInterval(10.0 * 60.0)
         info.timeZone = NSTimeZone.defaultTimeZone()
         info.alertBody = "You should click come back now. It is time out more than 10 minutes."
         info.soundName = UILocalNotificationDefaultSoundName
         info.applicationIconBadgeNumber = 1
-        
-        
-        info.repeatInterval = .Minute
-        //        info.repeatInterval = NSCalendar.int
-        //        info.repeatInterval = 10
+        info.repeatInterval = .Second
         UIApplication.sharedApplication().scheduleLocalNotification(info)
         
 //        let a = endTime.dateByAddingTimeInterval(60)
@@ -86,10 +82,11 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
    
     
     func CircleSubmitLocation() {
-        saveLog()
+        saveLog0()
         let tl = Tool()
         let interval = tl.getCurrentInterval1()
         if interval > 0 {
+//            self.SyncTimer
             self.SyncTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: #selector(CLocationManager.saveLog), userInfo: nil, repeats: true)
         }
     }
@@ -105,6 +102,14 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         let location: CLLocation? = locations.last
         
         self.currentLocation = location 
+        
+        
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        if userInfo.boolForKey(CConstants.ToAddTrack) ?? true {
+            userInfo.setBool(false, forKey: CConstants.ToAddTrack)
+            updateLocation()
+        }
+        
         
         // use for real time update location
 //        updateLocation()
@@ -127,6 +132,12 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     func saveLog(){
+        self.performSelector(#selector(saveLog0), withObject: nil, afterDelay: Double(arc4random_uniform(15) * 60))
+       
+        
+    }
+    
+    func saveLog0(){
         updateLocation()
         let lg = cl_log()
         lg.savedLogToDB(NSDate(), xtype: true, lat: "\(currentLocation?.coordinate.latitude) -- \(currentLocation?.coordinate.longitude)")
