@@ -162,6 +162,17 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
             if let h = self.clockDataList?.filter({$0.ClockInName == "Clock In"}).last {
                 print(h.ClockIn, h.ClockInDay, h.ClockOutDayFullName)
             }
+            if let h = self.clockDataList?.filter({$0.ClockInName == "Clock Out"}).last {
+                print(h.ClockIn, h.ClockInDay, h.ClockOutDayFullName)
+            }
+            
+            if let h = self.clockDataList?.filter({$0.ClockInName == "Come Back"}).last {
+                print(h.ClockIn, h.ClockInDay, h.ClockOutDayFullName)
+            }
+            
+            if let h = self.clockDataList?.filter({$0.ClockInName != "Clock In" && $0.ClockInName != "Clock Out" && $0.ClockInName != "Come Back"}).last {
+                print(h.ClockIn, h.ClockInDay, h.ClockOutDayFullName)
+            }
         }
         
         
