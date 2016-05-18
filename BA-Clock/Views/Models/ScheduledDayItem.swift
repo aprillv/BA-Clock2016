@@ -33,4 +33,8 @@ class ScheduledDayItem: BaseObject {
     var ClockInName: String?
     var ClockOutName: String?
     
+    var clockInDateDay: String?
+    var clockOutDateDay: String?
+    
+    
 }

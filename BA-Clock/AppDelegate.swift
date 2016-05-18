@@ -37,11 +37,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         locaitonManager.updateLocation()
     }
     
+    
+    func donextSubmit(n: NSNotification) {
+        let cl = cl_submitData()
+        if let sdata = n.object as? NSManagedObject {
+            cl.resubmit(sdata)
+        }else{
+            cl.resubmit(nil)
+        }
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 //         print("\(NSDate()) didFinishLaunchingWithOptions")
         
        clearNotifications()
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(donextSubmit(_:)), name: CConstants.SubmitNext, object: nil)
         
         self.window?.backgroundColor = UIColor.whiteColor()
 //        print(CLLocationManager.locationServicesEnabled())
@@ -54,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if  net?.isReachable ?? false {
                 let sd = cl_submitData()
-                sd.resubmit()
+                sd.resubmit(nil)
             }
             else {
                 //                print("no connection")

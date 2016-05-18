@@ -62,6 +62,8 @@ struct CConstants{
     static let LastComeBackTime : String = "LastComeBackTime"
     
     static let SavingMsg = "Saving to server..."
+    
+    static let SubmitNext = "DO NEXT SUBMIT"
 
     //check app version
     static let CheckUpdateServiceURL: String = "bacontract_appid.json"

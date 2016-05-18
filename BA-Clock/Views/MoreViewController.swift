@@ -337,12 +337,15 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let requiredInfo = MoreActionRequired()
         requiredInfo.ActionType = actionType
         
+        let lat = self.locationManager?.currentLocation?.coordinate.latitude ?? 0
+        let lng = self.locationManager?.currentLocation?.coordinate.longitude ?? 0
         requiredInfo.Latitude = "\(self.locationManager?.currentLocation?.coordinate.latitude ?? 0)"
         requiredInfo.Longitude = "\(self.locationManager?.currentLocation?.coordinate.longitude ?? 0)"
         requiredInfo.HostName = UIDevice.currentDevice().name
         let tl = Tool()
         requiredInfo.IPAddress = tl.getWiFiAddress()
-        requiredInfo.ClientTime = tl.getClientTime()
+        let now = NSDate()
+        requiredInfo.ClientTime = tl.getClientTime(now)
         let OAuthToken = self.getUserToken()
         requiredInfo.Token = OAuthToken.Token!
         //        clockOutRequiredInfo.Token = "asdfaasdf"
@@ -385,12 +388,61 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                     return
                 }
             }
+        }else{
+            let msg = "In order to go out, you have to clock in first."
+            self.PopMsgWithJustOK(msg: msg, txtField: nil)
+            return
+
         }
+        
+         tl.saveGoOutDataToLocalDB(requiredInfo)
+        
+        let submitData = cl_submitData()
+        submitData.resubmit(nil)
+        
+        
+        
+        
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.dateFormat =  "hh:mm:ss a"
+        let nowHour = dateFormatter.stringFromDate(now)
+        dateFormatter.dateFormat = "EEE, MMM dd"
+        let nowDay = dateFormatter.stringFromDate(now)
+        dateFormatter.dateFormat = "EEEE"
+        let nowFullWeekName = dateFormatter.stringFromDate(now)
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        let nowFullDateName = dateFormatter.stringFromDate(now)
+        
+        //        let userInfo = NSUserDefaults.standardUserDefaults()
+        userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)
+        
+       
+        let item = ScheduledDayItem(dicInfo : nil)
+        item.ClockOut = nowHour
+        item.ClockOutCoordinate = CoordinateObject(dicInfo: nil)
+        item.ClockOutCoordinate?.Latitude = lat
+        item.ClockOutCoordinate?.Longitude = lng
+        item.clockOutDateDay = nowFullDateName
+        item.ClockOutDay = nowDay
+        item.ClockOutName = actionType
+        item.ClockOutDayFullName = nowFullWeekName
+        item.ClockOutDayName =  nowDay.substringToIndex(nowDay.startIndex.advancedBy(2))
+                
+        let ss = cl_showSchedule()
+        ss.updateLastItem(item)
+        
+        
+        self.navigationController?.popViewControllerAnimated(true)
+        
+        return
+        
         
         if net?.isReachable ?? false {
             
             let submitData = cl_submitData()
-            submitData.resubmit()
+            submitData.resubmit(nil)
             
 //            let userInfo = NSUserDefaults.standardUserDefaults()
             userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)

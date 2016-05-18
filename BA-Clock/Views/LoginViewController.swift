@@ -246,7 +246,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                 let loginRequiredInfo : ClockInRequired = ClockInRequired()
                 loginRequiredInfo.Email = email
                 loginRequiredInfo.Password = tl.md5(string: password!)
-                loginRequiredInfo.ClientTime = tl.getClientTime()
+                let now = NSDate()
+                loginRequiredInfo.ClientTime = tl.getClientTime(now)
 //                print(loginRequiredInfo.getPropertieNamesAsDictionary())
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.LoginServiceURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     hud.hide(true)

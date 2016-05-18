@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CoreData
+import Alamofire
 
 class cl_submitData: NSObject {
     
@@ -63,20 +64,29 @@ class cl_submitData: NSObject {
     
     
     
-    func resubmit(){
+    func resubmit(last : NSManagedObject?){
+        let net = NetworkReachabilityManager()
+        if !(net?.isReachable ?? false){
+            return
+        }
         let fetchRequest = NSFetchRequest(entityName: "SubmitData")
         do {
+            if let a = last {
+                managedObjectContext.deleteObject(a)
+                try managedObjectContext.save()
+            }
             let results =
                 try managedObjectContext.executeFetchRequest(fetchRequest)
             let tl = Tool()
             if let t = results as? [NSManagedObject] {
-                for item : NSManagedObject in t {
+                if let item = t.first{
                     let lat =  item.valueForKey("latitude") as? Double
                     let lng = item.valueForKey("longitude") as? Double
                     
                     if let xtype = item.valueForKey("xtype") as? Int,
                         let d = item.valueForKey("submitdate") as? String{
-                        managedObjectContext.deleteObject(item)
+                        
+//
                         switch xtype {
                         case CConstants.SubmitLocationType:
                             tl.callSubmitLocationService(lat, longitude1: lng, time: d)
@@ -91,9 +101,9 @@ class cl_submitData: NSObject {
                             clockOutRequiredInfo.Token = OAuthToken.Token!
                             clockOutRequiredInfo.TokenSecret = OAuthToken.TokenSecret!
                             if xtype == CConstants.ComeBackType {
-                                tl.doComeBack(clockOutRequiredInfo)
+                                tl.doComeBack(clockOutRequiredInfo, obj: item)
                             }else{
-                                tl.callClockService(isClockIn: xtype == CConstants.ClockInType, clockOutRequiredInfo: clockOutRequiredInfo)
+                                tl.callClockService(isClockIn: xtype == CConstants.ClockInType, clockOutRequiredInfo: clockOutRequiredInfo, obj: item)
                             }
                         case CConstants.GoOutType:
                             
@@ -111,7 +121,7 @@ class cl_submitData: NSObject {
                             requiredInfo.ReasonStart = (item.valueForKey("reasonStart") as? String) ?? ""
                             requiredInfo.ReasonEnd = (item.valueForKey("reasonEnd") as? String) ?? ""
                             requiredInfo.Reason = (item.valueForKey("reason") as? String) ?? ""
-                            tl.doGoOutService(requiredInfo)
+                            tl.doGoOutService(requiredInfo, obj: item)
                             
                         default:
                             break
@@ -121,7 +131,8 @@ class cl_submitData: NSObject {
                 }
                 
             }
-            try managedObjectContext.save()
+            
+//
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }

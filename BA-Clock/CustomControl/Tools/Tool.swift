@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import CoreData
 
 class Tool: NSObject {
     func getTime2() -> Bool{
@@ -189,6 +190,16 @@ class Tool: NSObject {
         callSubmitLocationService(latitude, longitude1: longitude1, time: ClientTime)
     }
     
+    func getDateFromString(ds : String) -> NSDate{
+       
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.dateFormat =  "MM/dd/yyyy hh:mm:ss a"
+        print(ds)
+        print(dateFormatter.dateFromString(ds))
+        return dateFormatter.dateFromString(ds)!
+    }
+    
     
     func callSubmitLocationService(latitude : Double?, longitude1 : Double?, time: String){
         let submitRequired = SubmitLocationRequired()
@@ -283,9 +294,9 @@ class Tool: NSObject {
         return 0
         
     }
-    func getClientTime() -> String{
+    func getClientTime(date1 : NSDate?) -> String{
         //        return 60
-        let date = NSDate()
+        let date = date1 ?? NSDate()
         //        print(date)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -338,21 +349,22 @@ class Tool: NSObject {
     }
     
     // MARK: Clock IN/OUT
-    func callClockService(isClockIn isClockIn: Bool, clockOutRequiredInfo : ClockOutRequired){
+    func callClockService(isClockIn isClockIn: Bool, clockOutRequiredInfo : ClockOutRequired, obj: NSManagedObject){
         
         Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
-                //                print(response.result.value)
-                if let _ = response.result.value as? [String: AnyObject]{
+                                print(response.result.value)
+                if let rtn = response.result.value as? [String: AnyObject]{
 //                    let rtn = ClockResponse(dicInfo: rtnValue)
-                    
-                }else{
-                    self.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
+                    if let msg = rtn["Message"] as? String{
+                        if msg.containsString("Successfully"){
+                            NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: obj)
+                            return
+                        }
+                    }
                 }
-                
-            }else{
-                self.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
             }
+            NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: false)
         }
     }
     
@@ -366,80 +378,38 @@ class Tool: NSObject {
     
     
     // MARK: COME BACK
-    func doComeBack(clockOutRequiredInfo : ClockOutRequired){
+    func doComeBack(clockOutRequiredInfo : ClockOutRequired, obj: NSManagedObject){
         
         var param = clockOutRequiredInfo.getPropertieNamesAsDictionary()
         param["ActionType"] = "Come Back"
         
         Alamofire.request(.POST, CConstants.ServerURL + "ComeBack.json", parameters: param).responseJSON{ (response) -> Void in
-            if response.result.isSuccess {
-                
-            }else{
-                let cl = cl_submitData()
-                cl.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
-                    , lat: Double(clockOutRequiredInfo.Latitude ?? "0.0") ?? 0.0
-                    , lng: Double(clockOutRequiredInfo.Longitude ?? "0.0") ?? 0.0
-                    , xtype: CConstants.ComeBackType)
-                
+//           print("come back", response.result.value)
+            if let rtnValue = response.result.value as? Int{
+                if rtnValue == 1 {
+                    NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: obj)
+                    return
+                }
             }
+            NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: false)
+                
+            
         }
     }
     
     // MARK: GO OUT
-    func doGoOutService(requiredInfo : MoreActionRequired){
-//        var actionType : String?
-//        for i in 0...2 {
-//            if checkStatus[i] {
-//                switch i{
-//                case 0:
-//                    actionType = "Lunch"
-//                case 1:
-//                    actionType = "Personal Reason"
-//                default:
-//                    actionType = "Company Reason"
-//                }
-//                break
-//            }
-//        }
-//        let requiredInfo = MoreActionRequired()
-//        requiredInfo.ActionType = actionType
-//        
-//        requiredInfo.Latitude = "\(self.locationManager?.currentLocation?.coordinate.latitude ?? 0)"
-//        requiredInfo.Longitude = "\(self.locationManager?.currentLocation?.coordinate.longitude ?? 0)"
-//        requiredInfo.HostName = UIDevice.currentDevice().name
-//        let tl = Tool()
-//        requiredInfo.IPAddress = tl.getWiFiAddress()
-//        requiredInfo.ClientTime = tl.getClientTime()
-//        let OAuthToken = self.getUserToken()
-//        requiredInfo.Token = OAuthToken.Token!
-//        //        clockOutRequiredInfo.Token = "asdfaasdf"
-//        requiredInfo.TokenSecret = OAuthToken.TokenSecret!
-//        requiredInfo.ReasonStart = self.getFormatedDate2(StartTime)
-//        requiredInfo.ReasonEnd = self.getFormatedDate2(EndTime)
-//        
-//        
-//        let index = NSIndexPath(forRow: 0, inSection: 3)
-//        if let cell = tableView.cellForRowAtIndexPath(index) as? noteTableViewCell {
-//            requiredInfo.Reason = cell.txtView.text ?? " "
-//        }else{
-//            requiredInfo.Reason = " "
-//        }
-        
-        //        print(requiredInfo.getPropertieNamesAsDictionary())
+    func doGoOutService(requiredInfo : MoreActionRequired, obj: NSManagedObject){
         Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
             parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                
+                print("go out", response.result.value )
                 if let rtnValue = response.result.value as? Int{
                     if rtnValue == 1 {
-                        
-                    }else{
-                        self.saveGoOutDataToLocalDB(requiredInfo)
+                         NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: obj)
+                        return
                     }
-                }else{
-                    self.saveGoOutDataToLocalDB(requiredInfo)
                 }
-                
-                
+                 NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: false)
+//                self.saveGoOutDataToLocalDB(requiredInfo)  
         }
     }
     

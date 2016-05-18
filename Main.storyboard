@@ -610,9 +610,6 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                     <navigationItem key="navigationItem" title="Title" id="scq-nq-0OB">
                         <barButtonItem key="leftBarButtonItem" title="Clear Pins" id="LSm-m4-HQZ">
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="clearPINs" destination="Pxs-Of-gi9" id="IZq-5G-eRK"/>
-                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" id="ZUF-Rs-IVm">
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

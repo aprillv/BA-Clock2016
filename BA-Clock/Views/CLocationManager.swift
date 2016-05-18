@@ -138,6 +138,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     func saveLog0(){
+        print(NSDate())
         updateLocation()
         let lg = cl_log()
         lg.savedLogToDB(NSDate(), xtype: true, lat: "\(currentLocation?.coordinate.latitude) -- \(currentLocation?.coordinate.longitude)")

@@ -40,12 +40,49 @@ class cl_showSchedule: NSObject {
         sitem.setValue(item.ClockOutDayFullName, forKey: "clockOutDayFullName")
         sitem.setValue(item.ClockOutName, forKey: "clockOutName")
         sitem.setValue(item.Hours, forKey: "hours")
+        sitem.setValue(item.clockInDateDay, forKey: "clockInDate")
+        sitem.setValue(item.clockOutDateDay, forKey: "clockOutDate")
         do {
             try managedObjectContext.save()
         } catch let error as NSError  {
             print("Could not save \(error), \(error.userInfo)")
         }
     }
+    
+    func updateLastItem(item : ScheduledDayItem) {
+//        var rtn = [ScheduledDayItem]()
+        let fetchRequest = NSFetchRequest(entityName: "ShowSchedule")
+        do {
+            let results =
+                try managedObjectContext.executeFetchRequest(fetchRequest)
+            //            let tl = Tool()
+            if let t = results as? [NSManagedObject] {
+                if let sitem = t.last {
+//                    sitem.setValue(item.ClockIn, forKey: "clockIn")
+//                    sitem.setValue(item.ClockInCoordinate?.Latitude ?? 0.0, forKey: "clockInCoordinate_lat")
+//                    sitem.setValue(item.ClockInCoordinate?.Longitude ?? 0.0, forKey: "clockInCoordinate_lng")
+//                    sitem.setValue(item.ClockInDay, forKey: "clockInDay")
+//                    sitem.setValue(item.ClockInDayFullName, forKey: "clockInDayFullName")
+//                    sitem.setValue(item.ClockInName, forKey: "clockInName")
+                    sitem.setValue(item.ClockOut, forKey: "clockOut")
+                    sitem.setValue(item.ClockOutCoordinate?.Latitude ?? 0.0, forKey: "clockOutCoordinate_lat")
+                    sitem.setValue(item.ClockOutCoordinate?.Longitude ?? 0.0, forKey: "clockOutCoordinate_lng")
+                    sitem.setValue(item.ClockOutDay, forKey: "clockOutDay")
+                    sitem.setValue(item.ClockOutDayFullName, forKey: "clockOutDayFullName")
+                    sitem.setValue(item.ClockOutName, forKey: "clockOutName")
+                    sitem.setValue(item.Hours, forKey: "hours")
+//                    sitem.setValue(item.clockInDateDay, forKey: "clockInDate")
+                    sitem.setValue(item.clockOutDateDay, forKey: "clockOutDate")
+                }
+            }
+            try managedObjectContext.save()
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+//        return rtn
+        
+    }
+    
     
     func getScheduledList() -> [ScheduledDayItem]{
         var rtn = [ScheduledDayItem]()
@@ -74,12 +111,13 @@ class cl_showSchedule: NSObject {
                     sitem.ClockOutDayFullName = item.valueForKey("clockOutDayFullName") as? String
                     sitem.ClockOutName = item.valueForKey("clockOutName") as? String
                     sitem.Hours = item.valueForKey("hours") as? Double
-                    
+                    sitem.clockInDateDay = item.valueForKey("clockInDate") as? String
+                    sitem.clockOutDateDay = item.valueForKey("clockOutDate") as? String
                     rtn.append(sitem)
                 }
                 
             }
-            try managedObjectContext.save()
+//            try managedObjectContext.save()
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }

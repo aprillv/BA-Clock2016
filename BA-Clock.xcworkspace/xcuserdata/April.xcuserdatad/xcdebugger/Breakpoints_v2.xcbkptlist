@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
             landmarkName = "callGetList()"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "callGetList()"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
             landmarkName = "callGetList()"
             landmarkType = "5">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/CustomControl/Tools/Tool.swift"
-            timestampString = "480993963.885167"
+            timestampString = "485250814.855953"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
             landmarkName = "getTime2()"
             landmarkType = "5">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "callGetList()"
             landmarkType = "5">
          </BreakpointContent>
@@ -314,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/CustomControl/Tools/Tool.swift"
-            timestampString = "482479074.794306"
+            timestampString = "485250814.855953"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
             landmarkName = "getTime2()"
             landmarkType = "5">
          </BreakpointContent>
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "846"
-            endingLineNumber = "846">
+            startingLineNumber = "1053"
+            endingLineNumber = "1053">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -344,11 +344,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "821"
-            endingLineNumber = "821">
+            startingLineNumber = "1028"
+            endingLineNumber = "1028">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -358,11 +358,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "781"
-            endingLineNumber = "781">
+            startingLineNumber = "988"
+            endingLineNumber = "988">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -372,11 +372,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "815"
-            endingLineNumber = "815">
+            startingLineNumber = "1022"
+            endingLineNumber = "1022">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -386,11 +386,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "793"
-            endingLineNumber = "793">
+            startingLineNumber = "1000"
+            endingLineNumber = "1000">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -400,11 +400,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "814"
-            endingLineNumber = "814">
+            startingLineNumber = "1021"
+            endingLineNumber = "1021">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -414,11 +414,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "823"
-            endingLineNumber = "823">
+            startingLineNumber = "1030"
+            endingLineNumber = "1030">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -428,11 +428,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "822"
-            endingLineNumber = "822">
+            startingLineNumber = "1029"
+            endingLineNumber = "1029">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -442,11 +442,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/MoreViewController.swift"
-            timestampString = "485164011.477359"
+            timestampString = "485247600.739568"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "472"
-            endingLineNumber = "472"
+            startingLineNumber = "524"
+            endingLineNumber = "524"
             landmarkName = "myKeyboardWillShowHandler(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -602,45 +602,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/MoreViewController.swift"
-            timestampString = "485159273.884271"
+            timestampString = "485246951.939149"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "365"
-            endingLineNumber = "365"
+            startingLineNumber = "368"
+            endingLineNumber = "368"
             landmarkName = "callService()"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BA_Clock.MoreViewController.(callService in _1310C796453B7152389B53B38F555951) () -&gt; ()"
-                  moduleName = "BA-Clock"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/April/Desktop/BuildersAccess/BA-Clock/BA-Clock/Views/MoreViewController.swift"
-                  timestampString = "485082212.061418"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "351"
-                  endingLineNumber = "351"
-                  offsetFromSymbolStart = "4252">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BA_Clock.MoreViewController.(callService in _1310C796453B7152389B53B38F555951) () -&gt; ()"
-                  moduleName = "BA-Clock"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/April/Desktop/BuildersAccess/BA-Clock/BA-Clock/Views/MoreViewController.swift"
-                  timestampString = "485082212.061566"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "351"
-                  endingLineNumber = "351"
-                  offsetFromSymbolStart = "4548">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -650,11 +618,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "515"
-            endingLineNumber = "515"
+            startingLineNumber = "539"
+            endingLineNumber = "539"
             landmarkName = "callClockService(isClockIn:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -666,27 +634,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "495"
-            endingLineNumber = "495"
-            landmarkName = "callClockService(isClockIn:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "718"
-            endingLineNumber = "718"
+            startingLineNumber = "873"
+            endingLineNumber = "873"
             landmarkName = "doComeBack()"
             landmarkType = "5">
          </BreakpointContent>
@@ -698,11 +650,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "779"
-            endingLineNumber = "779">
+            startingLineNumber = "986"
+            endingLineNumber = "986">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -776,11 +728,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/MoreViewController.swift"
-            timestampString = "485159273.884271"
+            timestampString = "485246951.939149"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "380"
-            endingLineNumber = "380"
+            startingLineNumber = "383"
+            endingLineNumber = "383"
             landmarkName = "callService()"
             landmarkType = "5">
             <Locations>
@@ -824,11 +776,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/MoreViewController.swift"
-            timestampString = "485164011.477359"
+            timestampString = "485247600.739568"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "410"
-            endingLineNumber = "410"
+            startingLineNumber = "462"
+            endingLineNumber = "462"
             landmarkName = "callService()"
             landmarkType = "5">
          </BreakpointContent>
@@ -840,59 +792,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "518"
-            endingLineNumber = "518"
-            landmarkName = "callClockService(isClockIn:)"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BA_Clock.ClockMapViewController.(callClockService in _256A31E9BF9E9C3AC7700DD60548062C) (isClockIn : Swift.Bool) -&gt; ()"
-                  moduleName = "BA-Clock"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/April/Desktop/BuildersAccess/BA-Clock/BA-Clock/Views/ClockMapViewController.swift"
-                  timestampString = "485167227.954587"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "505"
-                  endingLineNumber = "505"
-                  offsetFromSymbolStart = "2632">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BA_Clock.ClockMapViewController.(callClockService in _256A31E9BF9E9C3AC7700DD60548062C) (isClockIn : Swift.Bool) -&gt; ()"
-                  moduleName = "BA-Clock"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/April/Desktop/BuildersAccess/BA-Clock/BA-Clock/Views/ClockMapViewController.swift"
-                  timestampString = "485167227.954738"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "505"
-                  endingLineNumber = "505"
-                  offsetFromSymbolStart = "2928">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485168539.740638"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
             landmarkName = "callGetList()"
             landmarkType = "5">
          </BreakpointContent>
@@ -904,12 +808,283 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA-Clock/Views/ClockMapViewController.swift"
-            timestampString = "485167093.308872"
+            timestampString = "485254799.887813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
+            landmarkName = "callGetList()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA-Clock/CoreData/cl_showSchedule.swift"
+            timestampString = "485230467.926317"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "savedSubmitDataToDB(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA-Clock/Views/ClockMapViewController.swift"
+            timestampString = "485254799.887813"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
+            landmarkName = "updateLastSyncDateTime()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA-Clock/Views/ClockMapViewController.swift"
+            timestampString = "485254799.887813"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "648"
+            endingLineNumber = "648"
+            landmarkName = "callClockService(isClockIn:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA-Clock/CustomControl/Tools/Tool.swift"
+            timestampString = "485255199.689545"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
+            landmarkName = "callClockService(isClockIn:clockOutRequiredInfo:obj:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA-Clock/AppDelegate.swift"
+            timestampString = "485253731.672221"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA-Clock/AppDelegate.swift"
+            timestampString = "485253731.672221"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "donextSubmit(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA-Clock/AppDelegate.swift"
+            timestampString = "485253731.672221"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "donextSubmit(_:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BA_Clock.AppDelegate.donextSubmit (__ObjC.NSNotification) -&gt; ()"
+                  moduleName = "BA-Clock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/April/Desktop/BuildersAccess/BA-Clock/BA-Clock/AppDelegate.swift"
+                  timestampString = "485251992.499147"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "42"
+                  endingLineNumber = "42"
+                  offsetFromSymbolStart = "19">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BA_Clock.AppDelegate.donextSubmit (__ObjC.NSNotification) -&gt; ()"
+                  moduleName = "BA-Clock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/April/Desktop/BuildersAccess/BA-Clock/BA-Clock/AppDelegate.swift"
+                  timestampString = "485251992.499425"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "42"
+                  endingLineNumber = "42"
+                  offsetFromSymbolStart = "174">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA-Clock/Views/MoreViewController.swift"
+            timestampString = "485252397.334709"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "401"
+            endingLineNumber = "401"
+            landmarkName = "callService()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA-Clock/Views/ClockMapViewController.swift"
+            timestampString = "485254290.766479"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA-Clock/Views/ClockMapViewController.swift"
+            timestampString = "485254799.887813"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
+            landmarkName = "updateLastSyncDateTime()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BA_Clock.ClockMapViewController.updateLastSyncDateTime () -&gt; ()"
+                  moduleName = "BA-Clock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/April/Desktop/BuildersAccess/BA-Clock/BA-Clock/Views/ClockMapViewController.swift"
+                  timestampString = "485254800.084014"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "194"
+                  endingLineNumber = "194"
+                  offsetFromSymbolStart = "848">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BA_Clock.ClockMapViewController.updateLastSyncDateTime () -&gt; ()"
+                  moduleName = "BA-Clock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/April/Desktop/BuildersAccess/BA-Clock/BA-Clock/Views/ClockMapViewController.swift"
+                  timestampString = "485254800.084172"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "194"
+                  endingLineNumber = "194"
+                  offsetFromSymbolStart = "1440">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BA_Clock.ClockMapViewController.(updateLastSyncDateTime () -&gt; ()).(closure #1)"
+                  moduleName = "BA-Clock"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/April/Desktop/BuildersAccess/BA-Clock/BA-Clock/Views/ClockMapViewController.swift"
+                  timestampString = "485254800.084322"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "194"
+                  endingLineNumber = "194"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA-Clock/Views/ClockMapViewController.swift"
+            timestampString = "485254871.987174"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
+            landmarkName = "updateLastSyncDateTime()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA-Clock/CustomControl/Tools/Tool.swift"
+            timestampString = "485255199.689545"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
+            landmarkName = "getDateFromString(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

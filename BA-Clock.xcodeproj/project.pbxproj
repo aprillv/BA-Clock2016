@@ -221,13 +221,13 @@
 		11128F721C3E35CA006390C1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				11128F961C3E38D4006390C1 /* CConstants.swift */,
 				11128F941C3E38A6006390C1 /* BaseViewController.swift */,
 				11128F751C3E3789006390C1 /* LoginViewController.swift */,
 				1158DA781C44CF930022B2D5 /* ClockMapViewController.swift */,
 				110B80FF1C45DF7500FE136D /* BA-Clock-Bridging-Header.h */,
 				1189AC4A1C5F3E3400E407FE /* MapViewController.swift */,
 				1104C2CD1C8EAD1C00B50B5F /* GISTrackViewController.swift */,
+				11128F961C3E38D4006390C1 /* CConstants.swift */,
 				1104C2D51C8EBDB100B50B5F /* MoreViewController.swift */,
 				111FF7E51C92906200960FD3 /* AgreementViewController.swift */,
 				1110E0571CABFDB100AE132F /* logFile.swift */,
