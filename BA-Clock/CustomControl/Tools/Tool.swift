@@ -390,7 +390,7 @@ class Tool: NSObject {
         
         Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
-                                print(response.result.value)
+//                                print(response.result.value)
                 if let rtn = response.result.value as? [String: AnyObject]{
 //                    let rtn = ClockResponse(dicInfo: rtnValue)
                     if let msg = rtn["Message"] as? String{

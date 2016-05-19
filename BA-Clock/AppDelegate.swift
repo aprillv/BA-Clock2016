@@ -55,8 +55,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         net?.startListening()
         
         net?.listener = {status in
-            
+           
             if  net?.isReachable ?? false {
+                 print(net?.isReachable, status, NSDate())
                 let sd = cl_submitData()
                 sd.resubmit(nil)
             }

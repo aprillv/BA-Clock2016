@@ -69,6 +69,17 @@ class cl_submitData: NSObject {
         if !(net?.isReachable ?? false){
             return
         }
+        if last == nil {
+            let userInfo = NSUserDefaults.standardUserDefaults()
+            if let date = userInfo.valueForKey(CConstants.LastSubmitDateTime) as? NSDate {
+                if NSDate().timeIntervalSinceDate(date) < 60 {
+                    return
+                }
+            }
+            userInfo.setValue(NSDate(), forKey: CConstants.LastSubmitDateTime)
+        }
+        
+        
         let fetchRequest = NSFetchRequest(entityName: "SubmitData")
         do {
             if let a = last {
@@ -128,6 +139,10 @@ class cl_submitData: NSObject {
                         }
                         
                     }
+                }else{
+                    let userInfo = NSUserDefaults.standardUserDefaults()
+                    
+                    userInfo.setValue("", forKey: CConstants.LastSubmitDateTime)
                 }
                 
             }

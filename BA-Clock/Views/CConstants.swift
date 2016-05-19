@@ -62,6 +62,7 @@ struct CConstants{
     static let LastComeBackTime : String = "LastComeBackTime"
     
     static let SavingMsg = "Saving to server..."
+    static let LastSubmitDateTime = "LastSubmitDateTime"
     
     static let SubmitNext = "DO NEXT SUBMIT"
 
