@@ -129,6 +129,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     private func getFormatedDate2(d: NSDate) -> String{
         dateFormat.dateFormat = "HH:mm:ss"
          dateFormat.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormat.locale = NSLocale(localeIdentifier : "en_US")
         return dateFormat.stringFromDate(d)
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -354,6 +355,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         requiredInfo.ReasonEnd = self.getFormatedDate2(EndTime)
         
         
+        
         let index = NSIndexPath(forRow: 0, inSection: 3)
         if let cell = tableView.cellForRowAtIndexPath(index) as? noteTableViewCell {
             requiredInfo.Reason = cell.txtView.text ?? " "
@@ -400,12 +402,19 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let submitData = cl_submitData()
         submitData.resubmit(nil)
         
+       
+        if  actionType != constants.BusinessString {
+            let rstart = tl.getClientTime(StartTime)
+            let rend = tl.getClientTime(EndTime)
+            userInfo.setValue("\(rstart);\(rend)", forKey: CConstants.LastGoOutTimeStartEnd)
+        }
         
         
         
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         dateFormatter.dateFormat =  "hh:mm:ss a"
         let nowHour = dateFormatter.stringFromDate(now)
         dateFormatter.dateFormat = "EEE, MMM dd"
@@ -433,6 +442,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let ss = cl_showSchedule()
         ss.updateLastItem(item)
         
+        self.locationManager?.setNotComeBackNotification(self.EndTime)
         
         self.navigationController?.popViewControllerAnimated(true)
         
@@ -461,7 +471,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 //                    print(requiredInfo.getPropertieNamesAsDictionary(), response.result.value)
                     if let rtnValue = response.result.value as? Int{
                         if rtnValue == 1 {
-                            self.locationManager?.setNotComeBackNotification(self.EndTime)
+                            
                             self.navigationController?.popViewControllerAnimated(true)
                         }else{
 //                            tl.saveGoOutDataToLocalDB(requiredInfo)

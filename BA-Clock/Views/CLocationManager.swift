@@ -50,20 +50,22 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         NSTimer.scheduledTimerWithTimeInterval(firstInterval, target: self, selector: #selector(CLocationManager.CircleSubmitLocation), userInfo: nil, repeats: false)
         
         
-        
+        NSTimer.scheduledTimerWithTimeInterval(60*60, target: self, selector: #selector(CLocationManager.syncFrequency), userInfo: nil, repeats: false)
         
         
     }
     
     func setNotComeBackNotification(endTime : NSDate) {
-        print(endTime)
+//        print(endTime)
+       
         let info = UILocalNotification()
         info.fireDate = endTime.dateByAddingTimeInterval(10.0 * 60.0)
         info.timeZone = NSTimeZone.defaultTimeZone()
         info.alertBody = "You should click come back now. It is time out more than 10 minutes."
         info.soundName = UILocalNotificationDefaultSoundName
         info.applicationIconBadgeNumber = 1
-        info.repeatInterval = .Second
+        print(info.repeatInterval)
+//        info.repeatInterval = .Second
         UIApplication.sharedApplication().scheduleLocalNotification(info)
         
 //        let a = endTime.dateByAddingTimeInterval(60)
@@ -125,13 +127,56 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     func updateLocation(){
+//        userInfo.setValue("\(rstart);\(rend)", forKey: CConstants.LastGoOutTimeStartEnd)
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        
+        if let s = userInfo.stringForKey(CConstants.LastGoOutTimeStartEnd) {
+            if s.containsString(";") {
+                let tl = Tool()
+                let array = s.componentsSeparatedByString(";")
+                let sStart = tl.getDateFromStringClient(array[0])
+                let sEnd = tl.getDateFromStringClient(array[1])
+                let now = NSDate()
+                if (now.timeIntervalSinceDate(sStart) < 0 || sEnd.timeIntervalSinceDate(now) < 0){
+                    return
+                }
+            }
+        }
+        
+        let now = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        let dayFullName = dateFormatter.stringFromDate(now)
+       
+        let clfrequency = cl_coreData()
+        if let item = clfrequency.getFrequencyByWeekdayNm(dayFullName) {
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            let nowdate = dateFormatter.stringFromDate(now)
+            
+            dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+            let todayFrom = dateFormatter.dateFromString("\(nowdate) \(item.ScheduledFrom ?? "12:00 AM")")
+            let todayTo = dateFormatter.dateFromString("\(nowdate) \(item.ScheduledTo ?? "11:59 PM")")
+            if (now.timeIntervalSinceDate(todayFrom ?? now) < 0 || (todayTo ?? now).timeIntervalSinceDate(now) < 0){
+                return
+            }
+        }
+        
+        let tl = Tool()
         let lat = currentLocation?.coordinate.latitude
         let lng = currentLocation?.coordinate.longitude
-        let tl = Tool()
         tl.callSubmitLocationService(lat, longitude1: lng)
     }
     
+    
+    func syncFrequency()  {
+        let tl = Tool()
+        tl.syncFrequency()
+    }
     func saveLog(){
+        
         self.performSelector(#selector(saveLog0), withObject: nil, afterDelay: Double(arc4random_uniform(15) * 60))
        
         

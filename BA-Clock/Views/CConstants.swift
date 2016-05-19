@@ -81,6 +81,7 @@ struct CConstants{
     static let ComeBackType : Int = 5
     
     static let ToAddTrack : String = "AddTrack"
+    static let LastGoOutTimeStartEnd : String = "LastGoOutTimeStartEnd"
 }
 
 

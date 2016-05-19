@@ -19,15 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print("sss")
         UIApplication.sharedApplication().applicationIconBadgeNumber = -1
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-//        if let list = UIApplication.sharedApplication().scheduledLocalNotifications {
-//            for no in list {
-//                UIApplication.sharedApplication().cancelLocalNotification(no)
-//            }
-//        }
-//        
-//        
-//
-//        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        
     }
     
    

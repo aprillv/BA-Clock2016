@@ -89,7 +89,7 @@ class cl_submitData: NSObject {
 //
                         switch xtype {
                         case CConstants.SubmitLocationType:
-                            tl.callSubmitLocationService(lat, longitude1: lng, time: d)
+                            tl.callSubmitLocationService(lat, longitude1: lng, time: d, obj: item)
                         case CConstants.ClockInType, CConstants.ClockOutType, CConstants.ComeBackType:
                             let clockOutRequiredInfo : ClockOutRequired = ClockOutRequired()
                             clockOutRequiredInfo.Latitude = "\(lat ?? 0.0 )"

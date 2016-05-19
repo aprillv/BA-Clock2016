@@ -21,6 +21,7 @@ class Tool: NSObject {
         
          dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         
+        
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
         let todayDay = today.substringToIndex(index0.advancedBy(10))
@@ -184,10 +185,16 @@ class Tool: NSObject {
         let d = NSDate()
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
         let ClientTime = dateFormatter.stringFromDate(d)
         
-        callSubmitLocationService(latitude, longitude1: longitude1, time: ClientTime)
+        let submitData = cl_submitData()
+        submitData.savedSubmitDataToDB(ClientTime, lat: latitude ?? 0 , lng: longitude1 ?? 0, xtype: CConstants.SubmitLocationType)
+        
+        submitData.resubmit(nil)
+//        
+//        callSubmitLocationService(latitude, longitude1: longitude1, time: ClientTime, ob)
     }
     
     func getDateFromString(ds : String) -> NSDate{
@@ -195,13 +202,49 @@ class Tool: NSObject {
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         dateFormatter.dateFormat =  "MM/dd/yyyy hh:mm:ss a"
-        print(ds)
-        print(dateFormatter.dateFromString(ds))
+        dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
+//        print(dateFormatter.stringFromDate(NSDate()))
+//        print(ds)
+//        let ds1 = ds.stringByReplacingOccurrencesOfString("/", withString: "").stringByReplacingOccurrencesOfString(" ", withString: "")
+//        print(ds)
+//        print(dateFormatter.dateFromString(ds))
+        return dateFormatter.dateFromString(ds)!
+    }
+    
+    func getDateFromStringClient(ds : String) -> NSDate{
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
+        //        print(dateFormatter.stringFromDate(NSDate()))
+        //        print(ds)
+        //        let ds1 = ds.stringByReplacingOccurrencesOfString("/", withString: "").stringByReplacingOccurrencesOfString(" ", withString: "")
+//        print(ds)
+//        print(dateFormatter.dateFromString(ds))
         return dateFormatter.dateFromString(ds)!
     }
     
     
-    func callSubmitLocationService(latitude : Double?, longitude1 : Double?, time: String){
+    
+//    func callSubmitLocationService(latitude : Double?, longitude1 : Double?, time: String){
+//        let submitRequired = SubmitLocationRequired()
+//        submitRequired.Latitude = "\(latitude ?? 0)"
+//        submitRequired.Longitude = "\(longitude1 ?? 0)"
+//        submitRequired.ClientTime = time
+//        
+//        let log = cl_log()
+//        log.savedLogToDB(NSDate(), xtype: true, lat: "\(submitRequired.Latitude!) \(submitRequired.Longitude!)")
+//        
+//        let OAuthToken = getUserToken()
+//        submitRequired.Token = OAuthToken.Token
+//        submitRequired.TokenSecret = OAuthToken.TokenSecret
+//        
+//
+//        
+//    }
+    
+    func callSubmitLocationService(latitude : Double?, longitude1 : Double?, time: String, obj: NSManagedObject){
         let submitRequired = SubmitLocationRequired()
         submitRequired.Latitude = "\(latitude ?? 0)"
         submitRequired.Longitude = "\(longitude1 ?? 0)"
@@ -215,24 +258,16 @@ class Tool: NSObject {
         submitRequired.TokenSecret = OAuthToken.TokenSecret
         
         Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                            print(submitRequired.getPropertieNamesAsDictionary(), response.result.value)
+//            print(submitRequired.getPropertieNamesAsDictionary(), response.result.value)
             if response.result.isSuccess {
+                NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: obj)
+                return
             }else{
-                
-                if let net = NetworkReachabilityManager() {
-                    if net.isReachable {
-                        self.callSubmitLocationService(latitude, longitude1: longitude1, time: time)
-                    }else{
-                        let submitData = cl_submitData()
-                        submitData.savedSubmitDataToDB(time, lat: latitude ?? 0 , lng: longitude1 ?? 0, xtype: CConstants.SubmitLocationType)
-                    }
-                }else{
-                    let submitData = cl_submitData()
-                    submitData.savedSubmitDataToDB(time, lat: latitude ?? 0 , lng: longitude1 ?? 0, xtype: CConstants.SubmitLocationType)
-                }
+                NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: false)
             }
         }
     }
+    
     
     func syncFrequency(){
         let userInfo = NSUserDefaults.standardUserDefaults()
@@ -244,6 +279,7 @@ class Tool: NSObject {
                 loginRequiredInfo.TokenSecret = tokenSecret
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
 //                    print(response.result.value)
+                    print("aaaaa")
                     if response.result.isSuccess {
                         if let rtnValue = response.result.value as? [[String: AnyObject]]{
 //                            print(rtnValue)
@@ -325,6 +361,7 @@ class Tool: NSObject {
     }
     
     
+    
     func getCurrentInterval1() -> Double{
         //        return 60
         let date = NSDate()
@@ -401,7 +438,7 @@ class Tool: NSObject {
     func doGoOutService(requiredInfo : MoreActionRequired, obj: NSManagedObject){
         Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
             parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                print("go out", response.result.value )
+//                print("go out", response.result.value )
                 if let rtnValue = response.result.value as? Int{
                     if rtnValue == 1 {
                          NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: obj)
