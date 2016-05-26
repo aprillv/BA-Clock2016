@@ -622,7 +622,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                     <connections>
                         <outlet property="clearItem" destination="LSm-m4-HQZ" id="HMH-yO-vVT"/>
                         <outlet property="mapTable" destination="Tt2-tO-RJk" id="O4M-yt-0GJ"/>
-                        <outlet property="tabbar" destination="Zwh-On-rqN" id="5Rm-gy-Hhv"/>
+                        <outlet property="tabbar" destination="Zwh-On-rqN" id="ub8-zw-b6i"/>
                         <segue destination="nvC-56-ODH" kind="presentation" identifier="showMapDetail" id="1Ei-fW-KDl"/>
                         <segue destination="87Q-nH-QVh" kind="show" identifier="More" id="XWW-Vi-Bvk"/>
                         <segue destination="RBc-pd-d2L" kind="show" identifier="showLog" id="Ux1-H1-HZn"/>

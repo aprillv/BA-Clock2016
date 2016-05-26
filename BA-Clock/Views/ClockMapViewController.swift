@@ -11,10 +11,14 @@ import Alamofire
 
 
 class ClockMapViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate {
-   
 
     @IBOutlet var tabbar: UITabBar!{
         didSet{
+            let userInfo = NSUserDefaults.standardUserDefaults()
+            if userInfo.integerForKey(CConstants.ShowClockInAndOut) ?? 1 == 0 {
+                tabbar.items?.removeFirst()
+                tabbar.items?.removeFirst()
+            }
             for item in tabbar.items! {
                 item.image = item.image?.imageWithRenderingMode(.AlwaysOriginal)
             }
@@ -414,12 +418,12 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let item = self.clockDataList![indexPath.row]
-        if (item.ClockIn ?? "-1" != "-1"){
+//        let item = self.clockDataList![indexPath.row]
+//        if (item.ClockIn ?? "-1" != "-1"){
             return 100
-        }else{
-            return 50
-        }
+//        }else{
+//            return 50
+//        }
     }
     
      func numberOfSectionsInTableView(tableView: UITableView) -> Int {

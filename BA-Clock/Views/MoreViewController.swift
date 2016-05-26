@@ -382,20 +382,24 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             
         }
         
-        if let lastClockInTime = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate {
-            if let lastClockOutTime = userInfo.valueForKey(CConstants.LastClockOutTime) as? NSDate {
-                if lastClockOutTime.timeIntervalSinceDate(lastClockInTime) > 0 {
-                    let msg = "In order to go out, you have to clock in first."
-                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                    return
+        if userInfo.integerForKey(CConstants.ShowClockInAndOut) ?? 1 == 1 {
+            if let lastClockInTime = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate {
+                if let lastClockOutTime = userInfo.valueForKey(CConstants.LastClockOutTime) as? NSDate {
+                    if lastClockOutTime.timeIntervalSinceDate(lastClockInTime) > 0 {
+                        let msg = "In order to go out, you have to clock in first."
+                        self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                        return
+                    }
                 }
+            }else{
+                let msg = "In order to go out, you have to clock in first."
+                self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                return
+                
             }
-        }else{
-            let msg = "In order to go out, you have to clock in first."
-            self.PopMsgWithJustOK(msg: msg, txtField: nil)
-            return
-
         }
+        
+        
         
          tl.saveGoOutDataToLocalDB(requiredInfo)
         

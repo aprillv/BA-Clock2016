@@ -29,6 +29,7 @@ struct CConstants{
     static let UserFullName : String = "Logined User Full Name"
     static let UserDeviceToken : String = "User Device Token"
     static let UserInfoTokenKey : String = "Token"
+    static let ShowClockInAndOut : String = "ShowClockInAndOut"
     static let UserInfoTokenScretKey : String = "TokenScret"
     static let RegisteredDeviceToken : String = "registeredDeviceToken"
     static let PhoneType : String = "1"

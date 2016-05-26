@@ -73,6 +73,8 @@ class cl_showSchedule: NSObject {
                     sitem.setValue(item.Hours, forKey: "hours")
 //                    sitem.setValue(item.clockInDateDay, forKey: "clockInDate")
                     sitem.setValue(item.clockOutDateDay, forKey: "clockOutDate")
+                }else{
+                    return savedSubmitDataToDB(item)
                 }
             }
             try managedObjectContext.save()

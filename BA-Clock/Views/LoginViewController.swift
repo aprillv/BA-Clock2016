@@ -177,6 +177,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     
     var clockInfo : LoginedInfo?{
         didSet{
+            
             if let username = clockInfo?.UserName{
                 
                 if let gistrack = clockInfo?.GPSAgreement {
@@ -188,6 +189,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                         coreData.savedFrequencysToDB(clockInfo!.Frequency!)
                         
                         let userInfo = NSUserDefaults.standardUserDefaults()
+                        userInfo.setValue(clockInfo?.ClockYN ?? "1", forKey: CConstants.ShowClockInAndOut)
                         userInfo.setValue(clockInfo!.OAuthToken!.Token!, forKey: CConstants.UserInfoTokenKey)
                         userInfo.setValue(clockInfo!.OAuthToken!.TokenSecret!, forKey: CConstants.UserInfoTokenScretKey)
                         self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
@@ -251,7 +253,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
 //                print(loginRequiredInfo.getPropertieNamesAsDictionary())
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.LoginServiceURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     hud.hide(true)
-//                    print(response.result.value)
+                    print(response.result.value)
 //                    self.progressBar.dismissViewControllerAnimated(true){
                         if response.result.isSuccess {
                             

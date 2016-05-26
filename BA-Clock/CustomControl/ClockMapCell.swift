@@ -49,8 +49,17 @@ class ClockMapCell: UITableViewCell {
                 
                 
 //                timeLbl.text = item.DayFullName! + ", " + item.Day!
-                clockInText.text = "\(item.ClockInName ?? "Clock In")"
-                clockInTime.text = "\(item.ClockInDay!)\n" + item.ClockIn!
+                if item.ClockInName != nil {
+                    clockInText.text = item.ClockInName!
+                    clockInTime.text = "\(item.ClockInDay!)\n" + item.ClockIn!
+                }else{
+                    tapClockBtn.hidden = true
+                    clockInImage.hidden = true
+                    clockInText.hidden = true
+                    clockInTime.hidden = true
+                    self.clockInMap.hidden = true
+                }
+                
                 if item.ClockOut != "" {
                     backGroupImageView.image = UIImage(named: "clockout.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
                     clockOutTextLbl.text = "\(item.ClockOutName  ?? "Clock Out")"
