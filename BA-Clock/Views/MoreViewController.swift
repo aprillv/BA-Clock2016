@@ -66,7 +66,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 //        cell.actionlbl?.text = "Personal Reason"
 //        
         static let LunchString = "Lunch"
-        static let BusinessString = "Business / Meeting"
+        static let BusinessString = "Business/Meeting"
         static let PersonalString = "Personal Reason"
         
 //        static let TitleGISTrack = "GIS Track"
@@ -128,7 +128,8 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     private func getFormatedDate2(d: NSDate) -> String{
         dateFormat.dateFormat = "HH:mm:ss"
-         dateFormat.timeZone = NSTimeZone(name: "America/Chicago")
+//         dateFormat.timeZone = NSTimeZone(name: "America/Chicago")
+         dateFormat.timeZone = NSTimeZone.localTimeZone()
         dateFormat.locale = NSLocale(localeIdentifier : "en_US")
         return dateFormat.stringFromDate(d)
     }
@@ -417,7 +418,8 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         dateFormatter.dateFormat =  "hh:mm:ss a"
         let nowHour = dateFormatter.stringFromDate(now)

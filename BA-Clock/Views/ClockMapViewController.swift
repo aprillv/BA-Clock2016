@@ -165,7 +165,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         // for test notification
 //        locationManager?.setNotComeBackNotification(NSDate())
         
-        checkUpate()
+//        checkUpate()
         
              
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
@@ -264,6 +264,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                     hud!.labelText = CConstants.LoadingMsg
                     hud?.userInteractionEnabled = false
                 }
+//                print(loginRequiredInfo.getPropertieNamesAsDictionary())
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetScheduledDataURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     self.firstrefreshControl?.endRefreshing()
                      hud?.userInteractionEnabled = true
@@ -400,17 +401,17 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     
     
     
-    func updateLocation(){
-//      print(NSRunLoop.currentRunLoop().ismai)
-        
-        let tl = Tool()
-        if tl.getTime2() {
-        }else{
-            let log = cl_log()
-            log.savedLogToDB(NSDate(), xtype: true, lat: "updateLocation")
-        }
-        
-    }
+//    func updateLocation(){
+////      print(NSRunLoop.currentRunLoop().ismai)
+//        
+//        let tl = Tool()
+//        if tl.getTime2() {
+//        }else{
+//            let log = cl_log()
+//            log.savedLogToDB(NSDate(), xtype: true, lat: "updateLocation")
+//        }
+//        
+//    }
     
   
     
@@ -503,7 +504,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     }
     
     @IBAction func gotoLog(sender: AnyObject) {
-        if self.title == "April" || self.title == "april Lv" || self.title == "jack fan" {
+        if self.title == "April" || self.title == "april Lv" || self.title == "jack fan" || self.title == "Bob Xia" || self.title == "Apple"{
             self.performSegueWithIdentifier("showLog", sender: nil)
         }
     }
@@ -723,7 +724,8 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         dateFormatter.dateFormat =  "hh:mm:ss a"
         let nowHour = dateFormatter.stringFromDate(now)
@@ -947,7 +949,8 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         submitData.resubmit(nil)
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         dateFormatter.dateFormat =  "hh:mm:ss a"
         let nowHour = dateFormatter.stringFromDate(now)

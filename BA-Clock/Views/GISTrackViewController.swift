@@ -150,7 +150,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         
         self.CurrentScheduledInterval = self.getCurrentInterval1()
         
-        checkUpate()
+//        checkUpate()
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
         
@@ -279,7 +279,8 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+//         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         
         
         let today = dateFormatter.stringFromDate(date)

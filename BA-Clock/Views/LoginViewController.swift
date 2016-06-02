@@ -352,7 +352,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
         
         self.title = "BA Clock"
         
-        self.checkUpate()
+//        self.checkUpate()
         
 //        let locationManager = LocationTracker.sharedLocationManager()
 //        locationTracker = LocationTracker()

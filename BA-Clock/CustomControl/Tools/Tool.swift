@@ -19,8 +19,8 @@ class Tool: NSObject {
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         
-         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        
+//         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
@@ -52,7 +52,8 @@ class Tool: NSObject {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
         let todayDay = today.substringToIndex(index0.advancedBy(10))
@@ -184,7 +185,8 @@ class Tool: NSObject {
     func callSubmitLocationService(latitude : Double?, longitude1 : Double?){
         let d = NSDate()
         let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
         let ClientTime = dateFormatter.stringFromDate(d)
@@ -200,7 +202,8 @@ class Tool: NSObject {
     func getDateFromString(ds : String) -> NSDate{
        
         let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.dateFormat =  "MM/dd/yyyy hh:mm:ss a"
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
 //        print(dateFormatter.stringFromDate(NSDate()))
@@ -214,7 +217,8 @@ class Tool: NSObject {
     func getDateFromStringClient(ds : String) -> NSDate{
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         //        print(dateFormatter.stringFromDate(NSDate()))
@@ -279,7 +283,7 @@ class Tool: NSObject {
                 loginRequiredInfo.TokenSecret = tokenSecret
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
 //                    print(response.result.value)
-                    print("aaaaa")
+//                    print("syncFrequency")
                     if response.result.isSuccess {
                         if let rtnValue = response.result.value as? [[String: AnyObject]]{
 //                            print(rtnValue)
@@ -338,8 +342,8 @@ class Tool: NSObject {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let today = dateFormatter.stringFromDate(date)
         
         return today
@@ -352,8 +356,8 @@ class Tool: NSObject {
         dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss a"
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let today = dateFormatter.stringFromDate(date)
         
         return today
@@ -370,8 +374,8 @@ class Tool: NSObject {
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
         let coreData = cl_coreData()

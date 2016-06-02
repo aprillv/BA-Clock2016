@@ -24,6 +24,13 @@ class cl_log: NSObject {
     
     func savedLogToDB(d: NSDate, xtype: Bool, lat: String){
         
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        let title = userInfo.valueForKey(CConstants.UserFullName) as? String
+        
+        if !(title == "April" || title == "april Lv" || title == "jack fan" || title == "Bob Xia" || title == "Apple"){
+            return
+        }
+        
 //        let fetchRequest = NSFetchRequest(entityName: "LogFile")
 //        let request = NSBatchDeleteRequest(fetchRequest: fetchRequest)
 //        do {
@@ -36,7 +43,8 @@ class cl_log: NSObject {
                     insertIntoManagedObjectContext: managedObjectContext)
                 
             let dateFormatter = NSDateFormatter()
-            dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+//            dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
             dateFormatter.dateFormat =  "MM/dd hh:mm a"
             let nowHour = dateFormatter.stringFromDate(d)
