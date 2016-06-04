@@ -34,6 +34,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         self.locationManager = CLLocationManager()
         self.locationManager?.delegate = self
         self.locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+//        self.locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
 //        self.locationManager?.distanceFilter = 10
         self.locationManager?.pausesLocationUpdatesAutomatically = false
         
@@ -52,7 +53,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         
         
 //        NSTimer.scheduledTimerWithTimeInterval(60*60, target: self, selector: #selector(CLocationManager.syncFrequency), userInfo: nil, repeats: false)
-        lastTimestampSync = NSDate()
+        lastResubmitTimestamp = NSDate().dateByAddingTimeInterval(-60)
         syncFrequency()
         
     }
@@ -97,44 +98,57 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     
     
     var lastTimestamp  = NSDate()
-    var lastTimestamp1  = NSDate()
-   var lastTimestampSync = NSDate()
-    
+    var lastResubmitTimestamp  = NSDate()
+    var random :NSTimeInterval = 0.0
     func stopUpdatingLocation() {
 //        println("Stop Location Updates")
         self.locationManager?.stopUpdatingLocation()
     }
     
+    var timeInterval : NSTimeInterval = 0.0
+    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        print("aaa", NSDate())
         let location: CLLocation? = locations.last
         
         self.currentLocation = location 
         
-        let su = cl_submitData()
-        su.resubmit(nil)
-
-        if NSDate().timeIntervalSinceDate(lastTimestamp1) >= 60 * 10 {
-            lastTimestamp1 = NSDate()
-            let lg = cl_log()
-            lg.savedLogToDB(NSDate(), xtype: true, lat: "WW \(currentLocation?.coordinate.latitude ?? 0.0) -- \(currentLocation?.coordinate.longitude ?? 0.0)")
+        if NSDate().timeIntervalSinceDate(lastResubmitTimestamp) >= 60 {
+            lastResubmitTimestamp = NSDate()
+            let su = cl_submitData()
+            su.resubmit(nil)
         }
+      
         
-        if NSDate().timeIntervalSinceDate(lastTimestampSync) >= 60*15 {
-            lastTimestampSync = NSDate()
-            syncFrequency()
-        }
         
         
         let userInfo = NSUserDefaults.standardUserDefaults()
         if userInfo.boolForKey(CConstants.ToAddTrack) ?? true {
+            
+            syncFrequency()
             userInfo.setBool(false, forKey: CConstants.ToAddTrack)
             lastTimestamp = NSDate()
             updateLocation()
             
+            let tl = Tool()
+            timeInterval = Double(arc4random_uniform(15) * 60)
+            print(timeInterval)
+            random = tl.getFirstQuauterTimeSpace().0 + timeInterval
             
-        }else if NSDate().timeIntervalSinceDate(lastTimestamp) >= 14*60+59 {
-            lastTimestamp = NSDate()
-            updateLocation()
+        }else{
+            let d = NSDate()
+            let h = d.timeIntervalSinceDate(lastTimestamp)
+            
+            if h >= random{
+                syncFrequency()
+                lastTimestamp = d
+                updateLocation()
+                let c = 900 - timeInterval
+                timeInterval = Double(arc4random_uniform(15) * 60)
+                random = timeInterval + c
+                print(timeInterval)
+                
+            }
         }
         
     
@@ -148,11 +162,13 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError){
+        
         let su = cl_submitData()
         su.resubmit(nil)
         
-        if NSDate().timeIntervalSinceDate(lastTimestamp) >= 14*60+59 {
+        if NSDate().timeIntervalSinceDate(lastTimestamp) >= random {
             lastTimestamp = NSDate()
+            random =  (-14 * 60)
             updateLocation()
         }
         
@@ -204,6 +220,9 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         let tl = Tool()
         let lat = currentLocation?.coordinate.latitude
         let lng = currentLocation?.coordinate.longitude
+        if lat == 0.0 || lng == 0.0 {
+           userInfo.setBool(true, forKey: CConstants.ToAddTrack)
+        }
         tl.callSubmitLocationService(lat, longitude1: lng)
     }
     

@@ -305,33 +305,23 @@ class Tool: NSObject {
         
     }
     
-    func getFirstQuauterTimeSpace() -> NSTimeInterval{
+    func getFirstQuauterTimeSpace() -> (NSTimeInterval, Int){
         let date = NSDate()
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy HH"
         let nowHour = dateFormatter.stringFromDate(date)
         dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
-        for i in 0.stride(to: 59, by: 15) {
-            
-            let now15 = dateFormatter.dateFromString(nowHour + (i == 0 ? ":00:00" : ":\(i):00"))
-//            print(nowHour + (i == 0 ? ":00:00" : ":\(i):00"))
+        var now15 = dateFormatter.dateFromString(nowHour + ":00:00")
+        
+        for i in 1...4 {
+            now15 = now15?.dateByAddingTimeInterval(15*60)
             let timeSpace = now15?.timeIntervalSinceDate(date)
             if  timeSpace > 0 {
-                return timeSpace!
+//                print("apirl", timeSpace ?? 0, i*15)
+                return (timeSpace!, i*15)
             }
         }
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        let nowHour1 = dateFormatter.stringFromDate(date)
-         dateFormatter.dateFormat = "HH"
-        let now2 = dateFormatter.stringFromDate(date)
-        let a = Int(now2) ?? 0 + 1
-        let now15 = dateFormatter.dateFromString(nowHour1 + " \(a)" + ":00:00")
-        let timeSpace = now15?.timeIntervalSinceDate(date)
-        if  timeSpace > 0 {
-            return timeSpace!
-        }
-        
-        return 0
+        return (0, 15)
         
     }
     func getClientTime(date1 : NSDate?) -> String{
