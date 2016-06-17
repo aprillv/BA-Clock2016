@@ -88,6 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
            
             if  net?.isReachable ?? false {
                  print(net?.isReachable, status, NSDate())
+//                let userInfo = NSUserDefaults.standardUserDefaults()
+//                userInfo.setBool(true, forKey: "openApp")
                 let sd = cl_submitData()
                 sd.resubmit(nil)
             }

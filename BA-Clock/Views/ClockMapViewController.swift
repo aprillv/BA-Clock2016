@@ -603,58 +603,78 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
        
         let userInfo = NSUserDefaults.standardUserDefaults()
         if let lastGoOutTime = userInfo.valueForKey(CConstants.LastGoOutTime) as? NSDate {
-            if let lastComeBackTime = userInfo.valueForKey(CConstants.LastComeBackTime) as? NSDate {
-                if lastComeBackTime.timeIntervalSinceDate(lastGoOutTime) < 0 {
-                    let msg = "In order to \(isClockIn ? "clock in" : "clock out"), you have to come back first."
-                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                    self.view.userInteractionEnabled = true
-                    return
-                }
+            let calendar = NSCalendar.currentCalendar()
+            var components = calendar.components([.Day ], fromDate: lastGoOutTime)
+            let lastGoOutTimeday = components.day
+            
+            components = calendar.components([.Day ], fromDate: NSDate())
+            let todayday = components.day
+            if lastGoOutTimeday == todayday {
                 
-                if now.timeIntervalSinceDate(lastComeBackTime) < 60  && !isClockIn{
-                    let msg = "You cannot clock out within come back 1 minute. Last come back @\(tl.getClockMsgFormatedTime(lastComeBackTime))"
-                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                    self.view.userInteractionEnabled = true
-                    return
-                }
-                
-            }else{
-                if let lastClockIn = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate{
-                    if NSDate().timeIntervalSinceDate(lastClockIn) < 60 * 60 * 12 {
+                if let lastComeBackTime = userInfo.valueForKey(CConstants.LastComeBackTime) as? NSDate {
+                    if lastComeBackTime.timeIntervalSinceDate(lastGoOutTime) < 0 {
                         let msg = "In order to \(isClockIn ? "clock in" : "clock out"), you have to come back first."
                         self.PopMsgWithJustOK(msg: msg, txtField: nil)
                         self.view.userInteractionEnabled = true
                         return
                     }
-                }
-                
-            }
-        }
-        
-        if isClockIn {
-            
-            
-            if let lastClockOutTime = userInfo.valueForKey(CConstants.LastClockOutTime) as? NSDate {
-                let now = NSDate()
-                let h = now.timeIntervalSinceDate(lastClockOutTime)
-                if h < 60 {
-                    let msg = "Please wait 1 minute to clock in. Last clock out @\(tl.getClockMsgFormatedTime(lastClockOutTime))"
-                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                    self.view.userInteractionEnabled = true
-                    return
-                }
-                
-                if let lastClockInTime = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate {
-                    if lastClockInTime.timeIntervalSinceDate(lastClockInTime) > 0 {
-                        let h = now.timeIntervalSinceDate(lastClockInTime)
-                        if h < 12 * 60 * 60 {
-                            let msg = "You cannot clock in without clocking out. Last clock in @\(tl.getClockMsgFormatedTime(lastClockInTime))"
+                    
+                    if now.timeIntervalSinceDate(lastComeBackTime) < 60  && !isClockIn{
+                        let msg = "You cannot clock out within come back 1 minute. Last come back @\(tl.getClockMsgFormatedTime(lastComeBackTime))"
+                        self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                        self.view.userInteractionEnabled = true
+                        return
+                    }
+                    
+                }else{
+                    if let lastClockIn = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate{
+                        if NSDate().timeIntervalSinceDate(lastClockIn) < 60 * 60 * 12 {
+                            let msg = "In order to \(isClockIn ? "clock in" : "clock out"), you have to come back first."
                             self.PopMsgWithJustOK(msg: msg, txtField: nil)
                             self.view.userInteractionEnabled = true
                             return
                         }
                     }
+                    
                 }
+            }
+            
+            
+        }
+        
+        if isClockIn {
+            if let lastClockOutTime = userInfo.valueForKey(CConstants.LastClockOutTime) as? NSDate {
+                
+                let calendar = NSCalendar.currentCalendar()
+                var components = calendar.components([.Day ], fromDate: lastClockOutTime)
+                let lastGoOutTimeday = components.day
+                
+                components = calendar.components([.Day ], fromDate: NSDate())
+                let todayday = components.day
+                if lastGoOutTimeday == todayday {
+                    let now = NSDate()
+                    let h = now.timeIntervalSinceDate(lastClockOutTime)
+                    if h < 60 {
+                        let msg = "Please wait 1 minute to clock in. Last clock out @\(tl.getClockMsgFormatedTime(lastClockOutTime))"
+                        self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                        self.view.userInteractionEnabled = true
+                        return
+                    }
+                    
+                    if let lastClockInTime = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate {
+                        if lastClockInTime.timeIntervalSinceDate(lastClockInTime) > 0 {
+                            let h = now.timeIntervalSinceDate(lastClockInTime)
+                            if h < 12 * 60 * 60 {
+                                let msg = "You cannot clock in without clocking out. Last clock in @\(tl.getClockMsgFormatedTime(lastClockInTime))"
+                                self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                                self.view.userInteractionEnabled = true
+                                return
+                            }
+                        }
+                    }
+                }
+                
+                
             }
             
         }else{
@@ -724,7 +744,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         
         
         let dateFormatter = NSDateFormatter()
-//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
          dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         dateFormatter.dateFormat =  "hh:mm:ss a"
@@ -949,7 +969,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         submitData.resubmit(nil)
         
         let dateFormatter = NSDateFormatter()
-//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
          dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         dateFormatter.dateFormat =  "hh:mm:ss a"

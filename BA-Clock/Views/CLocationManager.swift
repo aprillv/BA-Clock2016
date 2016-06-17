@@ -33,8 +33,8 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         super.init()
         self.locationManager = CLLocationManager()
         self.locationManager?.delegate = self
-        self.locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-//        self.locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
+//        self.locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        self.locationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers
 //        self.locationManager?.distanceFilter = 10
         self.locationManager?.pausesLocationUpdatesAutomatically = false
         
@@ -44,7 +44,16 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
 //        println("Starting Location Updates")
         self.locationManager?.requestAlwaysAuthorization()
         self.locationManager?.allowsBackgroundLocationUpdates = true
+       
 //        self.locationManager
+        
+        self.locationManager?.startMonitoringSignificantLocationChanges()
+        self.locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
+//         self.locationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+//        self.locationManager?.distanceFilter = 100
+        self.locationManager?.pausesLocationUpdatesAutomatically = false
+        self.locationManager?.activityType = .OtherNavigation
+        
         self.locationManager?.startUpdatingLocation()
         
 //        let tl = Tool()
@@ -52,12 +61,18 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
 //        NSTimer.scheduledTimerWithTimeInterval(firstInterval, target: self, selector: #selector(CLocationManager.CircleSubmitLocation), userInfo: nil, repeats: false)
         
         
-//        NSTimer.scheduledTimerWithTimeInterval(60*60, target: self, selector: #selector(CLocationManager.syncFrequency), userInfo: nil, repeats: false)
+//        NSTimer.scheduledTimerWithTimeInterval(180, target: self, selector: #selector(CLocationManager.syncFrequency1), userInfo: nil, repeats: true)
         lastResubmitTimestamp = NSDate().dateByAddingTimeInterval(-60)
         syncFrequency()
         
     }
     
+    func syncFrequency1() {
+        let log = cl_log()
+        log.savedLogToDB(NSDate(), xtype: true, lat: "\(currentLocation?.coordinate.latitude ?? 0) \(currentLocation?.coordinate.longitude ?? 0)")
+        
+//        print("nstimer", NSDate())
+    }
     func setNotComeBackNotification(endTime : NSDate) {
 //        print(endTime)
        
@@ -107,11 +122,14 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     
     var timeInterval : NSTimeInterval = 0.0
     
+    func locationManager(manager: CLLocationManager, didFinishDeferredUpdatesWithError error: NSError?) {
+        //print("ccccc", error)
+    }
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        print("aaa", NSDate())
+//        print("aaa", NSDate(), manager.desiredAccuracy)
         let location: CLLocation? = locations.last
-        
-        self.currentLocation = location 
+//        self.locationManager?.allowDeferredLocationUpdatesUntilTraveled(CLLocationDistanceMax, timeout: 180)
+        self.currentLocation = location
         
         if NSDate().timeIntervalSinceDate(lastResubmitTimestamp) >= 60 {
             lastResubmitTimestamp = NSDate()
@@ -130,9 +148,10 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
             lastTimestamp = NSDate()
             updateLocation()
             
+            
             let tl = Tool()
-            timeInterval = Double(arc4random_uniform(15) * 60)
-            print(timeInterval)
+            timeInterval = Double(arc4random_uniform(9) * 60)
+//            print(timeInterval, "sdfsdfsfs")
             random = tl.getFirstQuauterTimeSpace().0 + timeInterval
             
         }else{
@@ -146,7 +165,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
                 let c = 900 - timeInterval
                 timeInterval = Double(arc4random_uniform(15) * 60)
                 random = timeInterval + c
-                print(timeInterval)
+//                print(timeInterval, "update")
                 
             }
         }
@@ -162,15 +181,18 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError){
-        
+        print("bbb", NSDate(), error)
         let su = cl_submitData()
         su.resubmit(nil)
         
         if NSDate().timeIntervalSinceDate(lastTimestamp) >= random {
             lastTimestamp = NSDate()
-            random =  (-14 * 60)
+            random =  (-9 * 60)
             updateLocation()
         }
+        
+        manager.disallowDeferredLocationUpdates()
+        manager.startUpdatingLocation()
         
 //        let lg = cl_log()
 //        lg.savedLogToDB(NSDate(), xtype: true, lat: "EE \(currentLocation?.coordinate.latitude ?? 0.0) -- \(currentLocation?.coordinate.longitude ?? 0.0)")
@@ -200,7 +222,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         dateFormatter.dateFormat = "EEEE"
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let dayFullName = dateFormatter.stringFromDate(now)
        

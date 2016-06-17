@@ -43,7 +43,7 @@ class cl_log: NSObject {
                     insertIntoManagedObjectContext: managedObjectContext)
                 
             let dateFormatter = NSDateFormatter()
-//            dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+            dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
             dateFormatter.dateFormat =  "MM/dd hh:mm a"

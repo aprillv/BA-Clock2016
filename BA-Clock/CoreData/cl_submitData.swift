@@ -73,6 +73,7 @@ class cl_submitData: NSObject {
             let userInfo = NSUserDefaults.standardUserDefaults()
             if let date = userInfo.valueForKey(CConstants.LastSubmitDateTime) as? NSDate {
                 if NSDate().timeIntervalSinceDate(date) < 60 {
+//                    print("dfdfdf")
                     return
                 }
             }
@@ -90,6 +91,10 @@ class cl_submitData: NSObject {
                 try managedObjectContext.executeFetchRequest(fetchRequest)
             let tl = Tool()
             if let t = results as? [NSManagedObject] {
+                print(t.count)
+                for item in t{
+                    print(item.valueForKey("xtype") ,item.valueForKey("submitdate"))
+                }
                 if let item = t.first{
                     let lat =  item.valueForKey("latitude") as? Double
                     let lng = item.valueForKey("longitude") as? Double
@@ -122,7 +127,7 @@ class cl_submitData: NSObject {
                             requiredInfo.ActionType = (item.valueForKey("actionType") as? String) ?? ""
                             
                             requiredInfo.Latitude = "\(lat ?? 0.0 )"
-                            requiredInfo.Longitude = "\(lat ?? 0.0 )"
+                            requiredInfo.Longitude = "\(lng ?? 0.0 )"
                             requiredInfo.HostName = UIDevice.currentDevice().name
                             requiredInfo.IPAddress = tl.getWiFiAddress()
                             requiredInfo.ClientTime = d

@@ -128,7 +128,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     private func getFormatedDate2(d: NSDate) -> String{
         dateFormat.dateFormat = "HH:mm:ss"
-//         dateFormat.timeZone = NSTimeZone(name: "America/Chicago")
+         dateFormat.timeZone = NSTimeZone(name: "America/Chicago")
          dateFormat.timeZone = NSTimeZone.localTimeZone()
         dateFormat.locale = NSLocale(localeIdentifier : "en_US")
         return dateFormat.stringFromDate(d)
@@ -368,19 +368,30 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         let userInfo = NSUserDefaults.standardUserDefaults()
         
+        var newitem = false
         if let lastGoOutTime = userInfo.valueForKey(CConstants.LastGoOutTime) as? NSDate {
-            if let lastComeBackTime = userInfo.valueForKey(CConstants.LastComeBackTime) as? NSDate {
-                if lastGoOutTime.timeIntervalSinceDate(lastComeBackTime) > 0 {
+            let calendar = NSCalendar.currentCalendar()
+            var components = calendar.components([.Day ], fromDate: lastGoOutTime)
+            let lastGoOutTimeday = components.day
+            
+            components = calendar.components([.Day ], fromDate: NSDate())
+            let todayday = components.day
+            
+            if lastGoOutTimeday == todayday{
+                if let lastComeBackTime = userInfo.valueForKey(CConstants.LastComeBackTime) as? NSDate {
+                    if lastGoOutTime.timeIntervalSinceDate(lastComeBackTime) > 0 {
+                        let msg = "In order to go out, you have to come back first."
+                        self.PopMsgWithJustOK(msg: msg, txtField: nil)
+                        return
+                    }
+                }else{
                     let msg = "In order to go out, you have to come back first."
                     self.PopMsgWithJustOK(msg: msg, txtField: nil)
                     return
                 }
             }else{
-                let msg = "In order to go out, you have to come back first."
-                self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                return
+            newitem = true
             }
-            
         }
         
         if userInfo.integerForKey(CConstants.ShowClockInAndOut) ?? 1 == 1 {
@@ -418,7 +429,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         
         let dateFormatter = NSDateFormatter()
-//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
          dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         dateFormatter.dateFormat =  "hh:mm:ss a"
@@ -444,9 +455,15 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         item.ClockOutName = actionType
         item.ClockOutDayFullName = nowFullWeekName
         item.ClockOutDayName =  nowDay.substringToIndex(nowDay.startIndex.advancedBy(2))
-                
+        
+        print(lat, lng)
         let ss = cl_showSchedule()
+        if newitem {
+        ss.savedSubmitDataToDB(item)
+        }else{
         ss.updateLastItem(item)
+        }
+        
         
         self.locationManager?.setNotComeBackNotification(self.EndTime)
         

@@ -19,7 +19,7 @@ class Tool: NSObject {
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         
-//         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         
         let today = dateFormatter.stringFromDate(date)
@@ -52,7 +52,7 @@ class Tool: NSObject {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
@@ -185,7 +185,7 @@ class Tool: NSObject {
     func callSubmitLocationService(latitude : Double?, longitude1 : Double?){
         let d = NSDate()
         let dateFormatter = NSDateFormatter()
-//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
@@ -202,7 +202,7 @@ class Tool: NSObject {
     func getDateFromString(ds : String) -> NSDate{
        
         let dateFormatter = NSDateFormatter()
-//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.dateFormat =  "MM/dd/yyyy hh:mm:ss a"
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
@@ -217,7 +217,7 @@ class Tool: NSObject {
     func getDateFromStringClient(ds : String) -> NSDate{
         
         let dateFormatter = NSDateFormatter()
-//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
@@ -332,7 +332,7 @@ class Tool: NSObject {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let today = dateFormatter.stringFromDate(date)
         
@@ -346,7 +346,7 @@ class Tool: NSObject {
         dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss a"
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let today = dateFormatter.stringFromDate(date)
         
@@ -364,7 +364,7 @@ class Tool: NSObject {
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
@@ -448,7 +448,7 @@ class Tool: NSObject {
         let cl = cl_submitData()
         cl.savedSubmitDataToDB(requiredInfo.ClientTime ?? ""
             , lat: Double(requiredInfo.Latitude ?? "0.0") ?? 0.0
-            , lng: Double(requiredInfo.Latitude ?? "0.0") ?? 0.0
+            , lng: Double(requiredInfo.Longitude ?? "0.0") ?? 0.0
             , reasonStart : requiredInfo.ReasonStart ?? ""
             , reasonEnd : requiredInfo.ReasonEnd  ?? ""
             , reason : requiredInfo.Reason  ?? ""
