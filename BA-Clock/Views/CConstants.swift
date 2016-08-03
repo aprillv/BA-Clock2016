@@ -66,6 +66,7 @@ struct CConstants{
     static let LastSubmitDateTime = "LastSubmitDateTime"
     
     static let SubmitNext = "DO NEXT SUBMIT"
+    static let SeverTimeSinceClienttime = "SeverTimeSinceClienttime"
 
     //check app version
     static let CheckUpdateServiceURL: String = "bacontract_appid.json"

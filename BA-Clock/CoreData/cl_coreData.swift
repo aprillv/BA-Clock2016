@@ -23,7 +23,7 @@ class cl_coreData: NSObject {
     }()
     
     func savedScheduledDaysToDB(itemList : [ScheduledDayItem]){
-
+        return
         let fetchRequest = NSFetchRequest(entityName: "ScheduledDay")
         let request = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         do {
@@ -134,4 +134,34 @@ class cl_coreData: NSObject {
         return nil
     
     }
+    
+    func getAllFrequency() -> [FrequencyItem]{
+        let fetchRequest = NSFetchRequest(entityName: "Frequency")
+//        let predicate = NSPredicate(format: "dayFullName = %@", weekdayNm)
+//        fetchRequest.predicate = predicate
+        
+        var rtn = [FrequencyItem]()
+        //3
+        do {
+            let results =
+                try managedObjectContext.executeFetchRequest(fetchRequest)
+            if let t = results as? [NSManagedObject] {
+                for item in t {
+                    let tmp : FrequencyItem = FrequencyItem(dicInfo : nil)
+                    tmp.DayFullName = item.valueForKey("dayFullName") as? String
+                    tmp.DayOfWeek = item.valueForKey("dayOfWeek") as? NSNumber
+                    tmp.DayName = item.valueForKey("dayName") as? String
+                    tmp.ScheduledFrom = item.valueForKey("scheduledFrom") as? String
+                    tmp.ScheduledInterval = item.valueForKey("scheduledInterval") as? NSNumber
+                    tmp.ScheduledTo = item.valueForKey("scheduledTo") as? String
+                    rtn.append(tmp)
+                }
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        return rtn
+        
+    }
+    
 }

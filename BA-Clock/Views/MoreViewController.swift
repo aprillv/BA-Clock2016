@@ -129,7 +129,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     private func getFormatedDate2(d: NSDate) -> String{
         dateFormat.dateFormat = "HH:mm:ss"
          dateFormat.timeZone = NSTimeZone(name: "America/Chicago")
-         dateFormat.timeZone = NSTimeZone.localTimeZone()
+//         dateFormat.timeZone = NSTimeZone.localTimeZone()
         dateFormat.locale = NSLocale(localeIdentifier : "en_US")
         return dateFormat.stringFromDate(d)
     }
@@ -339,8 +339,8 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let requiredInfo = MoreActionRequired()
         requiredInfo.ActionType = actionType
         
-        let lat = self.locationManager?.currentLocation?.coordinate.latitude ?? 0
-        let lng = self.locationManager?.currentLocation?.coordinate.longitude ?? 0
+//        let lat = self.locationManager?.currentLocation?.coordinate.latitude ?? 0
+//        let lng = self.locationManager?.currentLocation?.coordinate.longitude ?? 0
         requiredInfo.Latitude = "\(self.locationManager?.currentLocation?.coordinate.latitude ?? 0)"
         requiredInfo.Longitude = "\(self.locationManager?.currentLocation?.coordinate.longitude ?? 0)"
         requiredInfo.HostName = UIDevice.currentDevice().name
@@ -368,7 +368,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         let userInfo = NSUserDefaults.standardUserDefaults()
         
-        var newitem = false
+//        var newitem = false
         if let lastGoOutTime = userInfo.valueForKey(CConstants.LastGoOutTime) as? NSDate {
             let calendar = NSCalendar.currentCalendar()
             var components = calendar.components([.Day ], fromDate: lastGoOutTime)
@@ -390,7 +390,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                     return
                 }
             }else{
-            newitem = true
+//            newitem = true
             }
         }
         
@@ -413,11 +413,11 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         
         
-         tl.saveGoOutDataToLocalDB(requiredInfo)
-        
-        let submitData = cl_submitData()
-        submitData.resubmit(nil)
-        
+//         tl.saveGoOutDataToLocalDB(requiredInfo)
+//        
+//        let submitData = cl_submitData()
+//        submitData.resubmit(nil)
+//        
        
         if  actionType != constants.BusinessString {
             let rstart = tl.getClientTime(StartTime)
@@ -428,54 +428,54 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-         dateFormatter.timeZone = NSTimeZone.localTimeZone()
-        dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
-        dateFormatter.dateFormat =  "hh:mm:ss a"
-        let nowHour = dateFormatter.stringFromDate(now)
-        dateFormatter.dateFormat = "EEE, MMM dd"
-        let nowDay = dateFormatter.stringFromDate(now)
-        dateFormatter.dateFormat = "EEEE"
-        let nowFullWeekName = dateFormatter.stringFromDate(now)
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        let nowFullDateName = dateFormatter.stringFromDate(now)
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+//         dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//        dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
+//        dateFormatter.dateFormat =  "hh:mm:ss a"
+//        let nowHour = dateFormatter.stringFromDate(now)
+//        dateFormatter.dateFormat = "EEE, MMM dd"
+//        let nowDay = dateFormatter.stringFromDate(now)
+//        dateFormatter.dateFormat = "EEEE"
+//        let nowFullWeekName = dateFormatter.stringFromDate(now)
+//        dateFormatter.dateFormat = "MM/dd/yyyy"
+//        let nowFullDateName = dateFormatter.stringFromDate(now)
         
         //        let userInfo = NSUserDefaults.standardUserDefaults()
         userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)
         
        
-        let item = ScheduledDayItem(dicInfo : nil)
-        item.ClockOut = nowHour
-        item.ClockOutCoordinate = CoordinateObject(dicInfo: nil)
-        item.ClockOutCoordinate?.Latitude = lat
-        item.ClockOutCoordinate?.Longitude = lng
-        item.clockOutDateDay = nowFullDateName
-        item.ClockOutDay = nowDay
-        item.ClockOutName = actionType
-        item.ClockOutDayFullName = nowFullWeekName
-        item.ClockOutDayName =  nowDay.substringToIndex(nowDay.startIndex.advancedBy(2))
-        
-        print(lat, lng)
-        let ss = cl_showSchedule()
-        if newitem {
-        ss.savedSubmitDataToDB(item)
-        }else{
-        ss.updateLastItem(item)
-        }
-        
-        
-        self.locationManager?.setNotComeBackNotification(self.EndTime)
-        
-        self.navigationController?.popViewControllerAnimated(true)
-        
-        return
+//        let item = ScheduledDayItem(dicInfo : nil)
+//        item.ClockOut = nowHour
+//        item.ClockOutCoordinate = CoordinateObject(dicInfo: nil)
+//        item.ClockOutCoordinate?.Latitude = lat
+//        item.ClockOutCoordinate?.Longitude = lng
+//        item.clockOutDateDay = nowFullDateName
+//        item.ClockOutDay = nowDay
+//        item.ClockOutName = actionType
+//        item.ClockOutDayFullName = nowFullWeekName
+//        item.ClockOutDayName =  nowDay.substringToIndex(nowDay.startIndex.advancedBy(2))
+//        
+//        print(lat, lng)
+//        let ss = cl_showSchedule()
+//        if newitem {
+//        ss.savedSubmitDataToDB(item)
+//        }else{
+//        ss.updateLastItem(item)
+//        }
+//        
+//        
+//        self.locationManager?.setNotComeBackNotification(self.EndTime)
+//        
+//        self.navigationController?.popViewControllerAnimated(true)
+//        
+//        return
         
         
         if net?.isReachable ?? false {
             
-            let submitData = cl_submitData()
-            submitData.resubmit(nil)
+//            let submitData = cl_submitData()
+//            submitData.resubmit(nil)
             
 //            let userInfo = NSUserDefaults.standardUserDefaults()
             userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)
@@ -485,10 +485,11 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.userInteractionEnabled = false
             hud.labelText = CConstants.SavingMsg
+             print(requiredInfo.getPropertieNamesAsDictionary(), CConstants.MoreActionServiceURL)
             
             Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
                 parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                    
+//                    print(requiredInfo.getPropertieNamesAsDictionary(), CConstants.MoreActionServiceURL)
                     hud.userInteractionEnabled = true
                     hud.hide(true)
 //                    print(requiredInfo.getPropertieNamesAsDictionary(), response.result.value)
@@ -501,7 +502,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                             self.PopServerError()
                         }
                     }else{
-                        tl.saveGoOutDataToLocalDB(requiredInfo)
+//                        tl.saveGoOutDataToLocalDB(requiredInfo)
                         self.navigationController?.popViewControllerAnimated(true)
                         //                    self.PopServerError()
                     }
@@ -509,7 +510,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             
         }else{
             userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)
-            tl.saveGoOutDataToLocalDB(requiredInfo)
+//            tl.saveGoOutDataToLocalDB(requiredInfo)
             self.navigationController?.popViewControllerAnimated(true)
         }
 

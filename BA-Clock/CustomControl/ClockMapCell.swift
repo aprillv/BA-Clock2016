@@ -49,7 +49,7 @@ class ClockMapCell: UITableViewCell {
                 
                 
 //                timeLbl.text = item.DayFullName! + ", " + item.Day!
-                if item.ClockInName != nil {
+                if item.ClockInName != nil  && item.ClockInName != ""{
                     clockInText.text = item.ClockInName!
                     clockInTime.text = "\(item.ClockInDay!)\n" + item.ClockIn!
                 }else{

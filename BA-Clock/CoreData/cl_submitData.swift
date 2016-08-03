@@ -104,8 +104,8 @@ class cl_submitData: NSObject {
                         
 //
                         switch xtype {
-                        case CConstants.SubmitLocationType:
-                            tl.callSubmitLocationService(lat, longitude1: lng, time: d, obj: item)
+//                        case CConstants.SubmitLocationType:
+//                            tl.callSubmitLocationService(lat, longitude1: lng, time: d, obj: item)
                         case CConstants.ClockInType, CConstants.ClockOutType, CConstants.ComeBackType:
                             let clockOutRequiredInfo : ClockOutRequired = ClockOutRequired()
                             clockOutRequiredInfo.Latitude = "\(lat ?? 0.0 )"
@@ -156,7 +156,7 @@ class cl_submitData: NSObject {
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
-        
+//
     }
 }
 

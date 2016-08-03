@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZwK-p4-vh3">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A238m" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZwK-p4-vh3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -337,7 +338,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="189" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Tt2-tO-RJk">
+                            <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="189" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Tt2-tO-RJk">
                                 <rect key="frame" x="-4" y="64" width="383" height="553"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -576,7 +577,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                     <outlet property="delegate" destination="Pxs-Of-gi9" id="8Vb-lq-Ird"/>
                                 </connections>
                             </tableView>
-                            <tabBar contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="Zwh-On-rqN">
+                            <tabBar contentMode="scaleToFill" misplaced="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="Zwh-On-rqN">
                                 <rect key="frame" x="-4" y="618" width="383" height="49"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
@@ -610,13 +611,15 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <barButtonItem key="leftBarButtonItem" title="Clear Pins" id="LSm-m4-HQZ">
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="ZUF-Rs-IVm">
-                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <barButtonItem key="rightBarButtonItem" image="settings" id="ZUF-Rs-IVm">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="gotoLog:" destination="Pxs-Of-gi9" id="jbQ-h7-6wX"/>
+                                <segue destination="Hlg-vI-xeP" kind="show" id="iQ4-R4-MgT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="clearItem" destination="LSm-m4-HQZ" id="HMH-yO-vVT"/>
@@ -629,7 +632,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xh6-jL-zFa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4083.5" y="-661.5"/>
+            <point key="canvasLocation" x="-4199.5" y="-652.5"/>
         </scene>
         <!--Log File-->
         <scene sceneID="tjV-BR-lnt">
@@ -643,7 +646,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uFp-BE-UbV">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uFp-BE-UbV">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1126,6 +1129,281 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
             </objects>
             <point key="canvasLocation" x="-5677.5" y="-93.5"/>
         </scene>
+        <!--Schedule Hours-->
+        <scene sceneID="MLN-ll-gfN">
+            <objects>
+                <viewController id="Hlg-vI-xeP" customClass="ClockHoursViewController" customModule="BA_Clock" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cys-Gd-8nJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="gi3-zj-BEQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9q9-MF-pby">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="u4A-M7-BE3">
+                                <rect key="frame" x="0.0" y="59" width="414" height="628"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="headCell" id="Zfv-eZ-HGF" customClass="ClockHourCell" customModule="BA_Clock" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zfv-eZ-HGF" id="vBT-Uj-wge">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gl9-0z-59G">
+                                                    <rect key="frame" x="290" y="11" width="116" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="SbS-hV-Ojt"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="SbS-hV-Ojt"/>
+                                                        </mask>
+                                                    </variation>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P4p-kM-S95">
+                                                    <rect key="frame" x="18" y="11" width="122" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzc-k2-cbh">
+                                                    <rect key="frame" x="157" y="11" width="116" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C0p-bs-WDX">
+                                                    <rect key="frame" x="281" y="-2" width="1" height="47"/>
+                                                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="1" id="cEG-is-YdF"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQ8-r5-k3F">
+                                                    <rect key="frame" x="148" y="-2" width="1" height="47"/>
+                                                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="gl9-0z-59G" firstAttribute="centerY" secondItem="vBT-Uj-wge" secondAttribute="centerY" id="0Hj-hp-Dhh"/>
+                                                <constraint firstItem="dzc-k2-cbh" firstAttribute="height" secondItem="gl9-0z-59G" secondAttribute="height" id="2Of-lc-hVg"/>
+                                                <constraint firstItem="dzc-k2-cbh" firstAttribute="top" secondItem="C0p-bs-WDX" secondAttribute="bottom" constant="-24" id="3yg-dJ-3Ua"/>
+                                                <constraint firstItem="P4p-kM-S95" firstAttribute="centerY" secondItem="dzc-k2-cbh" secondAttribute="centerY" id="8PN-h5-VHF"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="C0p-bs-WDX" secondAttribute="bottom" constant="-10" id="A62-Ht-6bM"/>
+                                                <constraint firstItem="dzc-k2-cbh" firstAttribute="centerY" secondItem="gl9-0z-59G" secondAttribute="centerY" id="AUX-hO-A9p"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="gl9-0z-59G" secondAttribute="trailing" id="D1E-A5-vVU"/>
+                                                <constraint firstItem="C0p-bs-WDX" firstAttribute="leading" secondItem="dzc-k2-cbh" secondAttribute="trailing" constant="8" id="Ldx-7f-vHv"/>
+                                                <constraint firstItem="C0p-bs-WDX" firstAttribute="top" secondItem="vBT-Uj-wge" secondAttribute="topMargin" constant="-10" id="OFJ-2z-OMw"/>
+                                                <constraint firstItem="gl9-0z-59G" firstAttribute="leading" secondItem="C0p-bs-WDX" secondAttribute="trailing" constant="8" id="QvU-rf-1bI"/>
+                                                <constraint firstItem="dzc-k2-cbh" firstAttribute="top" secondItem="C0p-bs-WDX" secondAttribute="bottom" constant="-24" id="RXE-mv-QCV"/>
+                                                <constraint firstItem="gl9-0z-59G" firstAttribute="width" secondItem="vBT-Uj-wge" secondAttribute="width" multiplier="0.28" id="XzX-fG-Zce"/>
+                                                <constraint firstItem="dzc-k2-cbh" firstAttribute="leading" secondItem="eQ8-r5-k3F" secondAttribute="trailing" constant="8" id="Zgl-0r-r43"/>
+                                                <constraint firstItem="gl9-0z-59G" firstAttribute="centerX" secondItem="vBT-Uj-wge" secondAttribute="centerX" id="bRm-wm-vOj"/>
+                                                <constraint firstItem="eQ8-r5-k3F" firstAttribute="top" secondItem="C0p-bs-WDX" secondAttribute="top" id="dHU-4v-JaW"/>
+                                                <constraint firstItem="eQ8-r5-k3F" firstAttribute="width" secondItem="C0p-bs-WDX" secondAttribute="width" id="gBG-wF-8l5"/>
+                                                <constraint firstItem="eQ8-r5-k3F" firstAttribute="leading" secondItem="P4p-kM-S95" secondAttribute="trailing" constant="8" id="mnE-VA-mNl"/>
+                                                <constraint firstItem="eQ8-r5-k3F" firstAttribute="height" secondItem="C0p-bs-WDX" secondAttribute="height" id="nqK-An-gbQ"/>
+                                                <constraint firstItem="dzc-k2-cbh" firstAttribute="width" secondItem="gl9-0z-59G" secondAttribute="width" id="pZw-9Y-cth"/>
+                                                <constraint firstItem="eQ8-r5-k3F" firstAttribute="bottom" secondItem="C0p-bs-WDX" secondAttribute="bottom" id="uDl-P9-R6G"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="P4p-kM-S95" secondAttribute="leading" constant="-10" id="yiu-kf-txw"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="3yg-dJ-3Ua"/>
+                                                    <exclude reference="RXE-mv-QCV"/>
+                                                    <exclude reference="bRm-wm-vOj"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="speratorWidth" destination="cEG-is-YdF" id="cgQ-Da-CVz"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contentCell" id="uZ9-h8-ibQ" customClass="ClockHourCell" customModule="BA_Clock" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="136" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uZ9-h8-ibQ" id="VXU-29-uHY">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxM-lU-UZa">
+                                                    <rect key="frame" x="290" y="11" width="116" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="tZ6-r5-bwt"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="tZ6-r5-bwt"/>
+                                                        </mask>
+                                                    </variation>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATT-o0-ygZ">
+                                                    <rect key="frame" x="18" y="11" width="122" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ryu-O0-XX2">
+                                                    <rect key="frame" x="157" y="11" width="116" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyp-PW-SW2">
+                                                    <rect key="frame" x="281" y="-2" width="1" height="47"/>
+                                                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="1" id="JAq-dX-Bq7"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dmz-60-OJX">
+                                                    <rect key="frame" x="148" y="-2" width="1" height="47"/>
+                                                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="pyp-PW-SW2" firstAttribute="leading" secondItem="ryu-O0-XX2" secondAttribute="trailing" constant="8" id="2Tz-d2-VAx"/>
+                                                <constraint firstItem="Dmz-60-OJX" firstAttribute="width" secondItem="pyp-PW-SW2" secondAttribute="width" id="2zK-mZ-WnG"/>
+                                                <constraint firstItem="Dmz-60-OJX" firstAttribute="top" secondItem="pyp-PW-SW2" secondAttribute="top" id="4MY-HE-f0L"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="vxM-lU-UZa" secondAttribute="trailing" id="73U-wd-t92"/>
+                                                <constraint firstItem="ryu-O0-XX2" firstAttribute="top" secondItem="pyp-PW-SW2" secondAttribute="bottom" constant="-24" id="F4y-YF-PgL"/>
+                                                <constraint firstItem="ATT-o0-ygZ" firstAttribute="centerY" secondItem="ryu-O0-XX2" secondAttribute="centerY" id="Nw5-Rz-LpS"/>
+                                                <constraint firstItem="vxM-lU-UZa" firstAttribute="width" secondItem="VXU-29-uHY" secondAttribute="width" multiplier="0.28" id="PyI-60-4YR"/>
+                                                <constraint firstItem="Dmz-60-OJX" firstAttribute="bottom" secondItem="pyp-PW-SW2" secondAttribute="bottom" id="SDD-LG-cVo"/>
+                                                <constraint firstItem="ryu-O0-XX2" firstAttribute="leading" secondItem="Dmz-60-OJX" secondAttribute="trailing" constant="8" id="agJ-j0-Uft"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="ATT-o0-ygZ" secondAttribute="leading" constant="-10" id="b8C-5N-BrH"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="pyp-PW-SW2" secondAttribute="bottom" constant="-10" id="c7P-Ng-Jn1"/>
+                                                <constraint firstItem="pyp-PW-SW2" firstAttribute="top" secondItem="VXU-29-uHY" secondAttribute="topMargin" constant="-10" id="fWS-KF-NJs"/>
+                                                <constraint firstItem="ryu-O0-XX2" firstAttribute="centerY" secondItem="vxM-lU-UZa" secondAttribute="centerY" id="g6y-kL-mHW"/>
+                                                <constraint firstItem="vxM-lU-UZa" firstAttribute="centerX" secondItem="VXU-29-uHY" secondAttribute="centerX" id="hie-9S-tVc"/>
+                                                <constraint firstItem="ryu-O0-XX2" firstAttribute="height" secondItem="vxM-lU-UZa" secondAttribute="height" id="lGf-Nt-dGf"/>
+                                                <constraint firstItem="Dmz-60-OJX" firstAttribute="height" secondItem="pyp-PW-SW2" secondAttribute="height" id="mgw-7B-6CM"/>
+                                                <constraint firstItem="vxM-lU-UZa" firstAttribute="centerY" secondItem="VXU-29-uHY" secondAttribute="centerY" id="mm1-ev-Uy0"/>
+                                                <constraint firstItem="vxM-lU-UZa" firstAttribute="leading" secondItem="pyp-PW-SW2" secondAttribute="trailing" constant="8" id="pM7-PL-j05"/>
+                                                <constraint firstItem="ryu-O0-XX2" firstAttribute="top" secondItem="pyp-PW-SW2" secondAttribute="bottom" constant="-24" id="qj3-wv-7wm"/>
+                                                <constraint firstItem="Dmz-60-OJX" firstAttribute="leading" secondItem="ATT-o0-ygZ" secondAttribute="trailing" constant="8" id="sYC-Ov-hCi"/>
+                                                <constraint firstItem="ryu-O0-XX2" firstAttribute="width" secondItem="vxM-lU-UZa" secondAttribute="width" id="ycU-S7-nZg"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="F4y-YF-PgL"/>
+                                                    <exclude reference="qj3-wv-7wm"/>
+                                                    <exclude reference="hie-9S-tVc"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="dayLbl" destination="ATT-o0-ygZ" id="7ux-qA-yhq"/>
+                                            <outlet property="speratorWidth" destination="JAq-dX-Bq7" id="uOs-XC-TQG"/>
+                                            <outlet property="timeinLbl" destination="ryu-O0-XX2" id="OQy-n3-9k3"/>
+                                            <outlet property="timeoutLbl" destination="vxM-lU-UZa" id="9M1-a6-whn"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Hlg-vI-xeP" id="dQW-Fl-ynr"/>
+                                    <outlet property="delegate" destination="Hlg-vI-xeP" id="fp0-JK-kba"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="u4A-M7-BE3" firstAttribute="top" secondItem="cys-Gd-8nJ" secondAttribute="bottom" constant="-5" id="HN5-pa-Fqp"/>
+                            <constraint firstItem="gi3-zj-BEQ" firstAttribute="top" secondItem="u4A-M7-BE3" secondAttribute="bottom" id="n3E-yd-6tc"/>
+                            <constraint firstItem="u4A-M7-BE3" firstAttribute="leading" secondItem="9q9-MF-pby" secondAttribute="leadingMargin" constant="-20" id="nfn-0N-fRe"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="u4A-M7-BE3" secondAttribute="trailing" constant="-20" id="sdN-QE-hBu"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Schedule Hours" id="72Z-Pj-hoI">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="jmY-Pu-gmG">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="goBack:" destination="Hlg-vI-xeP" id="sxn-Vc-GGg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="tablewView" destination="u4A-M7-BE3" id="ZHu-QQ-Iv1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mVm-KG-OEg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5961" y="603"/>
+        </scene>
+        <!--Item 2-->
+        <scene sceneID="xaY-Po-Gbk">
+            <objects>
+                <viewController id="zO1-J6-O9a" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="abU-XN-xMJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="8C0-8h-N2M"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4hz-Hr-NI9">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 2" id="FKk-gh-aZt"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uL6-Fu-Reb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--Item 1-->
+        <scene sceneID="GWy-xr-bpE">
+            <objects>
+                <viewController id="88H-ps-lLz" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DEr-tL-u6z"/>
+                        <viewControllerLayoutGuide type="bottom" id="3ay-Ss-o5T"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mlS-T5-iM6">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 1" id="prU-s4-GuC"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="brg-N7-lcK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="YfJ-rr-uN9">
+            <objects>
+                <tabBarController id="4VM-DW-aJF" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="YPb-qP-XND">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="88H-ps-lLz" kind="relationship" relationship="viewControllers" id="imn-1s-jeh"/>
+                        <segue destination="zO1-J6-O9a" kind="relationship" relationship="viewControllers" id="zC3-xR-kUO"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mx6-uu-rPh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationItem title="Title" id="Mbg-Au-Apk">
+                    <barButtonItem key="leftBarButtonItem" title="Clear Pins" id="rvO-LJ-caA">
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </barButtonItem>
+                    <barButtonItem key="rightBarButtonItem" image="settings" id="mem-fJ-oxL">
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="gotoLog:" destination="Pxs-Of-gi9" id="w1n-xH-xRw"/>
+                        </connections>
+                    </barButtonItem>
+                </navigationItem>
+            </objects>
+        </scene>
     </scenes>
     <resources>
         <image name="back" width="12" height="20"/>
@@ -1138,5 +1416,6 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
         <image name="location0" width="16" height="20"/>
         <image name="logo" width="100" height="100"/>
         <image name="more" width="28" height="6"/>
+        <image name="settings" width="25" height="25"/>
     </resources>
 </document>

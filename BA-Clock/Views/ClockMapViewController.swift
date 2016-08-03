@@ -103,12 +103,12 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         super.viewWillAppear(animated)
         
         
-        let ss = cl_showSchedule()
-        let rtn = ss.getScheduledList()
+//        let ss = cl_showSchedule()
+//        let rtn = ss.getScheduledList()
 //        if rtn.count == 0 {
-//            self.callGetList()
+            self.callGetList()
 //        }else{
-            self.clockDataList = rtn
+//            self.clockDataList = rtn
             updateLastSyncDateTime()
             
 //            let net = NetworkReachabilityManager()
@@ -152,14 +152,17 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+//        print("aaa", NSDate(), NSDate().laterDate(NSDate()))
 //        let submit = cl_submitData()
 //        submit.resubmit(nil)
         
-        let ss = cl_showSchedule()
-        let rtn = ss.getScheduledList()
-        if rtn.count == 0 {
-            self.callGetList()
-        }
+//        let ss = cl_showSchedule()
+//        let rtn = ss.getScheduledList()
+//        if rtn.count == 0 {
+//            self.callGetList()
+//        }
         locationManager = CLocationManager.sharedInstance
         locationManager?.startUpdatingLocation()
         // for test notification
@@ -276,6 +279,9 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                         if let rtnValue = response.result.value as? [String: AnyObject]{
                             
                             if rtnValue["Status"]!.integerValue == 1 {
+                                let serverTime = rtnValue["ServerTime"] as! String
+                            tl.SetNextCallTime(serverTime)
+                                
                                 if self.clockDataList != nil && self.clockDataList?.count > 0{
                                     if let lastItem = self.clockDataList?.last{
                                         if let list = rtnValue["ScheduledDay"] as? [[String: AnyObject]] {
@@ -300,7 +306,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                     self.updateLastSyncDateTime()
                                 }
                                 
-                                return
+//                                return
                                 if self.clockDataList != nil {
 //                                    var changed = false
                                     if let list = rtnValue["ScheduledDay"] as? [[String: AnyObject]] {
@@ -504,9 +510,9 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     }
     
     @IBAction func gotoLog(sender: AnyObject) {
-        if self.title == "April" || self.title == "april Lv" || self.title == "jack fan" || self.title == "Bob Xia" || self.title == "Apple"{
-            self.performSegueWithIdentifier("showLog", sender: nil)
-        }
+//        if self.title == "April" || self.title == "april Lv" || self.title == "jack fan" || self.title == "Bob Xia" || self.title == "Apple"{
+//            self.performSegueWithIdentifier("showLog", sender: nil)
+//        }
     }
 
     
@@ -705,115 +711,93 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
             
         }
         
+        if isClockIn {
+            userInfo.setValue(NSDate(), forKey: CConstants.LastClockInTime)
+        }else{
+            userInfo.setValue(NSDate(), forKey: CConstants.LastClockOutTime)
+        }
         
-        userInfo.setValue(NSDate(), forKey: CConstants.LastClockInTime)
-        tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
+//        tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
         self.view.userInteractionEnabled = true
         
-        let submitData = cl_submitData()
-        submitData.resubmit(nil)
+//        let submitData = cl_submitData()
+//        submitData.resubmit(nil)
         
-//            {
-//                ClockIn = "10:14:05 PM";
-//                ClockInCoordinate =             {
-//                    Latitude = "29.751872";
-//                    Longitude = "-95.36203709999999";
-//                };
-//                ClockInDay = "Tue, May 17";
-//                ClockInDayFullName = Tuesday;
-//                ClockInDayName = Tue;
-//                ClockInDayOfWeek = 2;
-//                ClockInName = "Clock In";
-//                ClockOut = "";
-//                ClockOutCoordinate =             {
-//                    Latitude = 0;
-//                    Longitude = 0;
-//                };
-//                ClockOutDay = "Tue, May 17";
-//                ClockOutDayFullName = Monday;
-//                ClockOutDayName = Tue;
-//                ClockOutDayOfWeek = 1;
-//                ClockOutName = "Clock Out";
-//                Hours = 0;
-//                clockInDateDay = "05/17/2016";
-//                clockOutDateDay = "01/01/1900";
+        
+        
+        
+        
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+//         dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//        dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
+//        dateFormatter.dateFormat =  "hh:mm:ss a"
+//        let nowHour = dateFormatter.stringFromDate(now)
+//        dateFormatter.dateFormat = "EEE, MMM dd"
+//        let nowDay = dateFormatter.stringFromDate(now)
+//        dateFormatter.dateFormat = "EEEE"
+//        let nowFullWeekName = dateFormatter.stringFromDate(now)
+//        dateFormatter.dateFormat = "MM/dd/yyyy"
+//        let nowFullDateName = dateFormatter.stringFromDate(now)
+//        
+////        let userInfo = NSUserDefaults.standardUserDefaults()
+//        userInfo.setValue(NSDate(), forKey: (isClockIn ? CConstants.LastClockInTime : CConstants.LastClockOutTime))
+//        
+//        if isClockIn {
+//            
+//            let item = ScheduledDayItem(dicInfo: nil)
+//            item.ClockInCoordinate = CoordinateObject(dicInfo: nil)
+//            item.ClockIn = nowHour
+//            item.ClockInName = "Clock In"
+//            item.ClockInCoordinate?.Latitude = lat
+//            item.ClockInCoordinate?.Longitude = lng
+//            item.ClockOut = ""
+//            item.ClockInDay = nowDay
+//            item.ClockInDayFullName = nowFullWeekName
+//            item.clockInDateDay = nowFullDateName
+////            item.ClockInDayOfWeek = rtn.DayOfWeek
+//            //                                    item.Hours = rtn
+//            item.ClockInDayName = nowDay.substringToIndex(nowDay.startIndex.advancedBy(2))
+//            
+//             let ss = cl_showSchedule()
+//            ss.savedSubmitDataToDB(item)
+//            
+//            self.clockDataList!.append(item)
+//            
+//            self.mapTable.reloadData()
+//            self.scrollToBottom()
+//            
+//        }else{
+//            if let item = self.clockDataList?[self.clockDataList!.count-1] {
+//                item.ClockOutName = "Clock Out"
+//                item.ClockOut = nowHour
+//                item.ClockOutCoordinate = CoordinateObject(dicInfo: nil)
+//                item.ClockOutCoordinate?.Latitude = lat
+//                item.ClockOutCoordinate?.Longitude = lng
+//                item.clockOutDateDay = nowFullDateName
+//                item.ClockOutDay = nowDay
+//                item.ClockOutDayFullName = nowFullWeekName
+////                item.ClockOutDayOfWeek = rtn.DayOfWeek
+//                item.ClockOutDayName =  nowDay.substringToIndex(nowDay.startIndex.advancedBy(2))
+//                
+//                let ss = cl_showSchedule()
+//                ss.updateLastItem(item)
+//                
+//                self.mapTable.reloadData()
+//                self.scrollToBottom()
+//            }
 //        }
-        
-        
-        
-        
-        
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-         dateFormatter.timeZone = NSTimeZone.localTimeZone()
-        dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
-        dateFormatter.dateFormat =  "hh:mm:ss a"
-        let nowHour = dateFormatter.stringFromDate(now)
-        dateFormatter.dateFormat = "EEE, MMM dd"
-        let nowDay = dateFormatter.stringFromDate(now)
-        dateFormatter.dateFormat = "EEEE"
-        let nowFullWeekName = dateFormatter.stringFromDate(now)
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        let nowFullDateName = dateFormatter.stringFromDate(now)
-        
-//        let userInfo = NSUserDefaults.standardUserDefaults()
-        userInfo.setValue(NSDate(), forKey: (isClockIn ? CConstants.LastClockInTime : CConstants.LastClockOutTime))
-        
-        if isClockIn {
-            
-            let item = ScheduledDayItem(dicInfo: nil)
-            item.ClockInCoordinate = CoordinateObject(dicInfo: nil)
-            item.ClockIn = nowHour
-            item.ClockInName = "Clock In"
-            item.ClockInCoordinate?.Latitude = lat
-            item.ClockInCoordinate?.Longitude = lng
-            item.ClockOut = ""
-            item.ClockInDay = nowDay
-            item.ClockInDayFullName = nowFullWeekName
-            item.clockInDateDay = nowFullDateName
-//            item.ClockInDayOfWeek = rtn.DayOfWeek
-            //                                    item.Hours = rtn
-            item.ClockInDayName = nowDay.substringToIndex(nowDay.startIndex.advancedBy(2))
-            
-             let ss = cl_showSchedule()
-            ss.savedSubmitDataToDB(item)
-            
-            self.clockDataList!.append(item)
-            
-            self.mapTable.reloadData()
-            self.scrollToBottom()
-            
-        }else{
-            if let item = self.clockDataList?[self.clockDataList!.count-1] {
-                item.ClockOutName = "Clock Out"
-                item.ClockOut = nowHour
-                item.ClockOutCoordinate = CoordinateObject(dicInfo: nil)
-                item.ClockOutCoordinate?.Latitude = lat
-                item.ClockOutCoordinate?.Longitude = lng
-                item.clockOutDateDay = nowFullDateName
-                item.ClockOutDay = nowDay
-                item.ClockOutDayFullName = nowFullWeekName
-//                item.ClockOutDayOfWeek = rtn.DayOfWeek
-                item.ClockOutDayName =  nowDay.substringToIndex(nowDay.startIndex.advancedBy(2))
-                
-                let ss = cl_showSchedule()
-                ss.updateLastItem(item)
-                
-                self.mapTable.reloadData()
-                self.scrollToBottom()
-            }
-        }
-        return
+//        return
         
         
         let net = NetworkReachabilityManager()
         if net?.isReachable ?? false {
             
-            let submitData = cl_submitData()
-            submitData.resubmit(nil)
-            
-            let userInfo = NSUserDefaults.standardUserDefaults()
-            userInfo.setValue(NSDate(), forKey: (isClockIn ? CConstants.LastClockInTime : CConstants.LastClockOutTime))
+//            let submitData = cl_submitData()
+//            submitData.resubmit(nil)
+//            
+//            let userInfo = NSUserDefaults.standardUserDefaults()
+//            userInfo.setValue(NSDate(), forKey: (isClockIn ? CConstants.LastClockInTime : CConstants.LastClockOutTime))
             
             currentRequest = Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                 if response.result.isSuccess {
@@ -843,40 +827,41 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                             
                             
                         }else{
-                            if isClockIn {
-                                
-                                let item = ScheduledDayItem(dicInfo: nil)
-                                item.ClockIn = rtn.ClockedInTime
-                                item.ClockInCoordinate = rtn.Coordinate
-                                item.ClockOut = ""
-                                item.ClockInDay = rtn.Day
-                                item.ClockInDayFullName = rtn.DayFullName
-                                item.ClockInDayOfWeek = rtn.DayOfWeek
-                                //                                    item.Hours = rtn
-                                item.ClockInDayName = rtn.DayName
-                                self.clockDataList!.append(item)
-                                
-                                self.mapTable.reloadData()
-                                self.scrollToBottom()
-                                
-                            }else{
-                                if let item = self.clockDataList?[self.clockDataList!.count-1] {
-                                    
-                                    item.ClockOut = rtn.ClockedOutTime
-                                    item.ClockOutCoordinate = rtn.Coordinate
-                                    
-                                    item.ClockOutDay = rtn.Day
-                                    item.ClockOutDayFullName = rtn.DayFullName
-                                    item.ClockOutDayOfWeek = rtn.DayOfWeek
-                                    item.ClockOutDayName = rtn.DayName
-                                    
-                                    self.mapTable.reloadData()
-                                    self.scrollToBottom()
-                                }
-                            }
+                            self.callGetList()
+//                            if isClockIn {
+//                                
+//                                let item = ScheduledDayItem(dicInfo: nil)
+//                                item.ClockIn = rtn.ClockedInTime
+//                                item.ClockInCoordinate = rtn.Coordinate
+//                                item.ClockOut = ""
+//                                item.ClockInDay = rtn.Day
+//                                item.ClockInDayFullName = rtn.DayFullName
+//                                item.ClockInDayOfWeek = rtn.DayOfWeek
+//                                //                                    item.Hours = rtn
+//                                item.ClockInDayName = rtn.DayName
+//                                self.clockDataList!.append(item)
+//                                
+//                                self.mapTable.reloadData()
+//                                self.scrollToBottom()
+//                                
+//                            }else{
+//                                if let item = self.clockDataList?[self.clockDataList!.count-1] {
+//                                    
+//                                    item.ClockOut = rtn.ClockedOutTime
+//                                    item.ClockOutCoordinate = rtn.Coordinate
+//                                    
+//                                    item.ClockOutDay = rtn.Day
+//                                    item.ClockOutDayFullName = rtn.DayFullName
+//                                    item.ClockOutDayOfWeek = rtn.DayOfWeek
+//                                    item.ClockOutDayName = rtn.DayName
+//                                    
+//                                    self.mapTable.reloadData()
+//                                    self.scrollToBottom()
+//                                }
+//                            }
                         }
                     }else{
-                        tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
+//                        tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
                         
                         self.PopServerError()
                         
@@ -884,12 +869,13 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                     self.view.userInteractionEnabled = true
                     
                 }else{
-                    tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
-                    
+//                    tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
+                      self.PopNetworkError()
                     self.view.userInteractionEnabled = true
                 }
             }
         }else{
+             self.PopNetworkError()
             userInfo.setValue(NSDate(), forKey: CConstants.LastClockOutTime)
             tl.saveClockDataToLocalDB(isClockIn: isClockIn, clockOutRequiredInfo: clockOutRequiredInfo)
             self.view.userInteractionEnabled = true
@@ -917,8 +903,8 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     
     private func doComeBack(){
         let clockOutRequiredInfo = ClockOutRequired()
-        let lat = self.locationManager?.currentLocation?.coordinate.latitude ?? 0
-        let lng = self.locationManager?.currentLocation?.coordinate.longitude ?? 0
+//        let lat = self.locationManager?.currentLocation?.coordinate.latitude ?? 0
+//        let lng = self.locationManager?.currentLocation?.coordinate.longitude ?? 0
         clockOutRequiredInfo.Latitude = "\(self.locationManager?.currentLocation?.coordinate.latitude ?? 0)"
         clockOutRequiredInfo.Longitude = "\(self.locationManager?.currentLocation?.coordinate.longitude ?? 0)"
         clockOutRequiredInfo.HostName = UIDevice.currentDevice().name
@@ -960,68 +946,69 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
         
         
         
-        let submitData = cl_submitData()
-        submitData.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
-            , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
-            , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
-            , xtype: CConstants.ComeBackType)
-        
-        submitData.resubmit(nil)
-        
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-         dateFormatter.timeZone = NSTimeZone.localTimeZone()
-        dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
-        dateFormatter.dateFormat =  "hh:mm:ss a"
-        let nowHour = dateFormatter.stringFromDate(now)
-        dateFormatter.dateFormat = "EEE, MMM dd"
-        let nowDay = dateFormatter.stringFromDate(now)
-        dateFormatter.dateFormat = "EEEE"
-        let nowFullWeekName = dateFormatter.stringFromDate(now)
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        let nowFullDateName = dateFormatter.stringFromDate(now)
-        
-        //        let userInfo = NSUserDefaults.standardUserDefaults()
-        userInfo.setValue(NSDate(), forKey:  CConstants.LastComeBackTime)
-        
-       userInfo.setValue("", forKey: CConstants.LastGoOutTimeStartEnd)
-        
-            
-            let item = ScheduledDayItem(dicInfo: nil)
-            item.ClockInCoordinate = CoordinateObject(dicInfo: nil)
-            item.ClockIn = nowHour
-            item.ClockInCoordinate?.Latitude = lat
-            item.ClockInCoordinate?.Longitude = lng
-            item.ClockOut = ""
-        
-        item.ClockInName = "Come Back"
-            item.ClockInDay = nowDay
-            item.ClockInDayFullName = nowFullWeekName
-            item.clockInDateDay = nowFullDateName
-            //            item.ClockInDayOfWeek = rtn.DayOfWeek
-            //                                    item.Hours = rtn
-            item.ClockInDayName = nowDay.substringToIndex(nowDay.startIndex.advancedBy(2))
-            
-            let ss = cl_showSchedule()
-            ss.savedSubmitDataToDB(item)
-            
-            self.clockDataList!.append(item)
-            
-            self.mapTable.reloadData()
-            self.scrollToBottom()
-            
-       
-        return
+//        let submitData = cl_submitData()
+//        submitData.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
+//            , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
+//            , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
+//            , xtype: CConstants.ComeBackType)
+//        
+//        submitData.resubmit(nil)
+//        
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+//         dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//        dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
+//        dateFormatter.dateFormat =  "hh:mm:ss a"
+//        let nowHour = dateFormatter.stringFromDate(now)
+//        dateFormatter.dateFormat = "EEE, MMM dd"
+//        let nowDay = dateFormatter.stringFromDate(now)
+//        dateFormatter.dateFormat = "EEEE"
+//        let nowFullWeekName = dateFormatter.stringFromDate(now)
+//        dateFormatter.dateFormat = "MM/dd/yyyy"
+//        let nowFullDateName = dateFormatter.stringFromDate(now)
+//        
+//        //        let userInfo = NSUserDefaults.standardUserDefaults()
+//        userInfo.setValue(NSDate(), forKey:  CConstants.LastComeBackTime)
+//        
+//       userInfo.setValue("", forKey: CConstants.LastGoOutTimeStartEnd)
+//        
+//            
+//            let item = ScheduledDayItem(dicInfo: nil)
+//            item.ClockInCoordinate = CoordinateObject(dicInfo: nil)
+//            item.ClockIn = nowHour
+//            item.ClockInCoordinate?.Latitude = lat
+//            item.ClockInCoordinate?.Longitude = lng
+//            item.ClockOut = ""
+//        
+//        item.ClockInName = "Come Back"
+//            item.ClockInDay = nowDay
+//            item.ClockInDayFullName = nowFullWeekName
+//            item.clockInDateDay = nowFullDateName
+//            //            item.ClockInDayOfWeek = rtn.DayOfWeek
+//            //                                    item.Hours = rtn
+//            item.ClockInDayName = nowDay.substringToIndex(nowDay.startIndex.advancedBy(2))
+//            
+//            let ss = cl_showSchedule()
+//            ss.savedSubmitDataToDB(item)
+//            
+//            self.clockDataList!.append(item)
+//            
+//            self.mapTable.reloadData()
+//            self.scrollToBottom()
+//            
+//       
+//        return
         
         
         let net = NetworkReachabilityManager()
         if net?.isReachable ?? false {
             
-            let submitData = cl_submitData()
-            submitData.resubmit(nil)
+//            let submitData = cl_submitData()
+//            submitData.resubmit(nil)
             
             let userInfo = NSUserDefaults.standardUserDefaults()
             userInfo.setValue(NSDate(), forKey: CConstants.LastComeBackTime)
+            userInfo.setValue("", forKey: CConstants.LastGoOutTimeStartEnd)
             
             var hud : MBProgressHUD?
             hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -1034,25 +1021,25 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                     UIApplication.sharedApplication().cancelAllLocalNotifications()
                     self.callGetList()
                 }else{
-                    let cl = cl_submitData()
-                    cl.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
-                        , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
-                        , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
-                        , xtype: CConstants.ComeBackType)
-                    //                self.PopNetworkError()
+//                    let cl = cl_submitData()
+//                    cl.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
+//                        , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
+//                        , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
+//                        , xtype: CConstants.ComeBackType)
+                                    self.PopNetworkError()
                     
                 }
             }
         }else{
             
+             self.PopNetworkError()
             
-            
-            userInfo.setValue(NSDate(), forKey: CConstants.LastComeBackTime)
-            let cl = cl_submitData()
-            cl.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
-                , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
-                , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
-                , xtype: CConstants.ComeBackType)
+//            userInfo.setValue(NSDate(), forKey: CConstants.LastComeBackTime)
+//            let cl = cl_submitData()
+//            cl.savedSubmitDataToDB(clockOutRequiredInfo.ClientTime ?? ""
+//                , lat: self.locationManager?.currentLocation?.coordinate.latitude ?? 0.0
+//                , lng: self.locationManager?.currentLocation?.coordinate.longitude ?? 0.0
+//                , xtype: CConstants.ComeBackType)
         }
         
     }

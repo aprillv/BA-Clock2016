@@ -23,21 +23,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
    
-    func applicationWillEnterForeground(application: UIApplication){
-//        print("aadsfdfd");
-        let locaitonManager = CLocationManager.sharedInstance
-        locaitonManager.updateLocation()
-    }
+//    func applicationWillEnterForeground(application: UIApplication){
+////        print("aadsfdfd");
+//        let locaitonManager = CLocationManager.sharedInstance
+//        locaitonManager.updateLocation()
+//    }
     
-    
-    func donextSubmit(n: NSNotification) {
-        let cl = cl_submitData()
-        if let sdata = n.object as? NSManagedObject {
-            cl.resubmit(sdata)
-        }else{
-            cl.resubmit(nil)
-        }
-    }
+//    
+//    func donextSubmit(n: NSNotification) {
+//        let cl = cl_submitData()
+//        if let sdata = n.object as? NSManagedObject {
+//            cl.resubmit(sdata)
+//        }else{
+//            cl.resubmit(nil)
+//        }
+//    }
     
     func checkUpate(){
         let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]
@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        clearNotifications()
         
         checkUpate()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(donextSubmit(_:)), name: CConstants.SubmitNext, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(donextSubmit(_:)), name: CConstants.SubmitNext, object: nil)
         
         self.window?.backgroundColor = UIColor.whiteColor()
 //        print(CLLocationManager.locationServicesEnabled())

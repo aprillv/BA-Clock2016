@@ -280,7 +280,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
          dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-         dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         
         
         let today = dateFormatter.stringFromDate(date)
@@ -420,7 +420,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
 //         print("background \(NSDate())")
         setLastSubmitTime()
         currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-            //                print(response.result.value)
+                            print("sfasdfa=======", response.result.value)
             if response.result.isSuccess {
             }else{
             }

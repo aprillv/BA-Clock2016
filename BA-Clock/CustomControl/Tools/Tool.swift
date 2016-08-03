@@ -11,6 +11,30 @@ import Alamofire
 import CoreData
 
 class Tool: NSObject {
+    func SetNextCallTime(serverTime: String) -> NSTimeInterval {
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        if serverTime == "" {
+            userInfo.setDouble(0, forKey: CConstants.SeverTimeSinceClienttime)
+            return 0
+        }
+        
+        
+        let now = NSDate()
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
+        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        let serverTime = dateFormatter.dateFromString(serverTime)
+        
+        var timeInterval = serverTime?.timeIntervalSinceDate(now) ?? 0
+        if timeInterval < 10  && timeInterval > -10{
+            timeInterval = 0
+        }
+        userInfo.setDouble(timeInterval, forKey: CConstants.SeverTimeSinceClienttime)
+//        print(serverTime, now)
+        return timeInterval
+    }
     func getTime2() -> Bool{
         let date = NSDate()
         //        print(date)
@@ -20,7 +44,7 @@ class Tool: NSObject {
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         
          dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
@@ -53,7 +77,7 @@ class Tool: NSObject {
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
         let todayDay = today.substringToIndex(index0.advancedBy(10))
@@ -186,7 +210,7 @@ class Tool: NSObject {
         let d = NSDate()
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
         let ClientTime = dateFormatter.stringFromDate(d)
@@ -203,7 +227,7 @@ class Tool: NSObject {
        
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.dateFormat =  "MM/dd/yyyy hh:mm:ss a"
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
 //        print(dateFormatter.stringFromDate(NSDate()))
@@ -218,7 +242,7 @@ class Tool: NSObject {
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
         //        print(dateFormatter.stringFromDate(NSDate()))
@@ -248,39 +272,73 @@ class Tool: NSObject {
 //        
 //    }
     
-    func callSubmitLocationService(latitude : Double?, longitude1 : Double?, time: String, obj: NSManagedObject){
-        let submitRequired = SubmitLocationRequired()
-        submitRequired.Latitude = "\(latitude ?? 0)"
-        submitRequired.Longitude = "\(longitude1 ?? 0)"
-        submitRequired.ClientTime = time
-        
-        let log = cl_log()
-        log.savedLogToDB(NSDate(), xtype: true, lat: "\(submitRequired.Latitude!) \(submitRequired.Longitude!)")
-        
-        let OAuthToken = getUserToken()
-        submitRequired.Token = OAuthToken.Token
-        submitRequired.TokenSecret = OAuthToken.TokenSecret
-        
-        Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-//            print(submitRequired.getPropertieNamesAsDictionary(), response.result.value)
-            if response.result.isSuccess {
-                NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: obj)
-                return
-            }else{
-                NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: false)
-            }
-        }
-    }
+//    func callSubmitLocationService(latitude : Double?, longitude1 : Double?, time: String, obj: NSManagedObject){
+//        let submitRequired = SubmitLocationRequired()
+//        submitRequired.Latitude = "\(latitude ?? 0)"
+//        submitRequired.Longitude = "\(longitude1 ?? 0)"
+//        submitRequired.ClientTime = time
+//        
+//        let log = cl_log()
+////        log.savedLogToDB(NSDate(), xtype: true, lat: "\(submitRequired.Latitude!) \(submitRequired.Longitude!)")
+//        
+//        let OAuthToken = getUserToken()
+//        submitRequired.Token = OAuthToken.Token
+//        submitRequired.TokenSecret = OAuthToken.TokenSecret
+//        
+//        Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+////            print(submitRequired.getPropertieNamesAsDictionary(), response.result.value)
+//            if response.result.isSuccess {
+//                if let result = response.result.value as? [String: AnyObject] {
+//                    if (result["Result"] as? String) ?? "" == "1" {
+//                        if (result["GeoFenceyn"] as? String) ?? "" == "0" {
+//                        
+//                        }
+//                        let tl = Tool()
+//                        let interval = tl.SetNextCallTime((result["ServerTime"] as? String) ?? "")
+//                       
+//                        
+//                    }else{
+//                    
+//                    }
+//                }else{
+//                    NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: true)
+//                }
+//            }else{
+//                NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: false)
+//            }
+//        }
+//    }
+//    private func getFirstQuauterTimeSpace(interval: NSTimeInterval) -> NSTimeInterval{
+//        let date = NSDate().dateByAddingTimeInterval(interval)
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateFormat = "MM/dd/yyyy HH"
+//        let nowHour = dateFormatter.stringFromDate(date)
+//        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
+//        var now15 = dateFormatter.dateFromString(nowHour + ":00:00")
+//        
+//        for i in 1...4 {
+//            now15 = now15?.dateByAddingTimeInterval(15*60)
+//            let timeSpace = now15?.timeIntervalSinceDate(date)
+//            if  timeSpace > 0 {
+//                //                print("apirl", timeSpace ?? 0, i*15)
+//                return timeSpace!
+//            }
+//        }
+//        return 15*60-5
+//        
+//    }
+    
     
     
     func syncFrequency(){
         let userInfo = NSUserDefaults.standardUserDefaults()
         if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String{
             if let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String {
-                
+//                print(token, tokenSecret)
                 let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
                 loginRequiredInfo.Token = token
                 loginRequiredInfo.TokenSecret = tokenSecret
+//                print(loginRequiredInfo.getPropertieNamesAsDictionary())
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
 //                    print(response.result.value)
 //                    print("syncFrequency")
@@ -333,7 +391,7 @@ class Tool: NSObject {
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let today = dateFormatter.stringFromDate(date)
         
         return today
@@ -347,7 +405,7 @@ class Tool: NSObject {
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let today = dateFormatter.stringFromDate(date)
         
         return today
@@ -365,7 +423,7 @@ class Tool: NSObject {
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         let today = dateFormatter.stringFromDate(date)
         let index0 = today.startIndex
         let coreData = cl_coreData()
