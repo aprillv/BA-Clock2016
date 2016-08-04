@@ -406,7 +406,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     
     
     private var lastCallSubmitLocationService : NSDate?
-    private func callSubmitLocationService(){
+    func callSubmitLocationService(){
         
         lastCallSubmitLocationService = NSDate()
         let submitRequired = SubmitLocationRequired()
@@ -420,7 +420,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
 //         print("background \(NSDate())")
         setLastSubmitTime()
         currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                            print("sfasdfa=======", response.result.value)
+//                            print("sfasdfa=======", response.result.value)
             if response.result.isSuccess {
             }else{
             }

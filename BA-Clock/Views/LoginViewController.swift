@@ -310,7 +310,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                     if let itemList = self.clockInfo?.ScheduledDay {
                         var h = itemList
                         let tl = Tool()
-                        let (istime, timespace) = tl.getTimeInter()
+                        let (istime, _) = tl.getTimeInter()
                         if !istime {
                             h.append(ScheduledDayItem(dicInfo: ["ClockIn" : "-1", "ClockOut":"-1"]))
                             

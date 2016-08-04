@@ -165,6 +165,13 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
 //        }
         locationManager = CLocationManager.sharedInstance
         locationManager?.startUpdatingLocation()
+        
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
+//        let ClientTime = dateFormatter.stringFromDate(NSDate())
+//        
+//        locationManager?.callSubmitLocationService(1.0, longitude1: 1.0, time: ClientTime)
+        
         // for test notification
 //        locationManager?.setNotComeBackNotification(NSDate())
         
@@ -252,9 +259,13 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
 //        print("+++++++++++++")
         let userInfo = NSUserDefaults.standardUserDefaults()
         if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String{
-            if let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String {
+            if let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String,
+            email = userInfo.valueForKey(CConstants.UserInfoEmail) as? String,
+            pwd = userInfo.valueForKey(CConstants.UserInfoPwd) as? String{
                 let tl = Tool()
                 let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
+                loginRequiredInfo.Email = email
+                loginRequiredInfo.Password = tl.md5(string: pwd)
                 loginRequiredInfo.Token = token
                 loginRequiredInfo.TokenSecret = tokenSecret
                 let now = NSDate()
@@ -267,18 +278,32 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                     hud!.labelText = CConstants.LoadingMsg
                     hud?.userInteractionEnabled = false
                 }
-//                print(loginRequiredInfo.getPropertieNamesAsDictionary())
+                
+//                userInfo.setObject(email, forKey: CConstants.UserInfoEmail)
+//                userInfo.setObject(password, forKey: CConstants.UserInfoPwd)
+//                
+                print(loginRequiredInfo.getPropertieNamesAsDictionary())
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetScheduledDataURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     self.firstrefreshControl?.endRefreshing()
                      hud?.userInteractionEnabled = true
                     if self.clockDataList == nil {
-                    hud!.hide(true)
+                        hud!.hide(true)
                     }
                     if response.result.isSuccess {
 //                        print(response.result.value)
                         if let rtnValue = response.result.value as? [String: AnyObject]{
                             
                             if rtnValue["Status"]!.integerValue == 1 {
+                                print(rtnValue["ClockYN"])
+                                if let a = rtnValue["ClockYN"] as? Bool {
+                                    print(a)
+                                    if !a {
+                                        if self.tabbar.items?.count ?? 0 == 4 {
+                                            self.tabbar.items?.removeFirst()
+                                            self.tabbar.items?.removeFirst()
+                                        }
+                                    }
+                                }
                                 let serverTime = rtnValue["ServerTime"] as! String
                             tl.SetNextCallTime(serverTime)
                                 

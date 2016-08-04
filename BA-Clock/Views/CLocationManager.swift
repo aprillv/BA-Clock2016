@@ -262,11 +262,21 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         let OAuthToken = tl.getUserToken()
         submitRequired.Token = OAuthToken.Token
         submitRequired.TokenSecret = OAuthToken.TokenSecret
-        
-        Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+        let param = submitRequired.getPropertieNamesAsDictionary()
+//        print(param)
+        Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: param).responseJSON{ (response) -> Void in
             //            print(submitRequired.getPropertieNamesAsDictionary(), response.result.value)
             if response.result.isSuccess {
                 if let result = response.result.value as? [String: AnyObject] {
+//                    print(result)
+                    if let rtnValue = result["ScheduledDay"] as? [[String: AnyObject]] {
+                        var rtn = [FrequencyItem]()
+                        for item in rtnValue{
+                            rtn.append(FrequencyItem(dicInfo: item))
+                        }
+                        let coreData = cl_coreData()
+                        coreData.savedFrequencysToDB(rtn)
+                    }
                     if ((result["Result"] as? Bool) ?? false) {
                         if !((result["GeoFenceyn"] as? Bool) ?? false) {
                             self.redoTimes += 1
