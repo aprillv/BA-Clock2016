@@ -22,54 +22,54 @@ class cl_coreData: NSObject {
         return appDelegate.managedObjectContext
     }()
     
-    func savedScheduledDaysToDB(itemList : [ScheduledDayItem]){
-        return
-        let fetchRequest = NSFetchRequest(entityName: "ScheduledDay")
-        let request = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        do {
-            try persistentStoreCoordinator.executeRequest(request, withContext: managedObjectContext)
-            for item : ScheduledDayItem in itemList {
-                let entity =  NSEntityDescription.entityForName("ScheduledDay",
-                    inManagedObjectContext:managedObjectContext)
-                
-                let scheduledDayItem = NSManagedObject(entity: entity!,
-                    insertIntoManagedObjectContext: managedObjectContext)
-                
-                
-                
-                scheduledDayItem.setValue(item.ClockIn!, forKey: "clockIn")
-                scheduledDayItem.setValue(item.ClockInCoordinate!.Latitude!, forKey: "clockInLatitude")
-                scheduledDayItem.setValue(item.ClockInCoordinate!.Longitude!, forKey: "clockInLongitude")
-                scheduledDayItem.setValue(item.ClockInDay!, forKey: "clockInDay")
-                scheduledDayItem.setValue(item.ClockInDayFullName!, forKey: "ClockInDayFullName")
-                scheduledDayItem.setValue(item.ClockInDayName!, forKey: "ClockInDayName")
-                scheduledDayItem.setValue(item.ClockInDayOfWeek!, forKey: "ClockInDayOfWeek")
-                scheduledDayItem.setValue(item.ClockOut!, forKey: "clockOut")
-                scheduledDayItem.setValue(item.ClockOutCoordinate!.Latitude!, forKey: "clockOutLatitude")
-                scheduledDayItem.setValue(item.ClockOutCoordinate!.Longitude!, forKey: "clockOutLatitude")
-                scheduledDayItem.setValue(item.ClockOutDay!, forKey: "ClockOutDay")
-                scheduledDayItem.setValue(item.ClockOutDayFullName!, forKey: "ClockOutDayFullName")
-                scheduledDayItem.setValue(item.ClockOutDayName!, forKey: "ClockOutDayName")
-                scheduledDayItem.setValue(item.ClockOutDayOfWeek!, forKey: "ClockOutDayOfWeek")
-                scheduledDayItem.setValue(item.Hours!, forKey: "Hours")
-                
-                
-                do {
-                    try managedObjectContext.save()
-                    
-                } catch let error as NSError  {
-                    print("Could not save \(error), \(error.userInfo)")
-                }
-            }
-            
-        } catch let error as NSError {
-            print("\(error)")
-            // TODO: handle the error
-        }
-        
-    
-
-    }
+//    func savedScheduledDaysToDB(itemList : [ScheduledDayItem]){
+//        return
+//        let fetchRequest = NSFetchRequest(entityName: "ScheduledDay")
+//        let request = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+//        do {
+//            try persistentStoreCoordinator.executeRequest(request, withContext: managedObjectContext)
+//            for item : ScheduledDayItem in itemList {
+//                let entity =  NSEntityDescription.entityForName("ScheduledDay",
+//                    inManagedObjectContext:managedObjectContext)
+//                
+//                let scheduledDayItem = NSManagedObject(entity: entity!,
+//                    insertIntoManagedObjectContext: managedObjectContext)
+//                
+//                
+//                
+//                scheduledDayItem.setValue(item.ClockIn!, forKey: "clockIn")
+//                scheduledDayItem.setValue(item.ClockInCoordinate!.Latitude!, forKey: "clockInLatitude")
+//                scheduledDayItem.setValue(item.ClockInCoordinate!.Longitude!, forKey: "clockInLongitude")
+//                scheduledDayItem.setValue(item.ClockInDay!, forKey: "clockInDay")
+//                scheduledDayItem.setValue(item.ClockInDayFullName!, forKey: "ClockInDayFullName")
+//                scheduledDayItem.setValue(item.ClockInDayName!, forKey: "ClockInDayName")
+//                scheduledDayItem.setValue(item.ClockInDayOfWeek!, forKey: "ClockInDayOfWeek")
+//                scheduledDayItem.setValue(item.ClockOut!, forKey: "clockOut")
+//                scheduledDayItem.setValue(item.ClockOutCoordinate!.Latitude!, forKey: "clockOutLatitude")
+//                scheduledDayItem.setValue(item.ClockOutCoordinate!.Longitude!, forKey: "clockOutLatitude")
+//                scheduledDayItem.setValue(item.ClockOutDay!, forKey: "ClockOutDay")
+//                scheduledDayItem.setValue(item.ClockOutDayFullName!, forKey: "ClockOutDayFullName")
+//                scheduledDayItem.setValue(item.ClockOutDayName!, forKey: "ClockOutDayName")
+//                scheduledDayItem.setValue(item.ClockOutDayOfWeek!, forKey: "ClockOutDayOfWeek")
+//                scheduledDayItem.setValue(item.Hours!, forKey: "Hours")
+//                
+//                
+//                do {
+//                    try managedObjectContext.save()
+//                    
+//                } catch let error as NSError  {
+//                    print("Could not save \(error), \(error.userInfo)")
+//                }
+//            }
+//            
+//        } catch let error as NSError {
+//            print("\(error)")
+//            // TODO: handle the error
+//        }
+//        
+//    
+//
+//    }
     
     func savedFrequencysToDB(itemList : [FrequencyItem]){
         

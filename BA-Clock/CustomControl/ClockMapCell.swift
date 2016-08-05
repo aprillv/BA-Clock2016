@@ -52,6 +52,10 @@ class ClockMapCell: UITableViewCell {
                 if item.ClockInName != nil  && item.ClockInName != ""{
                     clockInText.text = item.ClockInName!
                     clockInTime.text = "\(item.ClockInDay!)\n" + item.ClockIn!
+//                } else if item.ClockInName == "" {
+//                    clockInText.text = item.ClockInName!
+//                    clockInTime.text = "\(item.ClockInDay!)\n" + item.ClockIn!
+                
                 }else{
                     tapClockBtn.hidden = true
                     clockInImage.hidden = true

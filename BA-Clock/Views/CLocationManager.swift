@@ -101,7 +101,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     var timeInterval : NSTimeInterval = 0.0
     
     func locationManager(manager: CLLocationManager, didFinishDeferredUpdatesWithError error: NSError?) {
-        //print("ccccc", error)
+        print("ccccc", error)
     }
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        print("aaa", NSDate(), manager.desiredAccuracy)
@@ -119,12 +119,13 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         
         
         let userInfo = NSUserDefaults.standardUserDefaults()
+//        print(userInfo.boolForKey(CConstants.ToAddTrack))
         if userInfo.boolForKey(CConstants.ToAddTrack) ?? true {
             
             syncFrequency()
             userInfo.setBool(false, forKey: CConstants.ToAddTrack)
             lastTimestamp = NSDate()
-            NSTimer.scheduledTimerWithTimeInterval(6, target: self, selector: #selector(CLocationManager.updateLocation), userInfo: nil, repeats: false)
+            NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(CLocationManager.updateLocation), userInfo: nil, repeats: false)
         }
     }
     
@@ -134,69 +135,57 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
 //        print("bbb", NSDate(), error)
         let su = cl_submitData()
         su.resubmit(nil)
-        
-//        if NSDate().timeIntervalSinceDate(lastTimestamp) >= random {
-//            lastTimestamp = NSDate()
-////            updateLocation()
-//        }
-        
-//        manager.disallowDeferredLocationUpdates()
         manager.stopUpdatingHeading()
         manager.startUpdatingLocation()
-        
-//        let lg = cl_log()
-//        lg.savedLogToDB(NSDate(), xtype: true, lat: "EE \(currentLocation?.coordinate.latitude ?? 0.0) -- \(currentLocation?.coordinate.longitude ?? 0.0)")
-//        print("Update Location Error : \(error.description)")
     
     }
     
     func updateLocation(){
-//        userInfo.setValue("\(rstart);\(rend)", forKey: CConstants.LastGoOutTimeStartEnd)
         let userInfo = NSUserDefaults.standardUserDefaults()
         
-        if let s = userInfo.stringForKey(CConstants.LastGoOutTimeStartEnd) {
-            if s.containsString(";") {
-                let tl = Tool()
-                let array = s.componentsSeparatedByString(";")
-                let a = userInfo.doubleForKey(CConstants.SeverTimeSinceClienttime) ?? 0
-                let sStart = tl.getDateFromStringClient(array[0]).dateByAddingTimeInterval(a)
-                let sEnd = tl.getDateFromStringClient(array[1]).dateByAddingTimeInterval(a)
-                let now = NSDate()
-                if (now.timeIntervalSinceDate(sStart) < 0 || sEnd.timeIntervalSinceDate(now) < 0){
-                    let h = sEnd.timeIntervalSinceDate(NSDate())
-                    if h > 0 {
-                        
-                        self.doNextUpdateLoaction(h)
-                    }
-                    return
-                }
-            }
-        }
-//        syncFrequency()
-        let now = NSDate()
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-//        dateFormatter.timeZone = NSTimeZone.localTimeZone()
-        let dayFullName = dateFormatter.stringFromDate(now)
-       
-        let clfrequency = cl_coreData()
-        if let item = clfrequency.getFrequencyByWeekdayNm(dayFullName) {
-            dateFormatter.dateFormat = "MM/dd/yyyy"
-            let nowdate = dateFormatter.stringFromDate(now)
-            
-            dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-            let todayFrom = dateFormatter.dateFromString("\(nowdate) \(item.ScheduledFrom ?? "12:00 AM")")
-            let todayTo = dateFormatter.dateFromString("\(nowdate) \(item.ScheduledTo ?? "11:59 PM")")
-            if (now.timeIntervalSinceDate(todayFrom ?? now) < 0 || (todayTo ?? now).timeIntervalSinceDate(now) < 0){
-                let interval = userInfo.doubleForKey(CConstants.SeverTimeSinceClienttime) ?? 0
-                let nextInterval = self.getFirstQuauterTimeSpace(interval)
-                self.doNextUpdateLoaction(nextInterval)
-                return
-            }
-        }
+//        if let s = userInfo.stringForKey(CConstants.LastGoOutTimeStartEnd) {
+//            if s.containsString(";") {
+//                let tl = Tool()
+//                let array = s.componentsSeparatedByString(";")
+//                let a = userInfo.doubleForKey(CConstants.SeverTimeSinceClienttime) ?? 0
+//                let sStart = tl.getDateFromStringClient(array[0]).dateByAddingTimeInterval(a)
+//                let sEnd = tl.getDateFromStringClient(array[1]).dateByAddingTimeInterval(a)
+//                let now = NSDate()
+//                if (now.timeIntervalSinceDate(sStart) < 0 || sEnd.timeIntervalSinceDate(now) < 0){
+//                    let h = sEnd.timeIntervalSinceDate(NSDate())
+//                    if h > 0 {
+//                        
+//                        self.doNextUpdateLoaction(h)
+//                    }
+//                    return
+//                }
+//            }
+//        }
+////        syncFrequency()
+//        let now = NSDate()
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateFormat = "EEEE"
+//        
+//        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
+//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+////        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+//        let dayFullName = dateFormatter.stringFromDate(now)
+//       
+//        let clfrequency = cl_coreData()
+//        if let item = clfrequency.getFrequencyByWeekdayNm(dayFullName) {
+//            dateFormatter.dateFormat = "MM/dd/yyyy"
+//            let nowdate = dateFormatter.stringFromDate(now)
+//            
+//            dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+//            let todayFrom = dateFormatter.dateFromString("\(nowdate) \(item.ScheduledFrom ?? "12:00 AM")")
+//            let todayTo = dateFormatter.dateFromString("\(nowdate) \(item.ScheduledTo ?? "11:59 PM")")
+//            if (now.timeIntervalSinceDate(todayFrom ?? now) < 0 || (todayTo ?? now).timeIntervalSinceDate(now) < 0){
+//                let interval = userInfo.doubleForKey(CConstants.SeverTimeSinceClienttime) ?? 0
+//                let nextInterval = self.getFirstQuauterTimeSpace(interval)
+//                self.doNextUpdateLoaction(nextInterval)
+//                return
+//            }
+//        }
         
 //        let tl = Tool()
         let lat = currentLocation?.coordinate.latitude
@@ -204,6 +193,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         if lat == 0.0 || lng == 0.0 {
            userInfo.setBool(true, forKey: CConstants.ToAddTrack)
         }
+        let dateFormatter = NSDateFormatter()
         
         dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
         let ClientTime = dateFormatter.stringFromDate(NSDate())

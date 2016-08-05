@@ -185,7 +185,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                         self.saveEmailAndPwdToDisk(email: emailTxt.text!, password: passwordTxt.text!, displayName: username, fullName: clockInfo!.UserFullName!)
                         
                         let coreData = cl_coreData()
-                        coreData.savedScheduledDaysToDB(clockInfo!.ScheduledDay!)
+//                        coreData.savedScheduledDaysToDB(clockInfo!.ScheduledDay!)
                         coreData.savedFrequencysToDB(clockInfo!.Frequency!)
                         
                         let userInfo = NSUserDefaults.standardUserDefaults()
@@ -220,6 +220,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     
     
     private func doLogin(){
+        
         
         emailTxt.resignFirstResponder()
         passwordTxt.resignFirstResponder()
@@ -307,18 +308,18 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                
             case CConstants.SegueToMap:
                 if let clockListView = segue.destinationViewController as? ClockMapViewController{
-                    if let itemList = self.clockInfo?.ScheduledDay {
-                        var h = itemList
-                        let tl = Tool()
-                        let (istime, _) = tl.getTimeInter()
-                        if !istime {
-                            h.append(ScheduledDayItem(dicInfo: ["ClockIn" : "-1", "ClockOut":"-1"]))
-                            
-                            
-                        }
-                        clockListView.clockDataList = h
-                        
-                    }
+//                    if let itemList = self.clockInfo?.ScheduledDay {
+//                        var h = itemList
+//                        let tl = Tool()
+//                        let (istime, _) = tl.getTimeInter()
+//                        if !istime {
+//                            h.append(ScheduledDayItem(dicInfo: ["ClockIn" : "-1", "ClockOut":"-1"]))
+//                            
+//                            
+//                        }
+//                        clockListView.clockDataList = h
+//                        
+//                    }
 //                    if let tracker = locationTracker {
 //                        clockListView.locationTracker = tracker
 //                    }
@@ -342,7 +343,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.checkUpate()
         let userInfo = NSUserDefaults.standardUserDefaults()
         userInfo.setValue("0", forKey: CConstants.RegisteredDeviceToken)
         
@@ -352,7 +353,12 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
         
         self.title = "BA Clock"
         
-//        self.checkUpate()
+       
+        
+        
+       
+        
+        
         
 //        let locationManager = LocationTracker.sharedLocationManager()
 //        locationTracker = LocationTracker()

@@ -32,7 +32,7 @@ class Tool: NSObject {
             timeInterval = 0
         }
         userInfo.setDouble(timeInterval, forKey: CConstants.SeverTimeSinceClienttime)
-//        print(serverTime, now)
+        print(timeInterval, now)
         return timeInterval
     }
     func getTime2() -> Bool{

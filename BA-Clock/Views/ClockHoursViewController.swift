@@ -10,6 +10,38 @@ import Alamofire
 
 class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBAction func checkUpdate(sender: AnyObject) {
+        let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]
+        let parameter = ["version": (version == nil ?  "" : version!), "appid": "iphone_ClockIn"]
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "Checking for update..."
+        Alamofire.request(.POST,
+            CConstants.ServerVersionURL + CConstants.CheckUpdateServiceURL,
+            parameters: parameter).responseJSON{ (response) -> Void in
+                hud.hide(true)
+                if response.result.isSuccess {
+                    
+                    if let rtnValue = response.result.value{
+                        
+                        if rtnValue.integerValue == 1 {
+                            self.PopMsgWithJustOK(msg: "Now the app is the latest version.", txtField: nil)
+                        }else{
+                            if let url = NSURL(string: CConstants.InstallAppLink){
+                                
+                                UIApplication.sharedApplication().openURL(url)
+                            }else{
+                                
+                            }
+                        }
+                    }else{
+                        
+                    }
+                }else{
+                    
+                }
+        }
+    }
+    
     @IBAction func goBack(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }

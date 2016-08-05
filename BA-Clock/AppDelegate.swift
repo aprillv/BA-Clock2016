@@ -39,42 +39,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }
 //    }
     
-    func checkUpate(){
-        let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]
-        let parameter = ["version": (version == nil ?  "" : version!), "appid": "iphone_ClockIn"]
-        
-        Alamofire.request(.POST,
-            CConstants.ServerVersionURL + CConstants.CheckUpdateServiceURL,
-            parameters: parameter).responseJSON{ (response) -> Void in
-                if response.result.isSuccess {
-                    
-                    if let rtnValue = response.result.value{
-                        if rtnValue.integerValue == 1 {
-                            
-                        }else{
-                            if let url = NSURL(string: CConstants.InstallAppLink){
-                                
-                                UIApplication.sharedApplication().openURL(url)
-                            }else{
-                                
-                            }
-                        }
-                    }else{
-                        
-                    }
-                }else{
-                    
-                }
-        }
-    }
+    
     
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 //         print("\(NSDate()) didFinishLaunchingWithOptions")
         
        clearNotifications()
-        
-        checkUpate()
+        let userInfo = NSUserDefaults.standardUserDefaults()
+        userInfo.setValue(NSDate(), forKey: CConstants.LoginedDate)
+        userInfo.setBool(true, forKey: CConstants.ToAddTrack)
+//        checkUpate()
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(donextSubmit(_:)), name: CConstants.SubmitNext, object: nil)
         
         self.window?.backgroundColor = UIColor.whiteColor()
@@ -111,8 +86,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let storyboard = UIStoryboard(name: CConstants.StoryboardName, bundle: nil)
         
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        userInfo.setBool(true, forKey: CConstants.ToAddTrack)
+//        let userInfo = NSUserDefaults.standardUserDefaults()
+//        userInfo.setBool(true, forKey: CConstants.ToAddTrack)
         
         var storyid : String?
         if let _ = userInfo.objectForKey(CConstants.UserInfoPwd) as? String{

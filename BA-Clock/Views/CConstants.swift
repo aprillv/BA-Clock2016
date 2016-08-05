@@ -22,6 +22,7 @@ struct CConstants{
     static let MsgServerError : String = "Server Error, please try again later"
     static let MsgNetworkError : String = "Network Error, please check your network"
     
+    static let LoginedDate = "UserInfoLogindDate"
     static let UserInfoRememberMe :  String = "Login Remember Me"
     static let UserInfoEmail :  String = "Login Email"
     static let UserInfoPwd :  String = "Login Password"

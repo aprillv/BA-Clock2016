@@ -13,6 +13,35 @@ import Alamofire
 class BaseViewController: UIViewController {
     
 //    var locationManager : CLLocationManager?
+    func checkUpate(){
+        let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]
+        let parameter = ["version": (version == nil ?  "" : version!), "appid": "iphone_ClockIn"]
+        
+        Alamofire.request(.POST,
+            CConstants.ServerVersionURL + CConstants.CheckUpdateServiceURL,
+            parameters: parameter).responseJSON{ (response) -> Void in
+                if response.result.isSuccess {
+                    
+                    if let rtnValue = response.result.value{
+                        
+                        if rtnValue.integerValue == 1 {
+                            
+                        }else{
+                            if let url = NSURL(string: CConstants.InstallAppLink){
+                                
+                                UIApplication.sharedApplication().openURL(url)
+                            }else{
+                                
+                            }
+                        }
+                    }else{
+                        
+                    }
+                }else{
+                    
+                }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

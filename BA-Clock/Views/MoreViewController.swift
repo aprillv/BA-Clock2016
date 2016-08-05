@@ -1,3 +1,4 @@
+
 //
 //  MoreViewController.swift
 //  BA-Clock
@@ -479,13 +480,14 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             
 //            let userInfo = NSUserDefaults.standardUserDefaults()
             userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)
-            
+//            userInfo.synchronize()
+            print(userInfo.valueForKey(CConstants.LastGoOutTime))
             //        print(requiredInfo.getPropertieNamesAsDictionary())
             
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.userInteractionEnabled = false
             hud.labelText = CConstants.SavingMsg
-             print(requiredInfo.getPropertieNamesAsDictionary(), CConstants.MoreActionServiceURL)
+//             print(requiredInfo.getPropertieNamesAsDictionary(), CConstants.MoreActionServiceURL)
             
             Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
                 parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in

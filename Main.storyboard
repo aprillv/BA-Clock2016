@@ -1142,7 +1142,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="u4A-M7-BE3">
-                                <rect key="frame" x="0.0" y="59" width="414" height="628"/>
+                                <rect key="frame" x="0.0" y="59" width="414" height="540"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="headCell" id="Zfv-eZ-HGF" customClass="ClockHourCell" customModule="BA_Clock" customModuleProvider="target">
@@ -1314,13 +1314,47 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                     <outlet property="delegate" destination="Hlg-vI-xeP" id="fp0-JK-kba"/>
                                 </connections>
                             </tableView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rmz-wT-tJr">
+                                <rect key="frame" x="0.0" y="600" width="414" height="43"/>
+                                <color key="backgroundColor" red="0.84149247410000005" green="0.87687164549999996" blue="0.9076134562" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="yGp-vG-HRO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="dosubmit:" destination="87Q-nH-QVh" eventType="touchUpInside" id="T0N-bM-L1E"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ad-QT-FL5">
+                                <rect key="frame" x="0.0" y="644" width="414" height="43"/>
+                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <state key="normal" title="Check for Update">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="checkUpdate:" destination="Hlg-vI-xeP" eventType="touchUpInside" id="zuO-83-6J9"/>
+                                    <action selector="dosubmit:" destination="87Q-nH-QVh" eventType="touchUpInside" id="CZG-uy-nvZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="6ad-QT-FL5" firstAttribute="width" secondItem="Rmz-wT-tJr" secondAttribute="width" id="0Ql-Ld-eCY"/>
+                            <constraint firstItem="6ad-QT-FL5" firstAttribute="top" secondItem="Rmz-wT-tJr" secondAttribute="bottom" constant="1" id="5kf-Lz-K1K"/>
+                            <constraint firstItem="Rmz-wT-tJr" firstAttribute="top" secondItem="u4A-M7-BE3" secondAttribute="bottom" constant="1" id="Ahr-dZ-pcJ"/>
+                            <constraint firstItem="6ad-QT-FL5" firstAttribute="trailing" secondItem="Rmz-wT-tJr" secondAttribute="trailing" id="Cob-fW-9TI"/>
                             <constraint firstItem="u4A-M7-BE3" firstAttribute="top" secondItem="cys-Gd-8nJ" secondAttribute="bottom" constant="-5" id="HN5-pa-Fqp"/>
-                            <constraint firstItem="gi3-zj-BEQ" firstAttribute="top" secondItem="u4A-M7-BE3" secondAttribute="bottom" id="n3E-yd-6tc"/>
+                            <constraint firstItem="Rmz-wT-tJr" firstAttribute="leading" secondItem="u4A-M7-BE3" secondAttribute="leading" id="Hu7-Mi-cE3"/>
+                            <constraint firstItem="6ad-QT-FL5" firstAttribute="height" secondItem="Rmz-wT-tJr" secondAttribute="height" id="XYc-dO-ACJ"/>
+                            <constraint firstItem="6ad-QT-FL5" firstAttribute="leading" secondItem="Rmz-wT-tJr" secondAttribute="leading" id="i8P-2Q-NKE"/>
+                            <constraint firstItem="gi3-zj-BEQ" firstAttribute="top" secondItem="u4A-M7-BE3" secondAttribute="bottom" constant="88" id="n3E-yd-6tc"/>
                             <constraint firstItem="u4A-M7-BE3" firstAttribute="leading" secondItem="9q9-MF-pby" secondAttribute="leadingMargin" constant="-20" id="nfn-0N-fRe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="u4A-M7-BE3" secondAttribute="trailing" constant="-20" id="sdN-QE-hBu"/>
+                            <constraint firstItem="Rmz-wT-tJr" firstAttribute="trailing" secondItem="u4A-M7-BE3" secondAttribute="trailing" id="vPy-ly-rfM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Schedule Hours" id="72Z-Pj-hoI">
@@ -1408,7 +1442,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
     <resources>
         <image name="back" width="12" height="20"/>
         <image name="clockIns" width="32" height="32"/>
-        <image name="clockOuts" width="30" height="30"/>
+        <image name="clockOuts" width="32" height="32"/>
         <image name="close" width="50" height="50"/>
         <image name="comeback" width="25" height="28"/>
         <image name="goout" width="23" height="28"/>
