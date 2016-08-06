@@ -22,7 +22,20 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     @IBOutlet weak var mapBack: UIView!
     //    @IBOutlet weak var textTable: UITableView!
   
-    @IBOutlet weak var trackMap: MKMapView!
+    @IBOutlet weak var trackMap: MKMapView!{
+        didSet{
+            trackMap.showsUserLocation = true
+            trackMap.delegate  = self
+        }
+    }
+    
+    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+//        print0000(userLocation.coordinate.latitude, userLocation.coordinate.longitude)
+    }
+    
+//    Latitude = "36.70432856";
+//    Longitude = "119.17911514";
+
     @IBOutlet weak var trackTable: UITableView!{
         didSet{
             refreshControl = UIRefreshControl()
@@ -96,7 +109,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                     //                    self.showhideBtn.setImage(UIImage(named: "hide"), forState: .Normal)
                     
                 }
-                //                print(self.showhideBtn.transform)
+                //                print0000(self.showhideBtn.transform)
                 UIView.animateWithDuration(0.5) {
                     
                     self.showhideBtn.transform = CGAffineTransformMakeRotation(CGFloat(mul))
@@ -209,8 +222,8 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                 loginRequiredInfo.TokenSecret = tokenSecret
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     if response.result.isSuccess {
-                        //                        print("++++++++++++++++++++++++++++")
-                        //                        print(response.result.value)
+                        //                        print0000("++++++++++++++++++++++++++++")
+                        //                        print0000(response.result.value)
                         if let rtnValue = response.result.value as? [[String: AnyObject]]{
                             var rtn = [FrequencyItem]()
                             for item in rtnValue{
@@ -274,7 +287,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     
     private func getCurrentInterval1() -> Double{
         let date = NSDate()
-        //        print(date)
+        //        print0000(date)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
         
@@ -361,19 +374,19 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     }
     
 //    func clockInTapped(tap : UITapGestureRecognizer){
-//        //        print("sfsdf \(tap.view?.superview?.tag)  \(tap.view?.layer.valueForKey("lng"))")
+//        //        print0000("sfsdf \(tap.view?.superview?.tag)  \(tap.view?.layer.valueForKey("lng"))")
 //        showMap(true,tap: tap)
 //    }
 //    
 //    func clockOutTapped(tap : UITapGestureRecognizer){
-//        //         print("out sfsdf \(tap.view?.layer.valueForKey("lat"))  \(tap.view?.layer.valueForKey("lng"))")
+//        //         print0000("out sfsdf \(tap.view?.layer.valueForKey("lat"))  \(tap.view?.layer.valueForKey("lng"))")
 //        showMap(false,tap: tap)
 //    }
 //    
 //    private func showMap(isIn: Bool, tap : UITapGestureRecognizer) {
 //        self.isIn = isIn
 //        if let tag = tap.view?.superview?.tag {
-//            //            print("tag" + "\(tag)")
+//            //            print0000("tag" + "\(tag)")
 //            let list = clockDataList!
 //            if let item : ScheduledDayItem = list[tag] {
 //                self.selectedItem = item
@@ -415,12 +428,12 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         let OAuthToken = self.getUserToken()
         submitRequired.Token = OAuthToken.Token
         submitRequired.TokenSecret = OAuthToken.TokenSecret
-//        print("background")
-//                    print(submitRequired.getPropertieNamesAsDictionary())
-//         print("background \(NSDate())")
+//        print0000("background")
+//                    print0000(submitRequired.getPropertieNamesAsDictionary())
+//         print0000("background \(NSDate())")
         setLastSubmitTime()
         currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-//                            print("sfasdfa=======", response.result.value)
+//                            print0000("sfasdfa=======", response.result.value)
             if response.result.isSuccess {
             }else{
             }
@@ -443,7 +456,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
             let timeSpace = self.CurrentScheduledInterval {
                 
                 let date = NSDate()
-                //                print("\( date.timeIntervalSinceDate(lastTime))")
+                //                print0000("\( date.timeIntervalSinceDate(lastTime))")
                 return date.timeIntervalSinceDate(lastTime) > timeSpace
         }
         return false
@@ -491,7 +504,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                 }
                 
                 self.refreshControl?.beginRefreshing()
-                //                    print(self.refreshControl)
+                //                    print0000(self.refreshControl)
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetGISTrackURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     
                     self.refreshControl?.endRefreshing()
@@ -507,7 +520,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                         self.trackMap.removeAnnotations(self.trackMap.annotations)
                     }
                     if response.result.isSuccess {
-                        //                            print(response.result.value)
+//                                                    print0000(response.result.value)
                         if let rtnValue = response.result.value as? [String: AnyObject]{
                             
                             if rtnValue["Status"]!.integerValue == 1 {
@@ -521,15 +534,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                                 self.PopMsgWithJustOK(msg: rtnValue["Message"] as! String) {
                                     (action : UIAlertAction) -> Void in
                                     
-                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                    if let login = storyboard.instantiateViewControllerWithIdentifier("LoginStart") as? LoginViewController {
-                                        var va : [UIViewController]? = self.navigationController?.viewControllers
-                                        if va != nil {
-                                            va!.insert(login, atIndex: 0)
-                                            self.navigationController?.viewControllers = va!
-                                            self.navigationController?.popToRootViewControllerAnimated(true)
-                                        }
-                                    }
+                                    self.popToRootLogin()
                                 }
                             }
                             
@@ -581,7 +586,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        //        print(self.clearItem.tintColor)
+        //        print0000(self.clearItem.tintColor)
         if mapView.annotations.count > 0 && (self.clearItem.tag == 0){
             //            self.clearPinBtn.hidden = false
             //            UIView.animateWithDuration(0.3, delay: 0.0

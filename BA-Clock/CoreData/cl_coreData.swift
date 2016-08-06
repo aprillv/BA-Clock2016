@@ -58,12 +58,12 @@ class cl_coreData: NSObject {
 //                    try managedObjectContext.save()
 //                    
 //                } catch let error as NSError  {
-//                    print("Could not save \(error), \(error.userInfo)")
+//                    print0000("Could not save \(error), \(error.userInfo)")
 //                }
 //            }
 //            
 //        } catch let error as NSError {
-//            print("\(error)")
+//            print0000("\(error)")
 //            // TODO: handle the error
 //        }
 //        
@@ -99,7 +99,7 @@ class cl_coreData: NSObject {
             }
             
         } catch let error as NSError {
-            print("\(error)")
+//            print0000("\(error)")
             // TODO: handle the error
         }
         

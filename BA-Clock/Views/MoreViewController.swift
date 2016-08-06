@@ -287,38 +287,6 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         return userInfo1
     }
     
-//    private func callService(actionType : String){
-//       
-//        let requiredInfo = MoreActionRequired()
-//        requiredInfo.ActionType = actionType
-//        requiredInfo.Latitude = "\(self.locationTracker?.myLastLocation.latitude ?? 0)"
-//        requiredInfo.Longitude = "\(self.locationTracker?.myLastLocation.longitude ?? 0)"
-//        requiredInfo.HostName = UIDevice.currentDevice().name
-//        let tl = Tool()
-//        requiredInfo.IPAddress = tl.getWiFiAddress()
-//        let OAuthToken = self.getUserToken()
-//        requiredInfo.Token = OAuthToken.Token!
-//        //        clockOutRequiredInfo.Token = "asdfaasdf"
-//        requiredInfo.TokenSecret = OAuthToken.TokenSecret!
-//        
-//        print(requiredInfo.getPropertieNamesAsDictionary())
-//        Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
-//            parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-//            
-//                if let rtnValue = response.result.value as? Int{
-//                    if rtnValue == 1 {
-//                        self.navigationController?.popViewControllerAnimated(true)
-//                    }else{
-//                         self.PopServerError()
-//                    }
-//                }else{
-//                    self.PopServerError()
-//                }
-//                
-//           
-//        }
-//    }
-    
     
     var locationManager : CLocationManager?
     
@@ -367,112 +335,8 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         let net = NetworkReachabilityManager()
         
+        
         let userInfo = NSUserDefaults.standardUserDefaults()
-        
-//        var newitem = false
-        if let lastGoOutTime = userInfo.valueForKey(CConstants.LastGoOutTime) as? NSDate {
-            let calendar = NSCalendar.currentCalendar()
-            var components = calendar.components([.Day ], fromDate: lastGoOutTime)
-            let lastGoOutTimeday = components.day
-            
-            components = calendar.components([.Day ], fromDate: NSDate())
-            let todayday = components.day
-            
-            if lastGoOutTimeday == todayday{
-                if let lastComeBackTime = userInfo.valueForKey(CConstants.LastComeBackTime) as? NSDate {
-                    if lastGoOutTime.timeIntervalSinceDate(lastComeBackTime) > 0 {
-                        let msg = "In order to go out, you have to come back first."
-                        self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                        return
-                    }
-                }else{
-                    let msg = "In order to go out, you have to come back first."
-                    self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                    return
-                }
-            }else{
-//            newitem = true
-            }
-        }
-        
-        if userInfo.integerForKey(CConstants.ShowClockInAndOut) ?? 1 == 1 {
-            if let lastClockInTime = userInfo.valueForKey(CConstants.LastClockInTime) as? NSDate {
-                if let lastClockOutTime = userInfo.valueForKey(CConstants.LastClockOutTime) as? NSDate {
-                    if lastClockOutTime.timeIntervalSinceDate(lastClockInTime) > 0 {
-                        let msg = "In order to go out, you have to clock in first."
-                        self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                        return
-                    }
-                }
-            }else{
-                let msg = "In order to go out, you have to clock in first."
-                self.PopMsgWithJustOK(msg: msg, txtField: nil)
-                return
-                
-            }
-        }
-        
-        
-        
-//         tl.saveGoOutDataToLocalDB(requiredInfo)
-//        
-//        let submitData = cl_submitData()
-//        submitData.resubmit(nil)
-//        
-       
-        if  actionType != constants.BusinessString {
-            let rstart = tl.getClientTime(StartTime)
-            let rend = tl.getClientTime(EndTime)
-            userInfo.setValue("\(rstart);\(rend)", forKey: CConstants.LastGoOutTimeStartEnd)
-        }
-        
-        
-        
-        
-//        let dateFormatter = NSDateFormatter()
-//        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
-//         dateFormatter.timeZone = NSTimeZone.localTimeZone()
-//        dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
-//        dateFormatter.dateFormat =  "hh:mm:ss a"
-//        let nowHour = dateFormatter.stringFromDate(now)
-//        dateFormatter.dateFormat = "EEE, MMM dd"
-//        let nowDay = dateFormatter.stringFromDate(now)
-//        dateFormatter.dateFormat = "EEEE"
-//        let nowFullWeekName = dateFormatter.stringFromDate(now)
-//        dateFormatter.dateFormat = "MM/dd/yyyy"
-//        let nowFullDateName = dateFormatter.stringFromDate(now)
-        
-        //        let userInfo = NSUserDefaults.standardUserDefaults()
-        userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)
-        
-       
-//        let item = ScheduledDayItem(dicInfo : nil)
-//        item.ClockOut = nowHour
-//        item.ClockOutCoordinate = CoordinateObject(dicInfo: nil)
-//        item.ClockOutCoordinate?.Latitude = lat
-//        item.ClockOutCoordinate?.Longitude = lng
-//        item.clockOutDateDay = nowFullDateName
-//        item.ClockOutDay = nowDay
-//        item.ClockOutName = actionType
-//        item.ClockOutDayFullName = nowFullWeekName
-//        item.ClockOutDayName =  nowDay.substringToIndex(nowDay.startIndex.advancedBy(2))
-//        
-//        print(lat, lng)
-//        let ss = cl_showSchedule()
-//        if newitem {
-//        ss.savedSubmitDataToDB(item)
-//        }else{
-//        ss.updateLastItem(item)
-//        }
-//        
-//        
-//        self.locationManager?.setNotComeBackNotification(self.EndTime)
-//        
-//        self.navigationController?.popViewControllerAnimated(true)
-//        
-//        return
-        
-        
         if net?.isReachable ?? false {
             
 //            let submitData = cl_submitData()
@@ -481,23 +345,23 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 //            let userInfo = NSUserDefaults.standardUserDefaults()
             userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)
 //            userInfo.synchronize()
-            print(userInfo.valueForKey(CConstants.LastGoOutTime))
-            //        print(requiredInfo.getPropertieNamesAsDictionary())
+//            print0000(userInfo.valueForKey(CConstants.LastGoOutTime))
+            //        print0000(requiredInfo.getPropertieNamesAsDictionary())
             
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.userInteractionEnabled = false
             hud.labelText = CConstants.SavingMsg
-//             print(requiredInfo.getPropertieNamesAsDictionary(), CConstants.MoreActionServiceURL)
+//             print0000(requiredInfo.getPropertieNamesAsDictionary(), CConstants.MoreActionServiceURL)
             
             Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
                 parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-//                    print(requiredInfo.getPropertieNamesAsDictionary(), CConstants.MoreActionServiceURL)
+//                    print0000(requiredInfo.getPropertieNamesAsDictionary(), CConstants.MoreActionServiceURL)
                     hud.userInteractionEnabled = true
                     hud.hide(true)
-//                    print(requiredInfo.getPropertieNamesAsDictionary(), response.result.value)
+//                    print0000(requiredInfo.getPropertieNamesAsDictionary(), response.result.value)
                     if let rtnValue = response.result.value as? Int{
                         if rtnValue == 1 {
-                            
+                            self.locationManager?.setNotComeBackNotification(self.EndTime)
                             self.navigationController?.popViewControllerAnimated(true)
                         }else{
 //                            tl.saveGoOutDataToLocalDB(requiredInfo)
@@ -556,7 +420,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     
     func myKeyboardWillShowHandler(noti : NSNotification) {
-//        print(view.frame.size.height)
+//        print0000(view.frame.size.height)
         if view.frame.size.height == 672.0{
             // 6+
              tableView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)

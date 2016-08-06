@@ -866,7 +866,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ejt-0S-Qhp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3809.5" y="-238.5"/>
+            <point key="canvasLocation" x="-3637.5" y="-79.5"/>
         </scene>
         <!--Go Out-->
         <scene sceneID="uEW-Hd-f4r">
@@ -1158,7 +1158,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                         <constraint firstAttribute="width" constant="80" id="SbS-hV-Ojt"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
@@ -1169,13 +1169,13 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P4p-kM-S95">
                                                     <rect key="frame" x="18" y="12" width="122" height="20"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzc-k2-cbh">
                                                     <rect key="frame" x="157" y="12" width="116" height="20"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C0p-bs-WDX">
@@ -1238,7 +1238,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                         <constraint firstAttribute="width" constant="80" id="tZ6-r5-bwt"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
@@ -1249,13 +1249,13 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATT-o0-ygZ">
                                                     <rect key="frame" x="18" y="11" width="122" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ryu-O0-XX2">
                                                     <rect key="frame" x="157" y="11" width="116" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyp-PW-SW2">
@@ -1314,17 +1314,18 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                     <outlet property="delegate" destination="Hlg-vI-xeP" id="fp0-JK-kba"/>
                                 </connections>
                             </tableView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rmz-wT-tJr">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rmz-wT-tJr">
                                 <rect key="frame" x="0.0" y="600" width="414" height="43"/>
-                                <color key="backgroundColor" red="0.84149247410000005" green="0.87687164549999996" blue="0.9076134562" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="yGp-vG-HRO"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <state key="normal" title="Logout">
-                                    <color key="titleColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="Logout:" destination="Hlg-vI-xeP" eventType="touchUpInside" id="rs8-Br-AW5"/>
                                     <action selector="dosubmit:" destination="87Q-nH-QVh" eventType="touchUpInside" id="T0N-bM-L1E"/>
                                 </connections>
                             </button>
@@ -1357,6 +1358,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                             <constraint firstItem="Rmz-wT-tJr" firstAttribute="trailing" secondItem="u4A-M7-BE3" secondAttribute="trailing" id="vPy-ly-rfM"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="WU6-gr-sBV"/>
                     <navigationItem key="navigationItem" title="Schedule Hours" id="72Z-Pj-hoI">
                         <barButtonItem key="leftBarButtonItem" image="back" id="jmY-Pu-gmG">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1364,15 +1366,22 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                 <action selector="goBack:" destination="Hlg-vI-xeP" id="sxn-Vc-GGg"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="GIS" id="tK8-kO-Lhe">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="ASm-2k-YT5" kind="show" id="kmX-TS-A1w"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="logoutBtn" destination="Rmz-wT-tJr" id="BRX-85-nfV"/>
                         <outlet property="tablewView" destination="u4A-M7-BE3" id="ZHu-QQ-Iv1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mVm-KG-OEg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5961" y="603"/>
+            <point key="canvasLocation" x="-6207" y="544"/>
         </scene>
         <!--Item 2-->
         <scene sceneID="xaY-Po-Gbk">
@@ -1452,4 +1461,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
         <image name="more" width="28" height="6"/>
         <image name="settings" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="kmX-TS-A1w"/>
+    </inferredMetricsTieBreakers>
 </document>

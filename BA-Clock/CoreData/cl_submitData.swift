@@ -73,7 +73,7 @@ class cl_submitData: NSObject {
             let userInfo = NSUserDefaults.standardUserDefaults()
             if let date = userInfo.valueForKey(CConstants.LastSubmitDateTime) as? NSDate {
                 if NSDate().timeIntervalSinceDate(date) < 60 {
-//                    print("dfdfdf")
+//                    print0000("dfdfdf")
                     return
                 }
             }
@@ -91,9 +91,9 @@ class cl_submitData: NSObject {
                 try managedObjectContext.executeFetchRequest(fetchRequest)
             let tl = Tool()
             if let t = results as? [NSManagedObject] {
-                print(t.count)
+//                print0000(t.count)
                 for item in t{
-                    print(item.valueForKey("xtype") ,item.valueForKey("submitdate"))
+//                    print0000(item.valueForKey("xtype") ,item.valueForKey("submitdate"))
                 }
                 if let item = t.first{
                     let lat =  item.valueForKey("latitude") as? Double
@@ -104,8 +104,6 @@ class cl_submitData: NSObject {
                         
 //
                         switch xtype {
-//                        case CConstants.SubmitLocationType:
-//                            tl.callSubmitLocationService(lat, longitude1: lng, time: d, obj: item)
                         case CConstants.ClockInType, CConstants.ClockOutType, CConstants.ComeBackType:
                             let clockOutRequiredInfo : ClockOutRequired = ClockOutRequired()
                             clockOutRequiredInfo.Latitude = "\(lat ?? 0.0 )"

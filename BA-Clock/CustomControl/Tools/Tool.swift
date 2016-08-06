@@ -32,12 +32,12 @@ class Tool: NSObject {
             timeInterval = 0
         }
         userInfo.setDouble(timeInterval, forKey: CConstants.SeverTimeSinceClienttime)
-        print(timeInterval, now)
+//        print0000(timeInterval, now)
         return timeInterval
     }
     func getTime2() -> Bool{
         let date = NSDate()
-        //        print(date)
+        //        print0000(date)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
         
@@ -54,11 +54,11 @@ class Tool: NSObject {
         var send = false
         if let frequency = coreData.getFrequencyByWeekdayNm(today.substringFromIndex(index0.advancedBy(11))) {
             //        if let frequency = coreData.getFrequencyByWeekdayNm("Monday") {
-            //            print(todayDay + " " + frequency.ScheduledFrom!)
+            //            print0000(todayDay + " " + frequency.ScheduledFrom!)
             dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-            //            print(dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!))
+            //            print0000(dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!))
             if let fromTime = dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!) {
-                //                print(fromTime)
+                //                print0000(fromTime)
                 if date.timeIntervalSinceDate(fromTime) > 0 {
                     if let toTime = dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledTo!) {
                         send = (toTime.timeIntervalSinceDate(date) > 0)
@@ -87,11 +87,11 @@ class Tool: NSObject {
         var rtn : NSTimeInterval = 0
         if let frequency = coreData.getFrequencyByWeekdayNm(today.substringFromIndex(index0.advancedBy(11))) {
             //        if let frequency = coreData.getFrequencyByWeekdayNm("Monday") {
-            //            print(todayDay + " " + frequency.ScheduledFrom!)
+            //            print0000(todayDay + " " + frequency.ScheduledFrom!)
             dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-            //            print(dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!))
+            //            print0000(dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!))
             if let fromTime = dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledFrom!) {
-                //                print(fromTime)
+                //                print0000(fromTime)
                 if date.timeIntervalSinceDate(fromTime) > 0 {
                     if let toTime = dateFormatter.dateFromString(todayDay + " " + frequency.ScheduledTo!) {
                         send = (toTime.timeIntervalSinceDate(date) > 0)
@@ -179,10 +179,8 @@ class Tool: NSObject {
                     required.TokenSecret = userTokenSecret
                     required.UserToken = userToken
                     required.PhoneType = CConstants.PhoneType
-                    //        print(required.getPropertieNamesAsDictionary())
+                    //        print0000(required.getPropertieNamesAsDictionary())
                     Alamofire.request(.POST, CConstants.ServerURL + CConstants.RegisterDeviceTokenServiceURL, parameters: required.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                                            print(response.result.value)
-                        
                         if let result = response.result.value as? Bool {
                             if result {
                                 userInfo.setValue("1", forKey: CConstants.RegisteredDeviceToken)
@@ -230,11 +228,11 @@ class Tool: NSObject {
 //        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.dateFormat =  "MM/dd/yyyy hh:mm:ss a"
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
-//        print(dateFormatter.stringFromDate(NSDate()))
-//        print(ds)
+//        print0000(dateFormatter.stringFromDate(NSDate()))
+//        print0000(ds)
 //        let ds1 = ds.stringByReplacingOccurrencesOfString("/", withString: "").stringByReplacingOccurrencesOfString(" ", withString: "")
-//        print(ds)
-//        print(dateFormatter.dateFromString(ds))
+//        print0000(ds)
+//        print0000(dateFormatter.dateFromString(ds))
         return dateFormatter.dateFromString(ds)!
     }
     
@@ -245,11 +243,11 @@ class Tool: NSObject {
 //        dateFormatter.timeZone = NSTimeZone.localTimeZone()
         dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
         dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
-        //        print(dateFormatter.stringFromDate(NSDate()))
-        //        print(ds)
+        //        print0000(dateFormatter.stringFromDate(NSDate()))
+        //        print0000(ds)
         //        let ds1 = ds.stringByReplacingOccurrencesOfString("/", withString: "").stringByReplacingOccurrencesOfString(" ", withString: "")
-//        print(ds)
-//        print(dateFormatter.dateFromString(ds))
+//        print0000(ds)
+//        print0000(dateFormatter.dateFromString(ds))
         return dateFormatter.dateFromString(ds)!
     }
     
@@ -286,7 +284,7 @@ class Tool: NSObject {
 //        submitRequired.TokenSecret = OAuthToken.TokenSecret
 //        
 //        Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-////            print(submitRequired.getPropertieNamesAsDictionary(), response.result.value)
+////            print0000(submitRequired.getPropertieNamesAsDictionary(), response.result.value)
 //            if response.result.isSuccess {
 //                if let result = response.result.value as? [String: AnyObject] {
 //                    if (result["Result"] as? String) ?? "" == "1" {
@@ -320,7 +318,7 @@ class Tool: NSObject {
 //            now15 = now15?.dateByAddingTimeInterval(15*60)
 //            let timeSpace = now15?.timeIntervalSinceDate(date)
 //            if  timeSpace > 0 {
-//                //                print("apirl", timeSpace ?? 0, i*15)
+//                //                print0000("apirl", timeSpace ?? 0, i*15)
 //                return timeSpace!
 //            }
 //        }
@@ -334,17 +332,17 @@ class Tool: NSObject {
         let userInfo = NSUserDefaults.standardUserDefaults()
         if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String{
             if let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String {
-//                print(token, tokenSecret)
+//                print0000(token, tokenSecret)
                 let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
                 loginRequiredInfo.Token = token
                 loginRequiredInfo.TokenSecret = tokenSecret
-//                print(loginRequiredInfo.getPropertieNamesAsDictionary())
+//                print0000(loginRequiredInfo.getPropertieNamesAsDictionary())
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-//                    print(response.result.value)
-//                    print("syncFrequency")
+//                    print0000(response.result.value)
+//                    print0000("syncFrequency")
                     if response.result.isSuccess {
                         if let rtnValue = response.result.value as? [[String: AnyObject]]{
-//                            print(rtnValue)
+//                            print0000(rtnValue)
                             var rtn = [FrequencyItem]()
                             for item in rtnValue{
                                 rtn.append(FrequencyItem(dicInfo: item))
@@ -375,7 +373,7 @@ class Tool: NSObject {
             now15 = now15?.dateByAddingTimeInterval(15*60)
             let timeSpace = now15?.timeIntervalSinceDate(date)
             if  timeSpace > 0 {
-//                print("apirl", timeSpace ?? 0, i*15)
+//                print0000("apirl", timeSpace ?? 0, i*15)
                 return (timeSpace!, i*15)
             }
         }
@@ -385,7 +383,7 @@ class Tool: NSObject {
     func getClientTime(date1 : NSDate?) -> String{
         //        return 60
         let date = date1 ?? NSDate()
-        //        print(date)
+        //        print0000(date)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
@@ -417,7 +415,7 @@ class Tool: NSObject {
     func getCurrentInterval1() -> Double{
         //        return 60
         let date = NSDate()
-        //        print(date)
+        //        print0000(date)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
         
@@ -432,7 +430,7 @@ class Tool: NSObject {
         if let frequency = coreData.getFrequencyByWeekdayNm(today.substringFromIndex(index0.advancedBy(11))) {
             send = frequency.ScheduledInterval!.doubleValue * 60.0
         }
-        //        print(send)
+        //        print0000(send)
         return send
         
     }
@@ -442,7 +440,7 @@ class Tool: NSObject {
         
         Alamofire.request(.POST, CConstants.ServerURL + (isClockIn ? CConstants.ClockInServiceURL: CConstants.ClockOutServiceURL), parameters: clockOutRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
             if response.result.isSuccess {
-//                                print(response.result.value)
+//                                print0000(response.result.value)
                 if let rtn = response.result.value as? [String: AnyObject]{
 //                    let rtn = ClockResponse(dicInfo: rtnValue)
                     if let msg = rtn["Message"] as? String{
@@ -473,7 +471,7 @@ class Tool: NSObject {
         param["ActionType"] = "Come Back"
         
         Alamofire.request(.POST, CConstants.ServerURL + "ComeBack.json", parameters: param).responseJSON{ (response) -> Void in
-//           print("come back", response.result.value)
+//           print0000("come back", response.result.value)
             if let rtnValue = response.result.value as? Int{
                 if rtnValue == 1 {
                     NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: obj)
@@ -490,7 +488,7 @@ class Tool: NSObject {
     func doGoOutService(requiredInfo : MoreActionRequired, obj: NSManagedObject){
         Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
             parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-//                print("go out", response.result.value )
+//                print0000("go out", response.result.value )
                 if let rtnValue = response.result.value as? Int{
                     if rtnValue == 1 {
                          NSNotificationCenter.defaultCenter().postNotificationName(CConstants.SubmitNext, object: obj)

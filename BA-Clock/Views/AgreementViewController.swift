@@ -39,7 +39,7 @@ class AgreementViewController: BaseViewController {
                 loginRequiredInfo.TokenSecret = tokenSecret
                 
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.UpdAgreementURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-//                    print(response.result.value)
+//                    print0000(response.result.value)
                     self.dismissViewControllerAnimated(true) { () -> Void in
                         if let del = self.delegate {
                             del.afterAgree()

@@ -28,14 +28,14 @@ class BaseObject: RequiredBaseObject {
     override func setValue(value0: AnyObject?, forKey key: String) {
         var skey : String
         skey = key
-//        print(skey)
+//        print0000(skey)
         let dic = self.getPropertieNamesAsDictionary()
         if dic.keys.contains(key) {
             if let value = value0{
                 if let dic = value as? [Dictionary<String, AnyObject>]{
                     var tmpArray : [BaseObject] = [BaseObject]()
                     for tmp0 in dic{
-                        //                    print(NSStringFromClass(BaseObject))
+                        //                    print0000(NSStringFromClass(BaseObject))
                         let anyobjecType: AnyObject.Type = NSClassFromString(GetCapitalFirstWord(skey)!)!
                         if anyobjecType is BaseObject.Type {
                             let vc = (anyobjecType as! BaseObject.Type).init(dicInfo: tmp0)

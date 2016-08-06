@@ -66,6 +66,8 @@ struct CConstants{
     static let SavingMsg = "Saving to server..."
     static let LastSubmitDateTime = "LastSubmitDateTime"
     
+    static let LocationServericeChanged = "didChangeAuthorizationStatus"
+    
     static let SubmitNext = "DO NEXT SUBMIT"
     static let SeverTimeSinceClienttime = "SeverTimeSinceClienttime"
 

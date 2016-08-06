@@ -113,21 +113,52 @@ class BaseViewController: UIViewController {
         
     }
     
-    
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         //LocationServiceDenied
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BaseViewController.popLocationErrorMsg), name:"LocationServiceDenied", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BaseViewController.popLocationErrorMsg), name:CConstants.LocationServericeChanged, object: nil)
     }
+
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "LocationServiceDenied", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: CConstants.LocationServericeChanged, object: nil)
     }
     
     func popLocationErrorMsg(){
-        self.PopMsgWithJustOK(msg: CConstants.TurnOnLocationServiceMsg, txtField: nil)
-    }
+//        self.PopMsgWithJustOK(msg: CConstants.TurnOnLocationServiceMsg, action1:
+//        })
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: CConstants.LocationServericeChanged)
+        self.PopMsgWithJustOK(msg: CConstants.TurnOnLocationServiceMsg) { (action) in
+            self.popToRootLogin()
+        }
         
+    }
+    
+    func popToRootLogin()  {
+        
+        var va : [UIViewController]? = self.navigationController?.viewControllers
+        if (va?.count ?? 0) > 0 && va![0].isMemberOfClass(LoginViewController) {
+            let userInfo = NSUserDefaults.standardUserDefaults()
+            userInfo.removeObjectForKey(CConstants.UserInfoTokenKey)
+            userInfo.removeObjectForKey(CConstants.UserInfoTokenScretKey)
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        }else{
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let login = storyboard.instantiateViewControllerWithIdentifier("LoginStart") as? LoginViewController {
+                
+                
+                if va != nil {
+                    va!.insert(login, atIndex: 0)
+                    self.navigationController?.viewControllers = va!
+                    let userInfo = NSUserDefaults.standardUserDefaults()
+                    userInfo.removeObjectForKey(CConstants.UserInfoTokenKey)
+                    userInfo.removeObjectForKey(CConstants.UserInfoTokenScretKey)
+                    self.navigationController?.popToRootViewControllerAnimated(true)
+                    
+                }}
+        }
+        
+    }
+    
 }

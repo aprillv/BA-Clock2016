@@ -42,6 +42,21 @@ class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITable
         }
     }
     
+    @IBOutlet var logoutBtn: UIButton!{
+        didSet{
+            let email = (NSUserDefaults.standardUserDefaults().valueForKey(CConstants.UserInfoEmail) ?? "").lowercaseString
+            if !(email == "xiujun_85@163.com" || email == "april@buildersaccess.com" || email == "350582482@qq.com"
+                || email == "john@buildersaccess.com" || email == "bob@buildersaccess.com" || email == "roberto@buildersaccess.com") {
+                logoutBtn.hidden = true
+            }
+        }
+        
+    }
+    
+    
+    @IBAction func Logout(sender: UIButton) {
+        self.popToRootLogin()
+    }
     @IBAction func goBack(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
@@ -57,6 +72,13 @@ class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITable
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let email = (NSUserDefaults.standardUserDefaults().valueForKey(CConstants.UserInfoEmail) ?? "").lowercaseString
+        if !(email == "xiujun_85@163.com" || email == "april@buildersaccess.com" || email == "350582482@qq.com"
+            || email == "john@buildersaccess.com" || email == "bob@buildersaccess.com" || email == "roberto@buildersaccess.com") {
+            self.navigationItem.rightBarButtonItems = nil
+        }
+        
         syncFrequency()
 //        let cs = cl_coreData()
 //        hourList = cs.getAllFrequency()
@@ -68,22 +90,22 @@ class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITable
         let userInfo = NSUserDefaults.standardUserDefaults()
         if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String{
             if let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String {
-                //                print(token, tokenSecret)
+                //                print0000(token, tokenSecret)
                 let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
                 loginRequiredInfo.Token = token
                 loginRequiredInfo.TokenSecret = tokenSecret
-                //                print(loginRequiredInfo.getPropertieNamesAsDictionary())
+                //                print0000(loginRequiredInfo.getPropertieNamesAsDictionary())
                 
                 let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                 hud.labelText = CConstants.LoadingMsg
                 
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                    //                    print(response.result.value)
-                    //                    print("syncFrequency")
+                    //                    print0000(response.result.value)
+                    //                    print0000("syncFrequency")
                     hud.hide(true)
                     if response.result.isSuccess {
                         if let rtnValue = response.result.value as? [[String: AnyObject]]{
-                            //                            print(rtnValue)
+                            //                            print0000(rtnValue)
                             var rtn = [FrequencyItem]()
                             for item in rtnValue{
                                 rtn.append(FrequencyItem(dicInfo: item))

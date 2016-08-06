@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     private func clearNotifications(){
-//        print("sss")
+//        print0000("sss")
         UIApplication.sharedApplication().applicationIconBadgeNumber = -1
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         
@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
    
 //    func applicationWillEnterForeground(application: UIApplication){
-////        print("aadsfdfd");
+////        print0000("aadsfdfd");
 //        let locaitonManager = CLocationManager.sharedInstance
 //        locaitonManager.updateLocation()
 //    }
@@ -43,17 +43,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-//         print("\(NSDate()) didFinishLaunchingWithOptions")
+//         print0000("\(NSDate()) didFinishLaunchingWithOptions")
         
        clearNotifications()
         let userInfo = NSUserDefaults.standardUserDefaults()
         userInfo.setValue(NSDate(), forKey: CConstants.LoginedDate)
         userInfo.setBool(true, forKey: CConstants.ToAddTrack)
+        userInfo.setBool(false, forKey: CConstants.LocationServericeChanged)
 //        checkUpate()
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(donextSubmit(_:)), name: CConstants.SubmitNext, object: nil)
         
         self.window?.backgroundColor = UIColor.whiteColor()
-//        print(CLLocationManager.locationServicesEnabled())
+//        print0000(CLLocationManager.locationServicesEnabled())
         
         
         let net = NetworkReachabilityManager()
@@ -62,14 +63,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         net?.listener = {status in
            
             if  net?.isReachable ?? false {
-                 print(net?.isReachable, status, NSDate())
+//                 print0000(net?.isReachable, status, NSDate())
 //                let userInfo = NSUserDefaults.standardUserDefaults()
 //                userInfo.setBool(true, forKey: "openApp")
                 let sd = cl_submitData()
                 sd.resubmit(nil)
             }
             else {
-                //                print("no connection")
+                //                print0000("no connection")
             }
             
         }
@@ -113,7 +114,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(" ", withString: "")
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString("<", withString: "")
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(">", withString: "")
-        print(deviceTokenStr)
+//        print0000(deviceTokenStr)
         let userInfo = NSUserDefaults.standardUserDefaults()
         userInfo.setValue(deviceTokenStr, forKey: CConstants.UserDeviceToken)
         
@@ -123,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         print("Device token for push notifications: FAIL -- ")
-        print(error.description)
+//        print0000(error.description)
     }
     
     func initializeNotificationServices() -> Void {
@@ -144,7 +145,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-//        print("fort tessssssss")
+//        print0000("fort tessssssss")
         // display the userInfo
         if let _ = userInfo["aps"] as? NSDictionary {
 
@@ -235,8 +236,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    
     
     func applicationDidEnterBackground(application: UIApplication) {
-//        print("\(NSDate()) applicationDidEnterBackground")
-//      print("_______________")
+//        print0000("\(NSDate()) applicationDidEnterBackground")
+//      print0000("_______________")
          clearNotifications()
     }
     
@@ -244,7 +245,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var  backgroundUpdateTask : UIBackgroundTaskIdentifier?
     
     func applicationWillResignActive(application: UIApplication) {
-//        print("&&&&&&&&&&&&&&&&&&")
+//        print0000("&&&&&&&&&&&&&&&&&&")
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 //        backgroundUpdateTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
@@ -261,7 +262,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 //    func applicationWillEnterForeground(application: UIApplication) {
-////        print("************")
+////        print0000("************")
 ////        endBackgroundUpdateTask()
 //    }
 //

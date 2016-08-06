@@ -64,7 +64,7 @@ class cl_log: NSObject {
             
             
 //        } catch let error as NSError {
-//            print("\(error)")
+//            print0000("\(error)")
 //            // TODO: handle the error
 //        }
         

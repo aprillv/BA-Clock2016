@@ -17,7 +17,7 @@ class ClockMapCell: UITableViewCell {
                 
                 clockInImage.image = UIImage(named: "clockin.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
                 
-//                print(clockInMap.frame)
+//                print0000(clockInMap.frame)
                 let width = Int(UIScreen.mainScreen().bounds.size.width-93)
                 
 //                if let cor = item.ClockInCoordinate {

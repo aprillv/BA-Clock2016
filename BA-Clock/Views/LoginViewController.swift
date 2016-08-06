@@ -8,10 +8,11 @@
 
 import UIKit
 import Alamofire
+import CoreLocation
 //import LocalAuthentication
 
 class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDelegate {
-
+    
     // MARK: - Page constants
     private struct constants{
         static let PasswordEmptyMsg : String = "Password Required."
@@ -26,14 +27,14 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
         self.Login(signInBtn)
     }
     
-//    var isLocationServiceEnabled: Bool?
+    //    var isLocationServiceEnabled: Bool?
     
-//    @IBOutlet weak var signInMap: UIButton!{
-//        didSet{
-//            signInMap.layer.cornerRadius = 5.0
-//            signInMap.backgroundColor = UIColor(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1)
-//        }
-//    }
+    //    @IBOutlet weak var signInMap: UIButton!{
+    //        didSet{
+    //            signInMap.layer.cornerRadius = 5.0
+    //            signInMap.backgroundColor = UIColor(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1)
+    //        }
+    //    }
     // MARK: Outlets
     @IBOutlet weak var emailTxt: UITextField!{
         
@@ -62,20 +63,20 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
         }
     }
     
-//    @IBOutlet weak var rememberMeSwitch: UISwitch!{
-//        didSet {
-//            rememberMeSwitch.transform = CGAffineTransformMakeScale(0.85, 0.85)
-//            let userInfo = NSUserDefaults.standardUserDefaults()
-//            if let isRemembered = userInfo.objectForKey(CConstants.UserInfoRememberMe) as? Bool{
-//                rememberMeSwitch.on = isRemembered
-//            }else{
-//                rememberMeSwitch.on = true
-//            }
-//        }
-//    }
+    //    @IBOutlet weak var rememberMeSwitch: UISwitch!{
+    //        didSet {
+    //            rememberMeSwitch.transform = CGAffineTransformMakeScale(0.85, 0.85)
+    //            let userInfo = NSUserDefaults.standardUserDefaults()
+    //            if let isRemembered = userInfo.objectForKey(CConstants.UserInfoRememberMe) as? Bool{
+    //                rememberMeSwitch.on = isRemembered
+    //            }else{
+    //                rememberMeSwitch.on = true
+    //            }
+    //        }
+    //    }
     
     @IBOutlet weak var backView2: UIView!{
-//        backView.backgroundColor = UIColor.whiteColor()
+        //        backView.backgroundColor = UIColor.whiteColor()
         didSet{
             backView2.layer.borderColor = CConstants.BorderColor.CGColor
             backView2.layer.borderWidth = 0
@@ -99,12 +100,12 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
             
             
             
-//            [v.layer setShadowColor:[UIColor blackColor].CGColor];
-//            [v.layer setShadowOpacity:0.8];
-//            [v.layer setShadowRadius:3.0];
-//            [v.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
-//            
-//            backView.layer.cornerRadius = 8
+            //            [v.layer setShadowColor:[UIColor blackColor].CGColor];
+            //            [v.layer setShadowOpacity:0.8];
+            //            [v.layer setShadowRadius:3.0];
+            //            [v.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
+            //
+            //            backView.layer.cornerRadius = 8
         }
     }
     
@@ -115,7 +116,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
         }
     }
     
-//    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    //    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     
     // MARK: UITextField Delegate
@@ -137,39 +138,50 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     private func setSignInBtn(){
         signInBtn?.enabled = !self.IsNilOrEmpty(passwordTxt?.text)
             && !self.IsNilOrEmpty(emailTxt?.text)
-//        signInMap.enabled = signInBtn.enabled  && isLocationServiceEnabled!
+        //        signInMap.enabled = signInBtn.enabled  && isLocationServiceEnabled!
         
     }
     
     
     // MARK: Outlet Action
-//    @IBAction func rememberChanged(sender: UISwitch) {
-//        let userInfo = NSUserDefaults.standardUserDefaults()
-//        userInfo.setObject(rememberMeSwitch.on, forKey: CConstants.UserInfoRememberMe)
-//        if !rememberMeSwitch.on {
-//            userInfo.setObject("", forKey: CConstants.UserInfoPwd)
-//        }
-//    }
+    //    @IBAction func rememberChanged(sender: UISwitch) {
+    //        let userInfo = NSUserDefaults.standardUserDefaults()
+    //        userInfo.setObject(rememberMeSwitch.on, forKey: CConstants.UserInfoRememberMe)
+    //        if !rememberMeSwitch.on {
+    //            userInfo.setObject("", forKey: CConstants.UserInfoPwd)
+    //        }
+    //    }
     
     
     
     @IBAction func Login(sender: UIButton) {
-       
-//        popupAgreement()
-//        self.noticeOnlyText(CConstants.LoginingMsg)
-        disAblePageControl()
-        self.doLogin()
+        
+        //        popupAgreement()
+        //        self.noticeOnlyText(CConstants.LoginingMsg)
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey(CConstants.LocationServericeChanged) ?? false {
+            if CLLocationManager.authorizationStatus() != .AuthorizedAlways {
+                self.popLocationErrorMsg()
+            }else{
+                disAblePageControl()
+                self.doLogin()
+            }
+        }else{
+            disAblePageControl()
+            self.doLogin()
+        }
+        
     }
     
     
     
     private func disAblePageControl(){
         signInBtn.enabled = false
-//        signInBtn.backgroundColor = UIColor(red: 125/255.0, green: 153/255.0, blue: 176/255.0, alpha: 1)
-//        signInMap.hidden = true
+        //        signInBtn.backgroundColor = UIColor(red: 125/255.0, green: 153/255.0, blue: 176/255.0, alpha: 1)
+        //        signInMap.hidden = true
         emailTxt.enabled = false
         passwordTxt.enabled = false
-//        rememberMeSwitch.enabled = false
+        //        rememberMeSwitch.enabled = false
         emailTxt.textColor = UIColor.darkGrayColor()
         passwordTxt.textColor = UIColor.darkGrayColor()
         
@@ -185,7 +197,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                         self.saveEmailAndPwdToDisk(email: emailTxt.text!, password: passwordTxt.text!, displayName: username, fullName: clockInfo!.UserFullName!)
                         
                         let coreData = cl_coreData()
-//                        coreData.savedScheduledDaysToDB(clockInfo!.ScheduledDay!)
+                        //                        coreData.savedScheduledDaysToDB(clockInfo!.ScheduledDay!)
                         coreData.savedFrequencysToDB(clockInfo!.Frequency!)
                         
                         let userInfo = NSUserDefaults.standardUserDefaults()
@@ -228,7 +240,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
         let email = emailTxt.text
         let password = passwordTxt.text
         
-       
+        
         
         if IsNilOrEmpty(email) {
             self.toEablePageControl()
@@ -251,78 +263,78 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                 loginRequiredInfo.Password = tl.md5(string: password!)
                 let now = NSDate()
                 loginRequiredInfo.ClientTime = tl.getClientTime(now)
-//                print(loginRequiredInfo.getPropertieNamesAsDictionary())
+                //                print0000(loginRequiredInfo.getPropertieNamesAsDictionary())
                 Alamofire.request(.POST, CConstants.ServerURL + CConstants.LoginServiceURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     hud.hide(true)
-                    print(response.result.value)
-//                    self.progressBar.dismissViewControllerAnimated(true){
-                        if response.result.isSuccess {
+                    //                    print0000(response.result.value)
+                    //                    self.progressBar.dismissViewControllerAnimated(true){
+                    if response.result.isSuccess {
+                        
+                        if let rtnValue = response.result.value as? [String: AnyObject]{
                             
-                            if let rtnValue = response.result.value as? [String: AnyObject]{
-                                
-                                self.clockInfo = LoginedInfo(dicInfo: rtnValue)
-                                
-                            }else{
-                                self.PopServerError()
-                            }
+                            self.clockInfo = LoginedInfo(dicInfo: rtnValue)
+                            
                         }else{
-                            self.PopNetworkError()
+                            self.PopServerError()
                         }
-                        self.toEablePageControl()
-//                        self.clearNotice()
-//                    }
+                    }else{
+                        self.PopNetworkError()
+                    }
+                    self.toEablePageControl()
+                    //                        self.clearNotice()
+                    //                    }
                 }
                 
                 
             }
         }
     }
-   private func toEablePageControl(){
-    self.signInBtn.enabled = true
-    self.emailTxt.enabled = true
-    self.passwordTxt.enabled = true
-    self.emailTxt.textColor = UIColor.blackColor()
-    self.passwordTxt.textColor = UIColor.blackColor()
-//    self.spinner.stopAnimating()
+    private func toEablePageControl(){
+        self.signInBtn.enabled = true
+        self.emailTxt.enabled = true
+        self.passwordTxt.enabled = true
+        self.emailTxt.textColor = UIColor.blackColor()
+        self.passwordTxt.textColor = UIColor.blackColor()
+        //    self.spinner.stopAnimating()
     }
     
     func saveEmailAndPwdToDisk(email email: String, password: String, displayName: String, fullName: String){
         let userInfo = NSUserDefaults.standardUserDefaults()
-//        if rememberMeSwitch.on {
-            userInfo.setObject(true, forKey: CConstants.UserInfoRememberMe)
-//        }else{
-//            userInfo.setObject(false, forKey: CConstants.UserInfoRememberMe)
-//        }
+        //        if rememberMeSwitch.on {
+        userInfo.setObject(true, forKey: CConstants.UserInfoRememberMe)
+        //        }else{
+        //            userInfo.setObject(false, forKey: CConstants.UserInfoRememberMe)
+        //        }
         userInfo.setObject(email, forKey: CConstants.UserInfoEmail)
         userInfo.setObject(password, forKey: CConstants.UserInfoPwd)
         userInfo.setObject(displayName, forKey: CConstants.UserDisplayName)
         userInfo.setObject(fullName, forKey: CConstants.UserFullName)
     }
-   
+    
     
     // MARK: PrepareForSegue
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let identifier = segue.identifier {
             switch identifier {
-               
+                
             case CConstants.SegueToMap:
                 if let clockListView = segue.destinationViewController as? ClockMapViewController{
-//                    if let itemList = self.clockInfo?.ScheduledDay {
-//                        var h = itemList
-//                        let tl = Tool()
-//                        let (istime, _) = tl.getTimeInter()
-//                        if !istime {
-//                            h.append(ScheduledDayItem(dicInfo: ["ClockIn" : "-1", "ClockOut":"-1"]))
-//                            
-//                            
-//                        }
-//                        clockListView.clockDataList = h
-//                        
-//                    }
-//                    if let tracker = locationTracker {
-//                        clockListView.locationTracker = tracker
-//                    }
+                    //                    if let itemList = self.clockInfo?.ScheduledDay {
+                    //                        var h = itemList
+                    //                        let tl = Tool()
+                    //                        let (istime, _) = tl.getTimeInter()
+                    //                        if !istime {
+                    //                            h.append(ScheduledDayItem(dicInfo: ["ClockIn" : "-1", "ClockOut":"-1"]))
+                    //
+                    //
+                    //                        }
+                    //                        clockListView.clockDataList = h
+                    //
+                    //                    }
+                    //                    if let tracker = locationTracker {
+                    //                        clockListView.locationTracker = tracker
+                    //                    }
                 }
                 break
             case constants.segueToAgreement:
@@ -339,7 +351,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     
     // MARK: Life cycle
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -353,17 +365,17 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
         
         self.title = "BA Clock"
         
-       
-        
-        
-       
         
         
         
-//        let locationManager = LocationTracker.sharedLocationManager()
-//        locationTracker = LocationTracker()
-//        locationManager.delegate = locationTracker
-//        locationManager.requestAlwaysAuthorization()
+        
+        
+        
+        
+        //        let locationManager = LocationTracker.sharedLocationManager()
+        //        locationTracker = LocationTracker()
+        //        locationManager.delegate = locationTracker
+        //        locationManager.requestAlwaysAuthorization()
         
         
     }
