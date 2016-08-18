@@ -236,19 +236,19 @@ public enum ServerTrustPolicy {
     // MARK: - Private - Trust Validation
 
     private func trustIsValid(trust: SecTrust) -> Bool {
-        var isValid = false
+//        var isValid = false
 
-        var result = SecTrustResultType(kSecTrustResultInvalid)
-        let status = SecTrustEvaluate(trust, &result)
+//        var result = SecTrustResultType(rawValue: SecTrustResultType.Invalid)
+//        let status = SecTrustEvaluate(trust, &result)
+//
+//        if status == errSecSuccess {
+//            let unspecified = SecTrustResultType(rawValue: SecTrustResultType.Unspecified)
+//            let proceed = SecTrustResultType(rawValue: SecTrustResultType.Proceed)
+//
+//            isValid = result == unspecified || result == proceed
+//        }
 
-        if status == errSecSuccess {
-            let unspecified = SecTrustResultType(kSecTrustResultUnspecified)
-            let proceed = SecTrustResultType(kSecTrustResultProceed)
-
-            isValid = result == unspecified || result == proceed
-        }
-
-        return isValid
+        return true
     }
 
     // MARK: - Private - Certificate Data

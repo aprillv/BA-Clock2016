@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A270f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZwK-p4-vh3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11185.3" systemVersion="16A270f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ZwK-p4-vh3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11151.4"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -19,24 +20,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TrM-bp-FfJ">
-                                <rect key="frame" x="16" y="181" width="343" height="202"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="202" id="bYk-2U-ITc"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rtU-mw-aQS">
-                                <rect key="frame" x="16" y="181" width="343" height="199"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dgz-XT-R5S">
-                                        <rect key="frame" x="0.0" y="50" width="343" height="1"/>
-                                        <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="7W1-yU-KQC"/>
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="UNz-uy-8UC">
-                                        <rect key="frame" x="8" y="10" width="327" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="6SY-WT-1Mx"/>
                                         </constraints>
@@ -47,7 +44,6 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rQW-Ip-5KS">
-                                        <rect key="frame" x="8" y="60" width="327" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                         <connections>
@@ -55,31 +51,27 @@
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gj4-8i-mSg">
-                                        <rect key="frame" x="0.0" y="100" width="343" height="1"/>
-                                        <color key="backgroundColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="4Mz-Uw-a8r"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6qd-Nk-xWE">
-                                        <rect key="frame" x="8" y="132" width="327" height="44"/>
-                                        <color key="backgroundColor" red="0.074509803921568626" green="0.28235294117647058" blue="0.45490196078431372" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.074509803921568626" green="0.28235294117647058" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="86I-kV-Nb8"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <state key="normal" title="Login">
-                                            <color key="titleColor" white="0.98999999999999999" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" red="0.99000000953674316" green="0.99000000953674316" blue="0.99000000953674316" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="Login:" destination="mef-nr-wry" eventType="touchUpInside" id="Xoq-QA-Cxe"/>
                                         </connections>
                                     </button>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="QYH-Zz-g4o">
-                                        <rect key="frame" x="161" y="144" width="20" height="20"/>
-                                    </activityIndicatorView>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="QYH-Zz-g4o"/>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="gj4-8i-mSg" firstAttribute="top" secondItem="rtU-mw-aQS" secondAttribute="top" constant="100" id="2A0-yW-ntA"/>
                                     <constraint firstAttribute="height" constant="199" id="3hl-fl-qfr"/>
@@ -117,10 +109,6 @@
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="c8t-83-G5j"/>
-                                        <exclude reference="KrQ-wz-4LO"/>
-                                        <exclude reference="fb3-7a-cv4"/>
-                                        <exclude reference="fLa-iT-PfQ"/>
-                                        <exclude reference="ymh-o3-LPW"/>
                                         <exclude reference="H0v-Xs-GY5"/>
                                         <exclude reference="3uf-z7-kw0"/>
                                         <exclude reference="4Ae-K9-6Vr"/>
@@ -129,24 +117,26 @@
                                         <exclude reference="dMh-dc-DXX"/>
                                         <exclude reference="lZn-Zt-25I"/>
                                         <exclude reference="svr-Zi-tzw"/>
+                                        <exclude reference="KrQ-wz-4LO"/>
+                                        <exclude reference="fb3-7a-cv4"/>
+                                        <exclude reference="fLa-iT-PfQ"/>
+                                        <exclude reference="ymh-o3-LPW"/>
                                     </mask>
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2016 All Rights Reserved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4FT-dA-SiF">
-                                <rect key="frame" x="86" y="645" width="204" height="14"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="rWw-WR-mAw">
-                                <rect key="frame" x="138" y="72" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="D9V-2H-NA5"/>
                                     <constraint firstAttribute="height" constant="100" id="HtZ-zx-USN"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="TrM-bp-FfJ" firstAttribute="top" secondItem="rWw-WR-mAw" secondAttribute="bottom" constant="9" id="4ar-kS-k2i"/>
                             <constraint firstItem="4FT-dA-SiF" firstAttribute="centerX" secondItem="DmO-Wh-V3e" secondAttribute="centerX" id="6tg-Uc-se6"/>
@@ -171,7 +161,6 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="w6n-DC-gJX"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="backView" destination="rtU-mw-aQS" id="Fgf-KG-vyC"/>
                         <outlet property="backView2" destination="TrM-bp-FfJ" id="gaV-kP-XHL"/>
@@ -199,19 +188,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yvx-z2-7HJ">
-                                <rect key="frame" x="-4" y="0.0" width="383" height="64"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Agreement" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jGb-4c-FOj">
-                                        <rect key="frame" x="146" y="20" width="92" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Ta1-GN-xKV"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="2OR-vh-zEC"/>
                                     <constraint firstItem="jGb-4c-FOj" firstAttribute="centerY" secondItem="Yvx-z2-7HJ" secondAttribute="centerY" id="Sbw-Zd-ryT"/>
@@ -227,8 +214,7 @@
                                 </variation>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uY6-BT-kik">
-                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <string key="text">GEO FENCE:
  
 If an employee refuses to install the app, you can tell the employee to go home and “think about it” because refusal to install the app will result in termination.  If the employee continues to refuse to install the app, you can terminate the employee for insubordination and/or refusing to meet a job requirement.
@@ -250,47 +236,45 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9q-Mo-nOu">
-                                <rect key="frame" x="-4" y="623" width="191" height="44"/>
-                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="EQb-Rf-QtN"/>
+                                    <constraint firstAttribute="height" constant="40" id="EQb-Rf-QtN"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                 <state key="normal" title="I Agree">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="DoAgree:" destination="zIH-ZX-P2Y" eventType="touchUpInside" id="spJ-qP-wOM"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1kJ-Pk-svR">
-                                <rect key="frame" x="188" y="623" width="191" height="44"/>
-                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                 <state key="normal" title="Disagree">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="DoDisAgree:" destination="zIH-ZX-P2Y" eventType="touchUpInside" id="PTg-Tz-75e"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="c9q-Mo-nOu" firstAttribute="top" secondItem="uY6-BT-kik" secondAttribute="bottom" id="A0b-pf-5xi"/>
                             <constraint firstItem="c9q-Mo-nOu" firstAttribute="width" secondItem="1kJ-Pk-svR" secondAttribute="width" id="EV2-W1-Ayo"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="1kJ-Pk-svR" secondAttribute="trailing" constant="-20" id="Enz-jQ-Cuh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1kJ-Pk-svR" secondAttribute="trailing" id="Enz-jQ-Cuh"/>
                             <constraint firstItem="Yvx-z2-7HJ" firstAttribute="leading" secondItem="MJb-TA-ayn" secondAttribute="leadingMargin" constant="-20" id="IkA-Ho-quO"/>
                             <constraint firstItem="c9q-Mo-nOu" firstAttribute="height" secondItem="1kJ-Pk-svR" secondAttribute="height" id="M3g-KQ-fd7"/>
                             <constraint firstItem="1kJ-Pk-svR" firstAttribute="centerY" secondItem="c9q-Mo-nOu" secondAttribute="centerY" id="SXd-IU-91K"/>
                             <constraint firstItem="c9q-Mo-nOu" firstAttribute="bottom" secondItem="Yvx-z2-7HJ" secondAttribute="bottom" id="So7-JG-LvN"/>
                             <constraint firstItem="Yvx-z2-7HJ" firstAttribute="top" secondItem="MJb-TA-ayn" secondAttribute="topMargin" id="aXV-WH-vFg"/>
-                            <constraint firstItem="c9q-Mo-nOu" firstAttribute="leading" secondItem="Yvx-z2-7HJ" secondAttribute="leading" id="cid-Y8-wAb"/>
+                            <constraint firstItem="c9q-Mo-nOu" firstAttribute="leading" secondItem="Yvx-z2-7HJ" secondAttribute="leading" constant="20" id="cid-Y8-wAb"/>
                             <constraint firstItem="uY6-BT-kik" firstAttribute="top" secondItem="Yvx-z2-7HJ" secondAttribute="bottom" id="dDs-A5-EeX"/>
-                            <constraint firstItem="1kJ-Pk-svR" firstAttribute="leading" secondItem="c9q-Mo-nOu" secondAttribute="trailing" constant="1" id="e2O-dy-ixJ"/>
+                            <constraint firstItem="1kJ-Pk-svR" firstAttribute="leading" secondItem="c9q-Mo-nOu" secondAttribute="trailing" constant="20" id="e2O-dy-ixJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Yvx-z2-7HJ" secondAttribute="trailing" constant="-20" id="nQk-ZV-pnD"/>
                             <constraint firstItem="uY6-BT-kik" firstAttribute="leading" secondItem="MJb-TA-ayn" secondAttribute="leadingMargin" constant="-16" id="nnh-0w-cAD"/>
-                            <constraint firstItem="IXH-nU-5Xr" firstAttribute="top" secondItem="c9q-Mo-nOu" secondAttribute="bottom" id="wEX-fs-W6F"/>
+                            <constraint firstItem="IXH-nU-5Xr" firstAttribute="top" secondItem="c9q-Mo-nOu" secondAttribute="bottom" constant="4" id="wEX-fs-W6F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uY6-BT-kik" secondAttribute="trailing" constant="-16" id="yzF-oa-jhe"/>
                         </constraints>
                         <variation key="default">
@@ -299,9 +283,10 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                             </mask>
                         </variation>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="agreeBtn" destination="c9q-Mo-nOu" id="gom-WV-fsn"/>
                         <outlet property="contentview" destination="uY6-BT-kik" id="fE7-sJ-OIm"/>
+                        <outlet property="disagreeBtn" destination="1kJ-Pk-svR" id="dbV-hG-aFJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ncB-AP-fTQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -312,11 +297,10 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
         <scene sceneID="Gr4-xP-2Eq">
             <objects>
                 <navigationController id="ZwK-p4-vh3" sceneMemberID="viewController">
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tcS-iA-hnS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="mef-nr-wry" kind="show" identifier="Login" id="afF-LF-HnC"/>
@@ -338,19 +322,18 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="189" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Tt2-tO-RJk">
-                                <rect key="frame" x="-4" y="64" width="383" height="553"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="189" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Tt2-tO-RJk">
+                                <frame key="frameInset" minX="-4" minY="64" width="383" height="553"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="clockMapCell" rowHeight="189" id="AEJ-zh-3HT" customClass="ClockMapCell" customModule="BA_Clock" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="383" height="189"/>
+                                        <frame key="frameInset" minY="92" width="383" height="189"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AEJ-zh-3HT" id="NhT-t3-XvD">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="189"/>
+                                            <frame key="frameInset" width="383" height="189"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ywX-O6-9be">
-                                                    <rect key="frame" x="8" y="8" width="174" height="70"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="70" id="2em-IC-A2Y"/>
                                                         <constraint firstAttribute="width" constant="150" id="z5m-8Y-Mvk"/>
@@ -362,7 +345,6 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                     </variation>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XKp-yu-sXA">
-                                                    <rect key="frame" x="202" y="28" width="173" height="70"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="0qT-d8-2de"/>
                                                         <constraint firstAttribute="height" constant="149" id="9vk-MV-zxa"/>
@@ -375,25 +357,22 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                     </variation>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UUG-RJ-4d2">
-                                                    <rect key="frame" x="25" y="15" width="145" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="KIx-au-rh0"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHZ-fJ-aqm">
-                                                    <rect key="frame" x="25" y="35" width="145" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="PPO-dL-FAE"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yff-kq-9bZ">
-                                                    <rect key="frame" x="25" y="77" width="145" height="74"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="121" id="RdP-mD-Z1R"/>
                                                         <constraint firstAttribute="height" constant="74" id="eWJ-RT-S2E"/>
@@ -405,7 +384,6 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                     </variation>
                                                 </imageView>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FkL-ul-XGF">
-                                                    <rect key="frame" x="213" y="96" width="145" height="74"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="74" id="4lC-BY-Unl"/>
                                                         <constraint firstAttribute="width" constant="121" id="G5x-Dx-r3Z"/>
@@ -417,25 +395,22 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                     </variation>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyB-Kb-bQH">
-                                                    <rect key="frame" x="213" y="34" width="145" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="NWA-nY-Jtt"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IgY-EB-YVK">
-                                                    <rect key="frame" x="213" y="54" width="145" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="hBh-zi-ggs"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BGH-Cy-a7U">
-                                                    <rect key="frame" x="147" y="15" width="35" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="Bf0-UF-oDK"/>
                                                         <constraint firstAttribute="width" constant="35" id="b7p-Su-MBh"/>
@@ -446,7 +421,6 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yi6-qK-yUM">
-                                                    <rect key="frame" x="327" y="34" width="35" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="YSn-ax-qyB"/>
                                                         <constraint firstAttribute="height" constant="25" id="v2V-xl-x5s"/>
@@ -505,21 +479,21 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="4nd-Di-STV"/>
-                                                    <exclude reference="BMc-Dg-b03"/>
-                                                    <exclude reference="KjA-Dj-F7L"/>
-                                                    <exclude reference="DHr-v8-MFq"/>
-                                                    <exclude reference="0pp-TY-Iu6"/>
-                                                    <exclude reference="mXI-0L-e5T"/>
                                                     <exclude reference="5Zr-2V-z7E"/>
                                                     <exclude reference="5vP-0G-3lZ"/>
                                                     <exclude reference="Tto-xb-Nnk"/>
                                                     <exclude reference="q6B-uh-h6g"/>
-                                                    <exclude reference="8Kp-wp-qnl"/>
                                                     <exclude reference="28H-3p-RtT"/>
                                                     <exclude reference="McG-X7-qmF"/>
                                                     <exclude reference="soo-5i-L55"/>
+                                                    <exclude reference="DHr-v8-MFq"/>
+                                                    <exclude reference="KjA-Dj-F7L"/>
+                                                    <exclude reference="8Kp-wp-qnl"/>
+                                                    <exclude reference="0pp-TY-Iu6"/>
+                                                    <exclude reference="mXI-0L-e5T"/>
                                                     <exclude reference="evL-c4-qgU"/>
+                                                    <exclude reference="4nd-Di-STV"/>
+                                                    <exclude reference="BMc-Dg-b03"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -538,22 +512,20 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="clockTextCell" id="8Gv-jo-tpg" customClass="TextTableViewCell" customModule="BA_Clock" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="281" width="383" height="189"/>
+                                        <frame key="frameInset" minY="281" width="383" height="189"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Gv-jo-tpg" id="u2i-Lk-dS5">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="189"/>
+                                            <frame key="frameInset" width="383" height="189"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lBf-zP-Szw">
-                                                    <rect key="frame" x="8" y="73" width="359" height="43"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="43" id="feu-pl-R33"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="krK-m2-LuI">
-                                                    <rect key="frame" x="25" y="84" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -578,24 +550,24 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                 </connections>
                             </tableView>
                             <tabBar contentMode="scaleToFill" misplaced="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="Zwh-On-rqN">
-                                <rect key="frame" x="-4" y="618" width="383" height="49"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <frame key="frameInset" minX="-4" minY="618" width="383" height="49"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <items>
                                     <tabBarItem title="Clock In" image="clockIns" id="vO8-6N-NfC"/>
                                     <tabBarItem title="Clock Out" image="clockOuts" id="MM6-Ey-kBR"/>
                                     <tabBarItem title="Go Out" image="goout" selectedImage="more" id="gDL-8q-Z9i"/>
                                     <tabBarItem title="Come Back" image="comeback" selectedImage="more" id="FWd-Ov-2os"/>
                                 </items>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="barTintColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="selectedImageTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="selectedImageTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="delegate" destination="Pxs-Of-gi9" id="aMX-6m-JMM"/>
                                 </connections>
                             </tabBar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Tt2-tO-RJk" firstAttribute="top" secondItem="vMD-sg-tmx" secondAttribute="bottom" id="5fN-so-aoF"/>
@@ -609,10 +581,10 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="scq-nq-0OB">
                         <barButtonItem key="leftBarButtonItem" title="Clear Pins" id="LSm-m4-HQZ">
-                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="settings" id="ZUF-Rs-IVm">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="gotoLog:" destination="Pxs-Of-gi9" id="jbQ-h7-6wX"/>
                                 <segue destination="Hlg-vI-xeP" kind="show" id="iQ4-R4-MgT"/>
@@ -620,7 +592,6 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="clearItem" destination="LSm-m4-HQZ" id="HMH-yO-vVT"/>
                         <outlet property="mapTable" destination="Tt2-tO-RJk" id="O4M-yt-0GJ"/>
@@ -647,21 +618,21 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uFp-BE-UbV">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <frame key="frameInset" minY="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="logcell" id="Z1q-sx-xHA">
-                                        <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                        <frame key="frameInset" minY="92" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z1q-sx-xHA" id="uk9-02-FsC">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <frame key="frameInset" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="uFp-BE-UbV" firstAttribute="leading" secondItem="q9j-g2-wry" secondAttribute="leadingMargin" constant="-16" id="8VS-RK-t2p"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uFp-BE-UbV" secondAttribute="trailing" constant="-16" id="eYh-95-Mb3"/>
@@ -669,7 +640,6 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                             <constraint firstItem="0cO-wx-xKd" firstAttribute="top" secondItem="uFp-BE-UbV" secondAttribute="bottom" id="yTo-aR-cT6"/>
                         </constraints>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="logTable" destination="uFp-BE-UbV" id="yyB-Qz-w72"/>
                     </connections>
@@ -690,28 +660,26 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="l9o-zr-m8W">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="l9o-zr-m8W">
+                                <frame key="frameInset" width="1000" height="1000"/>
                                 <connections>
                                     <outlet property="delegate" destination="nvC-56-ODH" id="8UO-Vc-N92"/>
                                 </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mVs-He-7tW">
-                                <rect key="frame" x="309" y="20" width="50" height="50"/>
                                 <state key="normal" image="close"/>
                                 <connections>
                                     <action selector="closeself:" destination="nvC-56-ODH" eventType="touchUpInside" id="7bG-cH-l6E"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KUc-ZT-PSZ">
-                                <rect key="frame" x="169" y="631" width="36" height="22"/>
                                 <state key="normal" image="hide"/>
                                 <connections>
                                     <action selector="closeself:" destination="nvC-56-ODH" eventType="touchUpInside" id="cYN-m3-MA6"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="l9o-zr-m8W" firstAttribute="top" secondItem="xHg-Kw-nRG" secondAttribute="top" id="5Xr-YQ-Vge"/>
                             <constraint firstItem="l9o-zr-m8W" firstAttribute="top" secondItem="mVs-He-7tW" secondAttribute="bottom" constant="-72" id="6Mj-Kp-bjE"/>
@@ -731,7 +699,6 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                             </mask>
                         </variation>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="map" destination="l9o-zr-m8W" id="Oag-dc-7vG"/>
                     </connections>
@@ -753,35 +720,31 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hbq-Cs-cat">
-                                <rect key="frame" x="-4" y="64" width="383" height="559"/>
                                 <subviews>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="nNz-rN-zZ9">
-                                        <rect key="frame" x="0.0" y="0.0" width="383" height="280"/>
                                         <connections>
                                             <outlet property="delegate" destination="ASm-2k-YT5" id="yLM-2c-ODq"/>
                                         </connections>
                                     </mapView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MI0-Vk-AaU">
-                                        <rect key="frame" x="174" y="250" width="36" height="22"/>
                                         <state key="normal" image="hide"/>
                                         <connections>
                                             <action selector="hideorshow:" destination="ASm-2k-YT5" eventType="touchUpInside" id="Y3N-bi-qDJ"/>
                                         </connections>
                                     </button>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3Fc-rf-wHw">
-                                        <rect key="frame" x="0.0" y="280" width="383" height="279"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="separatorColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="separatorColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="trackTableCell" id="xDl-FV-nlX">
-                                                <rect key="frame" x="0.0" y="28" width="383" height="44"/>
+                                                <frame key="frameInset" minY="28" width="383" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xDl-FV-nlX" id="ura-Bj-53C">
-                                                    <rect key="frame" x="0.0" y="0.0" width="350" height="43"/>
+                                                    <frame key="frameInset" width="350" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </tableViewCellContentView>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </tableViewCell>
                                         </prototypes>
@@ -791,19 +754,18 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                         </connections>
                                     </tableView>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jY3-8J-Tjx">
-                                        <rect key="frame" x="15" y="15" width="80" height="31"/>
-                                        <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="a3n-07-usQ"/>
                                             <constraint firstAttribute="height" constant="31" id="bNl-su-14i"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <state key="normal" title="Clear Pins">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="MI0-Vk-AaU" firstAttribute="top" secondItem="nNz-rN-zZ9" secondAttribute="bottom" constant="-30" id="32h-IM-vJm"/>
                                     <constraint firstItem="3Fc-rf-wHw" firstAttribute="top" secondItem="nNz-rN-zZ9" secondAttribute="bottom" id="4l0-dm-eDt"/>
@@ -830,8 +792,8 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                 </variation>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="an3-Q5-48Y" firstAttribute="top" secondItem="Hbq-Cs-cat" secondAttribute="bottom" id="8Q7-6h-TzD"/>
@@ -842,19 +804,18 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                     </view>
                     <navigationItem key="navigationItem" title="GIS Track" id="o4y-gL-k0M">
                         <barButtonItem key="leftBarButtonItem" image="back" id="yqT-4p-9iS">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="GoBackToMore:" destination="ASm-2k-YT5" id="jGz-Of-TwZ"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Clear Pins" id="KUW-gI-m0E">
-                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="clearPINs" destination="ASm-2k-YT5" id="rsl-5R-qpb"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="clearItem" destination="KUW-gI-m0E" id="cZD-FK-6eH"/>
                         <outlet property="mapBack" destination="Hbq-Cs-cat" id="jXO-Kl-8Oh"/>
@@ -881,8 +842,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="60" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="3MY-NR-Uwp">
-                                <rect key="frame" x="-4" y="64" width="383" height="519"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="220" id="5Sg-cC-iQK"/>
                                     <constraint firstAttribute="height" constant="44" id="Bup-HW-QmN"/>
@@ -890,23 +850,21 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                 <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="MoreCell" id="dP1-xy-RVs" customClass="MoreTableViewCell" customModule="BA_Clock" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="114" width="383" height="60"/>
+                                        <frame key="frameInset" minY="120" width="383" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dP1-xy-RVs" id="8Vi-1M-VxN">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="59"/>
+                                            <frame key="frameInset" width="383" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0uy-yl-XzV">
-                                                    <rect key="frame" x="8" y="19" width="22" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="22" id="GMc-Mb-nro"/>
                                                         <constraint firstAttribute="height" constant="22" id="Gjc-fa-eA0"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tOk-7S-4l5">
-                                                    <rect key="frame" x="38" y="19" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -933,15 +891,14 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="notes" rowHeight="140" id="Nwt-Lg-TY9" customClass="noteTableViewCell" customModule="BA_Clock" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="174" width="383" height="140"/>
+                                        <frame key="frameInset" minY="180" width="383" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nwt-Lg-TY9" id="Sul-1V-Myf">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="139"/>
+                                            <frame key="frameInset" width="383" height="139"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="o3b-In-3RZ">
-                                                    <rect key="frame" x="18" y="13" width="347" height="113"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -958,10 +915,10 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="time" id="BLB-kt-wPp">
-                                        <rect key="frame" x="0.0" y="314" width="383" height="60"/>
+                                        <frame key="frameInset" minY="320" width="383" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BLB-kt-wPp" id="zPL-hG-4eP">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="59"/>
+                                            <frame key="frameInset" width="383" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -977,28 +934,31 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                     <outlet property="delegate" destination="87Q-nH-QVh" id="EhQ-ex-p3n"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U7n-Qd-b8w">
-                                <rect key="frame" x="-4" y="583" width="383" height="40"/>
-                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ysq-EO-dUb">
+                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="tcg-pf-zCH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
-                                    <action selector="dosubmit:" destination="87Q-nH-QVh" eventType="touchUpInside" id="Ezq-Uv-cue"/>
+                                    <action selector="dosubmit:" destination="87Q-nH-QVh" eventType="touchUpInside" id="MsH-Ir-phF"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="c07-7d-gus" firstAttribute="top" secondItem="3MY-NR-Uwp" secondAttribute="bottom" id="3KB-2b-6Nd"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="Ysq-EO-dUb" secondAttribute="leading" id="ETP-DX-U3w"/>
+                            <constraint firstItem="Ysq-EO-dUb" firstAttribute="centerX" secondItem="NG5-td-jme" secondAttribute="centerX" id="Lcz-so-Fta"/>
                             <constraint firstItem="3MY-NR-Uwp" firstAttribute="leading" secondItem="NG5-td-jme" secondAttribute="leadingMargin" constant="-20" id="QrZ-HB-ARX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3MY-NR-Uwp" secondAttribute="trailing" constant="-20" id="Syk-mg-TIU"/>
                             <constraint firstItem="c07-7d-gus" firstAttribute="top" secondItem="3MY-NR-Uwp" secondAttribute="bottom" id="ULp-ag-gPv"/>
-                            <constraint firstItem="U7n-Qd-b8w" firstAttribute="top" secondItem="3MY-NR-Uwp" secondAttribute="bottom" id="XSF-nV-sek"/>
-                            <constraint firstItem="U7n-Qd-b8w" firstAttribute="leading" secondItem="3MY-NR-Uwp" secondAttribute="leading" id="fdW-0B-YNZ"/>
-                            <constraint firstItem="U7n-Qd-b8w" firstAttribute="trailing" secondItem="3MY-NR-Uwp" secondAttribute="trailing" id="hNf-5M-Rn2"/>
-                            <constraint firstItem="c07-7d-gus" firstAttribute="top" secondItem="U7n-Qd-b8w" secondAttribute="bottom" id="hwo-k8-Qan"/>
-                            <constraint firstItem="c07-7d-gus" firstAttribute="top" secondItem="3MY-NR-Uwp" secondAttribute="bottom" constant="40" id="moi-aX-xi2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Ysq-EO-dUb" secondAttribute="trailing" id="VN0-W5-nua"/>
+                            <constraint firstItem="c07-7d-gus" firstAttribute="top" secondItem="3MY-NR-Uwp" secondAttribute="bottom" constant="50" id="moi-aX-xi2"/>
+                            <constraint firstItem="c07-7d-gus" firstAttribute="top" secondItem="Ysq-EO-dUb" secondAttribute="bottom" constant="5" id="mxC-eJ-dn2"/>
                             <constraint firstItem="3MY-NR-Uwp" firstAttribute="top" secondItem="8k7-fL-prH" secondAttribute="bottom" id="q1p-BH-3hf"/>
                         </constraints>
                         <variation key="default">
@@ -1011,15 +971,15 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Go Out" id="0Kg-K6-9N9">
                         <barButtonItem key="leftBarButtonItem" image="back" width="200" id="Z1P-Bn-4lB">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="GoBackToList:" destination="87Q-nH-QVh" id="MOa-Ad-P6v"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="submitBtn" destination="Ysq-EO-dUb" id="c9N-EB-UAR"/>
                         <outlet property="tableView" destination="3MY-NR-Uwp" id="PJo-5Q-J7e"/>
                         <segue destination="ASm-2k-YT5" kind="show" identifier="GISTrack" id="Yo4-C5-sQs"/>
                         <segue destination="sgz-Wv-R7v" kind="presentation" identifier="showTime" id="vbR-CW-G5V"/>
@@ -1042,12 +1002,10 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WER-Tw-3bM">
-                                <rect key="frame" x="28" y="226" width="320" height="216"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="eL3-lQ-YSt">
-                                <rect key="frame" x="28" y="226" width="320" height="216"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <date key="date" timeIntervalSinceReferenceDate="483592744.55283302">
                                     <!--2016-04-29 03:19:04 +0000-->
                                 </date>
@@ -1056,16 +1014,14 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                 </connections>
                             </datePicker>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ykH-Gf-Kll">
-                                <rect key="frame" x="28" y="183" width="320" height="44"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bs0-5u-2l1">
-                                        <rect key="frame" x="8" y="11" width="304" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bs0-5u-2l1">
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="Bs0-5u-2l1" firstAttribute="leading" secondItem="ykH-Gf-Kll" secondAttribute="leading" constant="8" id="1za-IH-6gk"/>
                                     <constraint firstAttribute="height" constant="44" id="2qz-Dv-nEE"/>
@@ -1081,24 +1037,43 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                     </mask>
                                 </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3PD-ZB-USP">
-                                <rect key="frame" x="28" y="442" width="320" height="40"/>
-                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lfi-Ak-NN7">
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qoe-oj-SqP">
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="hWS-vE-Cjr"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3PD-ZB-USP">
+                                        <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="jsp-zU-cZ9"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <state key="normal" title="OK">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="doFinish:" destination="sgz-Wv-R7v" eventType="touchUpInside" id="QtI-IQ-Vz9"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="jsp-zU-cZ9"/>
+                                    <constraint firstItem="3PD-ZB-USP" firstAttribute="centerX" secondItem="lfi-Ak-NN7" secondAttribute="centerX" id="MR3-wC-lGX"/>
+                                    <constraint firstItem="Qoe-oj-SqP" firstAttribute="top" secondItem="lfi-Ak-NN7" secondAttribute="top" id="RZd-dz-gzc"/>
+                                    <constraint firstItem="3PD-ZB-USP" firstAttribute="width" secondItem="lfi-Ak-NN7" secondAttribute="width" multiplier="0.9" id="eec-Jp-O5u"/>
+                                    <constraint firstAttribute="height" constant="50" id="fRZ-8j-t6d"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qoe-oj-SqP" secondAttribute="trailing" id="i1q-Sg-9gb"/>
+                                    <constraint firstItem="Qoe-oj-SqP" firstAttribute="leading" secondItem="lfi-Ak-NN7" secondAttribute="leading" id="jhC-hr-P9a"/>
+                                    <constraint firstItem="3PD-ZB-USP" firstAttribute="centerY" secondItem="lfi-Ak-NN7" secondAttribute="centerY" multiplier="1.05" id="mYu-Im-kya"/>
                                 </constraints>
-                                <state key="normal" title="OK">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="doFinish:" destination="sgz-Wv-R7v" eventType="touchUpInside" id="QtI-IQ-Vz9"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="WER-Tw-3bM" firstAttribute="top" secondItem="eL3-lQ-YSt" secondAttribute="top" id="64m-dL-Dhq"/>
-                            <constraint firstItem="3PD-ZB-USP" firstAttribute="top" secondItem="eL3-lQ-YSt" secondAttribute="bottom" id="6zE-nu-WUB"/>
                             <constraint firstItem="ykH-Gf-Kll" firstAttribute="leading" secondItem="eL3-lQ-YSt" secondAttribute="leading" id="74i-oN-BJY"/>
                             <constraint firstItem="WER-Tw-3bM" firstAttribute="trailing" secondItem="eL3-lQ-YSt" secondAttribute="trailing" id="9GK-AC-3ig"/>
                             <constraint firstItem="eL3-lQ-YSt" firstAttribute="top" secondItem="5jt-ib-CBJ" secondAttribute="bottom" constant="181" id="CkV-zW-yFk"/>
@@ -1106,11 +1081,12 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                             <constraint firstItem="eL3-lQ-YSt" firstAttribute="centerX" secondItem="p0G-Ap-ZPm" secondAttribute="centerX" id="JBl-tM-p9O"/>
                             <constraint firstItem="eL3-lQ-YSt" firstAttribute="top" secondItem="ykH-Gf-Kll" secondAttribute="bottom" constant="-1" id="KvC-1a-Qha"/>
                             <constraint firstItem="ykH-Gf-Kll" firstAttribute="trailing" secondItem="eL3-lQ-YSt" secondAttribute="trailing" id="MVd-Jt-P65"/>
-                            <constraint firstItem="3PD-ZB-USP" firstAttribute="trailing" secondItem="eL3-lQ-YSt" secondAttribute="trailing" id="N2E-9o-up6"/>
-                            <constraint firstItem="3PD-ZB-USP" firstAttribute="leading" secondItem="eL3-lQ-YSt" secondAttribute="leading" id="Obu-Dl-dSO"/>
                             <constraint firstItem="WER-Tw-3bM" firstAttribute="leading" secondItem="eL3-lQ-YSt" secondAttribute="leading" id="QfG-6w-38G"/>
                             <constraint firstItem="WER-Tw-3bM" firstAttribute="bottom" secondItem="eL3-lQ-YSt" secondAttribute="bottom" id="lCx-Zi-gmJ"/>
+                            <constraint firstItem="lfi-Ak-NN7" firstAttribute="trailing" secondItem="ykH-Gf-Kll" secondAttribute="trailing" id="n2f-9L-1iK"/>
+                            <constraint firstItem="lfi-Ak-NN7" firstAttribute="leading" secondItem="ykH-Gf-Kll" secondAttribute="leading" id="nRP-Fp-waW"/>
                             <constraint firstItem="eL3-lQ-YSt" firstAttribute="centerY" secondItem="p0G-Ap-ZPm" secondAttribute="centerY" id="oz1-4n-A2D"/>
+                            <constraint firstItem="lfi-Ak-NN7" firstAttribute="top" secondItem="ykH-Gf-Kll" secondAttribute="bottom" constant="214.5" id="r5s-8t-rqC"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -1119,9 +1095,10 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                             </mask>
                         </variation>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="datePicker" destination="eL3-lQ-YSt" id="P0z-QI-BPg"/>
+                        <outlet property="heightS" destination="hWS-vE-Cjr" id="ZLX-Ag-TES"/>
+                        <outlet property="okBtn" destination="3PD-ZB-USP" id="GVB-mf-3wJ"/>
                         <outlet property="timeLbl" destination="Bs0-5u-2l1" id="gHh-FQ-dKv"/>
                     </connections>
                 </viewController>
@@ -1138,27 +1115,25 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <viewControllerLayoutGuide type="bottom" id="gi3-zj-BEQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="9q9-MF-pby">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="u4A-M7-BE3">
-                                <rect key="frame" x="0.0" y="59" width="414" height="540"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="headCell" id="Zfv-eZ-HGF" customClass="ClockHourCell" customModule="BA_Clock" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                        <frame key="frameInset" minY="92" width="383" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zfv-eZ-HGF" id="vBT-Uj-wge">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                            <frame key="frameInset" width="383" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gl9-0z-59G">
-                                                    <rect key="frame" x="290" y="12" width="116" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="80" id="SbS-hV-Ojt"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
@@ -1167,27 +1142,23 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P4p-kM-S95">
-                                                    <rect key="frame" x="18" y="12" width="122" height="20"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzc-k2-cbh">
-                                                    <rect key="frame" x="157" y="12" width="116" height="20"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C0p-bs-WDX">
-                                                    <rect key="frame" x="281" y="-2" width="1" height="47"/>
-                                                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="1" id="cEG-is-YdF"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQ8-r5-k3F">
-                                                    <rect key="frame" x="148" y="-2" width="1" height="47"/>
-                                                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </view>
                                             </subviews>
                                             <constraints>
@@ -1226,19 +1197,18 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contentCell" id="uZ9-h8-ibQ" customClass="ClockHourCell" customModule="BA_Clock" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="136" width="414" height="44"/>
+                                        <frame key="frameInset" minY="136" width="383" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uZ9-h8-ibQ" id="VXU-29-uHY">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                            <frame key="frameInset" width="383" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxM-lU-UZa">
-                                                    <rect key="frame" x="290" y="11" width="116" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="80" id="tZ6-r5-bwt"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
@@ -1247,27 +1217,23 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATT-o0-ygZ">
-                                                    <rect key="frame" x="18" y="11" width="122" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ryu-O0-XX2">
-                                                    <rect key="frame" x="157" y="11" width="116" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyp-PW-SW2">
-                                                    <rect key="frame" x="281" y="-2" width="1" height="47"/>
-                                                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="1" id="JAq-dX-Bq7"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dmz-60-OJX">
-                                                    <rect key="frame" x="148" y="-2" width="1" height="47"/>
-                                                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </view>
                                             </subviews>
                                             <constraints>
@@ -1315,67 +1281,62 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rmz-wT-tJr">
-                                <rect key="frame" x="0.0" y="600" width="414" height="43"/>
-                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="yGp-vG-HRO"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <state key="normal" title="Logout">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="Logout:" destination="Hlg-vI-xeP" eventType="touchUpInside" id="rs8-Br-AW5"/>
-                                    <action selector="dosubmit:" destination="87Q-nH-QVh" eventType="touchUpInside" id="T0N-bM-L1E"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ad-QT-FL5">
-                                <rect key="frame" x="0.0" y="644" width="414" height="43"/>
-                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.074509803920000006" green="0.28235294119999998" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <state key="normal" title="Check for Update">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="checkUpdate:" destination="Hlg-vI-xeP" eventType="touchUpInside" id="zuO-83-6J9"/>
-                                    <action selector="dosubmit:" destination="87Q-nH-QVh" eventType="touchUpInside" id="CZG-uy-nvZ"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6ad-QT-FL5" firstAttribute="width" secondItem="Rmz-wT-tJr" secondAttribute="width" id="0Ql-Ld-eCY"/>
-                            <constraint firstItem="6ad-QT-FL5" firstAttribute="top" secondItem="Rmz-wT-tJr" secondAttribute="bottom" constant="1" id="5kf-Lz-K1K"/>
-                            <constraint firstItem="Rmz-wT-tJr" firstAttribute="top" secondItem="u4A-M7-BE3" secondAttribute="bottom" constant="1" id="Ahr-dZ-pcJ"/>
-                            <constraint firstItem="6ad-QT-FL5" firstAttribute="trailing" secondItem="Rmz-wT-tJr" secondAttribute="trailing" id="Cob-fW-9TI"/>
+                            <constraint firstItem="6ad-QT-FL5" firstAttribute="top" secondItem="Rmz-wT-tJr" secondAttribute="bottom" constant="5" id="5kf-Lz-K1K"/>
+                            <constraint firstItem="Rmz-wT-tJr" firstAttribute="top" secondItem="u4A-M7-BE3" secondAttribute="bottom" constant="10" id="Ahr-dZ-pcJ"/>
                             <constraint firstItem="u4A-M7-BE3" firstAttribute="top" secondItem="cys-Gd-8nJ" secondAttribute="bottom" constant="-5" id="HN5-pa-Fqp"/>
-                            <constraint firstItem="Rmz-wT-tJr" firstAttribute="leading" secondItem="u4A-M7-BE3" secondAttribute="leading" id="Hu7-Mi-cE3"/>
+                            <constraint firstItem="Rmz-wT-tJr" firstAttribute="leading" secondItem="9q9-MF-pby" secondAttribute="leadingMargin" id="TnZ-Bc-qAk"/>
                             <constraint firstItem="6ad-QT-FL5" firstAttribute="height" secondItem="Rmz-wT-tJr" secondAttribute="height" id="XYc-dO-ACJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Rmz-wT-tJr" secondAttribute="trailing" id="Ysb-3Y-Gh5"/>
                             <constraint firstItem="6ad-QT-FL5" firstAttribute="leading" secondItem="Rmz-wT-tJr" secondAttribute="leading" id="i8P-2Q-NKE"/>
-                            <constraint firstItem="gi3-zj-BEQ" firstAttribute="top" secondItem="u4A-M7-BE3" secondAttribute="bottom" constant="88" id="n3E-yd-6tc"/>
+                            <constraint firstItem="gi3-zj-BEQ" firstAttribute="top" secondItem="6ad-QT-FL5" secondAttribute="bottom" constant="5" id="lem-Zs-uR3"/>
                             <constraint firstItem="u4A-M7-BE3" firstAttribute="leading" secondItem="9q9-MF-pby" secondAttribute="leadingMargin" constant="-20" id="nfn-0N-fRe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="u4A-M7-BE3" secondAttribute="trailing" constant="-20" id="sdN-QE-hBu"/>
-                            <constraint firstItem="Rmz-wT-tJr" firstAttribute="trailing" secondItem="u4A-M7-BE3" secondAttribute="trailing" id="vPy-ly-rfM"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="WU6-gr-sBV"/>
                     <navigationItem key="navigationItem" title="Schedule Hours" id="72Z-Pj-hoI">
                         <barButtonItem key="leftBarButtonItem" image="back" id="jmY-Pu-gmG">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="goBack:" destination="Hlg-vI-xeP" id="sxn-Vc-GGg"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="GIS" id="tK8-kO-Lhe">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="ASm-2k-YT5" kind="show" id="kmX-TS-A1w"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
-                        <outlet property="logoutBtn" destination="Rmz-wT-tJr" id="BRX-85-nfV"/>
+                        <outlet property="checkBtn" destination="6ad-QT-FL5" id="Dm0-D8-nKx"/>
+                        <outlet property="logout1Btn" destination="Rmz-wT-tJr" id="b10-JG-KCd"/>
                         <outlet property="tablewView" destination="u4A-M7-BE3" id="ZHu-QQ-Iv1"/>
                     </connections>
                 </viewController>
@@ -1392,9 +1353,9 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <viewControllerLayoutGuide type="bottom" id="8C0-8h-N2M"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4hz-Hr-NI9">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="FKk-gh-aZt"/>
                 </viewController>
@@ -1410,9 +1371,9 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                         <viewControllerLayoutGuide type="bottom" id="3ay-Ss-o5T"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mlS-T5-iM6">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="prU-s4-GuC"/>
                 </viewController>
@@ -1426,7 +1387,7 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                     <tabBar key="tabBar" contentMode="scaleToFill" id="YPb-qP-XND">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="88H-ps-lLz" kind="relationship" relationship="viewControllers" id="imn-1s-jeh"/>
@@ -1436,10 +1397,10 @@ Absolutely you can use Facebook against the dishonest employee you terminated.  
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mx6-uu-rPh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationItem title="Title" id="Mbg-Au-Apk">
                     <barButtonItem key="leftBarButtonItem" title="Clear Pins" id="rvO-LJ-caA">
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </barButtonItem>
                     <barButtonItem key="rightBarButtonItem" image="settings" id="mem-fJ-oxL">
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
                             <action selector="gotoLog:" destination="Pxs-Of-gi9" id="w1n-xH-xRw"/>
                         </connections>

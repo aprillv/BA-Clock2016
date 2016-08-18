@@ -38,17 +38,23 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         super.init()
         self.locationManager = CLLocationManager()
         self.locationManager?.delegate = self
+        self.locationManager?.requestAlwaysAuthorization()
+        self.locationManager?.activityType = .Fitness
         self.setHighLocationAccurcy()
         
     }
     
     func startUpdatingLocation() {
-        self.locationManager?.requestAlwaysAuthorization()
-        self.locationManager?.allowsBackgroundLocationUpdates = true
         
+        self.locationManager?.allowsBackgroundLocationUpdates = true
         self.setHighLocationAccurcy()
         
         self.locationManager?.startUpdatingLocation()
+        
+        let nextInterval = self.getFirstQuauterTimeSpace(diffinterval)
+        
+        NSTimer.scheduledTimerWithTimeInterval(nextInterval, target: self, selector: #selector(CLocationManager.updateLocation99), userInfo: nil, repeats: false)
+        
         
     }
     
@@ -67,7 +73,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         let info = UILocalNotification()
         info.fireDate = endTime.dateByAddingTimeInterval(10.0 * 60.0 + 1.0)
         info.timeZone = NSTimeZone.defaultTimeZone()
-        info.alertBody = "You should click come back now. It is time out more than 10 minutes."
+        info.alertBody = "You should click come back now. It is more than 10 minutes since you go out."
         info.soundName = UILocalNotificationDefaultSoundName
         info.applicationIconBadgeNumber = 1
         UIApplication.sharedApplication().scheduleLocalNotification(info)
@@ -102,8 +108,20 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
             lastTimestamp = NSDate()
             NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(CLocationManager.updateLocation), userInfo: nil, repeats: false)
         }
+//        self.callSubmitLocationService(location?.coordinate.latitude, longitude1: location?.coordinate.longitude, time: self.getClientTime())
+//        if (!deferringUpdates) {
+//            let distance: CLLocationDistance = 100000
+//            let time: NSTimeInterval = 5*60;
+//            manager.allowDeferredLocationUpdatesUntilTraveled(distance, timeout:time)
+//            deferringUpdates = true;
+//        }
+        
     }
     
+//    var deferringUpdates = false
+//    func locationManager(manager: CLLocationManager, didFinishDeferredUpdatesWithError error: NSError?) {
+//        deferringUpdates = false
+//    }
     
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError){
@@ -125,9 +143,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         self.callSubmitLocationService(lat, longitude1: lng, time: self.getClientTime())
         if hasfirstTrack == 1 {
             hasfirstTrack = 2
-           let nextInterval = self.getFirstQuauterTimeSpace(diffinterval)
-            
-            NSTimer.scheduledTimerWithTimeInterval(nextInterval, target: self, selector: #selector(CLocationManager.updateLocation99), userInfo: nil, repeats: false)
+           
         }
     }
     

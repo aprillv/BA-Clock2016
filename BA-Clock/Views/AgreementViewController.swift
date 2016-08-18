@@ -16,6 +16,16 @@ class AgreementViewController: BaseViewController {
 
     var delegate : afterAgreeDelegate?
     
+    @IBOutlet var disagreeBtn: UIButton!{
+        didSet{
+            disagreeBtn.layer.cornerRadius = 5.0
+        }
+    }
+    @IBOutlet var agreeBtn: UIButton!{
+        didSet{
+            agreeBtn.layer.cornerRadius = 5.0
+        }
+    }
     @IBOutlet var contentview: UITextView!{
         didSet{
             contentview.scrollRangeToVisible(NSMakeRange(0, 0))

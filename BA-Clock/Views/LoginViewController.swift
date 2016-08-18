@@ -358,6 +358,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
         self.checkUpate()
         let userInfo = NSUserDefaults.standardUserDefaults()
         userInfo.setValue("0", forKey: CConstants.RegisteredDeviceToken)
+        userInfo.setBool(true, forKey: CConstants.ToAddTrack)
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
         self.navigationController?.navigationBar.translucent = false

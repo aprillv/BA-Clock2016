@@ -220,6 +220,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                 let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
                 loginRequiredInfo.Token = token
                 loginRequiredInfo.TokenSecret = tokenSecret
+                
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     if response.result.isSuccess {
                         //                        print0000("++++++++++++++++++++++++++++")
@@ -373,29 +374,6 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         
     }
     
-//    func clockInTapped(tap : UITapGestureRecognizer){
-//        //        print0000("sfsdf \(tap.view?.superview?.tag)  \(tap.view?.layer.valueForKey("lng"))")
-//        showMap(true,tap: tap)
-//    }
-//    
-//    func clockOutTapped(tap : UITapGestureRecognizer){
-//        //         print0000("out sfsdf \(tap.view?.layer.valueForKey("lat"))  \(tap.view?.layer.valueForKey("lng"))")
-//        showMap(false,tap: tap)
-//    }
-//    
-//    private func showMap(isIn: Bool, tap : UITapGestureRecognizer) {
-//        self.isIn = isIn
-//        if let tag = tap.view?.superview?.tag {
-//            //            print0000("tag" + "\(tag)")
-//            let list = clockDataList!
-//            if let item : ScheduledDayItem = list[tag] {
-//                self.selectedItem = item
-//                self.performSegueWithIdentifier("showMapDetail", sender: nil)
-//            }
-//        }
-//        
-//    }
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showMapDetail" {
             if let item = self.selectedItem {
@@ -505,6 +483,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                 
                 self.refreshControl?.beginRefreshing()
                 //                    print0000(self.refreshControl)
+            print(loginRequiredInfo.getPropertieNamesAsDictionary())
                 currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetGISTrackURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
                     
                     self.refreshControl?.endRefreshing()
@@ -530,6 +509,14 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                                 }
                                 self.drawTrackPath()
                                 self.trackTable.reloadData()
+                                if let a = rtnValue["polygons"] as? [[String: String]]{
+                                    for it in a {
+                                        for (ke, va) in it {
+                                            self.drawPolygon(va)
+                                            print(ke)
+                                        }
+                                    }
+                                }
                             }else{
                                 self.PopMsgWithJustOK(msg: rtnValue["Message"] as! String) {
                                     (action : UIAlertAction) -> Void in
@@ -576,6 +563,31 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         }
         
     }
+    
+    private func drawPolygon(p : String){
+        let s = p.stringByReplacingOccurrencesOfString("POLYGON ((", withString: "").stringByReplacingOccurrencesOfString("))", withString: "")
+        let alist = s.componentsSeparatedByString(", ")
+        var dotsArray = [CLLocationCoordinate2D]()
+        for al in alist {
+            let c = al.componentsSeparatedByString(" ")
+            if c.count == 2 {
+                if let lat = Double(c[1]),
+                    let lng = Double(c[0]) {
+//                    print(lat,lng)
+                    
+                    dotsArray.append(CLLocationCoordinate2D(latitude: lat, longitude: lng))
+                }
+            }
+        }
+        if dotsArray.count > 0 {
+//           print(dotsArray)
+//            trackMap.setVisibleMapRect(MKPolygon(coordinates: &dotsArray, count: dotsArray.count).boundingMapRect, edgePadding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), animated: true)
+            trackMap.addOverlay(MKPolygon(coordinates: &dotsArray, count: dotsArray.count))
+            
+        }
+        
+    }
+    
     
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         let pr = MKPolylineRenderer(overlay: overlay)

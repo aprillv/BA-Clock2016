@@ -192,11 +192,16 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         dext?.resignFirstResponder()
     }
 
+    @IBOutlet var submitBtn: UIButton!{
+        didSet{
+            submitBtn.layer.cornerRadius = 5.0
+        }
+    }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch indexPath.section{
         case 3:
-            return 120
+            return 180
         default:
             return 44
         }

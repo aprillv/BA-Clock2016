@@ -12,25 +12,26 @@ import MapKit
 
 class ClockMapViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, MKMapViewDelegate {
 
-    @IBOutlet var hidmap: MKMapView!{
-        didSet{
-//            hidmap.showsUserLocation = true
-//            hidmap.delegate = self
-////            36.7047370224665 119.184943323601
+//    @IBOutlet var hidmap: MKMapView!{
+//        didSet{
+////            hidmap.showsUserLocation = true
+////            hidmap.delegate = self
+//////            36.7047370224665 119.184943323601
+////            hidmap.hidden = true
+////          updateLocaiton0()
 //            
-//             NSTimer.scheduledTimerWithTimeInterval(58, target: self, selector: #selector(updateLocaiton0), userInfo: nil, repeats: true)
-            
-        }
-    }
-    
-//    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-//        print0000(userLocation.coordinate.latitude,userLocation.coordinate.longitude, "ddd")
-//       
-//        
+//        }
 //    }
+//    
+////    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+////        print0000(userLocation.coordinate.latitude,userLocation.coordinate.longitude, "ddd")
+////       
+////        
+////    }
 //    func updateLocaiton0 ()  {
 //        hidmap.showsUserLocation = true
 //        NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(updateLocaiton), userInfo: nil, repeats: false)
+//        NSTimer.scheduledTimerWithTimeInterval(302, target: self, selector: #selector(updateLocaiton0), userInfo: nil, repeats: false)
 //    }
 //    func updateLocaiton ()  {
 //        
@@ -42,6 +43,7 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
 //        locationManager?.callSubmitLocationService(hidmap.userLocation.coordinate.latitude, longitude1: hidmap.userLocation.coordinate.longitude, time: ClientTime)
 //        hidmap.showsUserLocation = false
 //    }
+    
     @IBOutlet var tabbar: UITabBar!{
         didSet{
             let userInfo = NSUserDefaults.standardUserDefaults()
@@ -239,12 +241,14 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     }
     
     
-  
+//    func stopMapLoaction() {
+//        self.hidmap.showsUserLocation = false
+//    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(stopMapLoaction), name:CConstants.AppTerminal, object: nil)
 //        let ss = cl_showSchedule()
 //        let rtn = ss.getScheduledList()
 //        if rtn.count == 0 {

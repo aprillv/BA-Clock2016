@@ -154,6 +154,16 @@ class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITable
         return cell
     }
     
+    @IBOutlet var logout1Btn: UIButton!{
+        didSet{
+            logout1Btn.layer.cornerRadius = 5.0
+        }
+    }
+    @IBOutlet var checkBtn: UIButton!{
+        didSet{
+            checkBtn.layer.cornerRadius = 5.0
+        }
+    }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 44.0
     }

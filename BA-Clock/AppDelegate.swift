@@ -109,6 +109,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
 
+    
+    
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         var deviceTokenStr = "\(deviceToken)"
         deviceTokenStr = deviceTokenStr.stringByReplacingOccurrencesOfString(" ", withString: "")
@@ -168,6 +170,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+        CLocationManager.sharedInstance.stopUpdatingLocation()
+        NSNotificationCenter.defaultCenter().postNotificationName(CConstants.AppTerminal, object: nil)
     }
 
     // MARK: - Core Data stack
@@ -260,6 +264,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }
         
     }
+    
+    
+
     
 //    func applicationWillEnterForeground(application: UIApplication) {
 ////        print0000("************")

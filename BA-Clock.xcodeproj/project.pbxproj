@@ -101,6 +101,7 @@
 		111BF4BF1C4E22AC00C94E66 /* ClockResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockResponse.swift; sourceTree = "<group>"; };
 		111FF7E51C92906200960FD3 /* AgreementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		112D38981C9A72A100E98E9C /* TextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
+		114A8ED11D585E6D00C7A449 /* BA-Clock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BA-Clock.entitlements"; sourceTree = "<group>"; };
 		11561A0E1C4F6C3D007A049A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1158DA6E1C44CF3A0022B2D5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1158DA781C44CF930022B2D5 /* ClockMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockMapViewController.swift; sourceTree = "<group>"; };
@@ -213,6 +214,7 @@
 		11128F5B1C3E0EE2006390C1 /* BA-Clock */ = {
 			isa = PBXGroup;
 			children = (
+				114A8ED11D585E6D00C7A449 /* BA-Clock.entitlements */,
 				11E889401C4F5632003E9633 /* CoreData */,
 				110645A21C4725D900795996 /* Tools */,
 				110B81121C46259F00FE136D /* CustomControl */,
@@ -319,6 +321,7 @@
 					11128F581C3E0EE2006390C1 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 7D8CVP7EK4;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -559,6 +562,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "BA-Clock/BA-Clock.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -575,6 +579,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BA-Clock/Views/BA-Clock-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -584,6 +589,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "BA-Clock/BA-Clock.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -599,6 +605,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BA-Clock/Views/BA-Clock-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
