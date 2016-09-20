@@ -59,7 +59,7 @@ class BaseViewController: UIViewController {
         let alert: UIAlertController = UIAlertController(title: CConstants.MsgTitle, message: msg1, preferredStyle: .Alert)
         
         //Create and add the OK action
-        let oKAction: UIAlertAction = UIAlertAction(title: CConstants.MsgOKTitle, style: .Cancel) { action -> Void in
+        let oKAction: UIAlertAction = UIAlertAction(title: CConstants.MsgOKTitle, style: .Cancel) { [weak txtField] action -> Void in
             //Do some stuff
             txtField?.becomeFirstResponder()
         }
@@ -130,7 +130,10 @@ class BaseViewController: UIViewController {
 //        })
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: CConstants.LocationServericeChanged)
         self.PopMsgWithJustOK(msg: CConstants.TurnOnLocationServiceMsg) { (action) in
-            self.popToRootLogin()
+            if let url = NSURL(string: UIApplicationOpenSettingsURLString){
+                UIApplication.sharedApplication().openURL(url)
+            }
+//            self.popToRootLogin()
         }
         
     }

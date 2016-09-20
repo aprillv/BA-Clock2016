@@ -428,8 +428,8 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
     private func callGetList(){
 //        print0000("+++++++++++++")
         let userInfo = NSUserDefaults.standardUserDefaults()
-        if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String{
-            if let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String,
+        if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String,
+            let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String,
             email = userInfo.valueForKey(CConstants.UserInfoEmail) as? String,
             pwd = userInfo.valueForKey(CConstants.UserInfoPwd) as? String{
                 let tl = Tool()
@@ -459,8 +459,9 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                     if self.clockDataList == nil {
                         hud!.hide(true)
                     }
+//                    print(response.result)
                     if response.result.isSuccess {
-//                        print0000(response.result.value)
+//                        print(response.result.value)
                         if let rtnValue = response.result.value as? [String: AnyObject]{
                             
                             if rtnValue["Status"]!.integerValue == 1 {
@@ -502,68 +503,6 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                     self.clockDataList = tmpaaaa
 //                                    self.updateLastSyncDateTime()
                                 }
-                                
-//                                return
-//                                if self.clockDataList != nil {
-////                                    var changed = false
-////                                    if let list = rtnValue["ScheduledDay"] as? [[String: AnyObject]] {
-////                                        for item in list{
-////                                            let info = ScheduledDayItem(dicInfo: item)
-////                                            
-////                                            
-////                                            if self.clockDataList!.filter(
-////                                                { $0.ClockIn == info.ClockIn && $0.ClockOut == info.ClockOut}
-////                                                ).count > 0 {
-////                                            } else {
-////                                                let listtmp = self.clockDataList!.filter(
-////                                                    { $0.ClockIn == info.ClockIn}
-////                                                )
-////                                                if listtmp.count > 0 {
-////                                                     self.mapTable.beginUpdates()
-////                                                    let ind = self.clockDataList!.indexOf(listtmp[0])
-////                                                    let s = ind?.distanceTo(self.clockDataList!.indexOf(self.clockDataList![0])!)
-////                                                    
-////                                                    let p = NSIndexPath(forRow: -s!, inSection: 0)
-////                                                    self.clockDataList![-s!] = info
-////                                                    
-////                                                    self.mapTable.reloadRowsAtIndexPaths([p], withRowAnimation: .None)
-////                                                    self.mapTable.endUpdates()
-////                                                }else{
-////                                                    self.mapTable.beginUpdates()
-////                                                    let h = self.clockDataList!.count
-////                                                    self.clockDataList?.insert(info, atIndex: h)
-////                                                    let p = NSIndexPath(forRow: h, inSection: 0)
-////                                                    self.mapTable.insertRowsAtIndexPaths([p], withRowAnimation: .Top)
-////                                                    self.mapTable.endUpdates()
-////                                                }
-////                                                
-////                                                
-////                                            }
-////                                            
-////                                        }
-////                                        
-////                                        var toshow = true
-////                                        if let h = self.clockDataList?.last {
-////                                            if h.ClockIn == "-1" {
-////                                               toshow = false
-////                                            }
-////                                        }
-////                                        if toshow {
-////                                            let tl = Tool()
-////                                            let (isTime, timespace) = tl.getTimeInter()
-////                                            
-////                                            if !isTime {
-////                                                self.clockDataList!.append(ScheduledDayItem(dicInfo: ["ClockIn" : "-1", "ClockOut":"-1"]))
-////                                                if timespace > 0 {
-////                                                    
-////                                                }
-////                                            }
-////                                        }
-////                                        
-////                                        self.scrollToBottom()
-////                                    }
-//                                    
-//                                }else{
                                     var tmpaaaa =  [ScheduledDayItem]()
                                     let ss = cl_showSchedule()
                                     for item in rtnValue["ScheduledDay"] as! [[String: AnyObject]]{
@@ -596,26 +535,34 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
 //                                }
                             }else{
                                 self.PopMsgWithJustOK(msg: rtnValue["Message"] as! String) {
-                                    (action : UIAlertAction) -> Void in
-                                    
-                                    self.popToRootLogin()
+                                    [weak self](action : UIAlertAction) -> Void in
+                                    CLocationManager.sharedInstance.stopUpdatingLocation()
+                                    self?.popToRootLogin()
                                 }
                             }
                             
                         }else{
+                            self.PopServerError()
                         }
                     }else{
                         self.PopNetworkError()
                     }
                     
                 }
+        }else{
+            self.PopMsgWithJustOK(msg: "Token invalid, please re-login with your username and password.") {
+                [weak self](action : UIAlertAction) -> Void in
+                CLocationManager.sharedInstance.stopUpdatingLocation()
+                self?.popToRootLogin()
             }
         }
         
         
     }
     
-    
+//    deinit {
+//        print("remove from heap")
+//    }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 100
@@ -822,9 +769,10 @@ class ClockMapViewController: BaseViewController, UITableViewDataSource, UITable
                                     msg = msg?.stringByReplacingOccurrencesOfString("clock in", withString: "clock in or come back")
                                 }
                                 self.PopMsgWithJustOK(msg: msg ?? "") {
-                                    (action : UIAlertAction) -> Void in
+                                    [weak self] (action : UIAlertAction) -> Void in
                                     if rtn.Status == -4 {
-                                        self.popToRootLogin()
+                                        CLocationManager.sharedInstance.stopUpdatingLocation()
+                                        self?.popToRootLogin()
                                     }
                                     
                                     

@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Alamofire
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,7 +40,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }
 //    }
     
-    
+//    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+//        print("4444@@@@", notification.alertBody)
+//        CLocationManager.sharedInstance.startUpdatingLocation()
+//    }
+//    
+//    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+////        print("@@@@", notification.alertBody)
+//        CLocationManager.sharedInstance.startUpdatingLocation()
+//    }
     
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -147,11 +156,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-//        print0000("fort tessssssss")
+//        print("fort tessssssss")
         // display the userInfo
-        if let _ = userInfo["aps"] as? NSDictionary {
-
-                
+        
+        if let aps = userInfo["aps"] as? NSDictionary {
+            
+//            print(aps.count, aps.allKeys)
+            for vaa in aps.allKeys {
+                if let s = vaa as? String {
+                    if s == "content-available" {
+//                        switch CLLocationManager.authorizationStatus() {
+//                        case .AuthorizedAlways:
+//                            print("AuthorizedAlways")
+//                        default:
+//                            print("other")
+//                        }
+//                        print(CLLocationManager.authorizationStatus())
+                        var bgtask : UIBackgroundTaskIdentifier
+                        bgtask = application.beginBackgroundTaskWithExpirationHandler({
+                            CLocationManager.sharedInstance.startUpdatingLocation()
+                        })
+                    }
+                }
+            }
+            
                 UIApplication.sharedApplication().applicationIconBadgeNumber = 0
                 
                 // call the completion handler
@@ -162,9 +190,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
 
-//    func applicationDidBecomeActive(application: UIApplication) {
-//        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-//    }
+    func applicationDidBecomeActive(application: UIApplication) {
+        CLocationManager.sharedInstance.startUpdatingLocation()
+        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
@@ -249,7 +278,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var  backgroundUpdateTask : UIBackgroundTaskIdentifier?
     
     func applicationWillResignActive(application: UIApplication) {
-//        print0000("&&&&&&&&&&&&&&&&&&")
+//        print("&&&&&&&&&&&&&&&&&&")
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 //        backgroundUpdateTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
@@ -268,12 +297,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
     
-//    func applicationWillEnterForeground(application: UIApplication) {
-////        print0000("************")
-////        endBackgroundUpdateTask()
-//    }
+    func applicationWillEnterForeground(application: UIApplication) {
+//        for win in UIApplication.sharedApplication().windows {
+//            let a = win.subviews
+//            if a.count > 0 {
+//                for vi in a {
+//                    if vi .isKindOfClass(UIAlertController)
+//                }
+//            }
+//        }
+        CLocationManager.sharedInstance.updateLocation()
+        let c = UIApplication.sharedApplication().keyWindow?.rootViewController
+        if let a = c?.presentedViewController as? UIAlertController {
+            if a.message == CConstants.TurnOnLocationServiceMsg {
+                let status = CLLocationManager.authorizationStatus()
+                if status == .AuthorizedAlways{
+                    c?.dismissViewControllerAnimated(true){}
+                }
+            }
+            
+        }else{
+            let status = CLLocationManager.authorizationStatus()
+            if status != .AuthorizedAlways && status != .NotDetermined{
+                NSNotificationCenter.defaultCenter().postNotificationName(CConstants.LocationServericeChanged, object: nil)
+            }
+        }
+        
+        
+//        endBackgroundUpdateTask()
+    }
 //
     
 
 }
+
 

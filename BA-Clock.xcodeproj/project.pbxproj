@@ -167,7 +167,6 @@
 				1166D8561C4CC8CE00878F7C /* LoginRequired.swift */,
 				111BF4B61C4E121600C94E66 /* OAuthTokenItem.swift */,
 				111BF4BF1C4E22AC00C94E66 /* ClockResponse.swift */,
-				11128F721C3E35CA006390C1 /* Views */,
 				11F8DC2F1C50A981002E4736 /* FrequencyItem.swift */,
 				11104F891C589ED100DF7922 /* DeviceTokenRequired.swift */,
 				11BCEBD11C608D3E007726D4 /* TrackDotItem.swift */,
@@ -218,6 +217,7 @@
 				11E889401C4F5632003E9633 /* CoreData */,
 				110645A21C4725D900795996 /* Tools */,
 				110B81121C46259F00FE136D /* CustomControl */,
+				11128F721C3E35CA006390C1 /* Views */,
 				110B81091C45FBD700FE136D /* Models */,
 				11128F5C1C3E0EE2006390C1 /* AppDelegate.swift */,
 				11128F661C3E0EE2006390C1 /* Assets.xcassets */,
@@ -247,8 +247,7 @@
 				111293DC1CDB3AC400B0DAFC /* CLocationManager.swift */,
 				11B45F2C1D518FC60032AA7D /* ClockHoursViewController.swift */,
 			);
-			name = Views;
-			path = ..;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		11E889401C4F5632003E9633 /* CoreData */ = {

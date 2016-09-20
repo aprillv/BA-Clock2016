@@ -55,6 +55,7 @@ class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITable
     
     
     @IBAction func Logout(sender: UIButton) {
+        CLocationManager.sharedInstance.stopUpdatingLocation()
         self.popToRootLogin()
     }
     @IBAction func goBack(sender: AnyObject) {

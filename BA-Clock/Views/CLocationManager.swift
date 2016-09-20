@@ -40,6 +40,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         self.locationManager?.delegate = self
         self.locationManager?.requestAlwaysAuthorization()
         self.locationManager?.activityType = .Fitness
+        self.locationManager?.pausesLocationUpdatesAutomatically = false
         self.setHighLocationAccurcy()
         
     }
@@ -54,8 +55,14 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         let nextInterval = self.getFirstQuauterTimeSpace(diffinterval)
         
         NSTimer.scheduledTimerWithTimeInterval(nextInterval, target: self, selector: #selector(CLocationManager.updateLocation99), userInfo: nil, repeats: false)
+//        print("222222222locationManager")
         
-        
+//        let info = UILocalNotification()
+//        info.fireDate = NSDate().dateByAddingTimeInterval(60)
+//        info.timeZone = NSTimeZone.defaultTimeZone()
+//        info.soundName = UILocalNotificationDefaultSoundName
+//        info.applicationIconBadgeNumber = 0
+//        UIApplication.sharedApplication().scheduleLocalNotification(info)
     }
     
     func setHighLocationAccurcy() {
@@ -69,14 +76,34 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     
     
     func setNotComeBackNotification(endTime : NSDate) {
-       
-        let info = UILocalNotification()
-        info.fireDate = endTime.dateByAddingTimeInterval(10.0 * 60.0 + 1.0)
-        info.timeZone = NSTimeZone.defaultTimeZone()
-        info.alertBody = "You should click come back now. It is more than 10 minutes since you go out."
-        info.soundName = UILocalNotificationDefaultSoundName
-        info.applicationIconBadgeNumber = 1
-        UIApplication.sharedApplication().scheduleLocalNotification(info)
+        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateFormat = "MM/dd/yyyy HH"
+//        let nowHour = dateFormatter.stringFromDate(date)
+//        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
+//        var now15 = dateFormatter.dateFromString(nowHour + ":00:00")
+        
+        let now = NSDate()
+        dateFormatter.dateFormat = "EEEE"
+        let dayFullName = dateFormatter.stringFromDate(now)
+        
+        let clfrequency = cl_coreData()
+        if let item = clfrequency.getFrequencyByWeekdayNm(dayFullName) {
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            let nowdate = dateFormatter.stringFromDate(now)
+            
+            dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+            let todayTo = dateFormatter.dateFromString("\(nowdate) \(item.ScheduledTo ?? "11:59 PM")")
+            if endTime.dateByAddingTimeInterval(10.0 * 60.0 + 1.0).timeIntervalSinceDate(todayTo ?? now) < 0 {
+                let info = UILocalNotification()
+                info.fireDate = endTime.dateByAddingTimeInterval(10.0 * 60.0 + 1.0)
+                info.timeZone = NSTimeZone.defaultTimeZone()
+                info.alertBody = "You should click come back now. It is more than 10 minutes since you go out."
+                info.soundName = UILocalNotificationDefaultSoundName
+                info.applicationIconBadgeNumber = 1
+                UIApplication.sharedApplication().scheduleLocalNotification(info)
+            }
+        }
+        
     }
    
    
@@ -93,11 +120,19 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status != .AuthorizedAlways && status != .NotDetermined{
+//             print("000")
             NSNotificationCenter.defaultCenter().postNotificationName(CConstants.LocationServericeChanged, object: nil)
+        }else{
+//            print(status)
+//            print("111")
+            let userInfo = NSUserDefaults.standardUserDefaults()
+            userInfo.setBool(true, forKey: CConstants.ToAddTrack)
+            manager.startUpdatingLocation()
+            
         }
     }
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
+//        print("222222--------------")
         let location: CLLocation? = locations.last
         self.currentLocation = location
         
@@ -108,14 +143,6 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
             lastTimestamp = NSDate()
             NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(CLocationManager.updateLocation), userInfo: nil, repeats: false)
         }
-//        self.callSubmitLocationService(location?.coordinate.latitude, longitude1: location?.coordinate.longitude, time: self.getClientTime())
-//        if (!deferringUpdates) {
-//            let distance: CLLocationDistance = 100000
-//            let time: NSTimeInterval = 5*60;
-//            manager.allowDeferredLocationUpdatesUntilTraveled(distance, timeout:time)
-//            deferringUpdates = true;
-//        }
-        
     }
     
 //    var deferringUpdates = false
@@ -125,8 +152,8 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError){
-        
-        manager.stopUpdatingHeading()
+//        print("333333", error)
+//        manager.stopUpdatingHeading()
         manager.startUpdatingLocation()
     
     }
@@ -201,6 +228,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         
     }
     func callSubmitLocationService(latitude : Double?, longitude1 : Double?, time: String){
+//        print("%%%%%%%%%%%%%%%")
         if hasfirstTrack == 0 {
             hasfirstTrack = 1
         }else {

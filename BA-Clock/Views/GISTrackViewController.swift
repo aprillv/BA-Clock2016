@@ -519,9 +519,9 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                                 }
                             }else{
                                 self.PopMsgWithJustOK(msg: rtnValue["Message"] as! String) {
-                                    (action : UIAlertAction) -> Void in
-                                    
-                                    self.popToRootLogin()
+                                    [weak self] (action : UIAlertAction) -> Void in
+                                    CLocationManager.sharedInstance.stopUpdatingLocation()
+                                    self?.popToRootLogin()
                                 }
                             }
                             
