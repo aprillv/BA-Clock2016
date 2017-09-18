@@ -20,7 +20,7 @@ class BaseCell: UITableViewCell {
         for a in self.contentView.subviews {
             if a.frame.width == 1 {
                 for b in a.constraints{
-                    b.constant = 1.0 / UIScreen.mainScreen().scale
+                    b.constant = 1.0 / UIScreen.main.scale
                 }
             }
         }
@@ -28,41 +28,41 @@ class BaseCell: UITableViewCell {
         self.contentView.addSubview(v)
         v.backgroundColor = CConstants.BorderColor
         let leadingConstraint = NSLayoutConstraint(item:v,
-                                                   attribute: .LeadingMargin,
-                                                   relatedBy: .Equal,
+                                                   attribute: .leadingMargin,
+                                                   relatedBy: .equal,
                                                    toItem: self.contentView,
-                                                   attribute: .LeadingMargin,
+                                                   attribute: .leadingMargin,
                                                    multiplier: 1.0,
                                                    constant: 0);
         let trailingConstraint = NSLayoutConstraint(item:v,
-                                                    attribute: .TrailingMargin,
-                                                    relatedBy: .Equal,
+                                                    attribute: .trailingMargin,
+                                                    relatedBy: .equal,
                                                     toItem: self.contentView,
-                                                    attribute: .TrailingMargin,
+                                                    attribute: .trailingMargin,
                                                     multiplier: 1.0,
                                                     constant: 0);
         
         let bottomConstraint = NSLayoutConstraint(item: v,
-                                                  attribute: .BottomMargin,
-                                                  relatedBy: .Equal,
+                                                  attribute: .bottomMargin,
+                                                  relatedBy: .equal,
                                                   toItem: self.contentView,
-                                                  attribute: .BottomMargin,
+                                                  attribute: .bottomMargin,
                                                   multiplier: 1.0,
                                                   constant: 0);
         
         let heightContraint = NSLayoutConstraint(item: v,
-                                                 attribute: .Height,
-                                                 relatedBy: .Equal,
+                                                 attribute: .height,
+                                                 relatedBy: .equal,
                                                  toItem: nil,
-                                                 attribute: .NotAnAttribute,
+                                                 attribute: .notAnAttribute,
                                                  multiplier: 1.0,
-                                                 constant: 1.0 / (UIScreen.mainScreen().scale));
+                                                 constant: 1.0 / (UIScreen.main.scale));
         v.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activateConstraints([leadingConstraint, trailingConstraint, bottomConstraint, heightContraint])
+        NSLayoutConstraint.activate([leadingConstraint, trailingConstraint, bottomConstraint, heightContraint])
     }
     
 //    @IBOutlet var lbl: UILabel!
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         self.setCellBackColor(highlighted)
     }
 //    @IBOutlet var seperatorHeight: NSLayoutConstraint!{
@@ -72,19 +72,19 @@ class BaseCell: UITableViewCell {
 //        }
 //    }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         self.setCellBackColor(selected)
     }
     
-    private func setCellBackColor(sels: Bool){
+    fileprivate func setCellBackColor(_ sels: Bool){
         if sels {
             let a = UIColor(red: 238/255.0, green: 238/255.0, blue: 238/255.0, alpha: 1)
             self.backgroundColor = a
             self.contentView.backgroundColor = a
         }else{
-            self.backgroundColor = UIColor.whiteColor()
-            self.contentView.backgroundColor = UIColor.whiteColor()
+            self.backgroundColor = UIColor.white
+            self.contentView.backgroundColor = UIColor.white
         }
     }
     

@@ -9,12 +9,36 @@
 import UIKit
 import Alamofire
 import MapKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     
-    @IBAction func GoBackToMore(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func GoBackToMore(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     @IBOutlet var clearItem: UIBarButtonItem!
    
@@ -29,7 +53,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         }
     }
     
-    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
 //        print0000(userLocation.coordinate.latitude, userLocation.coordinate.longitude)
     }
     
@@ -39,7 +63,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     @IBOutlet weak var trackTable: UITableView!{
         didSet{
             refreshControl = UIRefreshControl()
-            refreshControl!.addTarget(self, action: #selector(GISTrackViewController.refresh(_:)), forControlEvents: .ValueChanged)
+            refreshControl!.addTarget(self, action: #selector(GISTrackViewController.refresh(_:)), for: .valueChanged)
             trackTable.addSubview(refreshControl!)
             //            trackTable.separatorColor = UIColor(red: 20/255, green: 72/255, blue: 116/255, alpha: 0.3)
         }
@@ -48,7 +72,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     var refreshControl : UIRefreshControl?
     var firstrefreshControl : UIRefreshControl?
     
-    func refresh(refreshControl: UIRefreshControl) {
+    func refresh(_ refreshControl: UIRefreshControl) {
         // Do your job, when done:
         self.getTrackList()
     }
@@ -65,17 +89,17 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         //        }
         
         self.clearItem.tag = 0
-        UIView.animateWithDuration(0.2, delay: 0.0
-            , options: UIViewAnimationOptions.CurveEaseOut
+        UIView.animate(withDuration: 0.2, delay: 0.0
+            , options: UIViewAnimationOptions.curveEaseOut
             , animations: { () -> Void in
-                self.clearItem.tintColor = UIColor.clearColor()
+                self.clearItem.tintColor = UIColor.clear
             }) { (_) -> Void in
                 
         }
         
     }
     @IBOutlet var showhideBtn: UIButton!
-    @IBAction func hideorshow(sender: AnyObject) {
+    @IBAction func hideorshow(_ sender: AnyObject) {
         
         
         if let first = map_listContstraint.firstItem as? UIView,
@@ -86,10 +110,10 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                     
                     map_listContstraint = NSLayoutConstraint(
                         item: trackMap
-                        , attribute: NSLayoutAttribute.Height
-                        , relatedBy: NSLayoutRelation.Equal
+                        , attribute: NSLayoutAttribute.height
+                        , relatedBy: NSLayoutRelation.equal
                         , toItem: mapBack
-                        , attribute: NSLayoutAttribute.Height
+                        , attribute: NSLayoutAttribute.height
                         , multiplier: 1.0
                         , constant: 0)
                     mapBack.addConstraint(map_listContstraint)
@@ -98,10 +122,10 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                     
                     map_listContstraint = NSLayoutConstraint(
                         item: trackMap
-                        , attribute: NSLayoutAttribute.Height
-                        , relatedBy: NSLayoutRelation.Equal
+                        , attribute: NSLayoutAttribute.height
+                        , relatedBy: NSLayoutRelation.equal
                         , toItem: trackTable
-                        , attribute: NSLayoutAttribute.Height
+                        , attribute: NSLayoutAttribute.height
                         , multiplier: 1.0
                         , constant: 0)
                     mapBack.addConstraint(map_listContstraint)
@@ -110,19 +134,19 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                     
                 }
                 //                print0000(self.showhideBtn.transform)
-                UIView.animateWithDuration(0.5) {
+                UIView.animate(withDuration: 0.5, animations: {
                     
-                    self.showhideBtn.transform = CGAffineTransformMakeRotation(CGFloat(mul))
+                    self.showhideBtn.transform = CGAffineTransform(rotationAngle: CGFloat(mul))
                     self.view.layoutIfNeeded()
-                }
+                }) 
         }
         
     }
     @IBOutlet weak var map_listContstraint: NSLayoutConstraint!
     var CurrentScheduledInterval : Double?
     var locationTracker : CLocationManager?
-    var locationUpdateTimer : NSTimer?
-    var SyncTimer : NSTimer?
+    var locationUpdateTimer : Timer?
+    var SyncTimer : Timer?
     var firstTime = false
     var currentRequest : Request?
    
@@ -133,7 +157,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     var selectedItem : ScheduledDayItem?
     var isIn: Bool?;
     
-    private struct constants{
+    fileprivate struct constants{
         static let CellIdentifier : String = "clockMapCell"
         static let CellIdentifierTrack : String = "trackTableCell"
         //        static let UserInfoClockedKey : String = "ClockedIn"
@@ -165,13 +189,13 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         
 //        checkUpate()
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
         
        self.getTrackList()
         
-        let userInfo = NSUserDefaults.standardUserDefaults()
+        let userInfo = UserDefaults.standard
       
-        title = userInfo.valueForKey(CConstants.UserFullName) as? String
+        title = userInfo.value(forKey: CConstants.UserFullName) as? String
         
     }
     
@@ -189,13 +213,13 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     
     
     
-    private func update1(){
+    fileprivate func update1(){
         
-        self.SyncTimer = NSTimer.scheduledTimerWithTimeInterval(3600, target: self, selector: #selector(GISTrackViewController.syncFrequency), userInfo: nil, repeats: true)
+        self.SyncTimer = Timer.scheduledTimer(timeInterval: 3600, target: self, selector: #selector(GISTrackViewController.syncFrequency), userInfo: nil, repeats: true)
         
         if let a = CurrentScheduledInterval {
             if a > 0 {
-                self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(CurrentScheduledInterval ?? 900, target: self, selector: #selector(GISTrackViewController.updateLocation), userInfo: nil, repeats: true)
+                self.locationUpdateTimer = Timer.scheduledTimer(timeInterval: CurrentScheduledInterval ?? 900, target: self, selector: #selector(GISTrackViewController.updateLocation), userInfo: nil, repeats: true)
             }
             
         }
@@ -213,15 +237,25 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     }
     
     func syncFrequency(){
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String{
-            if let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String {
+        let userInfo = UserDefaults.standard
+        if let token = userInfo.object(forKey: CConstants.UserInfoTokenKey) as? String{
+            if let tokenSecret = userInfo.object(forKey: CConstants.UserInfoTokenScretKey) as? String {
                 
                 let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
                 loginRequiredInfo.Token = token
                 loginRequiredInfo.TokenSecret = tokenSecret
                 
-                currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                let param = [
+                    "Token": token
+                    , "TokenSecret": tokenSecret
+                    , "ClientTime": loginRequiredInfo.ClientTime ?? ""
+                    , "Email": loginRequiredInfo.Email ?? ""
+                    , "Password": loginRequiredInfo.Password ?? ""]
+                
+                Alamofire.request(CConstants.ServerURL + CConstants.SyncScheduleIntervalURL
+                    , method: .post
+                    , parameters: param
+                    ).responseJSON{ (response) -> Void in
                     if response.result.isSuccess {
                         //                        print0000("++++++++++++++++++++++++++++")
                         //                        print0000(response.result.value)
@@ -244,7 +278,8 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                                 if let a = self.CurrentScheduledInterval {
                                     if a > 0 && self.getLastSubmitTime(){
                                         self.updateLocation()
-                                        self.locationUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(self.CurrentScheduledInterval ?? 900, target: self, selector: #selector(GISTrackViewController.updateLocation), userInfo: nil, repeats: true)
+                                        self.locationUpdateTimer = Timer.scheduledTimer(timeInterval: self.CurrentScheduledInterval ?? 900
+                                            , target: self, selector: #selector(GISTrackViewController.updateLocation), userInfo: nil, repeats: true)
                                     }
                                     
                                 }
@@ -268,16 +303,16 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         
     }
     
-    private func getTime() -> NSTimeInterval{
-        let date = NSDate()
-        let dateFormatter = NSDateFormatter()
+    fileprivate func getTime() -> TimeInterval{
+        let date = Date()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy hh"
-        let nowHour = dateFormatter.stringFromDate(date)
+        let nowHour = dateFormatter.string(from: date)
         dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss"
-        for i in 14.stride(to: 60, by: 15) {
+        for i in stride(from: 14, to: 60, by: 15) {
 //        for var i = 14; i < 60; i += 15 {
-            let now15 = dateFormatter.dateFromString(nowHour + ":\(i):59")
-            let timeSpace = now15?.timeIntervalSinceDate(date)
+            let now15 = dateFormatter.date(from: nowHour + ":\(i):59")
+            let timeSpace = now15?.timeIntervalSince(date)
             if  timeSpace > 0 {
                 return timeSpace!
             }
@@ -286,23 +321,23 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         
     }
     
-    private func getCurrentInterval1() -> Double{
-        let date = NSDate()
+    fileprivate func getCurrentInterval1() -> Double{
+        let date = Date()
         //        print0000(date)
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy EEEE"
         
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-         dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.locale = Locale(identifier: "en_US")
+         dateFormatter.timeZone = TimeZone(identifier: "America/Chicago")
 //         dateFormatter.timeZone = NSTimeZone.localTimeZone()
         
         
-        let today = dateFormatter.stringFromDate(date)
+        let today = dateFormatter.string(from: date)
         let index0 = today.startIndex
         let coreData = cl_coreData()
         
         var send = 900.0
-        if let frequency = coreData.getFrequencyByWeekdayNm(today.substringFromIndex(index0.advancedBy(11))) {
+        if let frequency = coreData.getFrequencyByWeekdayNm(today.substring(from: today.index(index0, offsetBy: 11))) {
             send = frequency.ScheduledInterval!.doubleValue * 60.0
         }
         return send
@@ -314,22 +349,22 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     
     
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       
             return trackDotList?.count ?? 0
         
         
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
         
         
-            let cell = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifierTrack, forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: constants.CellIdentifierTrack, for: indexPath)
             let item = self.trackDotList![indexPath.row]
             cell.textLabel?.text = item.Tag
             return cell
@@ -337,7 +372,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     }
 
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == trackTable {
             if let list = trackDotList {
                 let item : TrackDotItem = list[indexPath.row]
@@ -348,9 +383,9 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                             trackMap.removeAnnotation(annotation)
                             trackMap.addAnnotation(annotation)
                             haveADD = true
-                            let alist = trackMap.annotationsInMapRect(trackMap.visibleMapRect)
+                            let alist = trackMap.annotations(in: trackMap.visibleMapRect)
                             if !alist.contains(annotation) {
-                                trackMap.setCenterCoordinate(annotation.coordinate, animated: true)
+                                trackMap.setCenter(annotation.coordinate, animated: true)
                             }
                             break
                         }
@@ -360,9 +395,9 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                     let annotation : CustomAnnotation = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: item.Latitude!.doubleValue, longitude: item.Longitude!.doubleValue))
                     annotation.index = indexPath.row
                     trackMap.addAnnotation(annotation)
-                    let alist = trackMap.annotationsInMapRect(trackMap.visibleMapRect)
+                    let alist = trackMap.annotations(in: trackMap.visibleMapRect)
                     if !alist.contains(annotation) {
-                        trackMap.setCenterCoordinate(annotation.coordinate, animated: true)
+                        trackMap.setCenter(annotation.coordinate, animated: true)
                     }
                     
                     
@@ -374,10 +409,10 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showMapDetail" {
             if let item = self.selectedItem {
-                if let dvc = segue.destinationViewController as? MapViewController {
+                if let dvc = segue.destination as? MapViewController {
                     //                    item.ClockInCoordinate?.Longitude
                     
                     if isIn! {
@@ -396,10 +431,10 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     
     
     
-    private var lastCallSubmitLocationService : NSDate?
+    fileprivate var lastCallSubmitLocationService : Date?
     func callSubmitLocationService(){
         
-        lastCallSubmitLocationService = NSDate()
+        lastCallSubmitLocationService = Date()
         let submitRequired = SubmitLocationRequired()
         submitRequired.Latitude = "\(self.locationTracker?.currentLocation?.coordinate.latitude ?? 0)"
         submitRequired.Longitude = "\(self.locationTracker?.currentLocation?.coordinate.longitude ?? 0)"
@@ -410,7 +445,18 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
 //                    print0000(submitRequired.getPropertieNamesAsDictionary())
 //         print0000("background \(NSDate())")
         setLastSubmitTime()
-        currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: submitRequired.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+        
+        let param = [
+            "Token": submitRequired.Token ?? ""
+            , "TokenSecret": submitRequired.TokenSecret ?? ""
+            , "Latitude": submitRequired.Latitude ?? ""
+            , "Longitude": submitRequired.Longitude ?? ""
+            , "ClientTime": submitRequired.ClientTime ?? ""
+        ]
+        
+        currentRequest = Alamofire.request( CConstants.ServerURL + CConstants.SubmitLocationServiceURL
+            , method:.post
+            , parameters: param).responseJSON{ (response) -> Void in
 //                            print0000("sfasdfa=======", response.result.value)
             if response.result.isSuccess {
             }else{
@@ -422,29 +468,29 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         
     }
     
-    private func setLastSubmitTime(){
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        userInfo.setValue(NSDate(), forKey: "LastSubmitLocationTime")
+    fileprivate func setLastSubmitTime(){
+        let userInfo = UserDefaults.standard
+        userInfo.setValue(Date(), forKey: "LastSubmitLocationTime")
     }
     
-    private func getLastSubmitTime() -> Bool{
+    fileprivate func getLastSubmitTime() -> Bool{
         
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        if let lastTime = userInfo.valueForKey("LastSubmitLocationTime") as? NSDate,
+        let userInfo = UserDefaults.standard
+        if let lastTime = userInfo.value(forKey: "LastSubmitLocationTime") as? Date,
             let timeSpace = self.CurrentScheduledInterval {
                 
-                let date = NSDate()
+                let date = Date()
                 //                print0000("\( date.timeIntervalSinceDate(lastTime))")
-                return date.timeIntervalSinceDate(lastTime) > timeSpace
+                return date.timeIntervalSince(lastTime) > timeSpace
         }
         return false
     }
     
-    private func getUserToken() -> OAuthTokenItem{
-        let userInfo = NSUserDefaults.standardUserDefaults()
+    fileprivate func getUserToken() -> OAuthTokenItem{
+        let userInfo = UserDefaults.standard
         let userInfo1 = OAuthTokenItem(dicInfo: nil)
-        userInfo1.Token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String
-        userInfo1.TokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String
+        userInfo1.Token = userInfo.object(forKey: CConstants.UserInfoTokenKey) as? String
+        userInfo1.TokenSecret = userInfo.object(forKey: CConstants.UserInfoTokenScretKey) as? String
         return userInfo1
     }
     
@@ -454,12 +500,12 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     
   
     
-    private func getTrackList(){
+    fileprivate func getTrackList(){
         
         
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String,
-            let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String {
+        let userInfo = UserDefaults.standard
+        if let token = userInfo.object(forKey: CConstants.UserInfoTokenKey) as? String,
+            let tokenSecret = userInfo.object(forKey: CConstants.UserInfoTokenScretKey) as? String {
                 
                 let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
                 loginRequiredInfo.Token = token
@@ -475,7 +521,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                 }
                 var hud : MBProgressHUD?
                 if showNoticie {
-                    hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud = MBProgressHUD.showAdded(to: self.view, animated: true)
                     hud!.labelText = CConstants.LoadingMsg
                     
 //                    self.noticeOnlyText(CConstants.LoadingMsg)
@@ -483,8 +529,18 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                 
                 self.refreshControl?.beginRefreshing()
                 //                    print0000(self.refreshControl)
-            print(loginRequiredInfo.getPropertieNamesAsDictionary())
-                currentRequest = Alamofire.request(.POST, CConstants.ServerURL + CConstants.GetGISTrackURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+//            print(loginRequiredInfo.getPropertieNamesAsDictionary())
+            
+            let param = [
+                "Token": token
+                , "TokenSecret": tokenSecret
+                , "ClientTime": loginRequiredInfo.ClientTime ?? ""
+                , "Email": loginRequiredInfo.Email ?? ""
+                , "Password": loginRequiredInfo.Password ?? ""]
+            
+            currentRequest = Alamofire.request( CConstants.ServerURL + CConstants.GetGISTrackURL
+                , method:.post
+                , parameters: param).responseJSON{ (response) -> Void in
                     
                     self.refreshControl?.endRefreshing()
                     
@@ -495,7 +551,8 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                     }
                     
                     if let line = self.polyLine {
-                        self.trackMap.removeOverlay(line)
+                        self.trackMap.remove(line)
+//                        self.trackMap.removeOverlay(line)
                         self.trackMap.removeAnnotations(self.trackMap.annotations)
                     }
                     if response.result.isSuccess {
@@ -532,7 +589,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
                         
                         self.PopNetworkError()
                     }
-                    self.performSelector(#selector(GISTrackViewController.dismissProgress), withObject: nil, afterDelay: 0.2)
+                    self.perform(#selector(GISTrackViewController.dismissProgress), with: nil, afterDelay: 0.2)
                 }
         }
         
@@ -542,7 +599,7 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
     
     
     var polyLine : MKPolyline?
-    private func drawTrackPath(){
+    fileprivate func drawTrackPath(){
         
         if let dots = self.trackDotList {
             var dotsArray = [CLLocationCoordinate2D]()
@@ -557,19 +614,19 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
             if dotsArray.count > 0 {
                 polyLine = MKPolyline(coordinates: &dotsArray, count: dotsArray.count)
                 trackMap.setVisibleMapRect(polyLine!.boundingMapRect, edgePadding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), animated: true)
-                trackMap.addOverlay(polyLine!)
+                trackMap.add(polyLine!)
                 
             }
         }
         
     }
     
-    private func drawPolygon(p : String){
-        let s = p.stringByReplacingOccurrencesOfString("POLYGON ((", withString: "").stringByReplacingOccurrencesOfString("))", withString: "")
-        let alist = s.componentsSeparatedByString(", ")
+    fileprivate func drawPolygon(_ p : String){
+        let s = p.replacingOccurrences(of: "POLYGON ((", with: "").replacingOccurrences(of: "))", with: "")
+        let alist = s.components(separatedBy: ", ")
         var dotsArray = [CLLocationCoordinate2D]()
         for al in alist {
-            let c = al.componentsSeparatedByString(" ")
+            let c = al.components(separatedBy: " ")
             if c.count == 2 {
                 if let lat = Double(c[1]),
                     let lng = Double(c[0]) {
@@ -582,22 +639,22 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
         if dotsArray.count > 0 {
 //           print(dotsArray)
 //            trackMap.setVisibleMapRect(MKPolygon(coordinates: &dotsArray, count: dotsArray.count).boundingMapRect, edgePadding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), animated: true)
-            trackMap.addOverlay(MKPolygon(coordinates: &dotsArray, count: dotsArray.count))
+            trackMap.add(MKPolygon(coordinates: &dotsArray, count: dotsArray.count))
             
         }
         
     }
     
     
-    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let pr = MKPolylineRenderer(overlay: overlay)
         //        pr.strokeColor = UIColor(red: 20/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
-        pr.strokeColor = UIColor.blueColor()
+        pr.strokeColor = UIColor.blue
         pr.lineWidth = 2
         return pr
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         //        print0000(self.clearItem.tintColor)
         if mapView.annotations.count > 0 && (self.clearItem.tag == 0){
             //            self.clearPinBtn.hidden = false
@@ -609,21 +666,21 @@ class GISTrackViewController: BaseViewController, MKMapViewDelegate, UITableView
             //                    self.clearPinBtn.hidden = false
             //            }
             self.clearItem.tag == 1
-            UIView.animateWithDuration(0.3, delay: 0.0
-                , options: UIViewAnimationOptions.CurveEaseOut
+            UIView.animate(withDuration: 0.3, delay: 0.0
+                , options: UIViewAnimationOptions.curveEaseOut
                 , animations: { () -> Void in
-                    self.clearItem.tintColor = UIColor.whiteColor()
+                    self.clearItem.tintColor = UIColor.white
                 }) { (_) -> Void in
                     
             }
             
             
         }
-        var annotationView : MKPinAnnotationView? = mapView.dequeueReusableAnnotationViewWithIdentifier("April") as? MKPinAnnotationView
+        var annotationView : MKPinAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: "April") as? MKPinAnnotationView
         if annotationView == nil {
             annotationView = MKPinAnnotationView.init(annotation: annotation, reuseIdentifier: "April")
         }
-        annotationView?.pinTintColor = UIColor.redColor()
+        annotationView?.pinTintColor = UIColor.red
         annotationView?.animatesDrop = true
         return annotationView
         

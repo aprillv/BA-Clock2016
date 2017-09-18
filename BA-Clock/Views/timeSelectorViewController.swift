@@ -9,18 +9,18 @@
 import UIKit
 
 protocol timeSelectorDelegate {
-    func finishSelectTime(xtime: NSDate, isStrat: Bool)
+    func finishSelectTime(_ xtime: Date, isStrat: Bool)
 }
 class timeSelectorViewController: BaseViewController {
 
    
     var delegate : timeSelectorDelegate?
     
-    @IBAction func selectedTime(sender: UIDatePicker) {
+    @IBAction func selectedTime(_ sender: UIDatePicker) {
         
     }
-    @IBAction func doFinish(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true) { 
+    @IBAction func doFinish(_ sender: AnyObject) {
+        self.dismiss(animated: true) { 
             if let del = self.delegate {
                 del.finishSelectTime(self.datePicker.date, isStrat: self.timeLbl.text! == "Start Time")
             }
@@ -29,7 +29,7 @@ class timeSelectorViewController: BaseViewController {
     }
     @IBOutlet var heightS: NSLayoutConstraint!{
         didSet{
-            heightS.constant = 1.0/UIScreen.mainScreen().scale
+            heightS.constant = 1.0/UIScreen.main.scale
 //            self.view.updateConstraintsIfNeeded()
             self.updateViewConstraints()
         }
@@ -43,8 +43,8 @@ class timeSelectorViewController: BaseViewController {
         }
     }
     var xtitle : String?
-    var xdate : NSDate?
-    var xminDate : NSDate?
+    var xdate : Date?
+    var xminDate : Date?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,15 +52,15 @@ class timeSelectorViewController: BaseViewController {
         self.view.backgroundColor = UIColor(white: 0.5, alpha: 0.7)
         
         timeLbl.text = xtitle ?? "Start Time"
-        datePicker.date = xdate ?? NSDate()
-        let now = NSDate()
+        datePicker.date = xdate ?? Date()
+        let now = Date()
         
         if let x = xminDate {
-            if x.timeIntervalSinceDate(now) < 0 {
+            if x.timeIntervalSince(now) < 0 {
                 xminDate = now
             }
         }
-        datePicker.minimumDate = xminDate ?? NSDate()
+        datePicker.minimumDate = xminDate ?? Date()
         datePicker.minuteInterval = 5
     }
 }

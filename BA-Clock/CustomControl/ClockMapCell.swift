@@ -15,10 +15,10 @@ class ClockMapCell: UITableViewCell {
                 
                 //                https://maps.google.com/maps/api/staticmap?markers=color:red%7C29.751872,-95.362037&zoom=14&size=200x200&sensor=true
                 
-                clockInImage.image = UIImage(named: "clockin.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
+                clockInImage.image = UIImage(named: "clockin.png")?.stretchableImage(withLeftCapWidth: 20, topCapHeight: 26)
                 
 //                print0000(clockInMap.frame)
-                let width = Int(UIScreen.mainScreen().bounds.size.width-93)
+                let width = Int(UIScreen.main.bounds.size.width-93)
                 
 //                if let cor = item.ClockInCoordinate {
 //                    if cor.Latitude == nil {
@@ -57,15 +57,15 @@ class ClockMapCell: UITableViewCell {
 //                    clockInTime.text = "\(item.ClockInDay!)\n" + item.ClockIn!
                 
                 }else{
-                    tapClockBtn.hidden = true
-                    clockInImage.hidden = true
-                    clockInText.hidden = true
-                    clockInTime.hidden = true
-                    self.clockInMap.hidden = true
+                    tapClockBtn.isHidden = true
+                    clockInImage.isHidden = true
+                    clockInText.isHidden = true
+                    clockInTime.isHidden = true
+                    self.clockInMap.isHidden = true
                 }
                 
                 if item.ClockOut != "" {
-                    backGroupImageView.image = UIImage(named: "clockout.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
+                    backGroupImageView.image = UIImage(named: "clockout.png")?.stretchableImage(withLeftCapWidth: 20, topCapHeight: 26)
                     clockOutTextLbl.text = "\(item.ClockOutName  ?? "Clock Out")"
                     clockOutTime.text =  "\(item.ClockOutDay!)\n" + item.ClockOut!
 //                    if let _ = item.ClockOutCoordinate?.Latitude {
@@ -84,18 +84,18 @@ class ClockMapCell: UITableViewCell {
 //                            
 //                        }
 //                    }
-                    tapClockOutBtn.hidden = false
-                    backGroupImageView.hidden = false
-                    clockOutTextLbl.hidden = false
-                     clockOutTime.hidden = false
-                    self.clockOutMap.hidden = true
+                    tapClockOutBtn.isHidden = false
+                    backGroupImageView.isHidden = false
+                    clockOutTextLbl.isHidden = false
+                     clockOutTime.isHidden = false
+                    self.clockOutMap.isHidden = true
                     
                 }else{
-                    tapClockOutBtn.hidden = true
-                    backGroupImageView.hidden = true
-                    clockOutTextLbl.hidden = true
-                    clockOutTime.hidden = true
-                    self.clockOutMap.hidden = true
+                    tapClockOutBtn.isHidden = true
+                    backGroupImageView.isHidden = true
+                    clockOutTextLbl.isHidden = true
+                    clockOutTime.isHidden = true
+                    self.clockOutMap.isHidden = true
                 }
             }
         }
@@ -118,12 +118,12 @@ class ClockMapCell: UITableViewCell {
         }
     }
     
-    private func toADDClockInTap(){
+    fileprivate func toADDClockInTap(){
         if let _ = superActionView, let _ = tapClockBtn {
             
             let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:#selector(ClockMapViewController.clockInTapped(_:)))
 //            let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:Selector("clockInTapped:"))
-            clockInMap.userInteractionEnabled = true
+            clockInMap.isUserInteractionEnabled = true
             tapGestureRecognizer.numberOfTapsRequired = 1
             clockInMap.addGestureRecognizer(tapGestureRecognizer)
         }
@@ -139,20 +139,20 @@ class ClockMapCell: UITableViewCell {
             toADDClockInTap()
         }
     }
-    @IBAction func tapClockOutCell(sender: UIButton) {
+    @IBAction func tapClockOutCell(_ sender: UIButton) {
         superActionView?.clockInTapped(sender)
     }
     
-    @IBAction func tapClockInCell(sender: UIButton) {
+    @IBAction func tapClockInCell(_ sender: UIButton) {
         superActionView?.clockOutTapped(sender)
     }
     
-    private func toADDClockOutTap(){
+    fileprivate func toADDClockOutTap(){
         if let _ = superActionView , let _ = tapClockOutBtn{
 //            let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:Selector("clockOutTapped:"))
              let tapGestureRecognizer = UITapGestureRecognizer(target:superActionView!, action:#selector(ClockMapViewController.clockOutTapped(_:)))
             tapGestureRecognizer.numberOfTapsRequired = 1
-            clockOutMap.userInteractionEnabled = true
+            clockOutMap.isUserInteractionEnabled = true
             clockOutMap.addGestureRecognizer(tapGestureRecognizer)
         }
     }

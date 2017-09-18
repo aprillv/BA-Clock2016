@@ -14,20 +14,20 @@ import Alamofire
 class cl_submitData: NSObject {
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentStoreCoordinator
     }()
     
     lazy var managedObjectContext: NSManagedObjectContext = {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.managedObjectContext
     }()
     
-    func savedSubmitDataToDB(d: String, lat: Double, lng: Double, reasonStart: String, reasonEnd: String, reason: String, actionType: String){
-        let entity =  NSEntityDescription.entityForName("SubmitData",
-                                                        inManagedObjectContext:managedObjectContext)
+    func savedSubmitDataToDB(_ d: String, lat: Double, lng: Double, reasonStart: String, reasonEnd: String, reason: String, actionType: String){
+        let entity =  NSEntityDescription.entity(forEntityName: "SubmitData",
+                                                        in:managedObjectContext)
         let scheduledDayItem = NSManagedObject(entity: entity!,
-                                               insertIntoManagedObjectContext: managedObjectContext)
+                                               insertInto: managedObjectContext)
         
         scheduledDayItem.setValue(lat, forKey: "latitude")
         scheduledDayItem.setValue(lng, forKey: "longitude")
@@ -44,11 +44,11 @@ class cl_submitData: NSObject {
         }
     }
     
-    func savedSubmitDataToDB(d: String, lat: Double, lng: Double, xtype: Int){
-        let entity =  NSEntityDescription.entityForName("SubmitData",
-                                                        inManagedObjectContext:managedObjectContext)
+    func savedSubmitDataToDB(_ d: String, lat: Double, lng: Double, xtype: Int){
+        let entity =  NSEntityDescription.entity(forEntityName: "SubmitData",
+                                                        in:managedObjectContext)
         let scheduledDayItem = NSManagedObject(entity: entity!,
-                                               insertIntoManagedObjectContext: managedObjectContext)
+                                               insertInto: managedObjectContext)
         
         scheduledDayItem.setValue(lat, forKey: "latitude")
         scheduledDayItem.setValue(lng, forKey: "longitude")
@@ -64,31 +64,31 @@ class cl_submitData: NSObject {
     
     
     
-    func resubmit(last : NSManagedObject?){
+    func resubmit(_ last : NSManagedObject?){
         let net = NetworkReachabilityManager()
         if !(net?.isReachable ?? false){
             return
         }
         if last == nil {
-            let userInfo = NSUserDefaults.standardUserDefaults()
-            if let date = userInfo.valueForKey(CConstants.LastSubmitDateTime) as? NSDate {
-                if NSDate().timeIntervalSinceDate(date) < 60 {
+            let userInfo = UserDefaults.standard
+            if let date = userInfo.value(forKey: CConstants.LastSubmitDateTime) as? Date {
+                if Date().timeIntervalSince(date) < 60 {
 //                    print0000("dfdfdf")
                     return
                 }
             }
-            userInfo.setValue(NSDate(), forKey: CConstants.LastSubmitDateTime)
+            userInfo.setValue(Date(), forKey: CConstants.LastSubmitDateTime)
         }
         
         
-        let fetchRequest = NSFetchRequest(entityName: "SubmitData")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SubmitData")
         do {
             if let a = last {
-                managedObjectContext.deleteObject(a)
+                managedObjectContext.delete(a)
                 try managedObjectContext.save()
             }
             let results =
-                try managedObjectContext.executeFetchRequest(fetchRequest)
+                try managedObjectContext.fetch(fetchRequest)
             let tl = Tool()
             if let t = results as? [NSManagedObject] {
 //                print0000(t.count)
@@ -96,11 +96,11 @@ class cl_submitData: NSObject {
 //                    print0000(item.valueForKey("xtype") ,item.valueForKey("submitdate"))
                 }
                 if let item = t.first{
-                    let lat =  item.valueForKey("latitude") as? Double
-                    let lng = item.valueForKey("longitude") as? Double
+                    let lat =  item.value(forKey: "latitude") as? Double
+                    let lng = item.value(forKey: "longitude") as? Double
                     
-                    if let xtype = item.valueForKey("xtype") as? Int,
-                        let d = item.valueForKey("submitdate") as? String{
+                    if let xtype = item.value(forKey: "xtype") as? Int,
+                        let d = item.value(forKey: "submitdate") as? String{
                         
 //
                         switch xtype {
@@ -108,7 +108,7 @@ class cl_submitData: NSObject {
                             let clockOutRequiredInfo : ClockOutRequired = ClockOutRequired()
                             clockOutRequiredInfo.Latitude = "\(lat ?? 0.0 )"
                             clockOutRequiredInfo.Longitude = "\(lng ?? 0.0 )"
-                            clockOutRequiredInfo.HostName = UIDevice.currentDevice().name
+                            clockOutRequiredInfo.HostName = UIDevice.current.name
                             clockOutRequiredInfo.IPAddress = tl.getWiFiAddress()
                             clockOutRequiredInfo.ClientTime = d
                             let OAuthToken = tl.getUserToken()
@@ -122,19 +122,19 @@ class cl_submitData: NSObject {
                         case CConstants.GoOutType:
                             
                             let requiredInfo = MoreActionRequired()
-                            requiredInfo.ActionType = (item.valueForKey("actionType") as? String) ?? ""
+                            requiredInfo.ActionType = (item.value(forKey: "actionType") as? String) ?? ""
                             
                             requiredInfo.Latitude = "\(lat ?? 0.0 )"
                             requiredInfo.Longitude = "\(lng ?? 0.0 )"
-                            requiredInfo.HostName = UIDevice.currentDevice().name
+                            requiredInfo.HostName = UIDevice.current.name
                             requiredInfo.IPAddress = tl.getWiFiAddress()
                             requiredInfo.ClientTime = d
                             let OAuthToken = tl.getUserToken()
                             requiredInfo.Token = OAuthToken.Token!
                             requiredInfo.TokenSecret = OAuthToken.TokenSecret!
-                            requiredInfo.ReasonStart = (item.valueForKey("reasonStart") as? String) ?? ""
-                            requiredInfo.ReasonEnd = (item.valueForKey("reasonEnd") as? String) ?? ""
-                            requiredInfo.Reason = (item.valueForKey("reason") as? String) ?? ""
+                            requiredInfo.ReasonStart = (item.value(forKey: "reasonStart") as? String) ?? ""
+                            requiredInfo.ReasonEnd = (item.value(forKey: "reasonEnd") as? String) ?? ""
+                            requiredInfo.Reason = (item.value(forKey: "reason") as? String) ?? ""
                             tl.doGoOutService(requiredInfo, obj: item)
                             
                         default:
@@ -143,7 +143,7 @@ class cl_submitData: NSObject {
                         
                     }
                 }else{
-                    let userInfo = NSUserDefaults.standardUserDefaults()
+                    let userInfo = UserDefaults.standard
                     
                     userInfo.setValue("", forKey: CConstants.LastSubmitDateTime)
                 }

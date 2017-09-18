@@ -31,9 +31,9 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         self.locationManager = CLocationManager.sharedInstance
         
-        let button = UIButton(type: .Custom)
+        let button = UIButton(type: .custom)
 //        button.setImage(UIImage(named: "back"), forState: .Normal)
-        button.addTarget(self, action: #selector(MoreViewController.GoBackToList(_:)), forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(MoreViewController.GoBackToList(_:)), for: .touchUpInside)
         button.frame = CGRect(x: 0, y: 0, width: 60, height: 44)
 //        button.setTitle("Back", forState: .Normal)
         let im = UIImageView(image: UIImage(named: "back"))
@@ -42,7 +42,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         im.frame = ct
         button.addSubview(im)
         let lbl = UILabel(frame: CGRect(x: 20, y: 0, width: 40, height: 44))
-        lbl.textColor = UIColor.whiteColor()
+        lbl.textColor = UIColor.white
         lbl.text = "Back"
         button.addSubview(lbl)
         let leftbutton = UIBarButtonItem(customView: button)
@@ -50,8 +50,8 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
     }
     
-    @IBAction func GoBackToList(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func GoBackToList(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     @IBOutlet var tableView: UITableView!
     
@@ -83,11 +83,11 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section{
         case 0:
             return 3
@@ -97,50 +97,50 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
         
     }
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
     
     var checkStatus = [true, false, false]
-    var StartTime : NSDate = NSDate() {
+    var StartTime : Date = Date() {
         didSet{
             if tableView != nil {
-                let index = NSIndexSet(index: 1)
-                tableView.reloadSections(index, withRowAnimation: .Automatic)
+                let index = IndexSet(integer: 1)
+                tableView.reloadSections(index, with: .automatic)
             }
-            EndTime = StartTime.dateByAddingTimeInterval(60*30)
+            EndTime = StartTime.addingTimeInterval(60*30)
         }
     }
-    var EndTime : NSDate = NSDate().dateByAddingTimeInterval(60*30){
+    var EndTime : Date = Date().addingTimeInterval(60*30){
         didSet{
             if tableView != nil {
-                let index = NSIndexSet(index: 2)
-                tableView.reloadSections(index, withRowAnimation: .Automatic)
+                let index = IndexSet(integer: 2)
+                tableView.reloadSections(index, with: .automatic)
             }
         }
     }
     
-    var dateFormat: NSDateFormatter = NSDateFormatter()
+    var dateFormat: DateFormatter = DateFormatter()
     
-    private func getFormatedDate(d: NSDate) -> String{
+    fileprivate func getFormatedDate(_ d: Date) -> String{
         dateFormat.dateFormat = "hh:mm a"
-        return dateFormat.stringFromDate(d)
+        return dateFormat.string(from: d)
     }
     
-    private func getFormatedDate2(d: NSDate) -> String{
+    fileprivate func getFormatedDate2(_ d: Date) -> String{
         dateFormat.dateFormat = "HH:mm:ss"
-         dateFormat.timeZone = NSTimeZone(name: "America/Chicago")
+         dateFormat.timeZone = TimeZone(identifier: "America/Chicago")
 //         dateFormat.timeZone = NSTimeZone.localTimeZone()
-        dateFormat.locale = NSLocale(localeIdentifier : "en_US")
-        return dateFormat.stringFromDate(d)
+        dateFormat.locale = Locale(identifier : "en_US")
+        return dateFormat.string(from: d)
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
 //        let cell1 = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifierTrack, forIndexPath: indexPath)
         
         switch indexPath.section{
         case 0:
-            let cell1 = tableView.dequeueReusableCellWithIdentifier(constants.CellIdentifierTrack, forIndexPath: indexPath)
+            let cell1 = tableView.dequeueReusableCell(withIdentifier: constants.CellIdentifierTrack, for: indexPath)
             if let cell = cell1 as? MoreTableViewCell {
                 switch indexPath.row {
                 case 0:
@@ -154,24 +154,24 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             }
             return cell1
         case 1:
-            let cell1 = tableView.dequeueReusableCellWithIdentifier("time", forIndexPath: indexPath)
+            let cell1 = tableView.dequeueReusableCell(withIdentifier: "time", for: indexPath)
             cell1.textLabel?.text = getFormatedDate(StartTime)
             return cell1
         case 2:
-            let cell1 = tableView.dequeueReusableCellWithIdentifier("time", forIndexPath: indexPath)
+            let cell1 = tableView.dequeueReusableCell(withIdentifier: "time", for: indexPath)
             cell1.textLabel?.text = getFormatedDate(EndTime)
             return cell1
         default:
-            let cell1 = tableView.dequeueReusableCellWithIdentifier("notes", forIndexPath: indexPath)
+            let cell1 = tableView.dequeueReusableCell(withIdentifier: "notes", for: indexPath)
             if let cell = cell1 as? noteTableViewCell {
                 
-                let numberToolbar = UIToolbar(frame: CGRectMake(0, 0, self.view.frame.size.width, 50))
-                numberToolbar.barStyle = UIBarStyle.Default
+                let numberToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 50))
+                numberToolbar.barStyle = UIBarStyle.default
                 numberToolbar.items = [
 //                    UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action:
 //                        #selector(cancelNumberPad)),
-                    UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-                    UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(doneWithNumberPad))]
+                    UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+                    UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(doneWithNumberPad))]
                 numberToolbar.sizeToFit()
                 dext = cell.txtView
                 cell.txtView.inputAccessoryView = numberToolbar
@@ -198,7 +198,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section{
         case 3:
             return 180
@@ -208,7 +208,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBOutlet var datepicker: UIDatePicker!
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         switch indexPath.section {
         case 0:
@@ -223,27 +223,27 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 self.tableView.reloadData()
         case 1:
             dext?.resignFirstResponder()
-            self.performSegueWithIdentifier("showTime", sender: 1)
+            self.performSegue(withIdentifier: "showTime", sender: 1)
         case 2:
             dext?.resignFirstResponder()
-            self.performSegueWithIdentifier("showTime", sender: 2)
+            self.performSegue(withIdentifier: "showTime", sender: 2)
         default:
             break;
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             switch identifier {
             case "showTime":
-                if let time = segue.destinationViewController as? timeSelectorViewController,
+                if let time = segue.destination as? timeSelectorViewController,
                     let index = sender as? Int {
                     time.delegate = self
                     time.xtitle = index == 1 ? "Start Time" : "End Time"
                     time.xdate = index == 1 ? StartTime : EndTime
                     if index == 2 {
-                        time.xminDate = StartTime.dateByAddingTimeInterval(60*5)
+                        time.xminDate = StartTime.addingTimeInterval(60*5)
                     }
                 }
             default:
@@ -252,7 +252,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func finishSelectTime(xtime: NSDate, isStrat: Bool) {
+    func finishSelectTime(_ xtime: Date, isStrat: Bool) {
         if isStrat {
             StartTime = xtime
         }else{
@@ -260,12 +260,12 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
     }
    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let view =  UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40))
         
         let lbl = UILabel()
-        lbl.textAlignment = .Left
+        lbl.textAlignment = .left
         
         switch section{
         case 0:
@@ -280,22 +280,22 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         lbl.sizeToFit()
         lbl.font = UIFont(name: "System", size: 17)
         lbl.frame = CGRect(x: 16, y: (40-lbl.frame.size.height)/2.0, width: self.view.frame.size.width-40, height: lbl.frame.size.height)
-        lbl.textColor = UIColor.darkGrayColor()
+        lbl.textColor = UIColor.darkGray
         view.addSubview(lbl)
         return view
     }
-    private func getUserToken() -> OAuthTokenItem{
-        let userInfo = NSUserDefaults.standardUserDefaults()
+    fileprivate func getUserToken() -> OAuthTokenItem{
+        let userInfo = UserDefaults.standard
         let userInfo1 = OAuthTokenItem(dicInfo: nil)
-        userInfo1.Token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String
-        userInfo1.TokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String
+        userInfo1.Token = userInfo.object(forKey: CConstants.UserInfoTokenKey) as? String
+        userInfo1.TokenSecret = userInfo.object(forKey: CConstants.UserInfoTokenScretKey) as? String
         return userInfo1
     }
     
     
     var locationManager : CLocationManager?
     
-    private func callService(){
+    fileprivate func callService(){
         var actionType : String?
         for i in 0...2 {
             if checkStatus[i] {
@@ -317,10 +317,10 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 //        let lng = self.locationManager?.currentLocation?.coordinate.longitude ?? 0
         requiredInfo.Latitude = "\(self.locationManager?.currentLocation?.coordinate.latitude ?? 0)"
         requiredInfo.Longitude = "\(self.locationManager?.currentLocation?.coordinate.longitude ?? 0)"
-        requiredInfo.HostName = UIDevice.currentDevice().name
+        requiredInfo.HostName = UIDevice.current.name
         let tl = Tool()
         requiredInfo.IPAddress = tl.getWiFiAddress()
-        let now = NSDate()
+        let now = Date()
         requiredInfo.ClientTime = tl.getClientTime(now)
         let OAuthToken = self.getUserToken()
         requiredInfo.Token = OAuthToken.Token!
@@ -331,8 +331,8 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         
         
-        let index = NSIndexPath(forRow: 0, inSection: 3)
-        if let cell = tableView.cellForRowAtIndexPath(index) as? noteTableViewCell {
+        let index = IndexPath(row: 0, section: 3)
+        if let cell = tableView.cellForRow(at: index) as? noteTableViewCell {
             requiredInfo.Reason = cell.txtView.text ?? " "
         }else{
             requiredInfo.Reason = " "
@@ -341,54 +341,71 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let net = NetworkReachabilityManager()
         
         
-        let userInfo = NSUserDefaults.standardUserDefaults()
+        let userInfo = UserDefaults.standard
         if net?.isReachable ?? false {
             
 //            let submitData = cl_submitData()
 //            submitData.resubmit(nil)
             
-//            let userInfo = NSUserDefaults.standardUserDefaults()
-            userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)
+//            let userInfo = UserDefaults.standard
+            userInfo.setValue(Date(), forKey: CConstants.LastGoOutTime)
 //            userInfo.synchronize()
 //            print0000(userInfo.valueForKey(CConstants.LastGoOutTime))
             //        print0000(requiredInfo.getPropertieNamesAsDictionary())
             
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.userInteractionEnabled = false
-            hud.labelText = CConstants.SavingMsg
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud?.isUserInteractionEnabled = false
+            hud?.labelText = CConstants.SavingMsg
 //             print0000(requiredInfo.getPropertieNamesAsDictionary(), CConstants.MoreActionServiceURL)
             
-            Alamofire.request(.POST, CConstants.ServerURL + CConstants.MoreActionServiceURL,
-                parameters: requiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+            let param = [
+                "ActionType": requiredInfo.ActionType   ?? ""
+                ,"Token": requiredInfo.Token   ?? ""
+                ,"TokenSecret": requiredInfo.TokenSecret   ?? ""
+                ,"IPAddress": requiredInfo.IPAddress   ?? ""
+                ,"HostName": requiredInfo.HostName   ?? ""
+                ,"Latitude": requiredInfo.Latitude   ?? ""
+                ,"Longitude": requiredInfo.Longitude   ?? ""
+                ,"ReasonStart": requiredInfo.ReasonStart   ?? ""
+                ,"ReasonEnd": requiredInfo.ReasonEnd   ?? ""
+                ,"Reason": requiredInfo.Reason   ?? ""
+                ,"ClientTime": requiredInfo.ClientTime   ?? ""
+            ]
+            
+//            print(param);
+            
+            Alamofire.request(CConstants.ServerURL + CConstants.MoreActionServiceURL, method:.post,
+                parameters: param).responseJSON{ (response) -> Void in
 //                    print0000(requiredInfo.getPropertieNamesAsDictionary(), CConstants.MoreActionServiceURL)
-                    hud.userInteractionEnabled = true
-                    hud.hide(true)
+                    hud?.isUserInteractionEnabled = true
+                    hud?.hide(true)
 //                    print0000(requiredInfo.getPropertieNamesAsDictionary(), response.result.value)
+//                    print(response.result.value)
                     if let rtnValue = response.result.value as? Int{
                         if rtnValue == 1 {
                             self.locationManager?.setNotComeBackNotification(self.EndTime)
-                            self.navigationController?.popViewControllerAnimated(true)
+                            self.navigationController?.popViewController(animated: true)
                         }else{
 //                            tl.saveGoOutDataToLocalDB(requiredInfo)
                             self.PopServerError()
                         }
                     }else{
 //                        tl.saveGoOutDataToLocalDB(requiredInfo)
-                        self.navigationController?.popViewControllerAnimated(true)
+                        self.navigationController?.popViewController(animated: true)
                         //                    self.PopServerError()
                     }
             }
             
         }else{
-            userInfo.setValue(NSDate(), forKey: CConstants.LastGoOutTime)
+            userInfo.setValue(Date(), forKey: CConstants.LastGoOutTime)
 //            tl.saveGoOutDataToLocalDB(requiredInfo)
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }
 
     }
     
-    @IBAction func doCancel(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func doCancel(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
 
@@ -399,32 +416,32 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 //            noteView.layer.borderWidth = 1.0 / (UIScreen().scale)
 //        }
 //    }
-    @IBAction func dosubmit(sender: AnyObject) {
+    @IBAction func dosubmit(_ sender: AnyObject) {
         callService()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(myKeyboardWillShowHandler(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(myKeyboardWillHideHandler(_:)), name: UIKeyboardWillHideNotification, object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(myKeyboardWillShowHandler(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(myKeyboardWillHideHandler(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         //        [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
         
     }
-    func myKeyboardWillHideHandler(noti : NSNotification) {
+    func myKeyboardWillHideHandler(_ noti : Notification) {
         tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        tableView.scrollEnabled = true
+        tableView.isScrollEnabled = true
     }
     
     
-    func myKeyboardWillShowHandler(noti : NSNotification) {
+    func myKeyboardWillShowHandler(_ noti : Notification) {
 //        print0000(view.frame.size.height)
         if view.frame.size.height == 672.0{
             // 6+
@@ -437,7 +454,7 @@ class MoreViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             tableView.setContentOffset(CGPoint(x: 0, y: 300), animated: true)
         }
     
-        tableView.scrollEnabled = false
+        tableView.isScrollEnabled = false
     }
     
     

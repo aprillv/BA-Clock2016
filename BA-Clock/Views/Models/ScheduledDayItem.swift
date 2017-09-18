@@ -37,4 +37,17 @@ class ScheduledDayItem: BaseObject {
     var clockOutDateDay: String?
     
     
+    required init(dicInfo : [String: AnyObject]?){
+        super.init(dicInfo: dicInfo)
+        if let newdic = dicInfo {
+            if let clockins = newdic["ClockInCoordinate"] as? [String: AnyObject] {
+                self.ClockInCoordinate = CoordinateObject(dicInfo: clockins)
+            }
+            if let clockins = newdic["ClockOutCoordinate"] as? [String: AnyObject] {
+                self.ClockOutCoordinate = CoordinateObject(dicInfo: clockins)
+            }
+
+        }
+        
+    }
 }

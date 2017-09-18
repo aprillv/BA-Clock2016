@@ -10,25 +10,24 @@ import Alamofire
 
 class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBAction func checkUpdate(sender: AnyObject) {
-        let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"]
+    @IBAction func checkUpdate(_ sender: AnyObject) {
+        let version = Bundle.main.infoDictionary?["CFBundleVersion"]
         let parameter = ["version": (version == nil ?  "" : version!), "appid": "iphone_ClockIn"]
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.labelText = "Checking for update..."
-        Alamofire.request(.POST,
-            CConstants.ServerVersionURL + CConstants.CheckUpdateServiceURL,
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud?.labelText = "Checking for update..."
+        Alamofire.request(
+            CConstants.ServerVersionURL + CConstants.CheckUpdateServiceURL, method:.post,
             parameters: parameter).responseJSON{ (response) -> Void in
-                hud.hide(true)
+                hud?.hide(true)
                 if response.result.isSuccess {
                     
                     if let rtnValue = response.result.value{
                         
-                        if rtnValue.integerValue == 1 {
+                        if (rtnValue as? NSNumber ?? 0).intValue == 1 {
                             self.PopMsgWithJustOK(msg: "Now the app is the latest version.", txtField: nil)
                         }else{
-                            if let url = NSURL(string: CConstants.InstallAppLink){
-                                
-                                UIApplication.sharedApplication().openURL(url)
+                            if let url = URL(string: CConstants.InstallAppLink){
+                                UIApplication.shared.openURL(url)
                             }else{
                                 
                             }
@@ -44,24 +43,24 @@ class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITable
     
     @IBOutlet var logoutBtn: UIButton!{
         didSet{
-            let email = (NSUserDefaults.standardUserDefaults().valueForKey(CConstants.UserInfoEmail) ?? "").lowercaseString
+            let email = ((UserDefaults.standard.value(forKey: CConstants.UserInfoEmail) ?? "") as AnyObject).lowercased
             if !(email == "xiujun_85@163.com" || email == "april@buildersaccess.com" || email == "350582482@qq.com"
                 || email == "john@buildersaccess.com" || email == "bob@buildersaccess.com" || email == "roberto@buildersaccess.com") {
-                logoutBtn.hidden = true
+                logoutBtn.isHidden = true
             }
         }
         
     }
     
     
-    @IBAction func Logout(sender: UIButton) {
+    @IBAction func Logout(_ sender: UIButton) {
         CLocationManager.sharedInstance.stopUpdatingLocation()
         self.popToRootLogin()
     }
-    @IBAction func goBack(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func goBack(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
-    private struct constants {
+    fileprivate struct constants {
         static let headCellIdentifier = "headCell"
         static let contentCellIdentifier = "contentCell"
     }
@@ -74,7 +73,7 @@ class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let email = (NSUserDefaults.standardUserDefaults().valueForKey(CConstants.UserInfoEmail) ?? "").lowercaseString
+        let email = ((UserDefaults.standard.value(forKey: CConstants.UserInfoEmail) ?? "") as AnyObject).lowercased
         if !(email == "xiujun_85@163.com" || email == "april@buildersaccess.com" || email == "350582482@qq.com"
             || email == "john@buildersaccess.com" || email == "bob@buildersaccess.com" || email == "roberto@buildersaccess.com") {
             self.navigationItem.rightBarButtonItems = nil
@@ -88,22 +87,31 @@ class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITable
     }
     
     func syncFrequency(){
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        if let token = userInfo.objectForKey(CConstants.UserInfoTokenKey) as? String{
-            if let tokenSecret = userInfo.objectForKey(CConstants.UserInfoTokenScretKey) as? String {
+        let userInfo = UserDefaults.standard
+        if let token = userInfo.object(forKey: CConstants.UserInfoTokenKey) as? String{
+            if let tokenSecret = userInfo.object(forKey: CConstants.UserInfoTokenScretKey) as? String {
                 //                print0000(token, tokenSecret)
                 let loginRequiredInfo : OAuthTokenItem = OAuthTokenItem(dicInfo: nil)
                 loginRequiredInfo.Token = token
                 loginRequiredInfo.TokenSecret = tokenSecret
                 //                print0000(loginRequiredInfo.getPropertieNamesAsDictionary())
                 
-                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                hud.labelText = CConstants.LoadingMsg
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud?.labelText = CConstants.LoadingMsg
                 
-                Alamofire.request(.POST, CConstants.ServerURL + CConstants.SyncScheduleIntervalURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
+                let param = [
+                    "Token": token
+                    , "TokenSecret": tokenSecret
+                    , "ClientTime": loginRequiredInfo.ClientTime ?? ""
+                    , "Email": loginRequiredInfo.Email ?? ""
+                    , "Password": loginRequiredInfo.Password ?? ""]
+                
+                Alamofire.request( CConstants.ServerURL + CConstants.SyncScheduleIntervalURL
+                    , method:.post
+                    , parameters: param).responseJSON{ (response) -> Void in
                     //                    print0000(response.result.value)
                     //                    print0000("syncFrequency")
-                    hud.hide(true)
+                    hud?.hide(true)
                     if response.result.isSuccess {
                         if let rtnValue = response.result.value as? [[String: AnyObject]]{
                             //                            print0000(rtnValue)
@@ -129,17 +137,17 @@ class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITable
     
     @IBOutlet var tablewView: UITableView!{
         didSet{
-            tablewView.separatorStyle = .None
+            tablewView.separatorStyle = .none
         }
     }
     
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return hourList?.count ?? 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(constants.contentCellIdentifier, forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: constants.contentCellIdentifier, for: indexPath)
         
         if let cell1 = cell as? ClockHourCell {
             cell1.setCellDetail(hourList![indexPath.row])
@@ -147,8 +155,8 @@ class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITable
          return cell
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCellWithIdentifier(constants.headCellIdentifier)
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: constants.headCellIdentifier)
         let a = UIColor(red: 215/255.0, green: 224/255.0, blue:231/255.0, alpha: 1)
         cell?.backgroundColor = a
         cell?.contentView.backgroundColor = a
@@ -165,7 +173,7 @@ class ClockHoursViewController: BaseViewController, UITableViewDelegate, UITable
             checkBtn.layer.cornerRadius = 5.0
         }
     }
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 44.0
     }
 }

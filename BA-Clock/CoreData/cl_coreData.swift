@@ -13,12 +13,12 @@ import CoreData
 class cl_coreData: NSObject {
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentStoreCoordinator
     }()
     
     lazy var managedObjectContext: NSManagedObjectContext = {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.managedObjectContext
     }()
     
@@ -71,18 +71,18 @@ class cl_coreData: NSObject {
 //
 //    }
     
-    func savedFrequencysToDB(itemList : [FrequencyItem]){
+    func savedFrequencysToDB(_ itemList : [FrequencyItem]){
         
-        let fetchRequest = NSFetchRequest(entityName: "Frequency")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Frequency")
         let request = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         do {
-            try persistentStoreCoordinator.executeRequest(request, withContext: managedObjectContext)
+            try persistentStoreCoordinator.execute(request, with: managedObjectContext)
             for item : FrequencyItem in itemList {
-                let entity =  NSEntityDescription.entityForName("Frequency",
-                    inManagedObjectContext:managedObjectContext)
+                let entity =  NSEntityDescription.entity(forEntityName: "Frequency",
+                    in:managedObjectContext)
                 
                 let scheduledDayItem = NSManagedObject(entity: entity!,
-                    insertIntoManagedObjectContext: managedObjectContext)
+                    insertInto: managedObjectContext)
                 
                 scheduledDayItem.setValue(item.DayFullName!, forKey: "dayFullName")
                 scheduledDayItem.setValue(item.DayName!, forKey: "dayName")
@@ -107,24 +107,24 @@ class cl_coreData: NSObject {
         
     }
     
-    func getFrequencyByWeekdayNm(weekdayNm: String) -> FrequencyItem?{
-        let fetchRequest = NSFetchRequest(entityName: "Frequency")
+    func getFrequencyByWeekdayNm(_ weekdayNm: String) -> FrequencyItem?{
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Frequency")
         let predicate = NSPredicate(format: "dayFullName = %@", weekdayNm)
         fetchRequest.predicate = predicate
         
         //3
         do {
             let results =
-            try managedObjectContext.executeFetchRequest(fetchRequest)
+            try managedObjectContext.fetch(fetchRequest)
             if let t = results as? [NSManagedObject] {
                 if let item : NSManagedObject = t.first {
                     let tmp : FrequencyItem = FrequencyItem(dicInfo : nil)
-                    tmp.DayFullName = item.valueForKey("dayFullName") as? String
-                    tmp.DayOfWeek = item.valueForKey("dayOfWeek") as? NSNumber
-                    tmp.DayName = item.valueForKey("dayName") as? String
-                    tmp.ScheduledFrom = item.valueForKey("scheduledFrom") as? String
-                    tmp.ScheduledInterval = item.valueForKey("scheduledInterval") as? NSNumber
-                    tmp.ScheduledTo = item.valueForKey("scheduledTo") as? String
+                    tmp.DayFullName = item.value(forKey: "dayFullName") as? String
+                    tmp.DayOfWeek = item.value(forKey: "dayOfWeek") as? NSNumber
+                    tmp.DayName = item.value(forKey: "dayName") as? String
+                    tmp.ScheduledFrom = item.value(forKey: "scheduledFrom") as? String
+                    tmp.ScheduledInterval = item.value(forKey: "scheduledInterval") as? NSNumber
+                    tmp.ScheduledTo = item.value(forKey: "scheduledTo") as? String
                     return tmp
                 }
             }
@@ -136,7 +136,7 @@ class cl_coreData: NSObject {
     }
     
     func getAllFrequency() -> [FrequencyItem]{
-        let fetchRequest = NSFetchRequest(entityName: "Frequency")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Frequency")
 //        let predicate = NSPredicate(format: "dayFullName = %@", weekdayNm)
 //        fetchRequest.predicate = predicate
         
@@ -144,16 +144,16 @@ class cl_coreData: NSObject {
         //3
         do {
             let results =
-                try managedObjectContext.executeFetchRequest(fetchRequest)
+                try managedObjectContext.fetch(fetchRequest)
             if let t = results as? [NSManagedObject] {
                 for item in t {
                     let tmp : FrequencyItem = FrequencyItem(dicInfo : nil)
-                    tmp.DayFullName = item.valueForKey("dayFullName") as? String
-                    tmp.DayOfWeek = item.valueForKey("dayOfWeek") as? NSNumber
-                    tmp.DayName = item.valueForKey("dayName") as? String
-                    tmp.ScheduledFrom = item.valueForKey("scheduledFrom") as? String
-                    tmp.ScheduledInterval = item.valueForKey("scheduledInterval") as? NSNumber
-                    tmp.ScheduledTo = item.valueForKey("scheduledTo") as? String
+                    tmp.DayFullName = item.value(forKey: "dayFullName") as? String
+                    tmp.DayOfWeek = item.value(forKey: "dayOfWeek") as? NSNumber
+                    tmp.DayName = item.value(forKey: "dayName") as? String
+                    tmp.ScheduledFrom = item.value(forKey: "scheduledFrom") as? String
+                    tmp.ScheduledInterval = item.value(forKey: "scheduledInterval") as? NSNumber
+                    tmp.ScheduledTo = item.value(forKey: "scheduledTo") as? String
                     rtn.append(tmp)
                 }
             }

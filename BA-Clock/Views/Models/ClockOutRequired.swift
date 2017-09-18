@@ -15,4 +15,5 @@ class ClockOutRequired: RequiredBaseObject {
     var HostName : String?
     var Latitude : String?
     var Longitude : String?
+    
 }

@@ -14,7 +14,7 @@ import CoreLocation
 class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDelegate {
     
     // MARK: - Page constants
-    private struct constants{
+    fileprivate struct constants{
         static let PasswordEmptyMsg : String = "Password Required."
         static let EmailEmptyMsg :  String = "Email Required."
         static let WrongEmailOrPwdMsg :  String = "Email or password is incorrect."
@@ -39,23 +39,23 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     @IBOutlet weak var emailTxt: UITextField!{
         
         didSet{
-            emailTxt.returnKeyType = .Next
+            emailTxt.returnKeyType = .next
             emailTxt.delegate = self
-            let userInfo = NSUserDefaults.standardUserDefaults()
-            emailTxt.text = userInfo.objectForKey(CConstants.UserInfoEmail) as? String
-            emailTxt.keyboardType = .EmailAddress
+            let userInfo = UserDefaults.standard
+            emailTxt.text = userInfo.object(forKey: CConstants.UserInfoEmail) as? String
+            emailTxt.keyboardType = .emailAddress
             self.setSignInBtn()
         }
     }
     @IBOutlet weak var passwordTxt: UITextField!{
         didSet{
-            passwordTxt.returnKeyType = .Go
+            passwordTxt.returnKeyType = .go
             passwordTxt.enablesReturnKeyAutomatically = true
             passwordTxt.delegate = self
-            let userInfo = NSUserDefaults.standardUserDefaults()
-            if let isRemembered = userInfo.objectForKey(CConstants.UserInfoRememberMe) as? Bool{
+            let userInfo = UserDefaults.standard
+            if let isRemembered = userInfo.object(forKey: CConstants.UserInfoRememberMe) as? Bool{
                 if isRemembered {
-                    passwordTxt.text = userInfo.objectForKey(CConstants.UserInfoPwd) as? String
+                    passwordTxt.text = userInfo.object(forKey: CConstants.UserInfoPwd) as? String
                 }
                 
             }
@@ -66,7 +66,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     //    @IBOutlet weak var rememberMeSwitch: UISwitch!{
     //        didSet {
     //            rememberMeSwitch.transform = CGAffineTransformMakeScale(0.85, 0.85)
-    //            let userInfo = NSUserDefaults.standardUserDefaults()
+    //            let userInfo = UserDefaults.standard
     //            if let isRemembered = userInfo.objectForKey(CConstants.UserInfoRememberMe) as? Bool{
     //                rememberMeSwitch.on = isRemembered
     //            }else{
@@ -78,10 +78,10 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     @IBOutlet weak var backView2: UIView!{
         //        backView.backgroundColor = UIColor.whiteColor()
         didSet{
-            backView2.layer.borderColor = CConstants.BorderColor.CGColor
+            backView2.layer.borderColor = CConstants.BorderColor.cgColor
             backView2.layer.borderWidth = 0
             
-            backView2.layer.shadowColor = CConstants.BorderColor.CGColor
+            backView2.layer.shadowColor = CConstants.BorderColor.cgColor
             backView2.layer.shadowOpacity = 1
             backView2.layer.shadowRadius = 3.0
             backView2.layer.shadowOffset = CGSize(width: -1.0, height: 0)
@@ -89,11 +89,11 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     }
     @IBOutlet weak var backView: UIView!{
         didSet{
-            backView.backgroundColor = UIColor.whiteColor()
-            backView.layer.borderColor = CConstants.BorderColor.CGColor
+            backView.backgroundColor = UIColor.white
+            backView.layer.borderColor = CConstants.BorderColor.cgColor
             backView.layer.borderWidth = 1.0
             
-            backView.layer.shadowColor = CConstants.BorderColor.CGColor
+            backView.layer.shadowColor = CConstants.BorderColor.cgColor
             backView.layer.shadowOpacity = 1
             backView.layer.shadowRadius = 3.0
             backView.layer.shadowOffset = CGSize(width: 1.0, height: 2.0)
@@ -120,7 +120,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     
     
     // MARK: UITextField Delegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField{
         case emailTxt:
             passwordTxt.becomeFirstResponder()
@@ -135,8 +135,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     @IBAction func textFieldChanged() {
         setSignInBtn()
     }
-    private func setSignInBtn(){
-        signInBtn?.enabled = !self.IsNilOrEmpty(passwordTxt?.text)
+    fileprivate func setSignInBtn(){
+        signInBtn?.isEnabled = !self.IsNilOrEmpty(passwordTxt?.text)
             && !self.IsNilOrEmpty(emailTxt?.text)
         //        signInMap.enabled = signInBtn.enabled  && isLocationServiceEnabled!
         
@@ -145,7 +145,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     
     // MARK: Outlet Action
     //    @IBAction func rememberChanged(sender: UISwitch) {
-    //        let userInfo = NSUserDefaults.standardUserDefaults()
+    //        let userInfo = UserDefaults.standard
     //        userInfo.setObject(rememberMeSwitch.on, forKey: CConstants.UserInfoRememberMe)
     //        if !rememberMeSwitch.on {
     //            userInfo.setObject("", forKey: CConstants.UserInfoPwd)
@@ -154,13 +154,13 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     
     
     
-    @IBAction func Login(sender: UIButton) {
+    @IBAction func Login(_ sender: UIButton) {
         
         //        popupAgreement()
         //        self.noticeOnlyText(CConstants.LoginingMsg)
         
-        if NSUserDefaults.standardUserDefaults().boolForKey(CConstants.LocationServericeChanged) ?? false {
-            if CLLocationManager.authorizationStatus() != .AuthorizedAlways {
+        if UserDefaults.standard.bool(forKey: CConstants.LocationServericeChanged) {
+            if CLLocationManager.authorizationStatus() != .authorizedAlways {
                 self.popLocationErrorMsg()
             }else{
                 disAblePageControl()
@@ -175,15 +175,15 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     
     
     
-    private func disAblePageControl(){
-        signInBtn.enabled = false
+    fileprivate func disAblePageControl(){
+        signInBtn.isEnabled = false
         //        signInBtn.backgroundColor = UIColor(red: 125/255.0, green: 153/255.0, blue: 176/255.0, alpha: 1)
         //        signInMap.hidden = true
-        emailTxt.enabled = false
-        passwordTxt.enabled = false
+        emailTxt.isEnabled = false
+        passwordTxt.isEnabled = false
         //        rememberMeSwitch.enabled = false
-        emailTxt.textColor = UIColor.darkGrayColor()
-        passwordTxt.textColor = UIColor.darkGrayColor()
+        emailTxt.textColor = UIColor.darkGray
+        passwordTxt.textColor = UIColor.darkGray
         
     }
     
@@ -200,21 +200,23 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                         //                        coreData.savedScheduledDaysToDB(clockInfo!.ScheduledDay!)
                         coreData.savedFrequencysToDB(clockInfo!.Frequency!)
                         
-                        let userInfo = NSUserDefaults.standardUserDefaults()
+                        let userInfo = UserDefaults.standard
                         userInfo.setValue(clockInfo?.ClockYN ?? "1", forKey: CConstants.ShowClockInAndOut)
                         userInfo.setValue(clockInfo!.OAuthToken!.Token!, forKey: CConstants.UserInfoTokenKey)
                         userInfo.setValue(clockInfo!.OAuthToken!.TokenSecret!, forKey: CConstants.UserInfoTokenScretKey)
-                        self.performSegueWithIdentifier(CConstants.SegueToMap, sender: self)
+                        userInfo.setValue(clockInfo!.iddeptos ?? "0", forKey: CConstants.UserInfoIdDeptos)
+                        print(userInfo.string(forKey: CConstants.UserInfoIdDeptos) ?? "0")
+                        self.performSegue(withIdentifier: CConstants.SegueToMap, sender: self)
                         
                         Tool.saveDeviceTokenToSever()
                     }else{
-                        let userInfo = NSUserDefaults.standardUserDefaults()
+                        let userInfo = UserDefaults.standard
                         userInfo.setValue(clockInfo!.OAuthToken!.Token!, forKey: CConstants.UserInfoTokenKey)
                         userInfo.setValue(clockInfo!.OAuthToken!.TokenSecret!, forKey: CConstants.UserInfoTokenScretKey)
-                        self.performSegueWithIdentifier(constants.segueToAgreement, sender: nil)
+                        self.performSegue(withIdentifier: constants.segueToAgreement, sender: nil)
                     }
                 }else{
-                    self.performSegueWithIdentifier(constants.segueToAgreement, sender: nil)
+                    self.performSegue(withIdentifier: constants.segueToAgreement, sender: nil)
                 }
                 
                 
@@ -231,7 +233,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
     }
     
     
-    private func doLogin(){
+    fileprivate func doLogin(){
         
         
         emailTxt.resignFirstResponder()
@@ -251,28 +253,57 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                 self.PopMsgWithJustOK(msg: constants.PasswordEmptyMsg, txtField: passwordTxt)
             }else {
                 
-                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                hud.labelText = CConstants.LoginingMsg
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud?.labelText = CConstants.LoginingMsg
                 
                 
                 // do login
                 let tl = Tool()
                 
-                let loginRequiredInfo : ClockInRequired = ClockInRequired()
-                loginRequiredInfo.Email = email
-                loginRequiredInfo.Password = tl.md5(string: password!)
-                let now = NSDate()
-                loginRequiredInfo.ClientTime = tl.getClientTime(now)
+//                let loginRequiredInfo : ClockInRequired = ClockInRequired()
+//                loginRequiredInfo.Email = email
+//                loginRequiredInfo.Password = tl.md5(string: password!)
+                let now = Date()
+//                loginRequiredInfo.ClientTime = tl.getClientTime(now)
+                let param = [
+                    "Email": email ?? ""
+                    , "Password": tl.md5(string: password!)  ?? ""
+                    , "ClientTime": tl.getClientTime(now)  ?? ""]
+                
                 //                print0000(loginRequiredInfo.getPropertieNamesAsDictionary())
-                Alamofire.request(.POST, CConstants.ServerURL + CConstants.LoginServiceURL, parameters: loginRequiredInfo.getPropertieNamesAsDictionary()).responseJSON{ (response) -> Void in
-                    hud.hide(true)
-                    //                    print0000(response.result.value)
+                Alamofire.request(CConstants.ServerURL + CConstants.LoginServiceURL
+                    , method:.post
+                    , parameters: param
+                    ).responseJSON{ (response) -> Void in
+                    hud?.hide(true)
+                                        print(response.result.value)
                     //                    self.progressBar.dismissViewControllerAnimated(true){
                     if response.result.isSuccess {
                         
                         if let rtnValue = response.result.value as? [String: AnyObject]{
                             
-                            self.clockInfo = LoginedInfo(dicInfo: rtnValue)
+                           let tmp = LoginedInfo(dicInfo: rtnValue)
+                            tmp.Frequency = [FrequencyItem]()
+                            if let Frequencys = rtnValue["Frequency"] as? [[String: AnyObject]]{
+                                for fitem in Frequencys {
+                                    tmp.Frequency?.append(FrequencyItem(dicInfo: fitem))
+                                }
+                            }
+                            
+                            if let OAuthToken = rtnValue["OAuthToken"] as? [String: AnyObject]{
+                                tmp.OAuthToken = OAuthTokenItem(dicInfo: OAuthToken);
+                            }
+                            
+                            tmp.ScheduledDay = [ScheduledDayItem]()
+                            if let ScheduledDay = rtnValue["ScheduledDay"] as? [[String: AnyObject]]{
+                                for fitem in ScheduledDay {
+                                    tmp.ScheduledDay?.append(ScheduledDayItem(dicInfo: fitem))
+                                }
+                            }
+                            
+                            
+                            
+                            self.clockInfo  = tmp;
                             
                         }else{
                             self.PopServerError()
@@ -289,37 +320,37 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
             }
         }
     }
-    private func toEablePageControl(){
-        self.signInBtn.enabled = true
-        self.emailTxt.enabled = true
-        self.passwordTxt.enabled = true
-        self.emailTxt.textColor = UIColor.blackColor()
-        self.passwordTxt.textColor = UIColor.blackColor()
+    fileprivate func toEablePageControl(){
+        self.signInBtn.isEnabled = true
+        self.emailTxt.isEnabled = true
+        self.passwordTxt.isEnabled = true
+        self.emailTxt.textColor = UIColor.black
+        self.passwordTxt.textColor = UIColor.black
         //    self.spinner.stopAnimating()
     }
     
-    func saveEmailAndPwdToDisk(email email: String, password: String, displayName: String, fullName: String){
-        let userInfo = NSUserDefaults.standardUserDefaults()
+    func saveEmailAndPwdToDisk(email: String, password: String, displayName: String, fullName: String){
+        let userInfo = UserDefaults.standard
         //        if rememberMeSwitch.on {
-        userInfo.setObject(true, forKey: CConstants.UserInfoRememberMe)
+        userInfo.set(true, forKey: CConstants.UserInfoRememberMe)
         //        }else{
         //            userInfo.setObject(false, forKey: CConstants.UserInfoRememberMe)
         //        }
-        userInfo.setObject(email, forKey: CConstants.UserInfoEmail)
-        userInfo.setObject(password, forKey: CConstants.UserInfoPwd)
-        userInfo.setObject(displayName, forKey: CConstants.UserDisplayName)
-        userInfo.setObject(fullName, forKey: CConstants.UserFullName)
+        userInfo.set(email, forKey: CConstants.UserInfoEmail)
+        userInfo.set(password, forKey: CConstants.UserInfoPwd)
+        userInfo.set(displayName, forKey: CConstants.UserDisplayName)
+        userInfo.set(fullName, forKey: CConstants.UserFullName)
     }
     
     
     // MARK: PrepareForSegue
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             switch identifier {
                 
             case CConstants.SegueToMap:
-                if let clockListView = segue.destinationViewController as? ClockMapViewController{
+                if let clockListView = segue.destination as? ClockMapViewController{
                     //                    if let itemList = self.clockInfo?.ScheduledDay {
                     //                        var h = itemList
                     //                        let tl = Tool()
@@ -338,7 +369,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                 }
                 break
             case constants.segueToAgreement:
-                if let agreement = segue.destinationViewController as? AgreementViewController{
+                if let agreement = segue.destination as? AgreementViewController{
                     agreement.delegate = self
                 }
                 break
@@ -356,28 +387,15 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
         super.viewDidLoad()
         
         self.checkUpate()
-        let userInfo = NSUserDefaults.standardUserDefaults()
+        let userInfo = UserDefaults.standard
         userInfo.setValue("0", forKey: CConstants.RegisteredDeviceToken)
-        userInfo.setBool(true, forKey: CConstants.ToAddTrack)
+        userInfo.set(true, forKey: CConstants.ToAddTrack)
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 19/255.0, green: 72/255.0, blue: 116/255.0, alpha: 1)
-        self.navigationController?.navigationBar.translucent = false
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
         
         self.title = "BA Clock"
-        
-        
-        
-        
-        
-        
-        
-        
-        //        let locationManager = LocationTracker.sharedLocationManager()
-        //        locationTracker = LocationTracker()
-        //        locationManager.delegate = locationTracker
-        //        locationManager.requestAlwaysAuthorization()
-        
         
     }
 }

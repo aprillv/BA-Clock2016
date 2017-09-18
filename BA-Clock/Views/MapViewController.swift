@@ -22,11 +22,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             updateMap()
         }
     }
-    @IBAction func closeself(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func closeself(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    private func updateMap(){
+    fileprivate func updateMap(){
         if let coordinateTmp = coordinate,
             let mapTmp = map{
                 let region = mapTmp.regionThatFits(MKCoordinateRegion.init(center: coordinateTmp, span: MKCoordinateSpanMake(0.02, 0.02)));
@@ -40,12 +40,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-     var annotationView : MKPinAnnotationView? = mapView.dequeueReusableAnnotationViewWithIdentifier("April") as? MKPinAnnotationView
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+     var annotationView : MKPinAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: "April") as? MKPinAnnotationView
         if annotationView == nil {
             annotationView = MKPinAnnotationView.init(annotation: annotation, reuseIdentifier: "April")
         }
-        annotationView?.pinTintColor = UIColor.redColor()
+        annotationView?.pinTintColor = UIColor.red
         annotationView?.animatesDrop = true
         return annotationView
     

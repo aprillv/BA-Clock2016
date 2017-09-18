@@ -56,6 +56,13 @@
 		11E889431C4F57FE003E9633 /* cl_coreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E889421C4F57FE003E9633 /* cl_coreData.swift */; };
 		11F256C41C48CA08009353CD /* ClockOutRequired.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F256C31C48CA08009353CD /* ClockOutRequired.swift */; };
 		11F8DC301C50A981002E4736 /* FrequencyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F8DC2F1C50A981002E4736 /* FrequencyItem.swift */; };
+		4242A3A11F6CACF7006D8DD0 /* SFAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4242A3A01F6CACF7006D8DD0 /* SFAnnotation.m */; };
+		4242A3A31F6CC3E5006D8DD0 /* MapFilterModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242A3A21F6CC3E5006D8DD0 /* MapFilterModalViewController.swift */; };
+		4242A3A51F6CFB38006D8DD0 /* TrackPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242A3A41F6CFB38006D8DD0 /* TrackPersonViewController.swift */; };
+		42AE6AAA1F6B9C1C00347897 /* TrackGPSMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AE6AA91F6B9C1C00347897 /* TrackGPSMapViewController.swift */; };
+		42FE6FC41F6A575D0011BCD5 /* TrackGPSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FE6FC31F6A575D0011BCD5 /* TrackGPSViewController.swift */; };
+		42FE6FC61F6A5BB60011BCD5 /* TrackGPSDat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FE6FC51F6A5BB60011BCD5 /* TrackGPSDat.swift */; };
+		AB71042ABCCF04790E5E10E2 /* Pods_BA_Clock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA26A5913366F0830973872C /* Pods_BA_Clock.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -77,7 +84,7 @@
 		110645A91C4725F300795996 /* Tool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
 		110645AB1C47643800795996 /* ClockInRequired.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockInRequired.swift; sourceTree = "<group>"; };
 		110B80FF1C45DF7500FE136D /* BA-Clock-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BA-Clock-Bridging-Header.h"; sourceTree = "<group>"; };
-		110B810A1C4616F600FE136D /* LoginedInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginedInfo.swift; path = "BA-Clock/Views/Models/LoginedInfo.swift"; sourceTree = "<group>"; };
+		110B810A1C4616F600FE136D /* LoginedInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginedInfo.swift; sourceTree = "<group>"; };
 		110B810D1C46175E00FE136D /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
 		110B810F1C46189100FE136D /* ScheduledDayItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledDayItem.swift; sourceTree = "<group>"; };
 		110B81131C4625B300FE136D /* ClockTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockTextCell.swift; sourceTree = "<group>"; };
@@ -129,6 +136,13 @@
 		11F8DC2F1C50A981002E4736 /* FrequencyItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequencyItem.swift; sourceTree = "<group>"; };
 		3C5C896F08706DD1428A0ED8 /* Pods-BA-Clock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BA-Clock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BA-Clock/Pods-BA-Clock.debug.xcconfig"; sourceTree = "<group>"; };
 		41515ADC4D8E6DED1032837D /* Pods-BA-Clock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BA-Clock.release.xcconfig"; path = "Pods/Target Support Files/Pods-BA-Clock/Pods-BA-Clock.release.xcconfig"; sourceTree = "<group>"; };
+		4242A39F1F6CACF7006D8DD0 /* SFAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFAnnotation.h; sourceTree = "<group>"; };
+		4242A3A01F6CACF7006D8DD0 /* SFAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFAnnotation.m; sourceTree = "<group>"; };
+		4242A3A21F6CC3E5006D8DD0 /* MapFilterModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFilterModalViewController.swift; sourceTree = "<group>"; };
+		4242A3A41F6CFB38006D8DD0 /* TrackPersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackPersonViewController.swift; sourceTree = "<group>"; };
+		42AE6AA91F6B9C1C00347897 /* TrackGPSMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackGPSMapViewController.swift; sourceTree = "<group>"; };
+		42FE6FC31F6A575D0011BCD5 /* TrackGPSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackGPSViewController.swift; sourceTree = "<group>"; };
+		42FE6FC51F6A5BB60011BCD5 /* TrackGPSDat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackGPSDat.swift; sourceTree = "<group>"; };
 		FA26A5913366F0830973872C /* Pods_BA_Clock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BA_Clock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -139,6 +153,7 @@
 			files = (
 				11A626471CD9E0C800B91EBE /* Pods_BA_Clock.framework in Frameworks */,
 				1158DA6F1C44CF3A0022B2D5 /* MapKit.framework in Frameworks */,
+				AB71042ABCCF04790E5E10E2 /* Pods_BA_Clock.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +172,7 @@
 		110B81091C45FBD700FE136D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				110B810A1C4616F600FE136D /* LoginedInfo.swift */,
 				110B810D1C46175E00FE136D /* BaseObject.swift */,
 				110B810F1C46189100FE136D /* ScheduledDayItem.swift */,
 				110645AB1C47643800795996 /* ClockInRequired.swift */,
@@ -171,6 +187,7 @@
 				11104F891C589ED100DF7922 /* DeviceTokenRequired.swift */,
 				11BCEBD11C608D3E007726D4 /* TrackDotItem.swift */,
 				1116A7A91C8FB60400438FBB /* MoreActionRequired.swift */,
+				42FE6FC51F6A5BB60011BCD5 /* TrackGPSDat.swift */,
 			);
 			name = Models;
 			path = Views/Models;
@@ -179,6 +196,8 @@
 		110B81121C46259F00FE136D /* CustomControl */ = {
 			isa = PBXGroup;
 			children = (
+				4242A39F1F6CACF7006D8DD0 /* SFAnnotation.h */,
+				4242A3A01F6CACF7006D8DD0 /* SFAnnotation.m */,
 				110B81131C4625B300FE136D /* ClockTextCell.swift */,
 				11810D471C4788EC00298DD9 /* ClockMapCell.swift */,
 				1189AC4D1C5F4A1C00E407FE /* CustomAnnotation.swift */,
@@ -194,7 +213,6 @@
 			children = (
 				11561A0E1C4F6C3D007A049A /* Main.storyboard */,
 				1158DA6E1C44CF3A0022B2D5 /* MapKit.framework */,
-				110B810A1C4616F600FE136D /* LoginedInfo.swift */,
 				11128F5B1C3E0EE2006390C1 /* BA-Clock */,
 				11128F5A1C3E0EE2006390C1 /* Products */,
 				40E3546B5740D77F373767CF /* Pods */,
@@ -246,6 +264,10 @@
 				11632C051CD357BE00B70C44 /* noteTableViewCell.swift */,
 				111293DC1CDB3AC400B0DAFC /* CLocationManager.swift */,
 				11B45F2C1D518FC60032AA7D /* ClockHoursViewController.swift */,
+				42FE6FC31F6A575D0011BCD5 /* TrackGPSViewController.swift */,
+				42AE6AA91F6B9C1C00347897 /* TrackGPSMapViewController.swift */,
+				4242A3A21F6CC3E5006D8DD0 /* MapFilterModalViewController.swift */,
+				4242A3A41F6CFB38006D8DD0 /* TrackPersonViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -290,13 +312,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 11128F6E1C3E0EE2006390C1 /* Build configuration list for PBXNativeTarget "BA-Clock" */;
 			buildPhases = (
-				4C5B1C694B2BCBBAADE3E61F /* 📦 Check Pods Manifest.lock */,
+				4C5B1C694B2BCBBAADE3E61F /* [CP] Check Pods Manifest.lock */,
 				11128F551C3E0EE2006390C1 /* Sources */,
 				11128F561C3E0EE2006390C1 /* Frameworks */,
 				11128F571C3E0EE2006390C1 /* Resources */,
 				11128F931C3E3869006390C1 /* Embed Frameworks */,
-				C472570D5B195AB91AD614B2 /* 📦 Embed Pods Frameworks */,
-				B334769454110D51BCC446D1 /* 📦 Copy Pods Resources */,
+				C472570D5B195AB91AD614B2 /* [CP] Embed Pods Frameworks */,
+				B334769454110D51BCC446D1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -320,7 +342,7 @@
 					11128F581C3E0EE2006390C1 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 7D8CVP7EK4;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -361,29 +383,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4C5B1C694B2BCBBAADE3E61F /* 📦 Check Pods Manifest.lock */ = {
+		4C5B1C694B2BCBBAADE3E61F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		B334769454110D51BCC446D1 /* 📦 Copy Pods Resources */ = {
+		B334769454110D51BCC446D1 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,14 +413,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BA-Clock/Pods-BA-Clock-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C472570D5B195AB91AD614B2 /* 📦 Embed Pods Frameworks */ = {
+		C472570D5B195AB91AD614B2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,6 +448,7 @@
 				111AA6AD1C48C93D00BD4098 /* SubmitLocationRequired.swift in Sources */,
 				11632C061CD357BE00B70C44 /* noteTableViewCell.swift in Sources */,
 				11A6263A1CD9D78400B91EBE /* cl_submitData.swift in Sources */,
+				4242A3A11F6CACF7006D8DD0 /* SFAnnotation.m in Sources */,
 				110645AA1C4725F300795996 /* Tool.swift in Sources */,
 				11632BFC1CD3261100B70C44 /* timeSelectorViewController.swift in Sources */,
 				11F256C41C48CA08009353CD /* ClockOutRequired.swift in Sources */,
@@ -443,18 +466,23 @@
 				1189AC4E1C5F4A1C00E407FE /* CustomAnnotation.swift in Sources */,
 				11E889431C4F57FE003E9633 /* cl_coreData.swift in Sources */,
 				1116A7AA1C8FB60400438FBB /* MoreActionRequired.swift in Sources */,
+				42FE6FC61F6A5BB60011BCD5 /* TrackGPSDat.swift in Sources */,
 				111FF7E61C92906200960FD3 /* AgreementViewController.swift in Sources */,
+				4242A3A31F6CC3E5006D8DD0 /* MapFilterModalViewController.swift in Sources */,
 				110B81101C46189100FE136D /* ScheduledDayItem.swift in Sources */,
 				11B45F2D1D518FC60032AA7D /* ClockHoursViewController.swift in Sources */,
 				11128F651C3E0EE2006390C1 /* BA_Clock.xcdatamodeld in Sources */,
+				4242A3A51F6CFB38006D8DD0 /* TrackPersonViewController.swift in Sources */,
 				1158DA791C44CF930022B2D5 /* ClockMapViewController.swift in Sources */,
 				110B810E1C46175E00FE136D /* BaseObject.swift in Sources */,
 				110645AC1C47643800795996 /* ClockInRequired.swift in Sources */,
 				112D38991C9A72A100E98E9C /* TextTableViewCell.swift in Sources */,
+				42AE6AAA1F6B9C1C00347897 /* TrackGPSMapViewController.swift in Sources */,
 				1166D8571C4CC8CE00878F7C /* LoginRequired.swift in Sources */,
 				110B81141C4625B300FE136D /* ClockTextCell.swift in Sources */,
 				11B45F311D5199A70032AA7D /* BaseCell.swift in Sources */,
 				1189AC4B1C5F3E3400E407FE /* MapViewController.swift in Sources */,
+				42FE6FC41F6A575D0011BCD5 /* TrackGPSViewController.swift in Sources */,
 				1110E0581CABFDB100AE132F /* logFile.swift in Sources */,
 				111BF4B71C4E121600C94E66 /* OAuthTokenItem.swift in Sources */,
 			);
@@ -564,6 +592,7 @@
 				CODE_SIGN_ENTITLEMENTS = "BA-Clock/BA-Clock.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7D8CVP7EK4;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -578,7 +607,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BA-Clock/Views/BA-Clock-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -591,6 +620,7 @@
 				CODE_SIGN_ENTITLEMENTS = "BA-Clock/BA-Clock.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7D8CVP7EK4;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -604,7 +634,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BA-Clock/Views/BA-Clock-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

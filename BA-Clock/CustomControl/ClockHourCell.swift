@@ -13,11 +13,11 @@ class ClockHourCell: BaseCell {
     @IBOutlet var dayLbl: UILabel!
     @IBOutlet var speratorWidth: NSLayoutConstraint!{
         didSet{
-            speratorWidth.constant = 1.0 / UIScreen.mainScreen().scale
+            speratorWidth.constant = 1.0 / UIScreen.main.scale
         }
     }
     
-    func setCellDetail(item : FrequencyItem) {
+    func setCellDetail(_ item : FrequencyItem) {
         if item.ScheduledFrom == item.ScheduledTo {
             timeinLbl.text = ""
             timeoutLbl.text = ""

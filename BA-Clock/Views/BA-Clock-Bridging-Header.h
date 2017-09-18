@@ -4,3 +4,4 @@
 #import <MBProgressHUD.h>
 #import <CommonCrypto/CommonCrypto.h>
 #include <ifaddrs.h>
+#import "SFAnnotation.h"

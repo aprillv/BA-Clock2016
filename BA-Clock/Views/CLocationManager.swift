@@ -13,25 +13,26 @@ import Alamofire
 
 
 class CLocationManager: NSObject, CLLocationManagerDelegate {
+//    private static var __once: () = {
+//            Static.instance = CLocationManager()
+//        }()
     class var sharedInstance: CLocationManager {
         struct Static {
-            static var onceToken: dispatch_once_t = 0
+            static var onceToken: Int = 0
             
-            static var instance: CLocationManager? = nil
+            static var instance: CLocationManager? = CLocationManager()
         }
-        dispatch_once(&Static.onceToken) {
-            Static.instance = CLocationManager()
-        }
+//        _ = CLocationManager.__once
         return Static.instance!
     }
     
     var locationManager:CLLocationManager?
     var currentLocation:CLLocation?
     
-    var SyncTimer: NSTimer?
-    var ResetLocaitonAccurarcyTimer : NSTimer?
+    var SyncTimer: Timer?
+    var ResetLocaitonAccurarcyTimer : Timer?
     
-    var NoComeBackTimer: NSTimer?
+    var NoComeBackTimer: Timer?
     
     var hasfirstTrack = 0
     override init() {
@@ -39,7 +40,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         self.locationManager = CLLocationManager()
         self.locationManager?.delegate = self
         self.locationManager?.requestAlwaysAuthorization()
-        self.locationManager?.activityType = .Fitness
+        self.locationManager?.activityType = .fitness
         self.locationManager?.pausesLocationUpdatesAutomatically = false
         self.setHighLocationAccurcy()
         
@@ -54,7 +55,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         
         let nextInterval = self.getFirstQuauterTimeSpace(diffinterval)
         
-        NSTimer.scheduledTimerWithTimeInterval(nextInterval, target: self, selector: #selector(CLocationManager.updateLocation99), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: nextInterval, target: self, selector: #selector(CLocationManager.updateLocation99), userInfo: nil, repeats: false)
 //        print("222222222locationManager")
         
 //        let info = UILocalNotification()
@@ -75,32 +76,32 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     
-    func setNotComeBackNotification(endTime : NSDate) {
-        let dateFormatter = NSDateFormatter()
+    func setNotComeBackNotification(_ endTime : Date) {
+        let dateFormatter = DateFormatter()
 //        dateFormatter.dateFormat = "MM/dd/yyyy HH"
 //        let nowHour = dateFormatter.stringFromDate(date)
 //        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
 //        var now15 = dateFormatter.dateFromString(nowHour + ":00:00")
         
-        let now = NSDate()
+        let now = Date()
         dateFormatter.dateFormat = "EEEE"
-        let dayFullName = dateFormatter.stringFromDate(now)
+        let dayFullName = dateFormatter.string(from: now)
         
         let clfrequency = cl_coreData()
         if let item = clfrequency.getFrequencyByWeekdayNm(dayFullName) {
             dateFormatter.dateFormat = "MM/dd/yyyy"
-            let nowdate = dateFormatter.stringFromDate(now)
+            let nowdate = dateFormatter.string(from: now)
             
             dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-            let todayTo = dateFormatter.dateFromString("\(nowdate) \(item.ScheduledTo ?? "11:59 PM")")
-            if endTime.dateByAddingTimeInterval(10.0 * 60.0 + 1.0).timeIntervalSinceDate(todayTo ?? now) < 0 {
+            let todayTo = dateFormatter.date(from: "\(nowdate) \(item.ScheduledTo ?? "11:59 PM")")
+            if endTime.addingTimeInterval(10.0 * 60.0 + 1.0).timeIntervalSince(todayTo ?? now) < 0 {
                 let info = UILocalNotification()
-                info.fireDate = endTime.dateByAddingTimeInterval(10.0 * 60.0 + 1.0)
-                info.timeZone = NSTimeZone.defaultTimeZone()
+                info.fireDate = endTime.addingTimeInterval(10.0 * 60.0 + 1.0)
+                info.timeZone = TimeZone.current
                 info.alertBody = "You should click come back now. It is more than 10 minutes since you go out."
                 info.soundName = UILocalNotificationDefaultSoundName
                 info.applicationIconBadgeNumber = 1
-                UIApplication.sharedApplication().scheduleLocalNotification(info)
+                UIApplication.shared.scheduleLocalNotification(info)
             }
         }
         
@@ -109,39 +110,39 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
    
     
     
-    var lastTimestamp  = NSDate()
+    var lastTimestamp  = Date()
 //    var lastResubmitTimestamp  = NSDate()
     func stopUpdatingLocation() {
 //        println("Stop Location Updates")
         self.locationManager?.stopUpdatingLocation()
     }
     
-    var timeInterval : NSTimeInterval = 0.0
+    var timeInterval : TimeInterval = 0.0
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status != .AuthorizedAlways && status != .NotDetermined{
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status != .authorizedAlways && status != .notDetermined{
 //             print("000")
-            NSNotificationCenter.defaultCenter().postNotificationName(CConstants.LocationServericeChanged, object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: CConstants.LocationServericeChanged), object: nil)
         }else{
 //            print(status)
 //            print("111")
-            let userInfo = NSUserDefaults.standardUserDefaults()
-            userInfo.setBool(true, forKey: CConstants.ToAddTrack)
+            let userInfo = UserDefaults.standard
+            userInfo.set(true, forKey: CConstants.ToAddTrack)
             manager.startUpdatingLocation()
             
         }
     }
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        print("222222--------------")
         let location: CLLocation? = locations.last
         self.currentLocation = location
         
         
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        if userInfo.boolForKey(CConstants.ToAddTrack) ?? true {
-            userInfo.setBool(false, forKey: CConstants.ToAddTrack)
-            lastTimestamp = NSDate()
-            NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(CLocationManager.updateLocation), userInfo: nil, repeats: false)
+        let userInfo = UserDefaults.standard
+        if userInfo.bool(forKey: CConstants.ToAddTrack) ?? true {
+            userInfo.set(false, forKey: CConstants.ToAddTrack)
+            lastTimestamp = Date()
+            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(CLocationManager.updateLocation), userInfo: nil, repeats: false)
         }
     }
     
@@ -151,7 +152,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
 //    }
     
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError){
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
 //        print("333333", error)
 //        manager.stopUpdatingHeading()
         manager.startUpdatingLocation()
@@ -159,11 +160,11 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     func updateLocation(){
-        let userInfo = NSUserDefaults.standardUserDefaults()
+        let userInfo = UserDefaults.standard
         let lat = currentLocation?.coordinate.latitude
         let lng = currentLocation?.coordinate.longitude
         if lat == 0.0 || lng == 0.0 {
-           userInfo.setBool(true, forKey: CConstants.ToAddTrack)
+           userInfo.set(true, forKey: CConstants.ToAddTrack)
         }
         
         
@@ -185,20 +186,20 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         }
         if h >= 10 {
             self.setLowLocationAccurcy()
-            NSTimer.scheduledTimerWithTimeInterval(h - 9, target: self, selector: #selector(CLocationManager.setHighLocationAccurcy), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: h - 9, target: self, selector: #selector(CLocationManager.setHighLocationAccurcy), userInfo: nil, repeats: false)
         }else{
             self.setHighLocationAccurcy()
         }
         
-        NSTimer.scheduledTimerWithTimeInterval(nextInterval, target: self, selector: #selector(CLocationManager.updateLocation99), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: nextInterval, target: self, selector: #selector(CLocationManager.updateLocation99), userInfo: nil, repeats: false)
         
     }
     
     func getClientTime() -> String {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         
         dateFormatter.dateFormat =  "yyyy-MM-dd HH:mm:ss"
-        let ClientTime = dateFormatter.stringFromDate(NSDate())
+        let ClientTime = dateFormatter.string(from: Date())
         return ClientTime
     }
     
@@ -210,24 +211,24 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
     
     var redoTimes = 0
     
-    func doNextUpdateLoaction(interval : NSTimeInterval) {
+    func doNextUpdateLoaction(_ interval : TimeInterval) {
         var h = interval
         if h == 0 {
             h = 900
         }
             if h >= 10 {
                 self.setLowLocationAccurcy()
-                NSTimer.scheduledTimerWithTimeInterval(h - 9, target: self, selector: #selector(CLocationManager.setHighLocationAccurcy), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: h - 9, target: self, selector: #selector(CLocationManager.setHighLocationAccurcy), userInfo: nil, repeats: false)
             }else{
                 self.setHighLocationAccurcy()
             }
             
             
-            NSTimer.scheduledTimerWithTimeInterval(h, target: self, selector: #selector(CLocationManager.updateLocation), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: h, target: self, selector: #selector(CLocationManager.updateLocation), userInfo: nil, repeats: false)
         
         
     }
-    func callSubmitLocationService(latitude : Double?, longitude1 : Double?, time: String){
+    func callSubmitLocationService(_ latitude : Double?, longitude1 : Double?, time: String){
 //        print("%%%%%%%%%%%%%%%")
         if hasfirstTrack == 0 {
             hasfirstTrack = 1
@@ -245,9 +246,17 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         let OAuthToken = tl.getUserToken()
         submitRequired.Token = OAuthToken.Token
         submitRequired.TokenSecret = OAuthToken.TokenSecret
-        let param = submitRequired.getPropertieNamesAsDictionary()
+        let param = [
+            "Token": submitRequired.Token ?? ""
+            , "TokenSecret": submitRequired.TokenSecret ?? ""
+            , "Latitude": submitRequired.Latitude ?? ""
+            , "Longitude": submitRequired.Longitude ?? ""
+            , "ClientTime": submitRequired.ClientTime ?? ""
+        ]
+        
+//        let param = submitRequired.getPropertieNamesAsDictionary()
 //        print0000(param)
-        Alamofire.request(.POST, CConstants.ServerURL + CConstants.SubmitLocationServiceURL, parameters: param).responseJSON{ (response) -> Void in
+        Alamofire.request(CConstants.ServerURL + CConstants.SubmitLocationServiceURL, method:.post, parameters: param).responseJSON{ (response) -> Void in
             //            print0000(submitRequired.getPropertieNamesAsDictionary(), response.result.value)
             if response.result.isSuccess {
                 if let result = response.result.value as? [String: AnyObject] {
@@ -287,7 +296,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
                     }else{
                         self.redoTimes = 0
                         
-                        self.diffinterval = NSUserDefaults.standardUserDefaults().doubleForKey(CConstants.SeverTimeSinceClienttime) ?? 0
+                        self.diffinterval = UserDefaults.standard.double(forKey:CConstants.SeverTimeSinceClienttime) ?? 0
                     }
                 }
             }else{
@@ -296,48 +305,48 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
                     self.doNextUpdateLoaction(60)
                 }else{
                     self.redoTimes = 0
-                    self.diffinterval = NSUserDefaults.standardUserDefaults().doubleForKey(CConstants.SeverTimeSinceClienttime) ?? 0
+                    self.diffinterval = UserDefaults.standard.double(forKey:CConstants.SeverTimeSinceClienttime) ?? 0
                 }
             }
         }
     }
     
-    var diffinterval: NSTimeInterval = 0.0
+    var diffinterval: TimeInterval = 0.0
     
-    private func getFirstQuauterTimeSpace(interval: NSTimeInterval) -> NSTimeInterval{
+    fileprivate func getFirstQuauterTimeSpace(_ interval: TimeInterval) -> TimeInterval{
         
-        let date = NSDate().dateByAddingTimeInterval(interval)
-        let dateFormatter = NSDateFormatter()
+        let date = Date().addingTimeInterval(interval)
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy HH"
-        let nowHour = dateFormatter.stringFromDate(date)
+        let nowHour = dateFormatter.string(from: date)
         dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
-        var now15 = dateFormatter.dateFromString(nowHour + ":00:00")
+        var now15 = dateFormatter.date(from: nowHour + ":00:00")
         
         let now = date
         dateFormatter.dateFormat = "EEEE"
         
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US")
-        dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.timeZone = TimeZone(identifier: "America/Chicago")
 //        dateFormatter.timeZone = NSTimeZone.localTimeZone()
-        let dayFullName = dateFormatter.stringFromDate(now)
+        let dayFullName = dateFormatter.string(from: now)
         
         let clfrequency = cl_coreData()
         if let item = clfrequency.getFrequencyByWeekdayNm(dayFullName) {
             dateFormatter.dateFormat = "MM/dd/yyyy"
-            let nowdate = dateFormatter.stringFromDate(now)
+            let nowdate = dateFormatter.string(from: now)
             
             dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-            let todayFrom = dateFormatter.dateFromString("\(nowdate) \(item.ScheduledFrom ?? "12:00 AM")")
-            let todayTo = dateFormatter.dateFromString("\(nowdate) \(item.ScheduledTo ?? "11:59 PM")")
+            let todayFrom = dateFormatter.date(from: "\(nowdate) \(item.ScheduledFrom ?? "12:00 AM")")
+            let todayTo = dateFormatter.date(from: "\(nowdate) \(item.ScheduledTo ?? "11:59 PM")")
 //            print0000(now.timeIntervalSinceDate(todayFrom ?? now), (todayTo ?? now).timeIntervalSinceDate(now))
-            if (now.timeIntervalSinceDate(todayFrom ?? now) > 0 && (todayTo ?? now).timeIntervalSinceDate(now) > 0){
+            if (now.timeIntervalSince(todayFrom ?? now) > 0 && (todayTo ?? now).timeIntervalSince(now) > 0){
                 
                 for _ in 1...4 {
 //                    if dos{
-                        now15 = now15?.dateByAddingTimeInterval(15*60)
+                        now15 = now15?.addingTimeInterval(15*60)
                         if let now1 = now15 {
-                            if (now1.timeIntervalSinceDate(todayFrom ?? now1) > 0 && (todayTo ?? now1).timeIntervalSinceDate(now1) > 0){
-                                let timeSpace = now1.timeIntervalSinceDate(date)
+                            if (now1.timeIntervalSince(todayFrom ?? now1) > 0 && (todayTo ?? now1).timeIntervalSince(now1) > 0){
+                                let timeSpace = now1.timeIntervalSince(date)
                                 if  timeSpace > 0 {
                                     //                print0000("apirl", timeSpace ?? 0, i*15)
                                     return timeSpace
@@ -352,26 +361,26 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
                 }
             }else{
                 
-                let now1 = NSDate()
-                var h = now1.timeIntervalSinceDate(todayFrom ?? now1)
+                let now1 = Date()
+                var h = now1.timeIntervalSince(todayFrom ?? now1)
                 if h < 0 {
                     return -h
                 }
-                h = (todayTo ?? now1).timeIntervalSinceDate(now1)
+                h = (todayTo ?? now1).timeIntervalSince(now1)
                 if h < 0 {
-                    let nextday = now.dateByAddingTimeInterval(60*60*24)
+                    let nextday = now.addingTimeInterval(60*60*24)
                     dateFormatter.dateFormat = "EEEE"
                     
-                    let dayFullName = dateFormatter.stringFromDate(nextday)
+                    let dayFullName = dateFormatter.string(from: nextday)
                     
                     let clfrequency = cl_coreData()
                     if let item = clfrequency.getFrequencyByWeekdayNm(dayFullName) {
                         dateFormatter.dateFormat = "MM/dd/yyyy"
-                        let nowdate = dateFormatter.stringFromDate(nextday)
+                        let nowdate = dateFormatter.string(from: nextday)
                         
                         dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-                        let todayFrom = dateFormatter.dateFromString("\(nowdate) \(item.ScheduledFrom ?? "12:00 AM")")
-                        h = todayFrom?.timeIntervalSinceDate(NSDate()) ?? 0
+                        let todayFrom = dateFormatter.date(from: "\(nowdate) \(item.ScheduledFrom ?? "12:00 AM")")
+                        h = todayFrom?.timeIntervalSince(Date()) ?? 0
                         if h > 0 {
                             return h
                         }

@@ -13,7 +13,7 @@ class noteTableViewCell: UITableViewCell {
     @IBOutlet var txtView: UITextView!{
         didSet{
             txtView.layer.cornerRadius = 5.0
-            txtView.layer.borderColor = CConstants.BorderColor.CGColor
+            txtView.layer.borderColor = CConstants.BorderColor.cgColor
             txtView.layer.borderWidth = 1.0 / (UIScreen().scale)
         }
     }

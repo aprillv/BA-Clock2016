@@ -13,19 +13,19 @@ import CoreData
 class cl_log: NSObject {
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentStoreCoordinator
     }()
     
     lazy var managedObjectContext: NSManagedObjectContext = {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.managedObjectContext
     }()
     
-    func savedLogToDB(d: NSDate, xtype: Bool, lat: String){
+    func savedLogToDB(_ d: Date, xtype: Bool, lat: String){
         
-        let userInfo = NSUserDefaults.standardUserDefaults()
-        let title = userInfo.valueForKey(CConstants.UserFullName) as? String
+        let userInfo = UserDefaults.standard
+        let title = userInfo.value(forKey: CConstants.UserFullName) as? String
         
         if !(title == "April" || title == "april Lv" || title == "jack fan" || title == "Bob Xia" || title == "Apple"){
             return
@@ -36,18 +36,18 @@ class cl_log: NSObject {
 //        do {
 //            try persistentStoreCoordinator.executeRequest(request, withContext: managedObjectContext)
            
-                let entity =  NSEntityDescription.entityForName("LogFile",
-                    inManagedObjectContext:managedObjectContext)
+                let entity =  NSEntityDescription.entity(forEntityName: "LogFile",
+                    in:managedObjectContext)
                 
                 let scheduledDayItem = NSManagedObject(entity: entity!,
-                    insertIntoManagedObjectContext: managedObjectContext)
+                    insertInto: managedObjectContext)
                 
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.timeZone = NSTimeZone(name: "America/Chicago")
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeZone = TimeZone(identifier: "America/Chicago")
 //        dateFormatter.timeZone = NSTimeZone.localTimeZone()
-        dateFormatter.locale = NSLocale(localeIdentifier : "en_US")
+        dateFormatter.locale = Locale(identifier : "en_US")
             dateFormatter.dateFormat =  "MM/dd hh:mm a"
-            let nowHour = dateFormatter.stringFromDate(d)
+            let nowHour = dateFormatter.string(from: d)
             
             scheduledDayItem.setValue(lat, forKey: "latlng")
             scheduledDayItem.setValue(xtype, forKey: "xtype")
@@ -75,19 +75,19 @@ class cl_log: NSObject {
   
     
     func getLogs() -> [logs]?{
-        let fetchRequest = NSFetchRequest(entityName: "LogFile")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "LogFile")
 //        let predicate = NSPredicate(format: "time BEGINSWITH[cd] %@", "2016")
 //        fetchRequest.predicate = predicate
         do {
             let results =
-            try managedObjectContext.executeFetchRequest(fetchRequest)
+            try managedObjectContext.fetch(fetchRequest)
             var c  = [logs]()
             if let t = results as? [NSManagedObject] {
                 for item : NSManagedObject in t {
                     let c1 = logs(dicInfo: nil)
-                    c1.time = item.valueForKey("time") as? String
-                    c1.xtype = item.valueForKey("xtype") as? Bool
-                    c1.latlng = item.valueForKey("latlng") as? String
+                    c1.time = item.value(forKey: "time") as? String
+                    c1.xtype = item.value(forKey: "xtype") as? Bool
+                    c1.latlng = item.value(forKey: "latlng") as? String
                     c.append(c1)
                 }
                 

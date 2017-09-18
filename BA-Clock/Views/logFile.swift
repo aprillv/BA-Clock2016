@@ -23,11 +23,11 @@ class logFile: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let log = cl_log()
         logc = log.getLogs()
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return logc?.count ?? 0
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("logcell", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "logcell", for: indexPath)
         let logItem = logc![indexPath.row]
 //        let index = logItem.time!.startIndex
         cell.textLabel?.text = "\(logItem.time!) \(logItem.latlng!)"

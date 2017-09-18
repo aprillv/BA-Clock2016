@@ -16,17 +16,17 @@ class ClockTextCell: UITableViewCell {
                 
 //                https://maps.google.com/maps/api/staticmap?markers=color:red%7C29.751872,-95.362037&zoom=14&size=200x200&sensor=true
                 
-                clockInImage.image = UIImage(named: "clockin.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
+                clockInImage.image = UIImage(named: "clockin.png")?.stretchableImage(withLeftCapWidth: 20, topCapHeight: 26)
 //                timeLbl.text = item.DayFullName! + ", " + item.Day!
                 clockInText.text = "Clock In \n\(item.ClockInDay!)\n@ " + item.ClockIn!
                 if item.ClockOut != "" {
-                    backGroupImageView.image = UIImage(named: "clockout.png")?.stretchableImageWithLeftCapWidth(20, topCapHeight: 26)
+                    backGroupImageView.image = UIImage(named: "clockout.png")?.stretchableImage(withLeftCapWidth: 20, topCapHeight: 26)
                     clockOutTextLbl.text = "Clock Out \n\(item.ClockOutDay!)\n@ " + item.ClockOut!
-                    backGroupImageView.hidden = false
-                    clockOutTextLbl.hidden = false
+                    backGroupImageView.isHidden = false
+                    clockOutTextLbl.isHidden = false
                 }else{
-                    backGroupImageView.hidden = true
-                    clockOutTextLbl.hidden = true
+                    backGroupImageView.isHidden = true
+                    clockOutTextLbl.isHidden = true
                 }
             }
         }

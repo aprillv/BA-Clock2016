@@ -12,20 +12,21 @@ import CoreData
 
 class cl_showSchedule: NSObject {
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentStoreCoordinator
     }()
     
     lazy var managedObjectContext: NSManagedObjectContext = {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.managedObjectContext
     }()
     
-    func savedSubmitDataToDB(item : ScheduledDayItem){
-        let entity =  NSEntityDescription.entityForName("ShowSchedule",
-                                                        inManagedObjectContext:managedObjectContext)
+    func savedSubmitDataToDB(_ item : ScheduledDayItem){
+//        print(item.ClockInCoordinate?.Latitude)
+        let entity =  NSEntityDescription.entity(forEntityName: "ShowSchedule",
+                                                        in:managedObjectContext)
         let sitem = NSManagedObject(entity: entity!,
-                                               insertIntoManagedObjectContext: managedObjectContext)
+                                               insertInto: managedObjectContext)
         
         sitem.setValue(item.ClockIn, forKey: "clockIn")
         sitem.setValue(item.ClockInCoordinate?.Latitude ?? 0.0, forKey: "clockInCoordinate_lat")
@@ -49,12 +50,12 @@ class cl_showSchedule: NSObject {
         }
     }
     
-    func updateLastItem(item : ScheduledDayItem) {
+    func updateLastItem(_ item : ScheduledDayItem) {
 //        var rtn = [ScheduledDayItem]()
-        let fetchRequest = NSFetchRequest(entityName: "ShowSchedule")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ShowSchedule")
         do {
             let results =
-                try managedObjectContext.executeFetchRequest(fetchRequest)
+                try managedObjectContext.fetch(fetchRequest)
             //            let tl = Tool()
             if let t = results as? [NSManagedObject] {
                 if let sitem = t.last {
@@ -88,10 +89,10 @@ class cl_showSchedule: NSObject {
     
     func getScheduledList() -> [ScheduledDayItem]{
         var rtn = [ScheduledDayItem]()
-        let fetchRequest = NSFetchRequest(entityName: "ShowSchedule")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ShowSchedule")
         do {
             let results =
-                try managedObjectContext.executeFetchRequest(fetchRequest)
+                try managedObjectContext.fetch(fetchRequest)
 //            let tl = Tool()
             if let t = results as? [NSManagedObject] {
                 for item : NSManagedObject in t {
@@ -100,21 +101,21 @@ class cl_showSchedule: NSObject {
                     sitem.ClockInCoordinate = CoordinateObject(dicInfo: nil)
                     sitem.ClockOutCoordinate = CoordinateObject(dicInfo: nil)
                     
-                    sitem.ClockIn =  item.valueForKey("clockIn") as? String
-                    sitem.ClockInCoordinate!.Latitude = item.valueForKey("clockInCoordinate_lat") as? Double
-                    sitem.ClockInCoordinate!.Longitude =  item.valueForKey("clockInCoordinate_lng") as? Double
-                    sitem.ClockInDay = item.valueForKey("clockInDay") as? String
-                    sitem.ClockInDayFullName = item.valueForKey("clockInDayFullName") as? String
-                    sitem.ClockInName = item.valueForKey("clockInName") as? String
-                    sitem.ClockOut =  item.valueForKey("clockOut") as? String
-                    sitem.ClockOutCoordinate!.Latitude = item.valueForKey("clockOutCoordinate_lat") as? Double
-                    sitem.ClockOutCoordinate!.Longitude =  item.valueForKey("clockOutCoordinate_lng") as? Double
-                    sitem.ClockOutDay = item.valueForKey("clockOutDay") as? String
-                    sitem.ClockOutDayFullName = item.valueForKey("clockOutDayFullName") as? String
-                    sitem.ClockOutName = item.valueForKey("clockOutName") as? String
-                    sitem.Hours = item.valueForKey("hours") as? Double
-                    sitem.clockInDateDay = item.valueForKey("clockInDate") as? String
-                    sitem.clockOutDateDay = item.valueForKey("clockOutDate") as? String
+                    sitem.ClockIn =  item.value(forKey: "clockIn") as? String
+                    sitem.ClockInCoordinate!.Latitude = item.value(forKey: "clockInCoordinate_lat") as? Double as! NSNumber
+                    sitem.ClockInCoordinate!.Longitude =  item.value(forKey: "clockInCoordinate_lng") as? Double as! NSNumber
+                    sitem.ClockInDay = item.value(forKey: "clockInDay") as? String
+                    sitem.ClockInDayFullName = item.value(forKey: "clockInDayFullName") as? String
+                    sitem.ClockInName = item.value(forKey: "clockInName") as? String
+                    sitem.ClockOut =  item.value(forKey: "clockOut") as? String
+                    sitem.ClockOutCoordinate!.Latitude = item.value(forKey: "clockOutCoordinate_lat") as? Double as! NSNumber
+                    sitem.ClockOutCoordinate!.Longitude =  item.value(forKey: "clockOutCoordinate_lng") as? Double as! NSNumber
+                    sitem.ClockOutDay = item.value(forKey: "clockOutDay") as? String
+                    sitem.ClockOutDayFullName = item.value(forKey: "clockOutDayFullName") as? String
+                    sitem.ClockOutName = item.value(forKey: "clockOutName") as? String
+                    sitem.Hours = item.value(forKey: "hours") as? Double as! NSNumber
+                    sitem.clockInDateDay = item.value(forKey: "clockInDate") as? String
+                    sitem.clockOutDateDay = item.value(forKey: "clockOutDate") as? String
                     rtn.append(sitem)
                 }
                 

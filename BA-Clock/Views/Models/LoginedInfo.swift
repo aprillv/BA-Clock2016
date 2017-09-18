@@ -24,5 +24,6 @@ class LoginedInfo: BaseObject {
     var GPSAgreement : NSNumber?
     var ClockYN : NSNumber?
     var ServerTime : String?
+    var iddeptos: String?
     
 }
