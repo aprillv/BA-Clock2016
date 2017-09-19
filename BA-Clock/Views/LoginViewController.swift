@@ -267,8 +267,8 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
 //                loginRequiredInfo.ClientTime = tl.getClientTime(now)
                 let param = [
                     "Email": email ?? ""
-                    , "Password": tl.md5(string: password!)  ?? ""
-                    , "ClientTime": tl.getClientTime(now)  ?? ""]
+                    , "Password": tl.md5(string: password!)
+                    , "ClientTime": tl.getClientTime(now)]
                 
                 //                print0000(loginRequiredInfo.getPropertieNamesAsDictionary())
                 Alamofire.request(CConstants.ServerURL + CConstants.LoginServiceURL
@@ -276,7 +276,7 @@ class LoginViewController: BaseViewController, UITextFieldDelegate, afterAgreeDe
                     , parameters: param
                     ).responseJSON{ (response) -> Void in
                     hud?.hide(true)
-                                        print(response.result.value)
+//                                        print(response.result.value)
                     //                    self.progressBar.dismissViewControllerAnimated(true){
                     if response.result.isSuccess {
                         

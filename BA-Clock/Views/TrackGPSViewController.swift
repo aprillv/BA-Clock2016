@@ -66,18 +66,48 @@ class TrackGPSViewController: BaseViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    var refreshControl: UIRefreshControl?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Track GPS";
 
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString.init(string: "Pull to refresh");
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        self.refreshControl = refreshControl;
+        
+        
+        if #available(iOS 10.0, *) {
+            tableview.refreshControl = refreshControl
+        } else {
+            tableview.backgroundView = refreshControl
+        }
+    
+    
         self.getTrackGPS()
         // Do any additional setup after loading the view.
     }
     
+    func refresh(_ refreshControl: UIRefreshControl) {
+        // Do your job, when done:
+        self.refreshControl?.isHidden = false;
+        self.getTrackGPS()
+       
+    }
+    
+    
+    
     private func getTrackGPS(){
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud?.labelText = CConstants.LoginingMsg
+        var hud: MBProgressHUD?
+        if (!(self.refreshControl?.isRefreshing ?? false)) {
+            hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud?.labelText = CConstants.LoginingMsg
+        }else{
+            self.refreshControl?.attributedTitle = NSAttributedString.init(string: "Refreshing...");
+        }
+       
         
         
         // do login
@@ -96,7 +126,14 @@ class TrackGPSViewController: BaseViewController, UITableViewDelegate, UITableVi
                 , parameters: param
                 ).responseJSON{ (response) -> Void in
                     hud?.hide(true)
+                    if (self.refreshControl?.isRefreshing ?? false){
+                        self.refreshControl?.attributedTitle = NSAttributedString.init(string: "Refresh successfully.");
+                        self.refreshControl?.endRefreshing()
+                        self.refreshControl?.isHidden = true;
+                        self.refreshControl?.attributedTitle = NSAttributedString.init(string: "Pull to refresh");
+                    }
                     print(response.result.value)
+                    
                     //                    self.progressBar.dismissViewControllerAnimated(true){
                     if response.result.isSuccess {
                         

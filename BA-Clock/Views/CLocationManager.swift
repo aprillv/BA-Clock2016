@@ -54,7 +54,7 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         self.locationManager?.startUpdatingLocation()
         
         let nextInterval = self.getFirstQuauterTimeSpace(diffinterval)
-        
+        print(nextInterval)
         Timer.scheduledTimer(timeInterval: nextInterval, target: self, selector: #selector(CLocationManager.updateLocation99), userInfo: nil, repeats: false)
 //        print("222222222locationManager")
         
@@ -182,7 +182,8 @@ class CLocationManager: NSObject, CLLocationManagerDelegate {
         
         var h = nextInterval
         if h == 0 {
-            h = 900
+//            h = 900
+            h = 90
         }
         if h >= 10 {
             self.setLowLocationAccurcy()

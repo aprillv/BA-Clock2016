@@ -121,13 +121,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        var deviceTokenStr = "\(deviceToken)"
-        deviceTokenStr = deviceTokenStr.replacingOccurrences(of: " ", with: "")
-        deviceTokenStr = deviceTokenStr.replacingOccurrences(of: "<", with: "")
-        deviceTokenStr = deviceTokenStr.replacingOccurrences(of: ">", with: "")
-//        print0000(deviceTokenStr)
+        let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+//        var deviceTokenStr = "\(deviceToken)"
+//        deviceTokenStr = deviceTokenStr.replacingOccurrences(of: " ", with: "")
+//        deviceTokenStr = deviceTokenStr.replacingOccurrences(of: "<", with: "")
+//        deviceTokenStr = deviceTokenStr.replacingOccurrences(of: ">", with: "")
+//        print(token)
         let userInfo = UserDefaults.standard
-        userInfo.setValue(deviceTokenStr, forKey: CConstants.UserDeviceToken)
+        userInfo.setValue(token, forKey: CConstants.UserDeviceToken)
         
         
         // ...register device token with our Time Entry API server via REST

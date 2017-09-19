@@ -131,7 +131,9 @@ class MapFilterModalViewController: BaseViewController {
         view.backgroundColor = UIColor.init(white: 0.2, alpha: 0.5)
         view.isOpaque = true
         
-        self.fromDateV = Date()
+        
+        self.fromDateV = Calendar.current.date(byAdding: .day, value: -7, to: Date())
+        
         self.toDateV = Date()
     }
 

@@ -38,6 +38,7 @@ class TrackPersonViewController: BaseViewController, MKMapViewDelegate, MapFilte
                     i = i + 1
                     annotation.subtitle2 = "\(i)"
                     annotation.title = gps.status ?? ""
+//                    print(gps.status ?? "")
                     //                    annotation.coordinate = ctmp
                     //                    annotation.title = gps.username
                     annotation.subtitle = gps.xcreadate ?? ""
@@ -72,7 +73,7 @@ class TrackPersonViewController: BaseViewController, MKMapViewDelegate, MapFilte
         let annotationView = SFAnnotation.createViewAnnotation(for: self.mapview, annotation: annotation)
         
         if let c = annotation as? SFAnnotation{
-            let imgname = ((c.title ?? "") == "Clock In") ? "marker_green" : "marker_red"
+            let imgname = ((c.title ?? "") == "Clock In" || (c.title ?? "") == "Track" || (c.title ?? "") == "Come Back") ? "marker_green" : "marker_red"
             annotationView?.image = UIImage(named:"\(imgname)\(c.subtitle2 ?? "1")");
         }
         
@@ -124,7 +125,7 @@ class TrackPersonViewController: BaseViewController, MKMapViewDelegate, MapFilte
                 , parameters: param
                 ).responseJSON{ (response) -> Void in
                     hud?.hide(true)
-//                    print(response.result.value)
+                    print(response.result.value)
                     //                    self.progressBar.dismissViewControllerAnimated(true){
                     if response.result.isSuccess {
                         
